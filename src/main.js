@@ -19,7 +19,10 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import './assets/css/style.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import '@fortawesome/fontawesome-free/js/all'
 
 Vue.use(BootstrapVue)
 

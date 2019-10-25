@@ -11,7 +11,7 @@
 .b-navbar-brand {
    padding-top: 0 !important;
 }
-.dropdown-menu  {
+.navbar .dropdown-menu  {
    background-color: #343a40 ;
    border: none;
    border-radius: 0;
@@ -45,9 +45,9 @@
 
 /* Navbar dropdown */
 
-.dropdown .show,
-.dropdown > a[aria-expanded="true"],
-.dropdown > a[aria-expanded="true"]:focus {
+.navbar .dropdown .show,
+.navbar .dropdown > a[aria-expanded="true"],
+.navbar .dropdown > a[aria-expanded="true"]:focus {
     background-color: #495057 !important;
 }
 .navbar-nav:hover, .navbar-nav:focus, .navbar-nav:active {
