@@ -14,55 +14,54 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // ROOT PATH
-    {
-      path: '/',
-      component: MainApp,
-      meta: {
-        breadcrumb: 'Home',
-        authRequired: true
-      },
-      children: [
-        // /home
-        {
-          path: '',
-          name: 'HomePage',
-          component: HomePage
-        },
-        // /cd
-        {
-          path: 'cd',
-          component: DummyView,
-          meta: {
-            breadcrumb: 'Browse CD'
-          },
-          children: [
-            // /cd/{id}
-            {
-              path: ':id',
-              name: 'ViewCd',
-              component: ViewCd,
-              props: true,
-              meta: {
-                breadcrumb: 'Detail CD'
-              }
+      { /* root path */
+         path: '/',
+         component: MainApp,
+         meta: {
+            breadcrumb: 'Home',
+            authRequired: true
+         },
+         children: [
+            { /* /home */
+               path: '',
+               name: 'HomePage',
+               component: HomePage
             },
-            //
-            {
-              path: '',
-              name: 'BrowseCd',
-              component: BrowseCd
+            { /* /cd */
+               path: 'cd',
+               component: DummyView,
+               meta: {
+                  breadcrumb: 'Browse CD'
+               },
+               children: [
+                  { // /cd/{id}
+                     path: ':id',
+                     name: 'ViewCd',
+                     component: ViewCd,
+                     props: true,
+                     meta: {
+                        title: 'Detail CD',
+                        breadcrumb: 'Detail CD'
+                     }
+                  },
+                  { //
+                     path: '',
+                     name: 'BrowseCd',
+                     meta: {
+                        title: 'List'
+                     },
+                     component: BrowseCd
+                  }
+               ]
             }
-          ]
-        }
-      ]
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: LoginPage
-    }
-  ]
+         ]
+      },
+      {
+         path: '/login',
+         name: 'Login',
+         component: LoginPage
+      }
+   ]
 })
 
 // set navigation guards here

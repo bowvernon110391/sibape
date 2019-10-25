@@ -1,7 +1,7 @@
 <template>
-    <b-container>
+    <div>
         <h2>Viewing CD #{{ id }}</h2>
-    </b-container>
+    </div>
 </template>
 
 <script>
