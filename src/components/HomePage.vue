@@ -15,23 +15,39 @@
                 id="input-tgl-lahir"
                 v-model="dateOfBirth"></datepicker>
         </b-form-group>
+        <b-form-group
+            id="input-group-flags"
+            label="Flag Deklarasi"
+            label-for="select-flag"
+            description="Flag Deklarasi CD">
+            <select2 v-model="flagDeklarasi" multiple class="form-control" :state="false">
+                <option value="IMPOR_UNTUK_DIPAKAI">Impor Utk Dpakai</option>
+                <option value="BKC">BKC</option>
+                <option value="UANG">UANG</option>
+                <option value="NARKOTIKA">NARKOTIKA</option>
+                <option value="KARANTINA">KARANTINA</option>
+            </select2>
+        </b-form-group>
         <p>
-            Tanggal lahir: {{ dateOfBirth }}
+            Tanggal lahir: {{ dateOfBirth }} Flag deklarasi: {{ JSON.stringify(flagDeklarasi) }}
         </p>
     </b-container>
 </template>
 
 <script>
 import Datepicker from '@/components/Datepicker'
+import Select2 from '@/components/Select2'
 
 export default {
     components: {
-        Datepicker
+        Datepicker,
+        Select2
     },
     data () {
         return {
             showAlert: true,
-            dateOfBirth: '11-03-1991'
+            dateOfBirth: '11-03-1991',
+            flagDeklarasi: ''
         }
     }
 }
