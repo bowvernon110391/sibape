@@ -25,7 +25,10 @@ const router = new Router({
             { /* /home */
                path: '',
                name: 'HomePage',
-               component: HomePage
+               component: HomePage,
+               meta: {
+                  title: 'Home Page'
+               }
             },
             { /* /cd */
                path: 'cd',
