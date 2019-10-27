@@ -1,15 +1,21 @@
 <template>
     <div>
-
-                <datepicker>
-            
-        </datepicker>
-        <b-alert variant="success" :show="showAlert">
+        <!-- <b-alert variant="success" :show="showAlert">
             Hello, world
         </b-alert>
         <b-btn size="sm" @click="showAlert = !showAlert">
             Toggle Alert
-        </b-btn>
+        </b-btn> -->
+
+        <b-form-group
+            label="Datepicker test"
+            label-for="tgl-lahir"
+            description="Tanggal lahir, sebisa mgkn < 01-01-1994">
+            <datepicker id="tgl-lahir" v-model="dateOfBirth" :state="dateValid"></datepicker>
+            <b-form-invalid-feedback :state="dateValid">
+                Too young to join, sorry!
+            </b-form-invalid-feedback>
+        </b-form-group>
 
         <b-form-group
             label="Some selection in normal select"
@@ -63,10 +69,34 @@ export default {
     },
     computed: {
         jsonData () {
-            return JSON.stringify(this.$data, null, 2)
+            let dats = {
+                cDate: this.dateFromString(this.dateOfBirth),
+                ...this.$data
+            }
+            return JSON.stringify(dats, null, 2)
         },
         selectValid: function () {
             return this.selectVal.length >= 2
+        },
+        dateValid: function () {
+            return this.dateFromString(this.dateOfBirth) < this.dateFromString('01-01-1994')
+        }
+    },
+    methods: {
+        dateFromString (str) {
+            var matches = str.match(/(\d{1,2})-(\d{1,2})-(\d{4})/i)
+            console.log(matches)
+            if (matches.length >=4) {
+                let d = new Date()
+                d.setFullYear(matches[3])
+                d.setMonth(Number(matches[2]) - 1)
+                d.setDate(matches[1])
+
+                console.log(d)
+
+                return d
+            }
+            return null
         }
     }
 }
