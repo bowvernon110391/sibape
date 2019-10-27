@@ -88,7 +88,8 @@ router.beforeEach((to, from, next) => {
     var tokenData = document.cookie.split("=")
     console.log("Token Cookie:")
     console.log(tokenData)
-
+    // show loading screen
+    store.commit('setBusyState', true)
     // if no token existed, we're way off of our login process
     // so just redirect to login page
     if (tokenData.length < 2) {
@@ -96,7 +97,6 @@ router.beforeEach((to, from, next) => {
     } else {
       // okay, token exists meaning it must have been attached (or not)
       // 1st, request user info from sso
-      store.commit('setBusyState', true)
       axios({
         method: 'get',
         url: '/static/sso/api.php?command=getUserInfo'
