@@ -1,13 +1,14 @@
 <template>
     <b-container>
-        <div class="text-center">
+        <div>
             <b-card no-body style="max-width: 540px" class="mt-2 mt-md-5 mx-auto">
                 <b-row no-gutters>
-                    <b-col md="6">
-                        <div class="fa fa-frown-o fa-10x">
-                        </div>
+                    <b-col md="6" sm="0">
+                        <p style="font-size: 10em; text-align: center" class="d-none d-md-block">
+                            :(
+                        </p>
                     </b-col>
-                    <b-col md="6">
+                    <b-col md="6" sm="12">
                         <b-card-body
                             title="404 Page Not Found">
                             <b-card-text>
