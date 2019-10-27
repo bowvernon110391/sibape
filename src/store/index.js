@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         userInfo: null,
-        busy: false
+        busy: false,
+        lokasi: null
     },
     mutations: {
         setUserInfo (state, payload) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
         },
         setBusyState (state, payload) {
             state.busy = payload
+        },
+        setLokasi (state, payload) {
+            state.lokasi = payload
         }
     }
 })
