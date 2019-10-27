@@ -44,10 +44,10 @@
                 </template>
                 <template v-slot:option="option">
                     <b-row>
-                        <b-col md="4">
-                            <strong>{{ option.nama }}</strong>
+                        <b-col md="6">
+                            <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
                         </b-col>
-                        <b-col md="8">
+                        <b-col md="6">
                             <b-row>
                                 <b-col md="6">
                                     {{ option.kebangsaan }}
@@ -60,10 +60,6 @@
                     </b-row>
                 </template>
             </v-select>
-            <b-form-input
-                class="mt-2"
-                type="text"
-                v-model="penumpang"></b-form-input>
         </b-form-group>
 
         <b-button variant="primary" @click="penumpang = 3">Set to 3</b-button>
@@ -125,6 +121,10 @@ export default {
     methods: {
         onSearchPenumpang (search, loading) {
             loading(true)
+            if (search == '') {
+                loading(false)
+                return
+            }
             this.searchPenumpang(search, loading, this)
         },
         searchPenumpang: debounce((search, loading, vm) => {
