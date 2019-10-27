@@ -61,6 +61,24 @@ export default {
                     }
                 }
             });
+        // sync state on created
+        this.syncState(this.state)
+    },
+    methods: {
+        syncState (newVal) {
+            var c = $(this.$el).siblings('span').find('.select2-selection')
+            console.log('C is :')
+            console.log(c)
+            $(c).removeClass('is-invalid')
+            $(c).removeClass('is-valid')
+            if (newVal === true) {
+                $(c).addClass('is-valid')
+                
+            } else if (newVal === false) {
+                $(c).addClass('is-invalid')
+                
+            } 
+        }
     },
     watch: {
         value: {
@@ -73,6 +91,12 @@ export default {
         },
         options: function (opts) {
             $(this.$el).empty().select2({ data: opts })
+        },
+        state: {
+            handler (newVal) {
+                this.syncState(newVal)
+            },
+            immediate: true
         }
     },
     destroyed () {
@@ -80,3 +104,13 @@ export default {
     }
 }
 </script>
+
+<style>
+.select2-selection.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.select2-selection.is-valid {
+    border-color: #28a745 !important;
+}
+</style>
