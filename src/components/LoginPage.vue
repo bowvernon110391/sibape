@@ -1,35 +1,52 @@
 <template>
-    <b-container>
-        <b-form @submit.prevent="processLogin">
-            <b-form-group
-                label="Username"
-                label-for="username"
-                description="Username SSO">
-                <b-form-input
-                    id="username"
-                    v-model.trim="username"
-                    required
-                    placeholder="Username sesuai SSO..."
-                    type="text"></b-form-input>
-            </b-form-group>
-            <b-form-group
-                label="Password"
-                label-for="password"
-                description="Password sesuai SSO">
-                <b-form-input
-                    id="password"
-                    v-model.trim="password"
-                    required
-                    placeholder="Password sesuai SSO..."
-                    type="password"></b-form-input>
-            </b-form-group>
-            <b-alert :show="errorMsg.length" variant="danger">{{ errorMsg }}</b-alert>
-            <div>
-                <b-button type="submit" variant="primary">Login</b-button>
-                <!-- <a href="./static/sso/api.php">SSO API</a> -->
-                <b-button type="button" variant="dark" @click="getUserInfo">Get UserInfo</b-button>
-            </div>
-        </b-form>
+    <b-container md="6" class="mt-2 mt-md-5 col-md-4 col-sm-12">
+        <b-card>
+            <b-card-title>
+                Login SiBAPE
+            </b-card-title>
+            <b-form @submit.prevent="processLogin">
+                <b-form-group
+                    label="Username"
+                    label-for="username"
+                    description="Username SSO">
+                    <b-input-group>
+                        <b-form-input
+                            id="username"
+                            v-model.trim="username"
+                            required
+                            placeholder="Username sesuai SSO..."
+                            type="text"></b-form-input>
+                        <b-input-group-append>
+                            <b-input-group-text><i class="fa fa-user"></i></b-input-group-text>
+                        </b-input-group-append>
+                    </b-input-group>
+                    
+                </b-form-group>
+                <b-form-group
+                    label="Password"
+                    label-for="password"
+                    description="Password sesuai SSO">
+                    <b-input-group>
+                        <b-form-input
+                            id="password"
+                            v-model.trim="password"
+                            required
+                            placeholder="Password sesuai SSO..."
+                            type="password"></b-form-input>
+                        <b-input-group-append>
+                            <b-input-group-text><i class="fa fa-lock"></i></b-input-group-text>
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-form-group>
+                <b-alert :show="errorMsg.length" variant="danger">{{ errorMsg }}</b-alert>
+                <div>
+                    <b-button type="submit" variant="primary" :disabled="!loginReady">{{ loginButtonText }}<b-spinner small variant="light" v-if="!loginReady"></b-spinner></b-button>
+                    <!-- <a href="./static/sso/api.php">SSO API</a> -->
+                    <b-button type="button" variant="dark" @click="getUserInfo">Get UserInfo</b-button>
+                </div>
+            </b-form>
+        </b-card>
+        
         <!-- <pre>{{ JSON.stringify(userInfo) }}</pre> -->
     </b-container>
 </template>
@@ -44,16 +61,32 @@ export default {
             password: '',
             attached: false,
             userInfo: null,
-            errorMsg: ''
+            errorMsg: '',
+            loginStatus: 'Attaching'
+        }
+    },
+    computed: {
+        loginButtonText () {
+            if (this.loginStatus.length) {
+                // still busy, return it
+                return this.loginStatus
+            } else {
+                return "Login"
+            }
+        },
+        loginReady () {
+            return this.loginStatus.length == 0
         }
     },
     methods: {
         processLogin () {
-            if (!this.attached) {
-                alert('SSO not attached, would cause error')
+            if (!this.loginReady) {
+                alert('Login IS NOT READY BIATCH!!')
             }
 
+            // set some status
             this.errorMsg = ''
+            this.loginStatus = 'Logging in... '
 
             const fd = new FormData()
             fd.set('username', this.username)
@@ -75,6 +108,7 @@ export default {
                     // store user info locally
                     this.userInfo = e.data
                     this.errorMsg = ''
+                    this.loginStatus = 'Redirecting to homepage... '
 
                     // store at central store
                     this.$store.commit('setUserInfo', e.data)
@@ -93,6 +127,7 @@ export default {
                     } else {
                         this.errorMsg = e
                     }
+                    this.loginStatus = ''
                 })
         },
         getUserInfo () {
@@ -110,6 +145,9 @@ export default {
     },
     created () {
         var vm = this
+
+        // first, attaching
+        this.loginStatus = "Attaching Session... "
         $.ajax({
             url: '/static/sso/api.php?command=attach',
             crossDomain: true,
@@ -123,6 +161,9 @@ export default {
         .fail(function(jqxhr) {
             console.log('error')
             console.log(jqxhr)
+        })
+        .always(function () {
+            vm.loginStatus = ''
         })
     }
 }

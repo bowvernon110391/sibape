@@ -1,12 +1,5 @@
 <template>
     <div>
-        <!-- <b-alert variant="success" :show="showAlert">
-            Hello, world
-        </b-alert>
-        <b-btn size="sm" @click="showAlert = !showAlert">
-            Toggle Alert
-        </b-btn> -->
-
         <b-form-group
             label="Datepicker test"
             label-for="tgl-lahir"
@@ -18,71 +11,145 @@
         </b-form-group>
 
         <b-form-group
-            label="Some selection in normal select"
-            label-for="select1"
-            description="Select some options">
-            <b-select v-model="selectVal" id="select1" :state="selectValid" multiple>
-                <option value="1">text 1</option>
-                <option value="2">text 2</option>
-                <option value="3">text 3</option>
-            </b-select>
-            <b-form-invalid-feedback :state="selectValid">
-                Gotta select two or more, pal
-            </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group
             label="Some selection in select2"
             label-for="select2"
             description="Select some options">
-            <select2 class="form-control" v-model="selectVal" id="select2" :state="selectValid" multiple>
-                <option value="1">text 1</option>
-                <option value="2">text 2</option>
-                <option value="3">text 3</option>
-            </select2>
+            <v-select 
+                :options="numbers" 
+                label="text" 
+                :reduce="e => e.value" 
+                multiple 
+                v-model="selectVal"
+                placeholder="Select some numbers...">
+            </v-select>
             <b-form-invalid-feedback :state="selectValid">
                 Gotta select two or more, pal
             </b-form-invalid-feedback>
         </b-form-group>
+        <b-form-group
+            label="Penumpang"
+            label-for="select-penumpang"
+            description="Select data penumpang">
+            <v-select 
+                label="nama" 
+                :reduce="e => e.id" 
+                :options="dataPenumpang"
+                placeholder="Cari berdasarkan nama/no-paspor/asal/pekerjaan..."
+                :filterable="false"
+                @search="onSearchPenumpang"
+                v-model="penumpang"
+                >
+                <template v-slot:no-options>
+                    Penumpang tidak ditemukan
+                </template>
+                <template v-slot:option="option">
+                    <b-row>
+                        <b-col md="4">
+                            <strong>{{ option.nama }}</strong>
+                        </b-col>
+                        <b-col md="8">
+                            <b-row>
+                                <b-col md="6">
+                                    {{ option.kebangsaan }}
+                                </b-col>
+                                <b-col md="6">
+                                    {{ option.no_paspor }}
+                                </b-col>
+                            </b-row>
+                        </b-col>
+                    </b-row>
+                </template>
+            </v-select>
+            <b-form-input
+                class="mt-2"
+                type="text"
+                v-model="penumpang"></b-form-input>
+        </b-form-group>
+
+        <b-button variant="primary" @click="penumpang = 3">Set to 3</b-button>
         
 
-        <pre>{{ jsonData }}</pre>
+        <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
 
 <script>
 import Datepicker from '@/components/Datepicker'
-import Select2 from '@/components/Select2'
+import vSelect from 'vue-select'
+import { debounce } from 'debounce'
+
+const axios = require('axios').default
+const apishinta = axios.create({
+    baseURL: 'http://apishinta.test/',
+    timeout: 15000,
+    headers: {
+        'Authorization': 'Bearer token_admin'
+    }
+})
 
 export default {
     components: {
         Datepicker,
-        Select2
+        vSelect
     },
     data () {
         return {
             showAlert: true,
             dateOfBirth: '11-03-1991',
             flagDeklarasi: '',
-            selectVal: []
+            selectVal: [],
+            numbers: [
+                { value: 10, text: "Ten" },
+                { value: 20, text: "Twenty" },
+                { value: 30, text: "Thirty" },
+                { value: 40, text: "Forty" },
+            ],
+            dataPenumpang: [],
+            penumpang:null
         }
     },
     computed: {
         jsonData () {
             let dats = {
-                cDate: this.dateFromString(this.dateOfBirth),
                 ...this.$data
             }
             return JSON.stringify(dats, null, 2)
         },
         selectValid: function () {
-            return this.selectVal.length >= 2
+            return this.selectVal.length >= 3
         },
         dateValid: function () {
             return this.dateFromString(this.dateOfBirth) < this.dateFromString('01-01-1994')
         }
     },
     methods: {
+        onSearchPenumpang (search, loading) {
+            loading(true)
+            this.searchPenumpang(search, loading, this)
+        },
+        searchPenumpang: debounce((search, loading, vm) => {
+            apishinta.get('/penumpang', {
+                params: {
+                    number: 50,
+                    q: search
+                }
+            })
+            .then(e => {
+                console.log('data')
+                console.log(e)
+                vm.dataPenumpang = e.data.data
+                loading(false)
+            })
+            .catch(e => {
+                console.log('error')
+                console.log(e)
+
+                loading(false)
+            })
+        }, 500),
+        numberId(o) {
+            return o.value
+        },
         dateFromString (str) {
             var matches = str.match(/(\d{1,2})-(\d{1,2})-(\d{4})/i)
             console.log(matches)
@@ -97,6 +164,9 @@ export default {
                 return d
             }
             return null
+        },
+        select1and3 () {
+            $('#select2').val([1,3]).trigger('change')
         }
     }
 }

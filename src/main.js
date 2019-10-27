@@ -24,6 +24,9 @@ import './assets/css/style.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@fortawesome/fontawesome-free/js/all'
 
+// vue-select
+import 'vue-select/dist/vue-select.css'
+
 Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
