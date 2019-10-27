@@ -1,5 +1,5 @@
 <template>
-    <select :multiple="multiple">
+    <select v-bind="$props">
         <slot></slot>
     </select>
 </template>
