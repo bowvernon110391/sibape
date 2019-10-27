@@ -16,11 +16,11 @@
             description="Select some options">
             <v-select 
                 :options="numbers" 
-                label="text" 
-                :reduce="e => e.value" 
-                multiple 
+                multiple
+                taggable
                 v-model="selectVal"
-                placeholder="Select some numbers...">
+                placeholder="Select some numbers..."
+                @option:created="createOption">
             </v-select>
             <b-form-invalid-feedback :state="selectValid">
                 Gotta select two or more, pal
@@ -94,12 +94,7 @@ export default {
             dateOfBirth: '11-03-1991',
             flagDeklarasi: '',
             selectVal: [],
-            numbers: [
-                { value: 10, text: "Ten" },
-                { value: 20, text: "Twenty" },
-                { value: 30, text: "Thirty" },
-                { value: 40, text: "Forty" },
-            ],
+            numbers: ['Ten','Twenty','Thirty','Forty'],
             dataPenumpang: [],
             penumpang:null
         }
@@ -119,6 +114,11 @@ export default {
         }
     },
     methods: {
+        createOption (opt) {
+            console.log("Created option:")
+            console.log(opt)
+            this.numbers.push(opt)
+        },
         onSearchPenumpang (search, loading) {
             loading(true)
             if (search == '') {
