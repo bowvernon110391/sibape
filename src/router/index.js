@@ -6,6 +6,7 @@ import BrowseCd from '@/components/BrowseCd'
 import ViewCd from '@/components/ViewCd'
 import DummyView from '@/components/DummyView'
 import LoginPage from '@/components/LoginPage'
+import PageNotFound from '@/components/PageNotFound'
 import store from '../store'
 
 const axios = require('axios').default
@@ -63,6 +64,11 @@ const router = new Router({
          path: '/login',
          name: 'Login',
          component: LoginPage
+      },
+      {
+         path: '*',
+         name: 'PageNotFound',
+         component: PageNotFound
       }
    ]
 })
