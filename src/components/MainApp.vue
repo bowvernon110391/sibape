@@ -32,11 +32,11 @@
                     <b-navbar-nav class="ml-auto">
                         <b-nav-item-dropdown right>
                             <template v-slot:button-content>
-                                <span>{{ userInfo.name }}</span>
+                                <span><i class="fa fa-user-circle"></i> {{ userInfo.name }}</span>
                             </template>
-                            <b-dropdown-item href="#">Profile</b-dropdown-item>
-                            <b-dropdown-item href="#">Reset Password</b-dropdown-item>
-                            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                            <b-dropdown-item to="/profile"><i class="fa fa-user"></i> Profile</b-dropdown-item>
+                            <b-dropdown-item to="/resetpassword"><i class="fa fa-lock"></i> Reset Password</b-dropdown-item>
+                            <b-dropdown-item @click="logout"><i class="fa fa-power-off"></i> Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
@@ -76,7 +76,33 @@
 </template>
 
 <script>
+const axios = require('axios').default
+
 export default {
+    methods: {
+        // to logout of sso session
+        logout () {
+            this.$store.commit('setBusyState', true)
+
+            // call api
+            axios({
+                method: 'post',
+                url: '/static/sso/api.php?command=logout'
+            })
+            .then(e => {
+                this.$store.commit('setBusyState', false)
+                // success. return to login page?
+                // also might want to cleanup store data
+                this.$router.push({
+                    path: '/login'
+                })
+            })
+            .catch(e => {
+                this.$store.commit('setBusyState', false)
+                // failed. you may try again
+            })
+        }
+    },
     computed: {
         validBreadCrumbs () {
             var validBreadCrumbs = this.$route.matched

@@ -1,9 +1,17 @@
 <template>
-    <b-container md="6" class="mt-2 mt-md-5 col-md-4 col-sm-12">
+    <b-container md="6" class="mt-2 mt-md-4 col-md-4 col-sm-12">
         <b-card>
-            <b-card-title>
+            <template v-slot:header>
+                <h2>
+                    <img src="../assets/logo.png" width="64px" class="mr-2">Login SiBAPE
+                </h2>
+            </template>
+            <template v-slot:footer>
+                &copy; Duktek Soetta 2019
+            </template>
+            <!-- <b-card-title>
                 Login SiBAPE
-            </b-card-title>
+            </b-card-title> -->
             <b-form @submit.prevent="processLogin">
                 <b-form-group
                     label="Username"
@@ -15,7 +23,8 @@
                             v-model.trim="username"
                             required
                             placeholder="Username sesuai SSO..."
-                            type="text"></b-form-input>
+                            type="text"
+                            :disabled="!loginReady"></b-form-input>
                         <b-input-group-append>
                             <b-input-group-text><i class="fa fa-user"></i></b-input-group-text>
                         </b-input-group-append>
@@ -32,17 +41,30 @@
                             v-model.trim="password"
                             required
                             placeholder="Password sesuai SSO..."
-                            type="password"></b-form-input>
+                            type="password"
+                            :disabled="!loginReady"></b-form-input>
                         <b-input-group-append>
                             <b-input-group-text><i class="fa fa-lock"></i></b-input-group-text>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
+                <b-form-group
+                    label="Lokasi"
+                    label-for="lokasi">
+                    <b-form-select id="lokasi" required v-model="lokasi" :disabled="!loginReady">
+                        <option :value="null">Pilih lokasi...</option>
+                        <option value="T2F">T2F</option>
+                        <option value="T3">T3</option>
+                        <option value="KANTOR">KANTOR</option>
+                        <option value="TPP">TPP</option>
+                        <option value="GUDANG">GUDANG</option>
+                    </b-form-select>
+                </b-form-group>
                 <b-alert :show="errorMsg.length" variant="danger">{{ errorMsg }}</b-alert>
                 <div>
                     <b-button type="submit" variant="primary" :disabled="!loginReady">{{ loginButtonText }}<b-spinner small variant="light" v-if="!loginReady"></b-spinner></b-button>
                     <!-- <a href="./static/sso/api.php">SSO API</a> -->
-                    <b-button type="button" variant="dark" @click="getUserInfo">Get UserInfo</b-button>
+                    <!-- <b-button type="button" variant="dark" @click="getUserInfo">Get UserInfo</b-button> -->
                 </div>
             </b-form>
         </b-card>
@@ -62,7 +84,8 @@ export default {
             attached: false,
             userInfo: null,
             errorMsg: '',
-            loginStatus: 'Attaching'
+            loginStatus: 'Attaching',
+            lokasi: null
         }
     },
     computed: {
@@ -112,6 +135,7 @@ export default {
 
                     // store at central store
                     this.$store.commit('setUserInfo', e.data)
+                    this.$store.commit('setLokasi', this.lokasi)
 
                     // redirect to home?
                     this.$router.push({
