@@ -12,7 +12,7 @@
                 </h2>
             </template>
             <template v-slot:footer>
-                &copy; Duktek Soetta 2019 -- {{ environment }}
+                &copy; Duktek Soetta 2019
             </template>
             <!-- <b-card-title>
                 Login SiBAPE
