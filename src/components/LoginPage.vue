@@ -1,13 +1,18 @@
 <template>
     <b-container md="6" class="mt-2 mt-md-4 col-md-4 col-sm-12">
-        <b-card>
+        <b-card
+            header-bg-variant="dark"
+            header-text-variant="light"
+            footer-bg-variant="dark"
+            footer-text-variant="light"
+            class="shadow">
             <template v-slot:header>
                 <h2>
                     <img src="../assets/logo.png" width="64px" class="mr-2">Login SiBAPE
                 </h2>
             </template>
             <template v-slot:footer>
-                &copy; Duktek Soetta 2019
+                &copy; Duktek Soetta 2019 -- {{ environment }}
             </template>
             <!-- <b-card-title>
                 Login SiBAPE
@@ -89,6 +94,10 @@ export default {
         }
     },
     computed: {
+        environment: function () {
+            console.log(process)
+            return process.NODE_ENV
+        },
         loginButtonText () {
             if (this.loginStatus.length) {
                 // still busy, return it

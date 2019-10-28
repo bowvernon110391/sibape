@@ -42,12 +42,13 @@
                 :filterable="false"
                 @search="onSearchPenumpang"
                 v-model="penumpang"
+                taggable
                 >
                 <template v-slot:no-options>
                     Penumpang tidak ditemukan
                 </template>
                 <template v-slot:option="option">
-                    <b-row>
+                    <b-row v-if="'id' in option">
                         <b-col md="6">
                             <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
                         </b-col>
@@ -60,6 +61,11 @@
                                     {{ option.no_paspor }}
                                 </b-col>
                             </b-row>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else>
+                        <b-col>
+                            <em>Tambah Penumpang <strong>{{ option.nama }}...</strong></em>
                         </b-col>
                     </b-row>
                 </template>
@@ -83,7 +89,7 @@ const apishinta = axios.create({
     baseURL: 'http://192.168.146.23/apishinta/public',
     timeout: 15000,
     headers: {
-        'Authorization': 'Bearer token_admin'
+        'Authorization': 'Bearer token_pdtt'
     }
 })
 
@@ -175,14 +181,29 @@ export default {
                 }
             })
             .then(e => {
-                console.log('data')
-                console.log(e)
                 vm.dataPenumpang = e.data.data
                 loading(false)
+                return e.data.data
+            })
+            .then(e => {
+                console.log('log data')
+                console.log(e)
             })
             .catch(e => {
                 console.log('error')
-                console.log(e)
+                var errorMessage = ''
+                if (e.response) {
+                    // do we havedata?
+                    if ('data' in e.response) {
+                        alert(`error ${e.response.data.error.http_code} : ${e.response.data.error.message}`)
+                    } else {
+                        // generic
+                        alert(`error ${e.response.status} : ${e.response.statusText}`)
+                    }
+                } else {
+                    alert('Unknown Error')
+                }
+                // console.log(e.response)
 
                 loading(false)
             })

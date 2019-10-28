@@ -111,6 +111,11 @@ router.beforeEach((to, from, next) => {
         } else {
           // data is valid. store it to store
           store.commit('setUserInfo', e.data)
+          // also store token
+          store.commit('setToken', tokenData[1])
+          // log store data?
+          console.log('store now: ')
+          console.log(store)
           // redirect to whatever page we were accessing
           next()
         }
