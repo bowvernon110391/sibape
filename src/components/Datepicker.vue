@@ -1,6 +1,6 @@
 <template>
     <div class="input-group date">
-        <input type="text" :id="id" class="form-control" :class="{'is-valid': this.state===true, 'is-invalid': this.state===false}" ref="dp">
+        <input type="text" :disabled="disabled" :id="id" class="form-control" :class="{'is-valid': this.state===true, 'is-invalid': this.state===false}" ref="dp">
         <div class="input-group-append">
             <button type="button" class="btn btn-primary"><i class="fa fa-calendar-alt"></i></button>
         </div>
@@ -10,7 +10,7 @@
 <script>
 
 export default {
-    props: ['value','state','id'],
+    props: ['value','state','id', 'disabled'],
     watch: {
         value: function(newVal, oldVal) {
             $(this.$el).datepicker('update', newVal);
@@ -35,9 +35,9 @@ export default {
             }
         });
         // init value conversion
-        var initVal = this.value
+        var initVal = this.value || ''
         var matches = null
-        if (matches = this.value.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)) {
+        if (matches = initVal.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)) {
             initVal = `${matches[3]}-${matches[2]}-${matches[1]}`
         }
         // trigger initial update

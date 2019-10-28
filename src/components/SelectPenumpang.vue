@@ -42,7 +42,7 @@
                 </template>
                 </v-select>
             <b-input-group-append>
-                <b-button :variant="showDetail ? 'secondary' : 'dark'" size="sm" @click="showDetail=!showDetail">
+                <b-button :variant="showDetail ? 'secondary' : 'dark'" size="sm" @click="showDetail=!showDetail" title="Lihat/Tambah Penumpang" v-b-tooltip.hover :disabled="fetching">
                     <template v-show="!showDetail && !fetching && detail.id">
                         <span v-show="!showDetail && !fetching  && detail.id">
                             <i class="fa fa-eye"></i>
@@ -60,22 +60,14 @@
                     </template>
                     <b-spinner variant="light" type="grow" small v-if="fetching" label="fetching..."></b-spinner>
                 </b-button>
-                <!-- <b-button size="sm" variant="primary">
-                    <i class="fa fa-plus"></i>
-                </b-button> -->
             </b-input-group-append>
         </b-input-group>
-        <b-row v-if="showDetail">
+        <!-- <b-row v-if="showDetail">
             <b-col md="12">
                 <b-alert variant="dark" :show="showDetail" :dismissible="true" @dismissed="showDetail = false">
                     <h5>Detail Penumpang</h5>
                     <hr>
-                    <pre v-if="detail">{{ detail }}</pre>
-                    <div v-else class="text-center">
-                        <b-spinner variant="danger" small></b-spinner>
-                        Loading...
-                        <b-spinner variant="danger" small></b-spinner>
-                    </div>
+                    <pre>{{ detail }}</pre>
                 </b-alert>
             </b-col>
         </b-row>
@@ -85,19 +77,20 @@
                     {{ error }}
                 </b-alert>
             </b-col>
-        </b-row>
+        </b-row> -->
         <b-modal 
             v-model="showDetail"
             id="modal-penumpang"
             :title="modalTitle"
             no-close-on-backdrop
-            class="shadow">
+            footer-bg-variant="light"
+            header-bg-variant="light">
             <b-row>
                 <b-col sm="12" md="6">
                     <b-form-group
                         label="Nama Penumpang"
                         label-for="nama-penumpang">
-                        <b-form-input type="text" id="nama-penumpang" v-model="detail.nama">
+                        <b-form-input type="text" id="nama-penumpang" v-model="detail.nama" :disabled="saving">
                         </b-form-input>
                     </b-form-group>
                 </b-col>
@@ -105,7 +98,7 @@
                     <b-form-group
                         label="Tanggal Lahir"
                         label-for="tgl-lahir">
-                        <datepicker v-model="detail.tgl_lahir"></datepicker>
+                        <datepicker v-model="detail.tgl_lahir" :disabled="saving"></datepicker>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -114,27 +107,37 @@
                     <b-form-group
                         label="Nomor Paspor"
                         label-for="no-paspor">
-                        <b-form-input type="text" v-model="detail.no_paspor"></b-form-input>
+                        <b-form-input type="text" v-model="detail.no_paspor" :disabled="saving"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col sm="12" md="6">
                     <b-form-group
                         label="Kebangsaan"
                         label-for="kebangsaan">
-                        <b-form-input type="text" v-model="detail.kebangsaan"></b-form-input>
+                        <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col sm="12">
                     <b-form-group
                         label="Pekerjaan"
                         label-for="pekerjaan">
-                        <b-form-input type="text" v-model="detail.pekerjaan"></b-form-input>
+                        <b-form-input type="text" v-model="detail.pekerjaan" :disabled="saving"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
-            <b-alert :show="error ? error.length : false" variant="danger" dismissible>
-                Some error happened here
+            <b-alert :show="error ? error.length : false" variant="danger" dismissible @dismiss="resetError">
+                {{ error }}
             </b-alert>
+            <template v-slot:modal-footer>
+                <b-button variant="primary" :disabled="saving" @click="doSavePenumpang">
+                    <template v-if="saving">
+                        Menyimpan... <b-spinner small variant="light"></b-spinner>
+                    </template>
+                    <template v-else>
+                        Simpan
+                    </template>
+                </b-button>
+            </template>
         </b-modal>
     </div>    
 </template>
@@ -161,6 +164,23 @@ export default {
                 console.log('Fetch required for id: ' + newVal)
                 this.fetchPenumpangById(newVal)
             }
+        },
+        error: function (newVal, oldVal) {
+            if (newVal) {
+                this.$bvToast.toast(newVal, {
+                    title: `Error(!)`,
+                    autoHideDelay: 5000,
+                    appendToast: true,
+                    toaster: 'b-toaster-top-center',
+                    variant: 'danger'
+                })
+            }
+        },
+        detail: {
+            deep: true,
+            handler () {
+                this.dirty = true
+            }
         }
     },
     data () {
@@ -177,7 +197,9 @@ export default {
             },
             listPenumpang: [],
             showDetail: false,
-            fetching: false
+            fetching: false,
+            saving: false,
+            dirty: false
         }
     },
     computed: {
@@ -199,6 +221,9 @@ export default {
         }
     },
     methods: {
+        resetError () {
+            this.error = null
+        },
         handleError (e) {
             // build custom error text
             if (e.response) {
@@ -217,6 +242,10 @@ export default {
             return this.listPenumpang.filter(e => e.id == id).length > 0;
         },
         fetchPenumpangById (id) {
+            // reset dirty flag here?
+            this.dirty = false
+
+            // check for valid id
             if (!id) {
                 // set to default data
                 this.detail = this.defaultPenumpang
@@ -228,7 +257,8 @@ export default {
             api.get('/penumpang/' + id)
                 .then(e => {
                     // fill inside options
-                    this.listPenumpang.push(e.data.data)
+                    // this.listPenumpang.push(e.data.data)
+                    this.listPenumpang = [e.data.data]    // replace, rather than add
                     this.detail = e.data.data
                     this.fetching = false
                 })
@@ -281,7 +311,61 @@ export default {
                 loading(false)
                 this.handleError(e)
             })
-        }, 500)
+        }, 500),
+        doSavePenumpang () {
+            this.saving=true
+            this.resetError()
+            // do nothing if not dirty
+            if (!this.dirty) {
+                this.saving = false
+                this.showDetail = false
+                console.log("Nothing's dirty. Bailing out...")
+                return
+            }
+            // grab api instance
+            const api = this.$store.getters.apiInstance
+            // depending on the detail.id, this could be
+            var dataPenumpang = {
+                nama: this.detail.nama,
+                no_paspor: this.detail.no_paspor,
+                kebangsaan: this.detail.kebangsaan,
+                pekerjaan: this.detail.pekerjaan,
+                tgl_lahir: this.detail.tgl_lahir
+            }
+            // UPDATE or CREATE
+            if (this.detail.id) {
+                // PUT request here
+                api.put('/penumpang/' + this.detail.id, dataPenumpang)
+                .then(e => {
+                    this.saving = false
+                    this.dirty = false
+                    this.showDetail = false
+                    // re-fetch data
+                    this.fetchPenumpangById(this.detail.id)
+                })
+                .catch(e => {
+                    this.saving = false
+                    this.handleError(e)
+                })
+            } else {
+                // POST request here
+                api.post('/penumpang', dataPenumpang)
+                .then(e => {
+                    console.log('POST success:')
+                    console.log(e)
+                    this.saving = false
+                    // grab id, set current value to it,
+                    this.$emit('input', e.data.id)
+                    // and hide modal
+                    this.showDetail = false
+                    this.dirty = false
+                })
+                .catch(e => {
+                    this.saving = false
+                    this.handleError(e)
+                })
+            }
+        }
     }
 }
 </script>
