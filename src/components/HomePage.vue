@@ -11,7 +11,7 @@
         </b-form-group>
 
         <b-form-group
-            label="Some selection in select2"
+            label="Some selection in vue-select"
             label-for="select2"
             description="Select some options">
             <v-select 
@@ -20,7 +20,11 @@
                 taggable
                 v-model="selectVal"
                 placeholder="Select some numbers..."
-                @option:created="createOption">
+                :create-option="createOption">
+                <template v-slot:option="opt">
+                    <span v-if="'id' in opt && opt.id > 0">{{ opt.label }}</span>
+                    <span v-else><em>Add {{ opt.label }}...</em></span>
+                </template>
             </v-select>
             <b-form-invalid-feedback :state="selectValid">
                 Gotta select two or more, pal
@@ -76,7 +80,7 @@ import { debounce } from 'debounce'
 
 const axios = require('axios').default
 const apishinta = axios.create({
-    baseURL: 'http://192.168.146.23/apishinta/',
+    baseURL: 'http://192.168.146.23/apishinta/public',
     timeout: 15000,
     headers: {
         'Authorization': 'Bearer token_admin'
@@ -94,7 +98,12 @@ export default {
             dateOfBirth: '11-03-1991',
             flagDeklarasi: '',
             selectVal: [],
-            numbers: ['Ten','Twenty','Thirty','Forty'],
+            numbers: [
+                { id: 10, label: "Ten"},
+                { id: 20, label: "Twenty"},
+                { id: 30, label: "Thirty"},
+                { id: 40, label: "Forty"}
+            ],
             dataPenumpang: [],
             penumpang:null
         }
@@ -113,11 +122,42 @@ export default {
             return this.dateFromString(this.dateOfBirth) < this.dateFromString('01-01-1994')
         }
     },
+    watch: {
+        selectVal: {
+            handler () {
+                // always filter value so it stays valid
+                // this.selectVal = this.selectVal.filter(e => e.id)
+                console.log('Select Val Change')
+                console.log(this.selectVal)
+                // check last value only?
+                if (this.selectVal.length) {
+                    let x = this.selectVal[this.selectVal.length-1]
+                    if (!x.id) {
+                        this.selectVal.pop()
+                    }
+                }
+            }
+        }
+    },
     methods: {
         createOption (opt) {
             console.log("Created option:")
             console.log(opt)
-            this.numbers.push(opt)
+            var value = Number(prompt("Input value for '"+opt+"'", 0))
+            if (!value) {
+                alert("Invalid value, option will not be added")
+                return {
+                    id: 0,
+                    label: '--ERROR:DELET THIS--'
+                }
+            } else {
+                var newOpt = {
+                    id: Number(value),
+                    label: opt
+                }
+                this.numbers.push(newOpt)
+                return newOpt
+            }
         },
         onSearchPenumpang (search, loading) {
             loading(true)
