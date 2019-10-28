@@ -43,14 +43,19 @@
                 </v-select>
             <b-input-group-append>
                 <b-button :variant="showDetail ? 'secondary' : 'dark'" size="sm" @click="showDetail=!showDetail">
-                    <template v-show="!showDetail && !fetching">
-                        <span v-show="!showDetail && !fetching">
+                    <template v-show="!showDetail && !fetching && detail.id">
+                        <span v-show="!showDetail && !fetching  && detail.id">
                             <i class="fa fa-eye"></i>
                         </span>
                     </template>
-                    <template v-show="showDetail && !fetching">
-                        <span v-show="showDetail && !fetching">
+                    <template v-show="showDetail && !fetching  && detail.id">
+                        <span v-show="showDetail && !fetching  && detail.id">
                             <i class="fa fa-eye-slash"></i>
+                        </span>
+                    </template>
+                    <template v-show="!detail.id && !fetching">
+                        <span v-show="!detail.id && !fetching">
+                            <i class="fa fa-plus"></i>
                         </span>
                     </template>
                     <b-spinner variant="light" type="grow" small v-if="fetching" label="fetching..."></b-spinner>
@@ -85,7 +90,8 @@
             v-model="showDetail"
             id="modal-penumpang"
             :title="modalTitle"
-            no-close-on-backdrop>
+            no-close-on-backdrop
+            class="shadow">
             <b-row>
                 <b-col sm="12" md="6">
                     <b-form-group
