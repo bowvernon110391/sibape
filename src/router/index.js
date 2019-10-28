@@ -75,6 +75,12 @@ const router = new Router({
 
 // set navigation guards here
 router.beforeEach((to, from, next) => {
+  const toDepth = to.path.split('/').length
+  const fromDepth = from ? from.path.split('/').length : 0
+
+  let transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+  store.commit('setTransition', transitionName)
+  
   console.log('-->>')
   console.log(to)
 

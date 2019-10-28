@@ -12,7 +12,7 @@ export default new Vuex.Store({
         lokasi: null,   // data lokasi
         // api instance
         api: axios.create({
-            baseURL: 'http://192.168.146.23/apishinta/public',
+            baseURL: 'http://api-sibape.soetta.xyz/',
             timeout: 15000
         }),
         refData: {

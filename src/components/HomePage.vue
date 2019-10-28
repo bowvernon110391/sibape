@@ -91,15 +91,6 @@ import Datepicker from '@/components/Datepicker'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
 
-const axios = require('axios').default
-const apishinta = axios.create({
-    baseURL: 'http://192.168.146.23/apishinta/public',
-    timeout: 15000,
-    headers: {
-        'Authorization': 'Bearer token_pdtt'
-    }
-})
-
 export default {
     components: {
         Datepicker,
@@ -178,10 +169,10 @@ export default {
                 loading(false)
                 return
             }
-            this.searchPenumpang(search, loading, this)
+            this.searchPenumpang(search, loading, this, this.$store.getters.apiInstance)
         },
-        searchPenumpang: debounce((search, loading, vm) => {
-            apishinta.get('/penumpang', {
+        searchPenumpang: debounce((search, loading, vm, api) => {
+            api.get('/penumpang', {
                 params: {
                     number: 50,
                     q: search
