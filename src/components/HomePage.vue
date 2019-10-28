@@ -76,7 +76,7 @@ import { debounce } from 'debounce'
 
 const axios = require('axios').default
 const apishinta = axios.create({
-    baseURL: 'http://apishinta.test/',
+    baseURL: 'http://192.168.146.23/apishinta/',
     timeout: 15000,
     headers: {
         'Authorization': 'Bearer token_admin'

@@ -94,6 +94,7 @@ router.beforeEach((to, from, next) => {
     // so just redirect to login page
     if (tokenData.length < 2) {
       next('/login')
+      store.commit('setBusyState', false)
     } else {
       // okay, token exists meaning it must have been attached (or not)
       // 1st, request user info from sso
@@ -125,6 +126,7 @@ router.beforeEach((to, from, next) => {
       
     }
   } else {
+    store.commit('setBusyState', false)
     next()
   }
 })
