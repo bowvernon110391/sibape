@@ -34,8 +34,14 @@ export default {
                 vm.$emit('input', vm.$refs.dp.value);
             }
         });
-
-        $(this.$el).datepicker('update', this.value);
+        // init value conversion
+        var initVal = this.value
+        var matches = null
+        if (matches = this.value.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)) {
+            initVal = `${matches[3]}-${matches[2]}-${matches[1]}`
+        }
+        // trigger initial update
+        $(this.$el).datepicker('update', initVal);
     },
     destroyed() {
         $(this.$el).datepicker('destroy');

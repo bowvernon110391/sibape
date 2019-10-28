@@ -41,14 +41,14 @@
                 placeholder="Cari berdasarkan nama/no-paspor/asal/pekerjaan..."
                 :filterable="false"
                 @search="onSearchPenumpang"
+                @input="onInput"
                 v-model="penumpang"
-                taggable
                 >
                 <template v-slot:no-options>
                     Penumpang tidak ditemukan
                 </template>
                 <template v-slot:option="option">
-                    <b-row v-if="'id' in option">
+                    <b-row v-if="option.id">
                         <b-col md="6">
                             <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
                         </b-col>
@@ -72,7 +72,17 @@
             </v-select>
         </b-form-group>
 
-        <b-button variant="primary" @click="penumpang = 3">Set to 3</b-button>
+        <b-form-group
+            label="Test Select Penumpang"
+            label-for="sel-penumpang"
+            description="Select penumpang + view + input">
+            <select-penumpang
+                id="sel-penumpang"
+                v-model="penumpang"
+                placeholder="nama/asal/pekerjaan/no paspor...">
+            </select-penumpang>
+        </b-form-group>
+        
         <b-button variant="dark" @click="$bvToast.toast(`Something horrible has happened`, {
             title: `API_CALL_ERROR`,
             autoHideDelay: 5000,
@@ -90,11 +100,13 @@
 import Datepicker from '@/components/Datepicker'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
+import SelectPenumpang from '@/components/SelectPenumpang'
 
 export default {
     components: {
         Datepicker,
-        vSelect
+        vSelect,
+        SelectPenumpang
     },
     data () {
         return {
@@ -144,6 +156,10 @@ export default {
         }
     },
     methods: {
+        onInput (e) {
+            console.log('Input:')
+            console.log(e)
+        },
         createOption (opt) {
             console.log("Created option:")
             console.log(opt)
