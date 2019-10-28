@@ -73,6 +73,13 @@
         </b-form-group>
 
         <b-button variant="primary" @click="penumpang = 3">Set to 3</b-button>
+        <b-button variant="dark" @click="$bvToast.toast(`Something horrible has happened`, {
+            title: `API_CALL_ERROR`,
+            autoHideDelay: 5000,
+            appendToast: append,
+            toaster: 'b-toaster-top-center',
+            variant: 'danger'
+        })">Show Toast</b-button>
         
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
