@@ -260,7 +260,11 @@ export default {
 
             this.fetching = true
             const api = this.$store.getters.apiInstance
-            api.get('/penumpang/' + id)
+            api.get('/penumpang/' + id, {
+                params: {
+                    include: 'negara'
+                }
+            })
                 .then(e => {
                     // fill inside options
                     // this.listPenumpang.push(e.data.data)
