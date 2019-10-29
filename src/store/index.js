@@ -63,19 +63,17 @@ export default new Vuex.Store({
     },
     actions: {
         extractError (context, e) {
-            if ('response' in e) {
-                // normal error
-                if (e.response) {
-                    if (e.response.data) {
-                        return {
-                            code: e.response.data.error.http_code,
-                            message: e.response.data.error.message
-                        }
-                    } else {
-                        return {
-                            code: e.status,
-                            message: e.statusText
-                        }
+            // normal error
+            if (e.response) {
+                if (e.response.data) {
+                    return {
+                        code: e.response.data.error.http_code,
+                        message: e.response.data.error.message
+                    }
+                } else {
+                    return {
+                        code: e.status,
+                        message: e.statusText
                     }
                 }
             } 

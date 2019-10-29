@@ -86,15 +86,19 @@ export default {
                 })
                 .then(e => {
                     console.log('storeNegara success! force refetch...')
+                    this.$root.showToast('Data saved', 'Sukses menyimpan data negara', 'success')
+                    this.$root.showToast('Re-Fetching...', 'Re-fetching data...', 'info')
                     // refetch
                     this.fetchNegara()
                         .then(e => {
                             vm.syncing = false
+                            this.$root.showToast('Data ready', 'Data re-fetched', 'success')
                         })
                         .catch(e => {
                             alert("Failed on re-fetching after store!")
                             console.log(e)
                             vm.syncing = false
+                            this.$root.handleError(e)
                         })
                 })
                 .catch(e => {
@@ -103,6 +107,7 @@ export default {
                     console.log('string rep: ' + e.toString())
                     console.log(e.response)
                     console.log('json: ' +JSON.stringify(e))
+                    this.$root.handleError(e)
                     // fail to store, remove value
                     vm.innerValue=null
                     vm.syncing=false
@@ -115,9 +120,6 @@ export default {
                 }, 500)
             }
             
-        },
-        handleError (e) {
-            if (e.response) {}
         }
     },
     watch: {
@@ -131,6 +133,8 @@ export default {
         }
     },
     created () {
+        console.log('root is:')
+        console.log(this.$root)
         // first, check if options is filled.
         if (this.negara.length) {
             return
