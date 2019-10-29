@@ -82,6 +82,18 @@
                 placeholder="nama/asal/pekerjaan/no paspor...">
             </select-penumpang>
         </b-form-group>
+
+        <b-form-group
+            label="Test Select Negara"
+            label-for="sel-negara"
+            description="Select negara (auto data from storage/fetch)">
+            <select-negara
+                id="sel-negara"
+                v-model="negara">
+            </select-negara>
+        </b-form-group>
+
+        <b-form-input type="text" v-model="negara" class="my-2"></b-form-input>
         
         <b-button variant="dark" @click="$bvToast.toast(`Something horrible has happened`, {
             title: `API_CALL_ERROR`,
@@ -101,12 +113,14 @@ import Datepicker from '@/components/Datepicker'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
 import SelectPenumpang from '@/components/SelectPenumpang'
+import SelectNegara from '@/components/SelectNegara'
 
 export default {
     components: {
         Datepicker,
         vSelect,
-        SelectPenumpang
+        SelectPenumpang,
+        SelectNegara
     },
     data () {
         return {
@@ -121,7 +135,8 @@ export default {
                 { id: 40, label: "Forty"}
             ],
             dataPenumpang: [],
-            penumpang:null
+            penumpang:null,
+            negara:null
         }
     },
     computed: {
