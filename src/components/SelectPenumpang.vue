@@ -26,7 +26,7 @@
                         <b-col md="6">
                             <b-row>
                                 <b-col md="6">
-                                    {{ option.kebangsaan }}
+                                    {{ option.negara.data.uraian }}
                                 </b-col>
                                 <b-col md="6">
                                     {{ option.no_paspor }}
@@ -114,7 +114,8 @@
                     <b-form-group
                         label="Kebangsaan"
                         label-for="kebangsaan">
-                        <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input>
+                        <!-- <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input> -->
+                        <select-negara id="kebangsaan" v-model="detail.kebangsaan" :disabled="saving"></select-negara>
                     </b-form-group>
                 </b-col>
                 <b-col sm="12">
@@ -144,13 +145,15 @@
 
 <script>
 import Datepicker from '@/components/Datepicker'
+import SelectNegara from '@/components/SelectNegara'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
 
 export default {
     components: {
         vSelect,
-        Datepicker
+        Datepicker,
+        SelectNegara
     },
     props: ['id', 'value', 'placeholder', 'disabled'],
     watch: {
@@ -216,7 +219,10 @@ export default {
         modalTitle: function () {
             if (this.detail.id) {
                 return "Detail Penumpang #" + this.detail.id
-            } 
+            } else {
+                // reset here?
+                this.detail = this.defaultPenumpang
+            }
             return "Input Penumpang Baru"
         }
     },
@@ -225,18 +231,7 @@ export default {
             this.error = null
         },
         handleError (e) {
-            // build custom error text
-            if (e.response) {
-                // do we havedata?
-                if ('data' in e.response) {
-                    this.error = `error ${e.response.data.error.http_code} : ${e.response.data.error.message}`
-                } else {
-                    // generic
-                    this.error = `error ${e.response.status} : ${e.response.statusText}`
-                }
-            } else {
-                this.error = "Unexpected error"
-            }
+            this.$root.handleError(e)
         },
         penumpangByIdExist (id) {
             return this.listPenumpang.filter(e => e.id == id).length > 0;
@@ -300,7 +295,8 @@ export default {
             api.get('/penumpang', {
                 params: {
                     q: search,
-                    number: 50
+                    number: 50,
+                    include: 'negara'
                 }
             })
             .then(e => {
