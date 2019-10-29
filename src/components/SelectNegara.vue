@@ -79,15 +79,22 @@ export default {
                 var vm = this
 
                 // pangil api utk store data
+                var id = Number(data[1])
+                var kode = data[0].toUpperCase()
                 this.storeNegara({
-                    id: Number(data[1]),
-                    kode: data[0].toUpperCase(),
+                    id: id,
+                    kode: kode,
                     uraian: opt.uraian
                 })
                 .then(e => {
+                    // raise input event?
+                    this.$emit('input', kode)
+
+                    // logging
                     console.log('storeNegara success! force refetch...')
                     this.$root.showToast('Data saved', 'Sukses menyimpan data negara', 'success')
                     this.$root.showToast('Re-Fetching...', 'Re-fetching data...', 'info')
+                    
                     // refetch
                     this.fetchNegara()
                         .then(e => {
