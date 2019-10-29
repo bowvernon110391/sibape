@@ -84,7 +84,8 @@
             :title="modalTitle"
             no-close-on-backdrop
             footer-bg-variant="light"
-            header-bg-variant="light">
+            header-bg-variant="light"
+            size="lg">
             <b-row>
                 <b-col sm="12" md="6">
                     <b-form-group
@@ -161,12 +162,7 @@ export default {
             console.log(`penumpang change: ${oldVal} -> ${newVal}`)
             // emit
             // this.$emit('input', newVal)
-            if (this.penumpangByIdExist(newVal)) {
-                console.log('No need to fetch')
-            } else {
-                console.log('Fetch required for id: ' + newVal)
-                this.fetchPenumpangById(newVal)
-            }
+            this.fetchDetail(newVal)
         },
         error: function (newVal, oldVal) {
             if (newVal) {
@@ -183,6 +179,13 @@ export default {
             deep: true,
             handler () {
                 this.dirty = true
+            }
+        },
+        showDetail: function(newVal, oldVal) {
+            console.log("modal shown: " + newVal)
+            // if we're closing, refetch
+            if (!newVal) {
+                this.fetchDetail(this.detail.id, true)
             }
         }
     },
@@ -221,12 +224,20 @@ export default {
                 return "Detail Penumpang #" + this.detail.id
             } else {
                 // reset here?
-                this.detail = this.defaultPenumpang
+                this.detail = {...this.defaultPenumpang}
             }
             return "Input Penumpang Baru"
         }
     },
     methods: {
+        fetchDetail (id, force) {
+            if (this.penumpangByIdExist(id) && !force) {
+                console.log('No need to fetch')
+            } else {
+                console.log('Fetch required for id: ' + id)
+                this.fetchPenumpangById(id)
+            }
+        },
         resetError () {
             this.error = null
         },
@@ -243,7 +254,7 @@ export default {
             // check for valid id
             if (!id) {
                 // set to default data
-                this.detail = this.defaultPenumpang
+                this.detail = {...this.defaultPenumpang}
                 return
             }
 
@@ -254,7 +265,7 @@ export default {
                     // fill inside options
                     // this.listPenumpang.push(e.data.data)
                     this.listPenumpang = [e.data.data]    // replace, rather than add
-                    this.detail = e.data.data
+                    this.detail = {...e.data.data}
                     this.fetching = false
                 })
                 .catch(e => {
@@ -266,12 +277,12 @@ export default {
             this.$emit('input', e)
 
             // call api if valid
-            this.detail = this.defaultPenumpang
+            this.detail = {...this.defaultPenumpang}
             if (e) {
                 const api = this.$store.getters.apiInstance
                 api.get('/penumpang/'+e)
                     .then(e => {
-                        this.detail = e.data.data
+                        this.detail = {...e.data.data}
                         console.log(e)
                     })
                     .catch(e => {
