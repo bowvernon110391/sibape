@@ -39,15 +39,19 @@ new Vue({
    components: { App },
    template: '<App/>',
    methods: {
+      // show success message
+      showToast(title,message,variant) {
+         this.$bvToast.toast(message, {
+            title: title,
+            autoHideDelay: 5000,
+            appendToast: true,
+            toaster: 'b-toaster-top-center',
+            variant: variant
+        })
+      },
       // show floating error
       showError(code, message) {
-          this.$bvToast.toast(message, {
-              title: `Error(${code})`,
-              autoHideDelay: 5000,
-              appendToast: true,
-              toaster: 'b-toaster-top-center',
-              variant: 'danger'
-          })
+          this.showToast(`Error (${code})`, message, 'danger')
       },
       handleError (e) {
           var code = 0
