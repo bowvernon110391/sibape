@@ -102,7 +102,8 @@
             toaster: 'b-toaster-top-center',
             variant: 'danger'
         })">Show Toast</b-button>
-        
+
+        <b-button variant="danger" @click="toggleBusyState">Toggle Busy State</b-button>        
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
@@ -136,7 +137,8 @@ export default {
             ],
             dataPenumpang: [],
             penumpang:null,
-            negara:null
+            negara:null,
+            busy: false
         }
     },
     computed: {
@@ -171,6 +173,9 @@ export default {
         }
     },
     methods: {
+        toggleBusyState () {
+            this.$store.commit('setBusyState', !this.$store.state.busy)
+        },
         onInput (e) {
             console.log('Input:')
             console.log(e)
