@@ -10,6 +10,7 @@ import PageNotFound from '@/components/PageNotFound'
 import store from '../store'
 
 const axios = require('axios').default
+const cookie = require('cookie')
 
 Vue.use(Router)
 
@@ -85,14 +86,18 @@ router.beforeEach((to, from, next) => {
   console.log(store.state.userInfo)
   if (authRequired /* && !store.state.userInfo */) {
     // perhaps state.userInfo is reset, but our token is still valid?
-    var tokenData = document.cookie.split("=")
+   //  var tokenData = document.cookie.split("=")
+    var cookies = cookie.parse(document.cookie) 
+    console.log(cookies)     
+    var token = cookies.sso_token_5                       
+    
     console.log("Token Cookie:")
-    console.log(tokenData)
+    console.log(token)
     // show loading screen
     store.commit('setBusyState', true)
     // if no token existed, we're way off of our login process
     // so just redirect to login page
-    if (tokenData.length < 2) {
+    if (!token) {
       next('/login')
       store.commit('setBusyState', false)
     } else {
@@ -112,7 +117,7 @@ router.beforeEach((to, from, next) => {
           // data is valid. store it to store
           store.commit('setUserInfo', e.data)
           // also store token
-          store.commit('setToken', tokenData[1])
+          store.commit('setToken', token)
           // log store data?
           console.log('store now: ')
           console.log(store)
