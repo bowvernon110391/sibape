@@ -11,11 +11,15 @@
           hide-header-close
           size="sm"
           variant="danger"
-          text-variant="danger">
+          text-variant="danger"
+          hide-header
+          hide-footer>
           <!-- <b-progress :value="100" :max="100" animated variant="danger"></b-progress> -->
-          <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
-          <hr />
-          <p>Please wait..</p>
+          <div class="text-center">
+            <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
+            <hr />
+            <p>Please wait..</p>
+          </div>
       </b-modal>
   </div>
 </template>

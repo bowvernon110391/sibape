@@ -175,6 +175,10 @@ export default {
     methods: {
         toggleBusyState () {
             this.$store.commit('setBusyState', !this.$store.state.busy)
+            // force to hide after 4 secs
+            setTimeout(() => {
+                this.$store.commit('setBusyState', false)
+            }, 4000)
         },
         onInput (e) {
             console.log('Input:')

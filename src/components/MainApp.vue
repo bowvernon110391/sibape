@@ -56,18 +56,6 @@
             <hr />
             @ footer 2019
         </b-container>
-        <b-modal 
-            v-model="this.$store.state.busy"
-            id="loading-screen"
-            centered 
-            no-close-on-backdrop
-            size="sm"
-            hide-header
-            hide-footer>
-            <div class="text-centered">
-                <b-spinner variant="success" type="grow" label="Spinning"></b-spinner>
-            </div>
-        </b-modal>
     </div>
 </template>
 
