@@ -241,9 +241,6 @@ export default {
         resetError () {
             this.error = null
         },
-        handleError (e) {
-            this.$root.handleError(e)
-        },
         penumpangByIdExist (id) {
             return this.listPenumpang.filter(e => e.id == id).length > 0;
         },
@@ -269,7 +266,7 @@ export default {
                     this.fetching = false
                 })
                 .catch(e => {
-                    this.handleError(e)
+                    this.$root.handleError(e)
                     this.fetching = false
                 })
         },
@@ -286,7 +283,7 @@ export default {
                         console.log(e)
                     })
                     .catch(e => {
-                        this.handleError(e)
+                        this.$root.handleError(e)
                     })
             }
         },
@@ -315,7 +312,7 @@ export default {
             })
             .catch(e => {
                 loading(false)
-                this.handleError(e)
+                this.$root.handleError(e)
             })
         }, 500),
         doSavePenumpang () {
@@ -351,7 +348,7 @@ export default {
                 })
                 .catch(e => {
                     this.saving = false
-                    this.handleError(e)
+                    this.$root.handleError(e)
                 })
             } else {
                 // POST request here
@@ -368,7 +365,7 @@ export default {
                 })
                 .catch(e => {
                     this.saving = false
-                    this.handleError(e)
+                    this.$root.handleError(e)
                 })
             }
         }
