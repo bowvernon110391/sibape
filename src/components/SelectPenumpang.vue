@@ -231,11 +231,14 @@ export default {
     },
     methods: {
         fetchDetail (id, force) {
+            this.fetching = true
             if (this.penumpangByIdExist(id) && !force) {
                 console.log('No need to fetch')
+                this.fetching = false
             } else {
                 console.log('Fetch required for id: ' + id)
                 this.fetchPenumpangById(id)
+                this.fetching = false
             }
         },
         resetError () {
