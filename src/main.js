@@ -28,7 +28,7 @@ import '@fortawesome/fontawesome-free/js/all'
 import 'vue-select/dist/vue-select.css'
 
 // mixins?
-import axiosErrorHandler from './mixins/axiosErrorHandler'
+import { axiosErrorHandler } from './mixins/axiosErrorHandler'
 
 Vue.use(BootstrapVue)
 Vue.mixin(axiosErrorHandler)
