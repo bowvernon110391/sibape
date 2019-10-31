@@ -46,14 +46,14 @@ const router = new Router({
                      props: true,
                      meta: {
                         title: 'Detail CD',
-                        breadcrumb: 'Detail CD'
+                        breadcrumb: 'Lihat Detail CD'
                      }
                   },
                   { //
                      path: '',
                      name: 'BrowseCd',
                      meta: {
-                        title: 'List'
+                        title: 'Browse Customs Declaration'
                      },
                      component: BrowseCd
                   }

@@ -9,10 +9,10 @@
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
                         <b-nav-item-dropdown text="Dokumen">
-                            <b-dropdown-item to="/cd">Browse Customs Declaration</b-dropdown-item>
-                            <b-dropdown-item to="/cd">Impor Sementara</b-dropdown-item>
-                            <b-dropdown-item to="/cd">SPMB</b-dropdown-item>
-                            <b-dropdown-item to="/cd">SSPCP</b-dropdown-item>
+                            <b-dropdown-item to="/cd">Customs Declaration</b-dropdown-item>
+                            <b-dropdown-item to="/is">Impor Sementara</b-dropdown-item>
+                            <b-dropdown-item to="/spmb">SPMB</b-dropdown-item>
+                            <b-dropdown-item to="/sspcp">SSPCP</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                     
