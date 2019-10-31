@@ -260,6 +260,7 @@ export default {
 
             this.fetching = true
             const api = this.$store.getters.apiInstance
+            var vm = this
             api.get('/penumpang/' + id)
                 .then(e => {
                     // fill inside options
@@ -269,7 +270,7 @@ export default {
                     this.fetching = false
                 })
                 .catch(e => {
-                    this.$root.handleError(e)
+                    vm.handleError(e)
                     this.fetching = false
                 })
         },
@@ -280,13 +281,14 @@ export default {
             this.detail = {...this.defaultPenumpang}
             if (e) {
                 const api = this.$store.getters.apiInstance
+                var vm = this
                 api.get('/penumpang/'+e)
                     .then(e => {
                         this.detail = {...e.data.data}
                         console.log(e)
                     })
                     .catch(e => {
-                        this.$root.handleError(e)
+                        vm.logSomeError(e)
                     })
             }
         },
@@ -315,7 +317,7 @@ export default {
             })
             .catch(e => {
                 loading(false)
-                this.$root.handleError(e)
+                vm.handleError(e)
             })
         }, 500),
         doSavePenumpang () {
@@ -340,6 +342,7 @@ export default {
             }
             // UPDATE or CREATE
             if (this.detail.id) {
+                var vm = this
                 // PUT request here
                 api.put('/penumpang/' + this.detail.id, dataPenumpang)
                 .then(e => {
@@ -351,9 +354,10 @@ export default {
                 })
                 .catch(e => {
                     this.saving = false
-                    this.$root.handleError(e)
+                    vm.handleError(e)
                 })
             } else {
+                var vm = this
                 // POST request here
                 api.post('/penumpang', dataPenumpang)
                 .then(e => {
@@ -368,7 +372,7 @@ export default {
                 })
                 .catch(e => {
                     this.saving = false
-                    this.$root.handleError(e)
+                    vm.handleError(e)
                 })
             }
         }

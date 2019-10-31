@@ -105,7 +105,7 @@ export default {
                             alert("Failed on re-fetching after store!")
                             console.log(e)
                             vm.syncing = false
-                            this.$root.handleError(e)
+                            vm.handleError(e)
                         })
                 })
                 .catch(e => {
@@ -114,7 +114,7 @@ export default {
                     console.log('string rep: ' + e.toString())
                     console.log(e.response)
                     console.log('json: ' +JSON.stringify(e))
-                    this.$root.handleError(e)
+                    vm.handleError(e)
                     // fail to store, remove value
                     vm.innerValue=null
                     vm.syncing=false
@@ -153,12 +153,13 @@ export default {
         // setTimeout(() => {
         //     this.syncing = false
         // }, 5000)
+        var vm = this
         this.fetchNegara()
             .then(e => {
                 this.syncing = false
             })
             .catch(e => {
-                alert('Error fetching data negara!')
+                vm.handleError(e)
             })
     }
 }
