@@ -89,7 +89,13 @@ router.beforeEach((to, from, next) => {
    //  var tokenData = document.cookie.split("=")
     var cookies = cookie.parse(document.cookie) 
     console.log(cookies)     
-    var token = cookies.sso_token_5                       
+    var token = cookies.sso_token_5
+    
+    // use token from .env if there's one
+    if (process.env.VUE_APP_TOKEN) {
+       console.log('ENV token exists! using it instead...')
+       token = process.env.VUE_APP_TOKEN
+    }
     
     console.log("Token Cookie:")
     console.log(token)
