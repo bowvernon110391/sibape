@@ -6,6 +6,11 @@ Vue.use(Vuex)
 const axios = require('axios').default
 const STORE_DEBUG = true
 
+// now we grab variable
+const proc_env = process.env.NODE_ENV
+console.log('App run in : ' + proc_env)
+console.log('Complete env : ' + JSON.stringify(process.env))
+
 export default new Vuex.Store({
     state: {
         userInfo: null, // user info dari sso
@@ -13,7 +18,7 @@ export default new Vuex.Store({
         lokasi: null,   // data lokasi
         // api instance
         api: axios.create({
-            baseURL: 'http://api-sibape.soetta.xyz/',
+            baseURL: process.env.VUE_APP_URL,
             timeout: 15000
         }),
         refData: {
