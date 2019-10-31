@@ -79,8 +79,59 @@ router.beforeEach((to, from, next) => {
   console.log('-->>')
   console.log(to)
 
-  const authRequired = to.matched.some(e => e.meta.authRequired)
+  var authRequired = to.matched.some(e => e.meta.authRequired)
   console.log("AUTH REQUIRED")
+
+  // bypass authentication if we're in dev mode
+  // also, set default userInfo
+  if (process.env.NODE_ENV != 'production') {
+     console.log("Not in production. Bypassing login and authentication and using default user")
+     var userDemo = {
+      "user_id": "666",
+      "username": "user.demo",
+      "name": "User Demo",
+      "nip": "123456789012345678",
+      "pangkat": "Penata Muda - III/a",
+      "status": true,
+      "apps_data": {
+        "1": {
+          "app_name": "SSO",
+          "roles": [
+            "Administrator"
+          ]
+        },
+        "2": {
+          "app_name": "APPFOTO",
+          "roles": [
+            "Administrator"
+          ]
+        },
+        "3": {
+          "app_name": "AKANG",
+          "roles": [
+            "PJT",
+            "ADMIN_PABEAN",
+            "SUPERUSER"
+          ]
+        },
+        "5": {
+          "app_name": "SiBAPE",
+          "roles": [
+            "KASI",
+            "CONSOLE"
+          ]
+        }
+      }
+    }
+    var lokasiDemo = "KANTOR"
+    var tokenDemo = 'token_admin'
+    // store default data
+    store.commit('setUserInfo', userDemo)
+    store.commit('setLokasi', lokasiDemo)
+    store.commit('setToken', tokenDemo)
+    // bypass auth
+    authRequired = false
+  }
 
   // okay, if required and we're not logged in yet (check user info)
   console.log(store.state.userInfo)
