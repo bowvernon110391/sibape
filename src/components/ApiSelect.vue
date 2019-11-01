@@ -9,8 +9,8 @@
         :disabled="disabled || syncing"
         :input-id="id"
         @search="debouncedSearch"
-        @search:focus="syncValueOptions"
         @search:blur="syncValueOptions"
+        :class="{ busy: loading }"
         >
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
             <slot :name="slot" v-bind="scope"></slot>
@@ -138,3 +138,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.busy {
+    position: relative;
+}
+.busy::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+</style>

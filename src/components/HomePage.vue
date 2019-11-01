@@ -114,7 +114,12 @@
                             </div>
                         </template>
                         <template v-slot:selected-option="opt">
-                            <span>#{{ opt.id }} : <strong>{{ opt.kode_valas }} @ Rp. {{ opt.kurs_idr }}</strong></span>
+                            <template v-if="opt.kurs_idr">
+                                <span>#{{ opt.id }} : <strong>{{ opt.kode_valas }} @ Rp. {{ opt.kurs_idr }}</strong></span>
+                            </template>
+                            <template v-else>
+                                synchronizing...
+                            </template>
                         </template>
                     </api-select>
                 </b-form-group>
