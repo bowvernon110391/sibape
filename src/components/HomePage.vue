@@ -93,15 +93,36 @@
             </select-negara>
         </b-form-group>
 
-        <b-form-input type="text" v-model="negara" class="my-2"></b-form-input>
-        
-        <api-select
-            v-model="selectedNumber"
-            :reduce="e => e.value"
-            :search-callback="searchNumber"></api-select>
-        <input type="text" v-model="selectedNumber">
+        <b-row>
+            <b-col md="6">
+                <b-form-group
+                    label="test kurs select"
+                    label-for="sel-kurs">
+                    <api-select
+                        v-model="kursId"
+                        :reduce="e => e.id"
+                        :search-callback="searchKurs"
+                        :sync-callback="syncKurs"
+                        label="kode_valas">
+                        <template v-slot:option="opt">
+                            <div>
+                                <h5>{{ `#${opt.id} ${opt.kode_valas} @ Rp ${opt.kurs_idr}` }}</h5>
+                                <h6>{{ opt.jenis }}</h6>
+                                <p>
+                                    <em>{{ opt.tanggal_awal }}</em> s/d <em>{{ opt.tanggal_akhir }}</em>
+                                </p>
+                            </div>
+                        </template>
+                        <template v-slot:selected-option="opt">
+                            <span>#{{ opt.id }} : <strong>{{ opt.kode_valas }} @ Rp. {{ opt.kurs_idr }}</strong></span>
+                        </template>
+                    </api-select>
+                </b-form-group>
+            </b-col>
+        </b-row>
+    
         <p>
-            selectedNumber: {{ selectedNumber }}
+            selectedKurs: {{ kursId }}
         </p>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
@@ -131,6 +152,7 @@ export default {
             flagDeklarasi: '',
             selectVal: [],
             selectedNumber: null,
+            kursId: 2,
             numbers: [
                 { id: 10, value:"teen", label: "Ten"},
                 { id: 20, value:"tweeny", label: "Twenty"},
@@ -175,12 +197,59 @@ export default {
         }
     },
     methods: {
-        searchNumber (q, setLoading, vm) {
-            setLoading(true)
+        searchKurs (q, spinner, vm) {
+            spinner(true)
+            $.ajax({
+                type: 'GET',
+                url:'http://apishinta.test/kurs',
+                crossDomain: true,
+                data: {
+                    q: q,
+                    number: 50
+                }
+            })
+            .done((e) => {
+                // vm.setOptions(e.responseJSON.data)
+                vm.setOptions(e.data)
+                console.log(e)
+            })
+            .fail((e) => {
+                alert('Failed grab kurs!')
+            })
+            .always((e) => {
+                spinner(false)
+            })
+        },
+        syncKurs (q, spinner, vm) {
+            spinner(true)
+            $.ajax({
+                type: 'GET',
+                url: 'http://apishinta.test/kurs/' + q,
+                crossDomain: true
+            })
+            .done((e) => {
+                vm.setOptions([e.data])
+            })
+            .fail((e) => {
+                alert('Failed sync kurs!')
+            })
+            .always((e) => {
+                spinner(false)
+            })
+        },
+        searchNumber (q, spinner, vm) {
+            spinner(true)
             setTimeout(() => {
-                setLoading(false)
+                spinner(false)
                 vm.setOptions(this.numbers)
             }, 1500)
+        },
+        searchNumberByValue (v, spinner, vm) {
+            spinner(true)
+            setTimeout(() => {
+                spinner(false)
+                vm.setOptions(this.numbers.filter(e => e.value == v))
+            }, 2500)
         },
         toggleBusyState () {
             this.$store.commit('setBusyState', !this.$store.state.busy)
