@@ -6,14 +6,14 @@ import router from './router'
 import store from './store'
 
 // Fontawesome
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { 
-   faUserSecret, faCaretDown
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { 
+//    faUserSecret, faCaretDown
+// } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faUserSecret, faCaretDown)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// library.add(faUserSecret, faCaretDown)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Bootstrap
 import BootstrapVue from 'bootstrap-vue'
