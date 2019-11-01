@@ -95,15 +95,14 @@
 
         <b-form-input type="text" v-model="negara" class="my-2"></b-form-input>
         
-        <b-button variant="dark" @click="$bvToast.toast(`Something horrible has happened`, {
-            title: `API_CALL_ERROR`,
-            autoHideDelay: 5000,
-            appendToast: append,
-            toaster: 'b-toaster-top-center',
-            variant: 'danger'
-        })">Show Toast</b-button>
-
-        <b-button variant="danger" @click="toggleBusyState">Toggle Busy State</b-button>        
+        <api-select
+            v-model="selectedNumber"
+            :reduce="e => e.value"
+            :search-callback="searchNumber"></api-select>
+        <input type="text" v-model="selectedNumber">
+        <p>
+            selectedNumber: {{ selectedNumber }}
+        </p>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
@@ -115,13 +114,15 @@ import vSelect from 'vue-select'
 import { debounce } from 'debounce'
 import SelectPenumpang from '@/components/SelectPenumpang'
 import SelectNegara from '@/components/SelectNegara'
+import ApiSelect from '@/components/ApiSelect'
 
 export default {
     components: {
         Datepicker,
         vSelect,
         SelectPenumpang,
-        SelectNegara
+        SelectNegara,
+        ApiSelect
     },
     data () {
         return {
@@ -129,11 +130,12 @@ export default {
             dateOfBirth: '11-03-1991',
             flagDeklarasi: '',
             selectVal: [],
+            selectedNumber: null,
             numbers: [
-                { id: 10, label: "Ten"},
-                { id: 20, label: "Twenty"},
-                { id: 30, label: "Thirty"},
-                { id: 40, label: "Forty"}
+                { id: 10, value:"teen", label: "Ten"},
+                { id: 20, value:"tweeny", label: "Twenty"},
+                { id: 30, value:"thirsty", label: "Thirty"},
+                { id: 40, value:"frothy", label: "Forty"}
             ],
             dataPenumpang: [],
             penumpang:null,
@@ -173,6 +175,13 @@ export default {
         }
     },
     methods: {
+        searchNumber (q, setLoading, vm) {
+            setLoading(true)
+            setTimeout(() => {
+                setLoading(false)
+                vm.setOptions(this.numbers)
+            }, 1500)
+        },
         toggleBusyState () {
             this.$store.commit('setBusyState', !this.$store.state.busy)
             // force to hide after 4 secs
