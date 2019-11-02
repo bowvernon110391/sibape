@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { ApiSibape } from './api-sibape'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,8 @@ export default new Vuex.Store({
         userInfo: null, // user info dari sso
         busy: false,    // status layar (busy) bakal mnculin modal
         lokasi: null,   // data lokasi
+        // backend
+        backend: new ApiSibape(process.env.VUE_APP_URL, 15000),
         // api instance
         api: axios.create({
             baseURL: process.env.VUE_APP_URL,
@@ -34,10 +37,6 @@ export default new Vuex.Store({
     mutations: {
         setUserInfo (state, payload) {
             state.userInfo = payload
-            if (STORE_DEBUG) {
-                console.log('axios')
-                console.log(state.api)
-            }
         },
         setBusyState (state, payload) {
             state.busy = payload
@@ -47,6 +46,7 @@ export default new Vuex.Store({
         },
         setToken (state, payload) {
             state.api.defaults.headers.common['Authorization'] = 'Bearer ' + payload
+            state.backend.setToken(payload)
         },
         setDirtyFlagNegara(state, payload) {
             state.refData.isNegaraDirty = payload
@@ -56,6 +56,9 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        api: state => {
+            return state.backend
+        },
         apiInstance: state => {
             return state.api
         },

@@ -138,6 +138,7 @@
 import Datepicker from '@/components/Datepicker'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
+import { mapGetters } from 'vuex'
 import SelectPenumpang from '@/components/SelectPenumpang'
 import SelectNegara from '@/components/SelectNegara'
 import ApiSelect from '@/components/ApiSelect'
@@ -171,6 +172,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['api']),
         jsonData () {
             let dats = {
                 ...this.$data
@@ -204,43 +206,29 @@ export default {
     methods: {
         searchKurs (q, spinner, vm) {
             spinner(true)
-            $.ajax({
-                type: 'GET',
-                url:'http://apishinta.test/kurs',
-                crossDomain: true,
-                data: {
-                    q: q,
-                    number: 50
-                }
-            })
-            .done((e) => {
-                // vm.setOptions(e.responseJSON.data)
-                vm.setOptions(e.data)
-                console.log(e)
-            })
-            .fail((e) => {
-                alert('Failed grab kurs!')
-            })
-            .always((e) => {
-                spinner(false)
-            })
+            this.api.getKurs({ q: q, number: 50 })
+                .then(e => {
+                    console.log('got kurs:')
+                    console.log(e)
+                    vm.setOptions(e.data.data)
+                    spinner(false)
+                })
+                .catch(e => {
+                    alert('failed get kurs')
+                    spinner(false)
+                })
         },
         syncKurs (q, spinner, vm) {
             spinner(true)
-            $.ajax({
-                type: 'GET',
-                url: 'http://apishinta.test/kurs/' + q,
-                crossDomain: true
-            })
-            .done((e) => {
-                vm.setOptions([e.data])
-            })
-            .fail((e) => {
-                alert('Failed sync kurs!')
-            })
-            .always((e) => {
-                spinner(false)
-            })
+            this.api.getKursById(q)
+                .then(e => {
+                    vm.setOptions([e.data.data])
+                    spinner(false)
+                })
+                .catch(e => {
+                    alert('failed sync kurs')
+                    spinner(false)
+                })
         },
         searchNumber (q, spinner, vm) {
             spinner(true)
