@@ -149,6 +149,7 @@ import Datepicker from '@/components/Datepicker'
 import SelectNegara from '@/components/SelectNegara'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
+import { mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -209,6 +210,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['api']),
         defaultPenumpang: function () {
             return {
                 id:0,
@@ -259,9 +261,10 @@ export default {
             }
 
             this.fetching = true
-            const api = this.$store.getters.apiInstance
+            // const api = this.$store.getters.apiInstance
             var vm = this
-            api.get('/penumpang/' + id)
+            //api.get('/penumpang/' + id)
+            this.api.getPenumpangById(id)
                 .then(e => {
                     // fill inside options
                     // this.listPenumpang.push(e.data.data)
@@ -280,9 +283,10 @@ export default {
             // call api if valid
             this.detail = {...this.defaultPenumpang}
             if (e) {
-                const api = this.$store.getters.apiInstance
+                // const api = this.$store.getters.apiInstance
                 var vm = this
-                api.get('/penumpang/'+e)
+                // api.get('/penumpang/'+e)
+                this.api.getPenumpangById(e)
                     .then(e => {
                         this.detail = {...e.data.data}
                         console.log(e)
@@ -301,16 +305,17 @@ export default {
                 return
             }
             // do the real search (debounced)
-            this.searchPenumpang(search, loading, this, this.$store.getters.apiInstance)
+            this.searchPenumpang(search, loading, this)
         },
-        searchPenumpang: debounce((search, loading, vm, api) => {
+        searchPenumpang: debounce((search, loading, vm) => {
             // do api call
-            api.get('/penumpang', {
-                params: {
-                    q: search,
-                    number: 50
-                }
-            })
+            // api.get('/penumpang', {
+            //     params: {
+            //         q: search,
+            //         number: 50
+            //     }
+            // })
+            vm.api.getPenumpang({ q: search, number: 50 })
             .then(e => {
                 loading(false)
                 vm.listPenumpang = [...e.data.data]
@@ -331,7 +336,7 @@ export default {
                 return
             }
             // grab api instance
-            const api = this.$store.getters.apiInstance
+            // const api = this.$store.getters.apiInstance
             // depending on the detail.id, this could be
             var dataPenumpang = {
                 nama: this.detail.nama,
@@ -344,7 +349,8 @@ export default {
             if (this.detail.id) {
                 var vm = this
                 // PUT request here
-                api.put('/penumpang/' + this.detail.id, dataPenumpang)
+                // api.put('/penumpang/' + this.detail.id, dataPenumpang)
+                this.api.updatePenumpang(this.detail.id, dataPenumpang)
                 .then(e => {
                     this.saving = false
                     this.dirty = false
@@ -359,7 +365,8 @@ export default {
             } else {
                 var vm = this
                 // POST request here
-                api.post('/penumpang', dataPenumpang)
+                // api.post('/penumpang', dataPenumpang)
+                this.api.createPenumpang(dataPenumpang)
                 .then(e => {
                     console.log('POST success:')
                     console.log(e)

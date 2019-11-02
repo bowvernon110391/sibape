@@ -11,7 +11,7 @@
         taggable>
         <template v-slot:option="opt">
             <template v-if="opt.id">
-                <strong>{{ opt.uraian }}</strong> <em>({{ opt.id }})</em>
+                <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode }})</em>
             </template>
             <template v-else>
                 Tambahkan <strong>{{ opt.uraian }}</strong>...

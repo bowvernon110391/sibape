@@ -17,13 +17,8 @@ export default new Vuex.Store({
         userInfo: null, // user info dari sso
         busy: false,    // status layar (busy) bakal mnculin modal
         lokasi: null,   // data lokasi
-        // backend
-        backend: new ApiSibape(process.env.VUE_APP_URL, 15000),
-        // api instance
-        api: axios.create({
-            baseURL: process.env.VUE_APP_URL,
-            timeout: 15000
-        }),
+        // backend SiBAPE
+        api: new ApiSibape(process.env.VUE_APP_URL, 15000),
         refData: {
             kemasan: [],
             negara: [],
@@ -43,23 +38,36 @@ export default new Vuex.Store({
         },
         setLokasi (state, payload) {
             state.lokasi = payload
+
+            // also store @ localStorage for 
+            // later fetch if unavailable
+            localStorage.setItem('lokasi', payload)
         },
         setToken (state, payload) {
-            state.api.defaults.headers.common['Authorization'] = 'Bearer ' + payload
-            state.backend.setToken(payload)
+            state.api.setToken(payload)
         },
         setDirtyFlagNegara(state, payload) {
             state.refData.isNegaraDirty = payload
         },
         setRefDataNegara(state, payload) {
             state.refData.negara = payload
+        },
+        clearLocalData(state) {
+            state.userInfo = null
+            state.lokasi = null
+            localStorage.clear()
         }
     },
     getters: {
-        api: state => {
-            return state.backend
+        lokasi: state => {
+            if (!state.lokasi) {
+                // attempt to fetch from localStorage
+                // if our store is newly created
+                return localStorage.getItem('lokasi')
+            }
+            return state.lokasi
         },
-        apiInstance: state => {
+        api: state => {
             return state.api
         },
         negara: state => {
@@ -94,7 +102,7 @@ export default new Vuex.Store({
         storeNegara (context, payload) {
             const api = context.state.api
             // call POST
-            return api.post('/negara', payload)
+            return api.createNegara(payload)
                 .then(e => {
                     // mark dirty
                     context.commit('setDirtyFlagNegara', true)
@@ -157,7 +165,7 @@ export default new Vuex.Store({
                 const api = context.state.api
 
                 // return promise from axios
-                return api.get('/negara')
+                return api.getNegara()
                     .then(e => {
                         // data is in e.data.data
                         var data = e.data.data
@@ -167,16 +175,10 @@ export default new Vuex.Store({
                             console.log(data)
                         }
 
-                        // transform to set id into its code
-                        var correctData = data.map(e => ({
-                            id: e.kode,
-                            kode: e.kode,
-                            uraian: e.uraian
-                        }))
                         // store locally
-                        context.commit('setRefDataNegara', correctData)
+                        context.commit('setRefDataNegara', data)
                         // store in localStorage using its JSON string
-                        localStorage.setItem('ref_negara', JSON.stringify(correctData))
+                        localStorage.setItem('ref_negara', JSON.stringify(data))
                         // remove dirty flag
                         context.commit('setDirtyFlagNegara', false)
 

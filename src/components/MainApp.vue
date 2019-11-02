@@ -75,6 +75,8 @@ export default {
             })
             .then(e => {
                 this.$store.commit('setBusyState', false)
+                // clear local data
+                this.$store.commit('clearLocalData')
                 // success. return to login page?
                 // also might want to cleanup store data
                 this.$router.push({
@@ -106,7 +108,7 @@ export default {
             return this.$store.state.userInfo
         },
         lokasi () {
-            return this.$store.state.lokasi
+            return this.$store.getters.lokasi
         }
     }
 }
