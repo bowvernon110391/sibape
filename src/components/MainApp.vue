@@ -32,11 +32,11 @@
                     <b-navbar-nav class="ml-auto">
                         <b-nav-item-dropdown right>
                             <template v-slot:button-content>
-                                <span><i class="fa fa-user-circle"></i> {{ userInfo.name }} @ {{ lokasi }}</span>
+                                <span><font-awesome-icon icon="user-circle"></font-awesome-icon> {{ userInfo.name }} @ {{ lokasi }}</span>
                             </template>
-                            <b-dropdown-item to="/profile"><i class="fa fa-user"></i> Profile</b-dropdown-item>
-                            <b-dropdown-item to="/resetpassword"><i class="fa fa-lock"></i> Reset Password</b-dropdown-item>
-                            <b-dropdown-item @click="logout"><i class="fa fa-power-off"></i> Sign Out</b-dropdown-item>
+                            <b-dropdown-item to="/profile"><font-awesome-icon icon="user"></font-awesome-icon> Profile</b-dropdown-item>
+                            <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item>
+                            <b-dropdown-item @click="logout"><font-awesome-icon icon="power-off"></font-awesome-icon> Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>

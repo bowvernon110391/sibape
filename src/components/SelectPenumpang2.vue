@@ -48,10 +48,10 @@
                     <!-- could be view or add depending on innerData -->
                     <template v-if="innerData">
                         <!-- there's inner data, show it -->
-                        Lihat
+                        <font-awesome-icon icon="eye"></font-awesome-icon>
                     </template>
                     <template v-else>
-                        Tambah Baru
+                        <font-awesome-icon icon="user-plus"></font-awesome-icon>
                     </template>
                 </b-button>
                 <!-- <b-button variant="danger" size="sm" @click="forceSync">

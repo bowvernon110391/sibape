@@ -6,14 +6,16 @@ import router from './router'
 import store from './store'
 
 // Fontawesome
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { 
-//    faUserSecret, faCaretDown
-// } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { 
+   faCalendarAlt, faLock, faLockOpen, faUserCircle,
+   faUser, faUserAlt, faPowerOff, faEye, faUserPlus
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// library.add(faUserSecret, faCaretDown)
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
+library.add(faCalendarAlt, faLock, faLockOpen, faUserCircle, 
+   faUser, faUserAlt, faPowerOff, faEye, faUserPlus)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Bootstrap
 import BootstrapVue from 'bootstrap-vue'
@@ -21,17 +23,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // import './assets/css/style.css'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import '@fortawesome/fontawesome-free/js/all'
-
 // vue-select
 import 'vue-select/dist/vue-select.css'
 
 // mixins?
-import axiosErrorHandler from './mixins/axiosErrorHandler'
+// import axiosErrorHandler from './mixins/axiosErrorHandler'
 
 Vue.use(BootstrapVue)
-Vue.mixin(axiosErrorHandler)
+// Vue.mixin(axiosErrorHandler)
 
 Vue.config.productionTip = false
 

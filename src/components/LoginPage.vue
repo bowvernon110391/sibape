@@ -31,7 +31,9 @@
                             type="text"
                             :disabled="!loginReady"></b-form-input>
                         <b-input-group-append>
-                            <b-input-group-text><i class="fa fa-user"></i></b-input-group-text>
+                            <b-input-group-text>
+                                <font-awesome-icon icon="user"></font-awesome-icon>
+                            </b-input-group-text>
                         </b-input-group-append>
                     </b-input-group>
                     
@@ -49,7 +51,9 @@
                             type="password"
                             :disabled="!loginReady"></b-form-input>
                         <b-input-group-append>
-                            <b-input-group-text><i class="fa fa-lock"></i></b-input-group-text>
+                            <b-input-group-text>
+                                <font-awesome-icon icon="lock"></font-awesome-icon>
+                            </b-input-group-text>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
