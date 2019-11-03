@@ -15,6 +15,14 @@
                 :options="listPenumpang"
                 @search="doSearchPenumpang"
                 :placeholder="placeholder">
+                <template v-slot:selected-option="opt">
+                    <div v-if="'kebangsaan' in opt">
+                        {{ opt.nama }}
+                    </div>
+                    <div class="text-danger" v-else>
+                        Synchronizing penumpang...<b-spinner small variant="primary"></b-spinner>
+                    </div>
+                </template>
                 <template v-slot:no-options>
                     Penumpang tidak ditemukan
                 </template>
