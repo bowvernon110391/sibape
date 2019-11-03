@@ -4,13 +4,13 @@
             label="Penumpang"
             label-for="select-penumpang"
             description="Select data penumpang">
-            <v-select 
+            <api-select 
+                id="select-penumpang"
                 label="nama" 
                 :reduce="e => e.id" 
-                :options="dataPenumpang"
                 placeholder="Cari berdasarkan nama/no-paspor/asal/pekerjaan..."
-                :filterable="false"
-                @search="onSearchPenumpang"
+                :search-callback="searchPenumpang"
+                :sync-callback="syncPenumpang"
                 v-model="penumpang"
                 >
                 <template v-slot:no-options>
@@ -38,7 +38,7 @@
                         </b-col>
                     </b-row>
                 </template>
-            </v-select>
+            </api-select>
         </b-form-group>
 
         <b-form-group
@@ -338,49 +338,33 @@ export default {
                 this.$store.commit('setBusyState', false)
             }, 4000)
         },
-        onSearchPenumpang (search, loading) {
-            loading(true)
-            if (search == '') {
-                loading(false)
-                return
-            }
-            this.searchPenumpang(search, loading, this, this.$store.getters.apiInstance)
+        searchPenumpang (q, spinner, vm) {
+            spinner(true)
+            this.api.getPenumpang({
+                q: q,
+                number: 50
+            })
+                .then(e => {
+                    spinner(false)
+                    vm.setOptions(e.data.data)
+                })
+                .catch(e => {
+                    spinner(false)
+                    alert("Gagal cari penumpang")
+                })
         },
-        searchPenumpang: debounce((search, loading, vm, api) => {
-            api.get('/penumpang', {
-                params: {
-                    number: 50,
-                    q: search
-                }
-            })
-            .then(e => {
-                vm.dataPenumpang = e.data.data
-                loading(false)
-                return e.data.data
-            })
-            .then(e => {
-                console.log('log data')
-                console.log(e)
-            })
-            .catch(e => {
-                console.log('error')
-                var errorMessage = ''
-                if (e.response) {
-                    // do we havedata?
-                    if ('data' in e.response) {
-                        alert(`error ${e.response.data.error.http_code} : ${e.response.data.error.message}`)
-                    } else {
-                        // generic
-                        alert(`error ${e.response.status} : ${e.response.statusText}`)
-                    }
-                } else {
-                    alert('Unknown Error')
-                }
-                // console.log(e.response)
-
-                loading(false)
-            })
-        }, 500),
+        syncPenumpang (q, spinner, vm) {
+            spinner(true)
+            this.api.getPenumpangById(q)
+                .then(e => {
+                    spinner(false)
+                    vm.setOptions([e.data.data])
+                })
+                .catch(e => {
+                    spinner(false)
+                    alert("Failed to sync penumpang")
+                })
+        },
         numberId(o) {
             return o.value
         },
