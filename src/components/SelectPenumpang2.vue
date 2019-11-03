@@ -1,0 +1,291 @@
+<template>
+    <div>
+        <b-input-group class="d-flex">
+            <api-select 
+                ref="sel"
+                class="flex-grow-1"
+                v-bind="$attrs"
+                v-on="$listeners"
+                :reduce="e => e.id"
+                :search-callback="searchPenumpang"
+                :sync-callback="syncPenumpang">
+                <template v-slot:selected-option="opt">
+                    <div v-if="'kebangsaan' in opt">
+                        {{ opt.nama }}
+                    </div>
+                    <div class="text-danger" v-else>
+                        Synchronizing penumpang...<b-spinner small variant="primary"></b-spinner>
+                    </div>
+                </template>
+                <template v-slot:no-options>
+                    Penumpang tidak ditemukan
+                </template>
+                <template v-slot:option="option">
+                    <b-row v-if="'id' in option">
+                        <b-col md="6">
+                            <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
+                        </b-col>
+                        <b-col md="6">
+                            <b-row>
+                                <b-col md="6">
+                                    {{ option.negara.data.uraian }}
+                                </b-col>
+                                <b-col md="6">
+                                    {{ option.no_paspor }}
+                                </b-col>
+                            </b-row>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else>
+                        <b-col>
+                            <em>Tambah Penumpang <strong>{{ option.nama }}...</strong></em>
+                        </b-col>
+                    </b-row>
+                </template>
+            </api-select>
+            <b-input-group-append>
+                <b-button variant="primary" size="sm" :disabled="busy" @click="showDetail = true">
+                    <!-- could be view or add depending on innerData -->
+                    <template v-if="innerData">
+                        <!-- there's inner data, show it -->
+                        Lihat
+                    </template>
+                    <template v-else>
+                        Tambah Baru
+                    </template>
+                </b-button>
+                <!-- <b-button variant="danger" size="sm" @click="forceSync">
+                    Force Sync
+                </b-button> -->
+            </b-input-group-append>
+        </b-input-group>
+        <!-- MODAL FOR INNER DETAIL -->
+        <b-modal 
+            v-if="detail"
+            v-model="showDetail"
+            id="modal-penumpang"
+            :title="modalTitle"
+            no-close-on-backdrop
+            footer-bg-variant="light"
+            header-bg-variant="light"
+            size="lg">
+            <b-row>
+                <b-col sm="12" md="6">
+                    <b-form-group
+                        label="Nama Penumpang"
+                        label-for="nama-penumpang">
+                        <b-form-input type="text" id="nama-penumpang" v-model="detail.nama" :disabled="saving">
+                        </b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="12" md="6">
+                    <b-form-group
+                        label="Tanggal Lahir"
+                        label-for="tgl-lahir">
+                        <datepicker v-model="detail.tgl_lahir" :disabled="saving"></datepicker>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col sm="12" md="6">
+                    <b-form-group
+                        label="Nomor Paspor"
+                        label-for="no-paspor">
+                        <b-form-input type="text" v-model="detail.no_paspor" :disabled="saving"></b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="12" md="6">
+                    <b-form-group
+                        label="Kebangsaan"
+                        label-for="kebangsaan">
+                        <!-- <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input> -->
+                        <select-negara id="kebangsaan" v-model="detail.kebangsaan" :disabled="saving"></select-negara>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="12">
+                    <b-form-group
+                        label="Pekerjaan"
+                        label-for="pekerjaan">
+                        <b-form-input type="text" v-model="detail.pekerjaan" :disabled="saving"></b-form-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <template v-slot:modal-footer>
+                <b-button variant="primary" :disabled="saving" @click="savePenumpang">
+                    <template v-if="saving">
+                        Menyimpan... <b-spinner small variant="light"></b-spinner>
+                    </template>
+                    <template v-else>
+                        Simpan
+                    </template>
+                </b-button>
+            </template>
+        </b-modal>
+    </div>
+</template>
+
+<script>
+import ApiSelect from '@/components/ApiSelect'
+import Datepicker from '@/components/Datepicker'
+import SelectNegara from '@/components/SelectNegara'
+import { mapGetters } from 'vuex'
+import axiosErrorHandler from '../mixins/axiosErrorHandler'
+
+export default {
+    inheritAttrs: false,
+    mixins: [axiosErrorHandler],
+    components: {
+        ApiSelect,
+        Datepicker,
+        SelectNegara
+    },
+    computed: {
+        ...mapGetters(['api']),
+        defaultPenumpang () {
+            return {
+                id:0,
+                nama:'',
+                pekerjaan:'',
+                no_paspor:'',
+                kebangsaan:'',
+                tgl_lahir:''
+            }
+        },
+        modalTitle () {
+            if (this.detail) {
+                if (this.detail.id) {
+                    return `Edit Penumpang #${this.detail.id}`
+                }
+            }
+            return `Input Penumpang Baru`
+        }
+    },
+    data () {
+        return {
+            busy: false,
+            innerData: null,
+            saving: false,
+            showDetail: false,
+            detail: {
+                id:0,
+                nama:'',
+                pekerjaan:'',
+                no_paspor:'',
+                kebangsaan:'',
+                tgl_lahir:''
+            }
+        }
+    },
+    mounted () {
+        var vm = this
+
+        // watch loading state for the button
+        this.$watch('$refs.sel.loading', function (newVal) {
+            vm.busy = newVal
+        }, { immediate: true })
+    },
+    watch: {
+        innerData: function (newVal, oldVal) {
+            console.log("old penumpang:")
+            console.log(oldVal)
+            console.log("new penumpang:")
+            console.log(newVal)
+
+            // if it's good data, store it?
+            if (newVal) {
+                this.detail = {...newVal}
+            } else {
+                this.detail = {...this.defaultPenumpang}
+            }
+        },
+        showDetail: function (newVal) {
+            // if we're closing, force sync
+            if (!newVal) {
+                this.forceSync()
+            }
+        }
+    },
+    methods: {
+        forceEmitInput (val) {
+            this.$refs.sel.$emit('input', val)
+        },
+        forceSync () {
+            console.log('force sync...')
+            console.log('current value:')
+            console.log(this.$refs.sel.$refs.sel.value)
+            this.$refs.sel.syncValueOptions()
+        },
+        searchPenumpang(q, spinner, vm) {
+            // search means innerData needs to be nulled
+            this.innerData = null           
+
+            // normal progression
+            spinner(true)
+            this.api.getPenumpang({
+                q: q,
+                number: 150
+            })
+            .then(e => {
+                spinner(false)
+                vm.setOptions(e.data.data)
+            })
+            .catch(e => {
+                spinner(false)
+                this.handleError(e)
+            })
+        },
+        syncPenumpang(q, spinner, vm) {
+            var me = this
+            spinner(true)
+            this.api.getPenumpangById(q)
+            .then(e => {
+                spinner(false)
+                var data = e.data.data
+                vm.setOptions([data])
+                // set inner data too
+                me.innerData = data
+            })
+            .catch(e => {
+                spinner(false)
+                this.handleError(e)
+            })
+        },
+        savePenumpang () {
+            // first, lock all inputs
+            var vm = this
+            this.saving = true
+            // is it save or create?
+            if (this.detail.id) {
+                // UPDATE penumpang
+                this.api.updatePenumpang(this.detail.id, this.detail)
+                .then(e => {
+                    this.saving = false
+                    // good. do nothing?
+                    this.showToast('Saving successful!', `Data penumpang #${this.detail.id} tersimpan!`, 'success')
+                })
+                .catch(e => {
+                    this.saving = false
+                    this.handleError(e)
+                })
+            } else {
+                // CREATE penumpang
+                this.api.createPenumpang(this.detail)
+                .then(e => {
+                    this.saving = false
+                    // good. show something
+                    var newId = e.data.id
+                    this.showToast('Penumpang created!', `Created penumpang with id #${newId}`, 'success')
+                    // also, 
+                    console.log('force emit input: ' + newId)
+                    vm.forceEmitInput(newId)
+                })
+                .catch(e => {
+                    this.saving = false
+                    this.handleError(e)
+                })
+            }
+            
+        }
+    }
+}
+</script>

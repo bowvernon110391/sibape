@@ -42,17 +42,6 @@
         </b-form-group>
 
         <b-form-group
-            label="Test Select Penumpang"
-            label-for="sel-penumpang"
-            description="Select penumpang + view + input">
-            <select-penumpang
-                id="sel-penumpang"
-                v-model="penumpang"
-                placeholder="nama/asal/pekerjaan/no paspor...">
-            </select-penumpang>
-        </b-form-group>
-
-        <b-form-group
             label="Test Select Negara"
             label-for="sel-negara"
             description="Select negara (auto data from storage/fetch)">
@@ -60,6 +49,15 @@
                 id="sel-negara"
                 v-model="negara">
             </select-negara>
+        </b-form-group>
+
+        <b-form-group
+            label="Tes select-penumpang-2"
+            label-for="sel-penumpang-2">
+            <select-penumpang-2
+                id="sel-penumpang-2"
+                v-model="penumpang">
+            </select-penumpang-2>
         </b-form-group>
 
         <b-row>
@@ -179,17 +177,17 @@ import Datepicker from '@/components/Datepicker'
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
 import { mapGetters } from 'vuex'
-import SelectPenumpang from '@/components/SelectPenumpang'
 import SelectNegara from '@/components/SelectNegara'
 import ApiSelect from '@/components/ApiSelect'
+import SelectPenumpang2 from '@/components/SelectPenumpang2'
 
 export default {
     components: {
         Datepicker,
         vSelect,
-        SelectPenumpang,
         SelectNegara,
-        ApiSelect
+        ApiSelect,
+        SelectPenumpang2
     },
     data () {
         return {
@@ -200,7 +198,7 @@ export default {
             kategori: ["Alat Telekomunikasi", "Media Informasi"],
             kursId: 2,
             dataPenumpang: [],
-            penumpang:null,
+            penumpang:2,
             negara:null,
             busy: false
         }
