@@ -143,14 +143,15 @@ export default {
             if (vm.$refs.sel.multiple) {
                 // check for invalid values
                 console.log(`length change from ${ov.length} -> ${nv.length}`)
-
-                if (nv.some(e => e === null || e == 0 )) {
+                console.log(`Validating values...`)
+                if (nv.some(e => e == null || e == 0 )) {
                     console.log('new value contains invalids: must purge')
 
-                    vm.$refs.sel.$emit('input', nv.filter(e => e !== null && e != 0))
+                    vm.$refs.sel.$emit('input', nv.filter(e => e != null && e != 0))
                     // prevent sync, and set new value instead
                     return
                 }
+                console.log('already valid it seems')
             } 
             // if not sycnhronized, call syncvalueopts
             // if (!this.synchronized) {

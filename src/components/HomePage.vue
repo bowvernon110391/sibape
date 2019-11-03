@@ -197,7 +197,7 @@ export default {
             kodeHS:'10063030',
             selectVal: [],
             selectedNumber: null,
-            kategori: ["Alat Telekomunikasi", "Limbah Beracun"],
+            kategori: ["Alat Telekomunikasi", "Media Informasi"],
             kursId: 2,
             dataPenumpang: [],
             penumpang:null,
