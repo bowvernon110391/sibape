@@ -102,7 +102,7 @@
                         id="api-multiselect"
                         ref="selectKategori"
                         v-model="kategori"
-                        :reduce="e => e.id"
+                        :reduce="e => e.nama"
                         label="nama"
                         :search-callback="searchKategori"
                         :sync-callback="searchKategori"
@@ -209,7 +209,7 @@ export default {
                     // clear selection
                     // vm.$refs.selectKategori.onEscape()
                     // gotta push manually?
-                    vm.kategori.push(e.data.id)
+                    vm.kategori.push(value)
                     // vm.kategori = vm.kategori.push(e.data.id)
                     // requestData.id = e.data.id
                     // when successful, reset data
@@ -217,7 +217,10 @@ export default {
                 .catch(e => {
                     alert(`Gagal menambah tag: ${value}`)
                 })
-            return requestData
+            return {
+                id: 0,
+                nama: ''
+            }
         },
         searchKategori (q, spinner, vm) {
             spinner(true)

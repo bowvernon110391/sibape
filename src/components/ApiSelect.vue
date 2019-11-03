@@ -137,10 +137,10 @@ export default {
                 // check for invalid values
                 console.log(`length change from ${ov.length} -> ${nv.length}`)
 
-                if (nv.some(e => e === null || e === 0)) {
+                if (nv.some(e => e === null || e == 0 )) {
                     console.log('new value contains invalids: must purge')
 
-                    vm.$refs.sel.$emit('input', nv.filter(e => e !== null && e > 0))
+                    vm.$refs.sel.$emit('input', nv.filter(e => e !== null && e != 0))
                     // prevent sync, and set new value instead
                     return
                 }
