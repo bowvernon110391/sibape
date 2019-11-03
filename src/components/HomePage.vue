@@ -11,7 +11,6 @@
                 placeholder="Cari berdasarkan nama/no-paspor/asal/pekerjaan..."
                 :filterable="false"
                 @search="onSearchPenumpang"
-                @input="onInput"
                 v-model="penumpang"
                 >
                 <template v-slot:no-options>
@@ -101,13 +100,24 @@
                     label-for="api-multiselect">
                     <api-select
                         id="api-multiselect"
+                        ref="selectKategori"
                         v-model="kategori"
                         :reduce="e => e.id"
                         label="nama"
                         :search-callback="searchKategori"
                         :sync-callback="searchKategori"
-                        multiple>
-
+                        taggable
+                        multiple
+                        :create-option="createKategori"
+                        :clear-search-on-select="true">
+                        <template v-slot:option="opt">
+                            <template v-if="opt.id">
+                                <span>{{ opt.nama }}</span>
+                            </template>
+                            <template v-else>
+                                <span><strong>Tambahkan</strong> {{ opt.nama }}...</span>
+                            </template>
+                        </template>
                     </api-select>
                 </b-form-group>
             </b-col>
@@ -186,6 +196,29 @@ export default {
         }
     },
     methods: {
+        createKategori (value) {
+            var requestData = {
+                id: 0,
+                nama: value
+            }
+
+            // call api to create kategori
+            var vm = this
+            this.api.createKategori(requestData)
+                .then(e => {
+                    // clear selection
+                    // vm.$refs.selectKategori.onEscape()
+                    // gotta push manually?
+                    vm.kategori.push(e.data.id)
+                    // vm.kategori = vm.kategori.push(e.data.id)
+                    // requestData.id = e.data.id
+                    // when successful, reset data
+                })
+                .catch(e => {
+                    alert(`Gagal menambah tag: ${value}`)
+                })
+            return requestData
+        },
         searchKategori (q, spinner, vm) {
             spinner(true)
             this.api.getKategori()
@@ -244,29 +277,6 @@ export default {
             setTimeout(() => {
                 this.$store.commit('setBusyState', false)
             }, 4000)
-        },
-        onInput (e) {
-            console.log('Input:')
-            console.log(e)
-        },
-        createOption (opt) {
-            console.log("Created option:")
-            console.log(opt)
-            var value = Number(prompt("Input value for '"+opt+"'", 0))
-            if (!value) {
-                alert("Invalid value, option will not be added")
-                return {
-                    id: 0,
-                    label: '--ERROR:DELET THIS--'
-                }
-            } else {
-                var newOpt = {
-                    id: Number(value),
-                    label: opt
-                }
-                this.numbers.push(newOpt)
-                return newOpt
-            }
         },
         onSearchPenumpang (search, loading) {
             loading(true)

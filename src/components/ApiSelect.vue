@@ -112,6 +112,9 @@ export default {
         setOptions (data) {
             this.options = data
         },
+        addOption (data) {
+            this.options.push(data)
+        },
         setLoading (flag) {
             this.loading = flag
         },
@@ -125,12 +128,26 @@ export default {
         this.syncValueOptions()
 
         // add watcher for wrapped component's value
+        var vm = this
         this.$watch('$refs.sel.value', function (nv, ov) {
             console.log(`changed! ${ov} -> ${nv}`)
             console.log('Synched? ' + this.synchronized)
+            // are we in multiple mode
+            if (vm.$refs.sel.multiple) {
+                // check for invalid values
+                console.log(`length change from ${ov.length} -> ${nv.length}`)
+
+                if (nv.some(e => e === null || e === 0)) {
+                    console.log('new value contains invalids: must purge')
+
+                    vm.$refs.sel.$emit('input', nv.filter(e => e !== null && e > 0))
+                    // prevent sync, and set new value instead
+                    return
+                }
+            } 
             // if not sycnhronized, call syncvalueopts
             // if (!this.synchronized) {
-                this.syncValueOptions()
+            this.syncValueOptions()
             // } else {
                 // console.log("Already in sync @ " + new Date().toString())
             // }
