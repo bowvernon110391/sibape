@@ -23,11 +23,13 @@
 <script>
 import vSelect from 'vue-select'
 import { mapGetters, mapActions } from 'vuex'
+import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 export default {
     components: {
         vSelect
     },
+    mixins: [axiosErrorHandler],
     props: ['id','disabled','value'],
     data () {
         return {
@@ -92,14 +94,14 @@ export default {
 
                     // logging
                     console.log('storeNegara success! force refetch...')
-                    this.$root.showToast('Data saved', 'Sukses menyimpan data negara', 'success')
-                    this.$root.showToast('Re-Fetching...', 'Re-fetching data...', 'info')
+                    this.showToast('Data saved', 'Sukses menyimpan data negara', 'success')
+                    this.showToast('Re-Fetching...', 'Re-fetching data...', 'info')
                     
                     // refetch
                     this.fetchNegara()
                         .then(e => {
                             vm.syncing = false
-                            this.$root.showToast('Data ready', 'Data re-fetched', 'success')
+                            this.showToast('Data ready', 'Data re-fetched', 'success')
                         })
                         .catch(e => {
                             alert("Failed on re-fetching after store!")
@@ -141,7 +143,7 @@ export default {
     },
     created () {
         console.log('root is:')
-        console.log(this.$root)
+        // console.log(this.$root)
         // first, check if options is filled.
         if (this.negara.length) {
             return

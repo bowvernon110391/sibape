@@ -10,6 +10,7 @@
         :input-id="id"
         @search="debouncedSearch"
         :class="{ busy: loading }"
+        @search:blur="fallbackSync"
         >
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
             <slot :name="slot" v-bind="scope"></slot>
@@ -63,6 +64,11 @@ export default {
         }
     },
     methods: {
+        fallbackSync () {
+            if (!this.synchronized) {
+                this.syncValueOptions()
+            }
+        },
         syncValueOptions () {
             const val = this.$refs.sel.value
             if (!val) {
