@@ -1,36 +1,6 @@
 <template>
     <div>
         <b-form-group
-            label="Datepicker test"
-            label-for="tgl-lahir"
-            description="Tanggal lahir, sebisa mgkn < 01-01-1994">
-            <datepicker id="tgl-lahir" v-model="dateOfBirth" :state="dateValid"></datepicker>
-            <b-form-invalid-feedback :state="dateValid">
-                Too young to join, sorry!
-            </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group
-            label="Some selection in vue-select"
-            label-for="select2"
-            description="Select some options">
-            <v-select 
-                :options="numbers" 
-                multiple
-                taggable
-                v-model="selectVal"
-                placeholder="Select some numbers..."
-                :create-option="createOption">
-                <template v-slot:option="opt">
-                    <span v-if="'id' in opt && opt.id > 0">{{ opt.label }}</span>
-                    <span v-else><em>Add {{ opt.label }}...</em></span>
-                </template>
-            </v-select>
-            <b-form-invalid-feedback :state="selectValid">
-                Gotta select two or more, pal
-            </b-form-invalid-feedback>
-        </b-form-group>
-        <b-form-group
             label="Penumpang"
             label-for="select-penumpang"
             description="Select data penumpang">
@@ -99,6 +69,7 @@
                     label="test kurs select"
                     label-for="sel-kurs">
                     <api-select
+                        id="sel-kurs"
                         v-model="kursId"
                         :reduce="e => e.id"
                         :search-callback="searchKurs"
@@ -121,6 +92,22 @@
                                 synchronizing...
                             </template>
                         </template>
+                    </api-select>
+                </b-form-group>
+            </b-col>
+            <b-col md="6">
+                <b-form-group
+                    label="tes-api-multiselect"
+                    label-for="api-multiselect">
+                    <api-select
+                        id="api-multiselect"
+                        v-model="kategori"
+                        :reduce="e => e.id"
+                        label="nama"
+                        :search-callback="searchKategori"
+                        :sync-callback="searchKategori"
+                        multiple>
+
                     </api-select>
                 </b-form-group>
             </b-col>
@@ -158,13 +145,8 @@ export default {
             flagDeklarasi: '',
             selectVal: [],
             selectedNumber: null,
+            kategori: [],
             kursId: 2,
-            numbers: [
-                { id: 10, value:"teen", label: "Ten"},
-                { id: 20, value:"tweeny", label: "Twenty"},
-                { id: 30, value:"thirsty", label: "Thirty"},
-                { id: 40, value:"frothy", label: "Forty"}
-            ],
             dataPenumpang: [],
             penumpang:null,
             negara:null,
@@ -204,6 +186,18 @@ export default {
         }
     },
     methods: {
+        searchKategori (q, spinner, vm) {
+            spinner(true)
+            this.api.getKategori()
+                .then(e => {
+                    vm.setOptions(e.data.data)
+                    spinner(false)
+                })
+                .catch(e => {
+                    spinner(false)
+                    alert('Failed to get kategori')
+                })
+        },
         searchKurs (q, spinner, vm) {
             spinner(true)
             this.api.getKurs({ q: q, number: 50 })

@@ -71,6 +71,16 @@ class ApiSibape {
     createNegara (data) {
         return this.instance.post('/negara', data)
     }
+
+    // getKategori () : GET /kategori
+    getKategori () {
+        return this.instance.get('/kategori')
+    }
+
+    // createKategori (data) : POST /kategori
+    createKategori (data) {
+        return this.instance.post('/kategori', data)
+    }
 }
 
 export {
