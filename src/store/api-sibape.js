@@ -81,6 +81,13 @@ class ApiSibape {
     createKategori (data) {
         return this.instance.post('/kategori', data)
     }
+
+    // getHS (param) : GET /hs
+    getHS (param) {
+        return this.instance.get('/hs', {
+            params: param
+        })
+    }
 }
 
 export {
