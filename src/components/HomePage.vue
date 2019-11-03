@@ -135,6 +135,7 @@
                     :reduce="e => e.kode"
                     :search-callback="searchHS"
                     :sync-callback="searchHS"
+                    :clear-search-on-select="true"
                     >
                     <template v-slot:option="opt">
                         <div :class="[{ 'text-muted': !opt.usable, 'text-dark': opt.usable }, 'clearfix']" :style="opt.usable ? {fontWeight: 'bold'} : {fontSize: '0.75em'}">
@@ -196,7 +197,7 @@ export default {
             kodeHS:'10063030',
             selectVal: [],
             selectedNumber: null,
-            kategori: [],
+            kategori: ["Alat Telekomunikasi", "Limbah Beracun"],
             kursId: 2,
             dataPenumpang: [],
             penumpang:null,

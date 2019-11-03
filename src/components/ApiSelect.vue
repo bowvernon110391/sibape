@@ -9,7 +9,6 @@
         :disabled="disabled || syncing"
         :input-id="id"
         @search="debouncedSearch"
-        @search:blur="syncValueOptions"
         :class="{ busy: loading }"
         >
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
@@ -85,6 +84,14 @@ export default {
             }
         },
         doSearch (search, loading) {
+            // if search is empty but we have value, force using value instead
+            const val = this.$refs.sel.value
+            if (!search && val) {
+                console.log(`Empty search but..Wait! can force search using value instead using: ${val}`)
+                this.syncValueOptions()
+                return
+            }
+
             console.log("searching: " + search)
 
             // only call search if it's empty and we have no options
