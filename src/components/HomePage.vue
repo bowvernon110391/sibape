@@ -165,7 +165,7 @@
         </b-row>
     
         <p>
-            selectedKurs: {{ kursId }}
+            <select-hs v-model="kodeHS"></select-hs>
         </p>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
@@ -180,6 +180,7 @@ import { mapGetters } from 'vuex'
 import SelectNegara from '@/components/SelectNegara'
 import ApiSelect from '@/components/ApiSelect'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
+import SelectHs from '@/components/SelectHs'
 
 export default {
     components: {
@@ -187,7 +188,8 @@ export default {
         vSelect,
         SelectNegara,
         ApiSelect,
-        SelectPenumpang2
+        SelectPenumpang2,
+        SelectHs
     },
     data () {
         return {

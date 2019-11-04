@@ -19,28 +19,31 @@ export default {
     mounted() {
         var vm = this;
         $(this.$el).datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'yyyy-mm-dd',
             autoclose: true,
             language: 'id',
             weekStart: 1,
-            todayHighlight: true
+            todayHighlight: true,
+            orientation: 'left bottom'
         }).on('changeDate', function(e) {
             vm.$emit('input', vm.$refs.dp.value);
         }).on('keyup', function(e) {
-            // check if match (dd-mm-yy)
-            var matches = vm.$refs.dp.value.match(/(\d{1,2})-(\d{1,2})-(\d{4})/i);
+            // check if match (yyyy-mm-dd)
+            var matches = vm.$refs.dp.value.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i);
 
             if (matches) {
                 vm.$emit('input', vm.$refs.dp.value);
             }
+            // vm.$emit('input', vm.$refs.dp.value);
         });
         // init value conversion
         var initVal = this.value || ''
-        var matches = null
-        if (matches = initVal.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)) {
-            initVal = `${matches[3]}-${matches[2]}-${matches[1]}`
-        }
-        // trigger initial update
+        // var matches = null
+        // if (matches = initVal.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)) {
+        //     initVal = `${matches[3]}-${matches[2]}-${matches[1]}`
+        //     console.log('converted initial value: ' + initVal)
+        // }
+        // // trigger initial update
         $(this.$el).datepicker('update', initVal);
     },
     destroyed() {

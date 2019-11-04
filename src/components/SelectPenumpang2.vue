@@ -22,8 +22,11 @@
                 </template>
                 <template v-slot:option="option">
                     <b-row v-if="'id' in option">
-                        <b-col md="6">
-                            <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
+                        <b-col md="12">
+                            <strong class="d-md-inline d-block">{{ option.nama }}</strong>
+                        </b-col>
+                        <b-col md="12">
+                            <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
                         </b-col>
                         <b-col md="6">
                             <b-row>
