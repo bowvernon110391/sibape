@@ -147,6 +147,11 @@ export default {
                 .catch(e => {
                     vm.setBusyState(false)
                     vm.handleError(e)
+
+                    // kalo gk ketemu, replace ke new
+                    vm.$router.push({
+                       path: '/cd/new'
+                    })
                 })
         },
         onSave: function() {
