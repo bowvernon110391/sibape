@@ -28,7 +28,7 @@
             </b-col>
             <b-col md="6">
                 <b-form-group :label="labelNpwp" label-for="npwp_nib">
-                    <b-form-input v-model="dataCd.npwp_nib" type="text" id="npwp_nib" ></b-form-input>
+                    <b-form-input v-model="dataCd.npwp_nib" type="text" id="npwp_nib" :disabled="disableInput"></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -36,9 +36,9 @@
             <b-col md="6">
                 <b-form-group label="Nomor &amp; Tgl. Flight">
                     <b-input-group>
-                        <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3"></b-form-input>
+                        <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
                         <template v-slot:append>
-                            <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" ></datepicker>
+                            <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
@@ -46,17 +46,17 @@
             <b-col md="6">
                 <b-form-group label="Airport asal dan tujuan" label-for="kd_pelabuhan_asal">
                     <b-input-group prepend="Dari" class="mb-2">
-                        <b-form-input v-model="dataCd.kd_pelabuhan_asal" id="kd_pelabuhan_asal" type="text" ></b-form-input>
+                        <b-form-input v-model="dataCd.kd_pelabuhan_asal" id="kd_pelabuhan_asal" type="text" :disabled="disableInput"></b-form-input>
                         <b-input-group-prepend is-text>
                             Ke
                         </b-input-group-prepend>
-                        <b-form-input v-model="dataCd.kd_pelabuhan_tujuan" id="kd_pelabuhan_tujuan" type="text" ></b-form-input>
+                        <b-form-input v-model="dataCd.kd_pelabuhan_tujuan" id="kd_pelabuhan_tujuan" type="text" :disabled="disableInput"></b-form-input>
                     </b-input-group>
                 </b-form-group>
             </b-col>
         </b-row>
         <b-row>
-            <b-col><b-button @click="onSave" class="float-right" variant="primary"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
+            <b-col><b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
         </b-row>
         <hr>
         <p>
