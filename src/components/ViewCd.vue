@@ -55,6 +55,20 @@
                 </b-form-group>
             </b-col>
         </b-row>
+        <!-- Flag deklarasi -->
+        <b-row>
+            <b-col>
+                <b-form-group label="Flag Deklarasi">
+                    <b-form-checkbox-group
+                        :options="flagDeklarasi"
+                        stacked
+                        :disabled="disableInput"
+                        v-model="dataCd.declare_flags">
+
+                    </b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+        </b-row>
         <b-row>
             <b-col><b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
         </b-row>
@@ -80,7 +94,15 @@ export default {
     },
     data() {
         return {
-            dataCd: this.defaultData()
+            dataCd: this.defaultData(),
+            flagDeklarasi: [
+                { text: 'Barang yang diatur karantina', value: "KARANTINA"},
+                { text: 'Narkotika dan/atau obat-obatan', value: "NARKOTIKA"},
+                { text: 'Barang Kena Cukai', value: "BKC"},
+                { text: 'Pembawaan Mata Uang', value: "UANG"},
+                { text: 'Barang dagangan (tidak untuk dipakai)', value: "KOMERSIL"},
+                { text: 'Barang impor untuk dipakai', value: "IMPOR_UNTUK_DIPAKAI"}
+            ]
         }
     },
     computed: {

@@ -76,7 +76,7 @@ export default new Vuex.Store({
         negaraDirty: state => {
             return state.refData.isNegaraDirty
         },
-        canEditData: state => {
+        canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'
             // do we have user info?
             if (!state.userInfo) return false
