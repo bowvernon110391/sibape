@@ -75,6 +75,17 @@ export default new Vuex.Store({
         },
         negaraDirty: state => {
             return state.refData.isNegaraDirty
+        },
+        canEditData: state => {
+            // check if user role is one of 'KASI' or 'CONSOLE'
+            // do we have user info?
+            if (!state.userInfo) return false
+            // does the user have apps?
+            if (!state.userInfo.apps_data) return false
+            // does the user have SiBAPE privilege?
+            if (!state.userInfo.apps_data['5']) return false
+            // ok, check privileges
+            return state.userInfo.apps_data['5'].roles.filter(e => e == 'KASI' || e == 'CONSOLE').length > 0
         }
     },
     actions: {

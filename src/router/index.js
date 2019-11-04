@@ -117,8 +117,9 @@ router.beforeEach((to, from, next) => {
         "5": {
           "app_name": "SiBAPE",
           "roles": [
-            "KASI",
-            "CONSOLE"
+            // "KASI",
+            // "CONSOLE"
+            "PDTT"
           ]
         }
       }

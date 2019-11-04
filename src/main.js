@@ -9,12 +9,13 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { 
    faCalendarAlt, faLock, faLockOpen, faUserCircle,
-   faUser, faUserAlt, faPowerOff, faEye, faUserPlus
+   faUser, faUserAlt, faPowerOff, faEye, faUserPlus,
+   faSave
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faCalendarAlt, faLock, faLockOpen, faUserCircle, 
-   faUser, faUserAlt, faPowerOff, faEye, faUserPlus)
+   faUser, faUserAlt, faPowerOff, faEye, faUserPlus, faSave)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Bootstrap

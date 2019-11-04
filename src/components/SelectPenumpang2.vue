@@ -4,6 +4,7 @@
             <api-select 
                 ref="sel"
                 class="flex-grow-1"
+                :disabled="disabled"
                 v-bind="$attrs"
                 v-on="$listeners"
                 :reduce="e => e.id"
@@ -77,7 +78,7 @@
                     <b-form-group
                         label="Nama Penumpang"
                         label-for="nama-penumpang">
-                        <b-form-input type="text" id="nama-penumpang" v-model="detail.nama" :disabled="saving">
+                        <b-form-input type="text" id="nama-penumpang" v-model="detail.nama" :disabled="saving || disabled">
                         </b-form-input>
                     </b-form-group>
                 </b-col>
@@ -85,7 +86,7 @@
                     <b-form-group
                         label="Tanggal Lahir"
                         label-for="tgl-lahir">
-                        <datepicker v-model="detail.tgl_lahir" :disabled="saving"></datepicker>
+                        <datepicker v-model="detail.tgl_lahir" :disabled="saving || disabled"></datepicker>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -94,7 +95,7 @@
                     <b-form-group
                         label="Nomor Paspor"
                         label-for="no-paspor">
-                        <b-form-input type="text" v-model="detail.no_paspor" :disabled="saving"></b-form-input>
+                        <b-form-input type="text" v-model="detail.no_paspor" :disabled="saving || disabled"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col sm="12" md="6">
@@ -102,19 +103,19 @@
                         label="Kebangsaan"
                         label-for="kebangsaan">
                         <!-- <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input> -->
-                        <select-negara id="kebangsaan" v-model="detail.kebangsaan" :disabled="saving"></select-negara>
+                        <select-negara id="kebangsaan" v-model="detail.kebangsaan" :disabled="saving || disabled"></select-negara>
                     </b-form-group>
                 </b-col>
                 <b-col sm="12">
                     <b-form-group
                         label="Pekerjaan"
                         label-for="pekerjaan">
-                        <b-form-input type="text" v-model="detail.pekerjaan" :disabled="saving"></b-form-input>
+                        <b-form-input type="text" v-model="detail.pekerjaan" :disabled="saving || disabled"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
             <template v-slot:modal-footer>
-                <b-button variant="primary" :disabled="saving" @click="savePenumpang">
+                <b-button variant="primary" :disabled="saving || disabled" @click="savePenumpang">
                     <template v-if="saving">
                         Menyimpan... <b-spinner small variant="light"></b-spinner>
                     </template>
@@ -142,6 +143,7 @@ export default {
         Datepicker,
         SelectNegara
     },
+    props: ['disabled'],
     computed: {
         ...mapGetters(['api']),
         defaultPenumpang () {

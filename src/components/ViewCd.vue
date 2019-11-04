@@ -2,7 +2,7 @@
     <div>
         <h4>
             <template v-if="id != 'new'">
-                CD #{{ id }} <b-badge :variant="dataCd.is_locked ? 'danger' : 'primary'">{{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge>
+                CD #{{ id }} <b-badge :variant="dataCd.is_locked ? 'danger' : 'primary'"><font-awesome-icon :icon="dataCd.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge>
             </template>
             <template v-else>
                 Input CD Baru
@@ -14,7 +14,7 @@
                     <b-input-group>
                         <b-form-input class="rounded-left" v-model="dataCd.nomor_lengkap" type="text" disabled></b-form-input>
                         <template v-slot:append>
-                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataCd.tgl_dok"></datepicker>
+                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataCd.tgl_dok" :disabled="disableInput"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
@@ -23,7 +23,7 @@
         <b-row>
             <b-col md="6">
                 <b-form-group label="Penumpang" label-for="penumpang">
-                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang"></select-penumpang-2>
+                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang" :disabled="disableInput"></select-penumpang-2>
                 </b-form-group>
             </b-col>
             <b-col md="6">
@@ -56,7 +56,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col><b-button @click="onSave" class="float-right" variant="primary" size="sm">Simpan</b-button></b-col>
+            <b-col><b-button @click="onSave" class="float-right" variant="primary"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
         </b-row>
         <hr>
         <p>
@@ -84,7 +84,12 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['api', 'lokasi']),
+        ...mapGetters(['api', 'lokasi', 'canEdit']),
+        disableInput () {
+           // only disable input if user can't edit
+           // and the doc is locked
+           return !this.canEdit && this.dataCd.is_locked
+        },
         labelNpwp () {
            var defaultLabel = 'NPWP/NIB/NIK'
            if (!this.dataCd.npwp_nib) {
