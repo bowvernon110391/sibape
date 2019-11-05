@@ -45,12 +45,16 @@ export default {
         searchOnEmpty: {
             type: Boolean,
             default: true
-        }
+        },
+        initialOptions: [Array,Object,String,Number]
     },
     data () {
         return {
+            // make a 'debounced' version of our search callback
             debouncedSearch: debounce(this.doSearch, this.searchDelay),
-            options: [],
+            // fill internal options with initial options if exists
+            options: Array.isArray(this.initialOptions) ? this.initialOptions : (this.initialOptions ? [this.initialOptions] : []),
+            // loading and syncing state (only LOADING is used for now)
             loading: false,
             syncing: false
         }
@@ -165,6 +169,10 @@ export default {
             } 
             // if not sycnhronized, call syncvalueopts
             // if (!this.synchronized) {
+            if (vm.synchronized) {
+                console.log("Already in sync. SHouldn't need to do anything...")
+                return
+            }
             vm.syncValueOptions()
             // } else {
                 // console.log("Already in sync @ " + new Date().toString())

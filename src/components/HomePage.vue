@@ -12,6 +12,7 @@
                 :search-callback="searchPenumpang"
                 :sync-callback="syncPenumpang"
                 v-model="penumpang"
+                :initial-options="dataPenumpang"
                 >
                 <template v-slot:no-options>
                     Penumpang tidak ditemukan
@@ -56,7 +57,8 @@
             label-for="sel-penumpang-2">
             <select-penumpang-2
                 id="sel-penumpang-2"
-                v-model="penumpang">
+                v-model="penumpang"
+                :initial-options="dataPenumpang">
             </select-penumpang-2>
         </b-form-group>
 
@@ -120,9 +122,9 @@
                 </b-form-group>
             </b-col>
         </b-row>
-            
+
         <p>
-            <select-hs v-model="kodeHS"></select-hs>
+            <select-hs v-model="kodeHS" :initial-options="dataHs"></select-hs>
         </p>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
@@ -159,7 +161,47 @@ export default {
             dataPenumpang: [],
             penumpang:2,
             negara:null,
-            busy: false
+            busy: false,
+            dataHs: [
+                {
+                "id": 1324,
+                "usable": true,
+                "takik": 2,
+                "raw_code": "1006.30.30",
+                "kode": "10063030",
+                "uraian": "- - Beras ketan",
+                "jenis_tarif": "SPESIFIK",
+                "bm_tarif": 450,
+                "ppn_tarif": 0,
+                "ppnbm_tarif": 0,
+                "ppn_text": "-",
+                "ppnbm_text": "-",
+                "satuan_spesifik": "/kg"
+                }
+            ],
+            dataPenumpang: {
+                "id": 2,
+                "nama": "Eve Streich VI",
+                "tgl_lahir": "1978-09-03",
+                "no_paspor": "1-877-353-9262",
+                "kebangsaan": "NZ",
+                "pekerjaan": "Radiologic Technologist and Technician",
+                "created_at": "2019-11-04 16:21:47",
+                "updated_at": "2019-11-05 10:19:58",
+                "links": [
+                    {
+                        "rel": "self",
+                        "uri": "/penumpang/2"
+                    }
+                ],
+                "negara": {
+                    "data": {
+                        "id": 554,
+                        "kode": "NZ",
+                        "uraian": "New Zealand"
+                    }
+                }
+            }
         }
     },
     computed: {
