@@ -58,9 +58,12 @@ export default {
     computed: {
         // tell if the value and option is synched
         synchronized () {
-            const reduce = this.$refs.sel.reduce
-            const val = this.$refs.sel.value
-            return this.options.filter(e => reduce(e) == val ).length > 0
+            if (this.$refs.sel) {
+                const reduce = this.$refs.sel.reduce
+                const val = this.$refs.sel.value
+                return this.options.filter(e => reduce(e) == val ).length > 0
+            }
+            return false
         }
     },
     methods: {
@@ -70,6 +73,7 @@ export default {
             }
         },
         syncValueOptions () {
+            // if sel is not defined yet, can't sync
             const val = this.$refs.sel.value
             if (!val) {
                 // value is null, but is our options also empty?
@@ -161,7 +165,7 @@ export default {
             } 
             // if not sycnhronized, call syncvalueopts
             // if (!this.synchronized) {
-            this.syncValueOptions()
+            vm.syncValueOptions()
             // } else {
                 // console.log("Already in sync @ " + new Date().toString())
             // }
