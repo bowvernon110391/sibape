@@ -138,7 +138,7 @@ export default {
     mounted () {
         console.log("Mounted biatch!")
         // fill initial options with synced value
-        this.syncValueOptions()
+        // this.syncValueOptions()
 
         // add watcher for wrapped component's value
         var vm = this
@@ -165,6 +165,9 @@ export default {
             // } else {
                 // console.log("Already in sync @ " + new Date().toString())
             // }
+        }, 
+        {
+            immediate: true
         })
     }
 }
