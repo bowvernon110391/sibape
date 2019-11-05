@@ -188,6 +188,16 @@ export default {
         this.$watch('$refs.sel.loading', function (newVal) {
             vm.busy = newVal
         }, { immediate: true })
+
+        // watch for initial option @ $refs.sel?
+        this.$watch('$refs.sel.initialOptions', function (newVal) {
+            console.log('Select Penumpang 2 has initial options! use it!!!')
+            // if it's the only one, then FUCCKING USE IT
+            if (! Array.isArray(newVal)) {
+                console.log("Yeah definitely use it!")
+                vm.innerData = newVal
+            }
+        }, { immediate: true })
     },
     watch: {
         innerData: function (newVal, oldVal) {
@@ -212,13 +222,17 @@ export default {
     },
     methods: {
         forceEmitInput (val) {
-            this.$refs.sel.$emit('input', val)
+            if (this.$refs.sel) {
+                this.$refs.sel.$emit('input', val)
+            }
         },
         forceSync () {
-            console.log('force sync...')
-            console.log('current value:')
-            console.log(this.$refs.sel.$refs.sel.value)
-            this.$refs.sel.syncValueOptions()
+            if (this.$refs.sel) {
+                console.log('force sync...')
+                console.log('current value:')
+                console.log(this.$refs.sel.$refs.sel.value)
+                this.$refs.sel.syncValueOptions()
+            }
         },
         searchPenumpang(q, spinner, vm) {
             // search means innerData needs to be nulled

@@ -156,7 +156,6 @@ export default {
             // are we in multiple mode
             if (vm.$refs.sel.multiple) {
                 // check for invalid values
-                console.log(`length change from ${ov.length} -> ${nv.length}`)
                 console.log(`Validating values...`)
                 if (nv.some(e => e == null || e == 0 )) {
                     console.log('new value contains invalids: must purge')
