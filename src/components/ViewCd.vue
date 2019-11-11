@@ -219,7 +219,11 @@ export default {
            }
         }
     },
+    created () {
+        this.setBusyState(true)
+    },
     mounted () {
+        this.setBusyState(false)
         // console.log(this.$route);
         console.log('Data CD:')
         console.log(this.dataCd)

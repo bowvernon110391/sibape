@@ -82,7 +82,7 @@ export default {
                 console.log("$refs sel is still undefined. bailing...")
                 return
             }
-            
+
             const val = this.$refs.sel.value
             if (!val) {
                 // value is null, but is our options also empty?
@@ -97,6 +97,8 @@ export default {
                     console.log("Calling sync callback...")
                     // same format as search callback, but use value instead
                     this.syncCallback(val, this.setSyncing, this)
+                    // log after
+                    console.log("Called sync callback...")
                 } else {
                     console.log("No sync callback provided!")
                 }

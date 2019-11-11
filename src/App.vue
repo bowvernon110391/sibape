@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
     <b-modal 
-          v-model="this.$store.state.busy"
+          v-model="modalShown"
           id="loading-screen"
           centered 
           title="Loading..."
@@ -26,7 +26,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    modalShown: function () {
+      return this.$store.state.busy
+    }
+  }
 }
 </script>
 
