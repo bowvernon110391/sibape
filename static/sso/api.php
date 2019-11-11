@@ -16,7 +16,7 @@ if (empty($_REQUEST['command']) || !method_exists($broker, $_REQUEST['command'])
 try {
     $result = $broker->{$_REQUEST['command']}();
 } catch (Exception $e) {
-    $status = $e->getCode() ?: 500;
+    $status = $e->getCode();
     $result = ['error' => $e->getMessage()];
 }
 
