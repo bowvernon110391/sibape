@@ -1,0 +1,206 @@
+<template>
+    <div>
+        <!-- 1st row, length select and search box -->
+        <!-- Make it a slot so it can be modified -->
+        <slot name="header">
+            <b-row class="mb-3 py-2 rounded border border-dark bg-light shadow bg-form-control">
+                <!-- length select -->
+                <!-- make it a slot too -->
+                <slot name="header-length-select">
+                    <b-col md="4" sm="12">
+                        <b-form inline>
+                            <b-form-group
+                                label="tampilkan"
+                                label-for="length-select">
+                                <b-form-select v-model="internalLength" 
+                                    :options="lengthOptions" 
+                                    id="length-select" 
+                                    ref="lengthSelect" 
+                                    size="sm">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-form>
+                    </b-col>
+                </slot>
+                <!-- search box -->
+                <!-- make it a slot too -->
+                <slot name="header-search-box">
+                    <b-col md="8" sm="12" >
+                        <b-form inline class="float-md-right float-sm-none" @submit.prevent="doSearch">
+                            <!-- search date range -->
+                            <template v-if="searchDateRange">
+                                <b-form-group label="dari" label-for="from">
+                                    <!-- datepicker from -->
+                                    <datepicker v-model="queryFrom"></datepicker>
+                                </b-form-group>
+                                <b-form-group label="s/d" label-for="to">
+                                    <!-- datepicker to -->
+                                    <datepicker v-model="queryTo"></datepicker>
+                                </b-form-group>
+                            </template>
+                            <b-form-group label="Keyword" label-for="q">
+                                <b-input-group size="sm">
+                                    <b-form-input type="text" id="q" ref="q" placeholder="masukkan keyword..." 
+                                        v-model="queryString"></b-form-input>
+                                    <b-input-group-append>
+                                        <b-button type="submit" variant="primary">
+                                            <font-awesome-icon icon="search"></font-awesome-icon>
+                                        </b-button>
+                                    </b-input-group-append>
+                                </b-input-group>
+                            </b-form-group>
+                        </b-form>
+                    </b-col>
+                </slot>
+            </b-row>
+        </slot>
+        
+        <!-- 2nd row, content -->
+        <b-row class="my-2 position-relative">
+            <b-col>
+                <slot :data="internalData" :pagination="paginationData" v-if="dataLength">
+                    There's {{ dataLength }} data here. But no render components provided. SHieet
+                </slot>
+                <slot name="no-data" v-if="!dataLength">
+                    <b-alert show variant="danger">
+                        No data found.
+                    </b-alert>
+                </slot>
+            </b-col>
+        </b-row>
+
+        <!-- 3rd row, pagination info -->
+        <b-row>
+            <!-- 1st col, x of y from z -->
+            <b-col md="6" sm="12">
+                <span>Menampilkan <strong>{{ start }}</strong> - <strong>{{ end }}</strong> dari <strong>{{ dataLength }}</strong></span>
+            </b-col>
+            <b-col md="6" sm="12">
+                <div class="float-md-right float-sm-center">
+                    <b-pagination
+                        class="shadow"
+                        v-model="internalPage"
+                        :per-page="internalLength"
+                        :total-rows="dataLength"
+                        :limit="10"></b-pagination>
+                </div>
+            </b-col>
+        </b-row>
+    </div>
+</template>
+
+<script>
+import { mapGetters, mapState, mapMutations } from 'vuex'
+import Datepicker from '@/components/Datepicker'
+import axiosErrorHandler from '../mixins/axiosErrorHandler'
+
+export default {
+    name: 'paginated-browser',
+    mixins: [
+        axiosErrorHandler
+    ],
+    components: {
+        Datepicker
+    },
+    props: {
+        // default page number
+        page: {
+            type: [Number,String],
+            default: 1
+        },
+        length: {
+            type: [Number,String],
+            default: 10
+        },
+        dataCallback: {
+            type: Function,
+            required: true
+        },
+        dateRange: {
+            type: Boolean,
+            default: true
+        },
+        immediateLoad: {
+            type: Boolean,
+            default: true
+        }
+    },
+    data () {
+        return {
+            internalPage: this.page,
+            internalLength: this.length,
+            internalData: null,
+            totalRows: 0,
+            queryString: '',
+            queryFrom: null,
+            queryTo: null,
+            lengthOptions: [
+                { value: 5, text: "5" },
+                { value: 10, text: "10" },
+                { value: 25, text: "25" },
+                { value: 50, text: "50" }
+            ]
+        }
+    },
+    computed: {
+        browseData () {
+            return {
+                q: this.queryString,
+                from: this.queryFrom,
+                to: this.queryTo,
+                page: this.internalPage,
+                number: this.internalLength
+            }
+        },
+        dataLength: function () {
+            return this.internalData ? (Array.isArray(this.internalData) ? this.internalData.length : 0 ) : 0
+        },
+        start: function () {
+            return Math.min( (this.internalPage - 1) * this.internalLength + 1, this.dataLength )
+        },
+        end: function () {
+            return Math.min( this.internalPage * this.internalLength, this.dataLength )
+        },
+        paginationData () {
+            return {
+                start: this.start,
+                end: this.end,
+                number: this.internalLength,
+                page: this.internalPage,
+                total: this.dataLength
+            }
+        }
+    },
+    methods: {
+        ...mapMutations(['setBusyState']),
+        // call it whenever data needs to be reloaded
+        loadData () {
+            console.log("Calling loadData...")
+            if (this.dataCallback) {
+                console.log("Refreshing paginated-browser...")
+                // call it (browseData, spinner, vm)
+                this.dataCallback(this.browseData, this.setBusyState, this)
+            }
+        },
+        // set data
+        setData (data) {
+            this.internalData = data
+        }
+    },
+    watch: {
+        page: function(val) {
+            this.internalPage = val
+        },
+        length: function(val) {
+            this.internalLength = val
+        },
+        // change in this value cause data-reload
+        internalLength: function() {
+            this.loadData()
+        },
+        internalPage: function() {
+            this.loadData()
+        }
+    }
+}
+</script>
