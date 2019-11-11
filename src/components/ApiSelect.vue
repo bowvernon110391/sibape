@@ -78,6 +78,11 @@ export default {
         },
         syncValueOptions () {
             // if sel is not defined yet, can't sync
+            if (typeof this.$refs.sel == 'undefined') {
+                console.log("$refs sel is still undefined. bailing...")
+                return
+            }
+            
             const val = this.$refs.sel.value
             if (!val) {
                 // value is null, but is our options also empty?
