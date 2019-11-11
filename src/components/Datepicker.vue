@@ -13,7 +13,7 @@ export default {
     props: ['value','state','id', 'disabled'],
     watch: {
         value: function(newVal, oldVal) {
-            $(this.$el).datepicker('update', newVal);
+            $(this.$el).datepicker('update', newVal)
         }
     },
     mounted() {
@@ -24,15 +24,18 @@ export default {
             language: 'id',
             weekStart: 1,
             todayHighlight: true,
-            orientation: 'left bottom'
+            orientation: 'left bottom',
+            clearBtn: true
         }).on('changeDate', function(e) {
-            vm.$emit('input', vm.$refs.dp.value);
+            vm.$emit('input', vm.$refs.dp.value)
         }).on('keyup', function(e) {
             // check if match (yyyy-mm-dd)
-            var matches = vm.$refs.dp.value.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i);
+            var matches = vm.$refs.dp.value.match(/(\d{4})-(\d{1,2})-(\d{1,2})/i)
 
             if (matches) {
-                vm.$emit('input', vm.$refs.dp.value);
+                vm.$emit('input', vm.$refs.dp.value)
+            } else if (vm.$refs.dp.value == '') {
+                vm.$emit('input', null)
             }
             // vm.$emit('input', vm.$refs.dp.value);
         });
@@ -44,10 +47,10 @@ export default {
         //     console.log('converted initial value: ' + initVal)
         // }
         // // trigger initial update
-        $(this.$el).datepicker('update', initVal);
+        $(this.$el).datepicker('update', initVal)
     },
     destroyed() {
-        $(this.$el).datepicker('destroy');
+        $(this.$el).datepicker('destroy')
     }
 }
 </script>

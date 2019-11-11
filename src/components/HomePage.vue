@@ -1,58 +1,6 @@
 <template>
     <div>
-        <b-form-group
-            label="Penumpang"
-            label-for="select-penumpang"
-            description="Select data penumpang">
-            <api-select 
-                id="select-penumpang"
-                label="nama" 
-                :reduce="e => e.id" 
-                placeholder="Cari berdasarkan nama/no-paspor/asal/pekerjaan..."
-                :search-callback="searchPenumpang"
-                :sync-callback="syncPenumpang"
-                v-model="penumpang"
-                :initial-options="dataPenumpang"
-                >
-                <template v-slot:no-options>
-                    Penumpang tidak ditemukan
-                </template>
-                <template v-slot:option="option">
-                    <b-row v-if="option.id">
-                        <b-col md="6">
-                            <strong class="d-md-inline d-block">{{ option.nama }}</strong> <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
-                        </b-col>
-                        <b-col md="6">
-                            <b-row>
-                                <b-col md="6">
-                                    {{ option.kebangsaan }}
-                                </b-col>
-                                <b-col md="6">
-                                    {{ option.no_paspor }}
-                                </b-col>
-                            </b-row>
-                        </b-col>
-                    </b-row>
-                    <b-row v-else>
-                        <b-col>
-                            <em>Tambah Penumpang <strong>{{ option.nama }}...</strong></em>
-                        </b-col>
-                    </b-row>
-                </template>
-            </api-select>
-        </b-form-group>
-
-        <b-form-group
-            label="Test Select Negara"
-            label-for="sel-negara"
-            description="Select negara (auto data from storage/fetch)">
-            <select-negara
-                id="sel-negara"
-                v-model="negara">
-            </select-negara>
-        </b-form-group>
-
-        <b-form-group
+        <!-- <b-form-group
             label="Tes select-penumpang-2"
             label-for="sel-penumpang-2">
             <select-penumpang-2
@@ -125,7 +73,11 @@
 
         <p>
             <select-hs v-model="kodeHS" :initial-options="dataHs"></select-hs>
-        </p>
+        </p> -->
+        <paginated-browser
+            :data-callback="browseCd">
+
+        </paginated-browser>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
@@ -140,6 +92,7 @@ import SelectNegara from '@/components/SelectNegara'
 import ApiSelect from '@/components/ApiSelect'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectHs from '@/components/SelectHs'
+import PaginatedBrowser from '@/components/PaginatedBrowser'
 
 export default {
     components: {
@@ -148,7 +101,8 @@ export default {
         SelectNegara,
         ApiSelect,
         SelectPenumpang2,
-        SelectHs
+        SelectHs,
+        PaginatedBrowser
     },
     data () {
         return {
@@ -237,6 +191,24 @@ export default {
         }
     },
     methods: {
+        browseCd (q, spinner, vm) {
+            console.log('search parameter')
+            console.log(q)
+
+            spinner(true)
+            this.api.getCd(q)
+                .then(e => {
+                    console.log("Got cd data:")
+                    console.log(e.data.data)
+                    spinner(false)
+                    vm.setData(e.data.data)
+                    vm.setTotal(e.data.meta.pagination.total)
+                })
+                .catch(e => {
+                    spinner(false)
+                    this.handleError(e)
+                })
+        },
         searchHS (q, spinner, vm) {
             spinner(true)
             this.api.getHS({

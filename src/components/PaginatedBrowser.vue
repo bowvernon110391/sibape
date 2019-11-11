@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="pabow">
         <!-- 1st row, length select and search box -->
         <!-- Make it a slot so it can be modified -->
         <slot name="header">
@@ -7,7 +7,7 @@
                 <!-- length select -->
                 <!-- make it a slot too -->
                 <slot name="header-length-select">
-                    <b-col md="4" sm="12">
+                    <b-col md="3" sm="12">
                         <b-form inline>
                             <b-form-group
                                 label="tampilkan"
@@ -16,7 +16,7 @@
                                     :options="lengthOptions" 
                                     id="length-select" 
                                     ref="lengthSelect" 
-                                    size="sm">
+                                    >
                                 </b-form-select>
                             </b-form-group>
                         </b-form>
@@ -25,21 +25,21 @@
                 <!-- search box -->
                 <!-- make it a slot too -->
                 <slot name="header-search-box">
-                    <b-col md="8" sm="12" >
-                        <b-form inline class="float-md-right float-sm-none" @submit.prevent="doSearch">
+                    <b-col md="9" sm="12" >
+                        <b-form inline class="float-md-right float-sm-none" @submit.prevent="loadData">
                             <!-- search date range -->
                             <template v-if="searchDateRange">
-                                <b-form-group label="dari" label-for="from">
+                                <b-form-group label="dari" label-for="from" style="margin-right: .25em">
                                     <!-- datepicker from -->
-                                    <datepicker v-model="queryFrom"></datepicker>
+                                    <datepicker v-model="queryFrom" style="width:150px;"></datepicker>
                                 </b-form-group>
-                                <b-form-group label="s/d" label-for="to">
+                                <b-form-group label="s/d" label-for="to"  style="margin-right: .25em">
                                     <!-- datepicker to -->
-                                    <datepicker v-model="queryTo"></datepicker>
+                                    <datepicker v-model="queryTo" style="width:150px;"></datepicker>
                                 </b-form-group>
                             </template>
                             <b-form-group label="Keyword" label-for="q">
-                                <b-input-group size="sm">
+                                <b-input-group>
                                     <b-form-input type="text" id="q" ref="q" placeholder="masukkan keyword..." 
                                         v-model="queryString"></b-form-input>
                                     <b-input-group-append>
@@ -73,7 +73,7 @@
         <b-row>
             <!-- 1st col, x of y from z -->
             <b-col md="6" sm="12">
-                <span>Menampilkan <strong>{{ start }}</strong> - <strong>{{ end }}</strong> dari <strong>{{ dataLength }}</strong></span>
+                <span>Menampilkan <strong>{{ start }}</strong> - <strong>{{ end }}</strong> dari <strong>{{ totalRows }}</strong></span>
             </b-col>
             <b-col md="6" sm="12">
                 <div class="float-md-right float-sm-center">
@@ -81,7 +81,7 @@
                         class="shadow"
                         v-model="internalPage"
                         :per-page="internalLength"
-                        :total-rows="dataLength"
+                        :total-rows="totalRows"
                         :limit="10"></b-pagination>
                 </div>
             </b-col>
@@ -123,6 +123,10 @@ export default {
         immediateLoad: {
             type: Boolean,
             default: true
+        },
+        searchDateRange: {
+            type: Boolean,
+            default: true
         }
     },
     data () {
@@ -156,10 +160,10 @@ export default {
             return this.internalData ? (Array.isArray(this.internalData) ? this.internalData.length : 0 ) : 0
         },
         start: function () {
-            return Math.min( (this.internalPage - 1) * this.internalLength + 1, this.dataLength )
+            return Math.min( (this.internalPage - 1) * this.internalLength + 1, this.totalRows )
         },
         end: function () {
-            return Math.min( this.internalPage * this.internalLength, this.dataLength )
+            return Math.min( this.internalPage * this.internalLength, this.totalRows )
         },
         paginationData () {
             return {
@@ -167,7 +171,7 @@ export default {
                 end: this.end,
                 number: this.internalLength,
                 page: this.internalPage,
-                total: this.dataLength
+                total: this.totalRows
             }
         }
     },
@@ -185,6 +189,10 @@ export default {
         // set data
         setData (data) {
             this.internalData = data
+        },
+        // set total
+        setTotal (total) {
+            this.totalRows = total
         }
     },
     watch: {
@@ -201,6 +209,17 @@ export default {
         internalPage: function() {
             this.loadData()
         }
+    },
+    mounted () {
+        if (this.immediateLoad) {
+            this.loadData()
+        }
     }
 }
 </script>
+
+<style>
+label.d-block {
+    margin-right: .25em !important;
+}
+</style>
