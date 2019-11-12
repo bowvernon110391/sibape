@@ -76,7 +76,9 @@
         </p> -->
         <paginated-browser
             :data-callback="browseCd">
-
+            <template v-slot:default="data">
+                <pre>{{ JSON.stringify(data, null, 2) }}</pre>
+            </template>
         </paginated-browser>
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
@@ -196,7 +198,10 @@ export default {
             console.log(q)
 
             spinner(true)
-            this.api.getCd(q)
+            this.api.getCd({
+                ...q,
+                include: 'pelabuhan_asal,pelabuhan_tujuan'
+            })
                 .then(e => {
                     console.log("Got cd data:")
                     console.log(e.data.data)

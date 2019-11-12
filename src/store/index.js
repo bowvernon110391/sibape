@@ -10,7 +10,8 @@ const STORE_DEBUG = true
 // now we grab variable
 const proc_env = process.env.NODE_ENV
 console.log('App run in : ' + proc_env)
-console.log('Complete env : ' + JSON.stringify(process.env))
+console.log('Complete env : ')
+console.log(process.env)
 
 export default new Vuex.Store({
     state: {
@@ -18,7 +19,7 @@ export default new Vuex.Store({
         busy: false,    // status layar (busy) bakal mnculin modal
         lokasi: null,   // data lokasi
         // backend SiBAPE
-        api: new ApiSibape(process.env.VUE_APP_URL, 15000),
+        api: new ApiSibape(process.env.API_URL, 15000),
         refData: {
             kemasan: [],
             negara: [],
