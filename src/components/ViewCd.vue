@@ -73,9 +73,11 @@
             <b-col><b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
         </b-row>
         <hr>
-        <h5>Data Detil</h5>
+        <h5>Data Detil Barang</h5>
         <div class="my-2">
-            <b-button variant="primary" size="sm">Tambah detil</b-button>
+            <b-button variant="primary">
+                <font-awesome-icon icon="plus-square"></font-awesome-icon> Tambah Barang
+            </b-button>
         </div>
         <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false">
             <template v-slot:default="{ data, pagination }">
@@ -100,10 +102,52 @@
                     <template v-slot:cell(nilai_pabean)="data">
                         {{ data.item.nilai_pabean | displayRupiah }}
                     </template>
+                    <!-- Tombol actions (edit, delete) -->
+                    <template v-slot:cell(action)="data">
+                        <b-button-group>
+                            <b-button size="sm" variant="primary">
+                                <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
+                            </b-button>
+                            <b-button size="sm" variant="danger" v-if="!disableInput">
+                                <font-awesome-icon icon="trash-alt"></font-awesome-icon>
+                            </b-button>
+                        </b-button-group>
+                    </template>
+                    <!-- Row detail button -->
+                    <template v-slot:cell(_showDetail)="row">
+                        <b-button variant="dark" size="sm" @click="row.toggleDetails">
+                            <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
+                            </font-awesome-icon>
+                        </b-button>
+                    </template>
+                    <!-- Row detail -->
+                    <template v-slot:row-details="row">
+                        <b-card>
+                            <!-- Show Kategori -->
+                            <b-row>
+                                <b-col md="2">
+                                    <strong>Kategori:</strong>
+                                </b-col>
+                                <b-col md="10">
+                                    <v-select multiple disabled :value="row.item.kategori"></v-select>
+                                </b-col>
+                            </b-row>
+                            <!-- Detail Sekunder -->
+                            <h5 class="mt-2">Data Pendukung lainnya</h5>
+                            <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id">
+                                <b-col md="3">
+                                    <strong>{{idx+1}}. {{ secData.jenis }}:</strong>
+                                </b-col>
+                                <b-col md="9">
+                                    {{ secData.data }}
+                                </b-col>
+                            </b-row>
+                        </b-card>
+                    </template>
                 </b-table>
             </template>
         </paginated-browser>
-        <pre>{{ dataCd }}</pre>
+        <!-- <pre>{{ dataCd }}</pre> -->
     </div>
 </template>
 
@@ -112,6 +156,7 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
+import vSelect from 'vue-select'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
@@ -119,7 +164,8 @@ export default {
     components: {
         SelectPenumpang2,
         Datepicker,
-        PaginatedBrowser
+        PaginatedBrowser,
+        vSelect
     },
     filters: {
         displayRupiah (val) {
@@ -138,12 +184,14 @@ export default {
                 { text: 'Barang impor untuk dipakai', value: "IMPOR_UNTUK_DIPAKAI"}
             ],
             fieldDetails: [
+                { label: '', key: '_showDetail'},
                 'uraian',
                 'satuan',
                 'kemasan',
                 'hscode',
                 'fob',
-                'nilai_pabean'
+                'nilai_pabean',
+                { label: '', key: 'action' }
             ]
         }
     },
