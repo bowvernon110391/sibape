@@ -39,17 +39,19 @@
                                     <datepicker v-model="queryTo" style="width:150px;"></datepicker>
                                 </b-form-group>
                             </template>
-                            <b-form-group label="Keyword" label-for="q">
-                                <b-input-group>
-                                    <b-form-input type="text" id="q" ref="q" placeholder="masukkan keyword..." 
-                                        v-model="queryString"></b-form-input>
-                                    <b-input-group-append>
-                                        <b-button type="submit" variant="primary">
-                                            <font-awesome-icon icon="search"></font-awesome-icon>
-                                        </b-button>
-                                    </b-input-group-append>
-                                </b-input-group>
-                            </b-form-group>
+                            <template v-if="searchBox">
+                                <b-form-group label="Keyword" label-for="q">
+                                    <b-input-group>
+                                        <b-form-input type="text" id="q" ref="q" placeholder="masukkan keyword..." 
+                                            v-model="queryString"></b-form-input>
+                                        <b-input-group-append>
+                                            <b-button type="submit" variant="primary">
+                                                <font-awesome-icon icon="search"></font-awesome-icon>
+                                            </b-button>
+                                        </b-input-group-append>
+                                    </b-input-group>
+                                </b-form-group>
+                            </template>
                         </b-form>
                     </b-col>
                 </slot>
@@ -126,6 +128,10 @@ export default {
             default: true
         },
         searchDateRange: {
+            type: Boolean,
+            default: true
+        },
+        searchBox: {
             type: Boolean,
             default: true
         }

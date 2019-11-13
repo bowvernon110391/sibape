@@ -77,7 +77,7 @@
         <div class="my-2">
             <b-button variant="primary" size="sm">Tambah detil</b-button>
         </div>
-        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false">
+        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false">
             <template v-slot:default="{ data, pagination }">
                 <b-table
                     responsive="sm"
