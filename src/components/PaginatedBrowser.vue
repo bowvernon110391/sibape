@@ -1,5 +1,5 @@
 <template>
-    <div id="pabow">
+    <div>
         <!-- 1st row, length select and search box -->
         <!-- Make it a slot so it can be modified -->
         <slot name="header">
@@ -11,7 +11,8 @@
                         <b-form inline>
                             <b-form-group
                                 label="tampilkan"
-                                label-for="length-select">
+                                label-for="length-select"
+                                class="mb-sm-2 mb-md-0">
                                 <b-form-select v-model="internalLength" 
                                     :options="lengthOptions" 
                                     id="length-select" 
@@ -29,11 +30,11 @@
                         <b-form inline class="float-md-right float-sm-none" @submit.prevent="loadData">
                             <!-- search date range -->
                             <template v-if="searchDateRange">
-                                <b-form-group label="dari" label-for="from" style="margin-right: .25em">
+                                <b-form-group label="dari" label-for="from" style="margin-right: .25em" class="mb-sm-2 mb-md-0">
                                     <!-- datepicker from -->
                                     <datepicker v-model="queryFrom" style="width:150px;"></datepicker>
                                 </b-form-group>
-                                <b-form-group label="s/d" label-for="to"  style="margin-right: .25em">
+                                <b-form-group label="s/d" label-for="to"  style="margin-right: .25em" class="mb-sm-2 mb-md-0">
                                     <!-- datepicker to -->
                                     <datepicker v-model="queryTo" style="width:150px;"></datepicker>
                                 </b-form-group>
