@@ -75,7 +75,7 @@
         <hr>
         <h5>Data Detil Barang</h5>
         <div class="my-2">
-            <b-button variant="primary">
+            <b-button variant="primary" class="shadow">
                 <font-awesome-icon icon="plus-square"></font-awesome-icon> Tambah Barang
             </b-button>
         </div>
@@ -105,7 +105,7 @@
                     <!-- Tombol actions (edit, delete) -->
                     <template v-slot:cell(action)="data">
                         <b-button-group>
-                            <b-button size="sm" variant="primary">
+                            <b-button size="sm" variant="primary" :disabled="disableInput">
                                 <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
                             </b-button>
                             <b-button size="sm" variant="danger" v-if="!disableInput">
@@ -134,14 +134,21 @@
                             </b-row>
                             <!-- Detail Sekunder -->
                             <h5 class="mt-2">Data Pendukung lainnya</h5>
-                            <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id">
-                                <b-col md="3">
-                                    <strong>{{idx+1}}. {{ secData.jenis }}:</strong>
-                                </b-col>
-                                <b-col md="9">
-                                    {{ secData.data }}
-                                </b-col>
-                            </b-row>
+                            <template v-if="row.item.detailSekunders.data.length < 1">
+                                <b-alert variant="secondary" :show="true">
+                                    Tidak ada data sekunder
+                                </b-alert>
+                            </template>
+                            <template v-else>
+                                <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id">
+                                    <b-col md="3">
+                                        <strong>{{idx+1}}. {{ secData.jenis }}:</strong>
+                                    </b-col>
+                                    <b-col md="9">
+                                        {{ secData.data }}
+                                    </b-col>
+                                </b-row>
+                            </template>                            
                         </b-card>
                     </template>
                 </b-table>
