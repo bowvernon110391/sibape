@@ -73,9 +73,36 @@
             <b-col><b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
         </b-row>
         <hr>
-        <p>
-           Details go here...
-        </p>
+        <h5>Data Detil</h5>
+        <div class="my-2">
+            <b-button variant="primary" size="sm">Tambah detil</b-button>
+        </div>
+        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false">
+            <template v-slot:default="{ data, pagination }">
+                <b-table
+                    responsive="sm"
+                    table-class="shadow"
+                    head-variant="dark"
+                    bordered
+                    outlined
+                    striped
+                    small
+                    hover
+                    primary-key="id"
+                    :items="data"
+                    :fields="fieldDetails">
+                    <template v-slot:cell(satuan)="data">
+                        {{ data.item.satuan.jumlah }} {{ data.item.satuan.jenis }}
+                    </template>
+                    <template v-slot:cell(kemasan)="data">
+                        {{ data.item.kemasan.jumlah }} {{ data.item.kemasan.jenis }}
+                    </template>
+                    <template v-slot:cell(nilai_pabean)="data">
+                        {{ data.item.nilai_pabean | displayRupiah }}
+                    </template>
+                </b-table>
+            </template>
+        </paginated-browser>
         <pre>{{ dataCd }}</pre>
     </div>
 </template>
@@ -84,13 +111,20 @@
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import Datepicker from '@/components/Datepicker'
+import PaginatedBrowser from '@/components/PaginatedBrowser'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
     mixins: [axiosErrorHandler],
     components: {
         SelectPenumpang2,
-        Datepicker
+        Datepicker,
+        PaginatedBrowser
+    },
+    filters: {
+        displayRupiah (val) {
+            return "Rp. " + val
+        }
     },
     data() {
         return {
@@ -102,6 +136,14 @@ export default {
                 { text: 'Pembawaan Mata Uang', value: "UANG"},
                 { text: 'Barang dagangan (tidak untuk dipakai)', value: "KOMERSIL"},
                 { text: 'Barang impor untuk dipakai', value: "IMPOR_UNTUK_DIPAKAI"}
+            ],
+            fieldDetails: [
+                'uraian',
+                'satuan',
+                'kemasan',
+                'hscode',
+                'fob',
+                'nilai_pabean'
             ]
         }
     },
@@ -134,6 +176,24 @@ export default {
     },
     methods: {
         ...mapMutations(['setBusyState']),
+        loadCdDetails(q, spinner, vm) {
+            
+            if (this.id != 'new') {
+                var me = this
+                spinner(true)
+
+                this.api.getCdDetails(this.id, q)
+                .then(e => {
+                    spinner(false)
+                    vm.setData(e.data.data)
+                    vm.setTotal(e.data.meta.pagination.total)
+                })
+                .catch(e => {
+                    spinner(false)
+                    me.handleError(e)
+                })
+            }
+        },
         defaultData: function() {
             return {
                 "id": null,

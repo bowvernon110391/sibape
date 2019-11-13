@@ -115,6 +115,12 @@ class ApiSibape {
     updateCd (id, dataCd) {
         return this.instance.put('/dokumen/cd/' + id, dataCd)
     }
+
+    getCdDetails(id, param) {
+        return this.instance.get(`/dokumen/cd/${id}/details`, {
+            params: param
+        })
+    }
 }
 
 export {
