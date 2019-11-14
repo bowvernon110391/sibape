@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- Title at the top, showing lock status too -->
         <h4>
             <template v-if="id != 'new'">
                 CD #{{ id }} <b-badge :variant="dataCd.is_locked ? 'danger' : 'primary'"><font-awesome-icon :icon="dataCd.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge>
@@ -8,22 +9,34 @@
                 Input CD Baru
             </template>
         </h4>
+        <!-- Nomor & Tgl Dokumen + Alamat -->
         <b-row>
-            <b-col md="6" sm="12" class="mt-4">
+            <!-- 1st col, nomor & tgl dokumen -->
+            <b-col md="6">
                 <b-form-group label="Nomor &amp; Tgl. Dokumen">
                     <b-input-group>
-                        <b-form-input class="rounded-left" v-model="dataCd.nomor_lengkap" type="text" disabled></b-form-input>
+                        <b-form-input class="rounded-left flex-grow-1" v-model="dataCd.nomor_lengkap" type="text" disabled></b-form-input>
                         <template v-slot:append>
-                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataCd.tgl_dok" :disabled="disableInput"></datepicker>
+                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataCd.tgl_dok" :disabled="disableInput" style="max-width: 150px"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
             </b-col>
+
+            <!-- 2nd col, alamat -->
+            <b-col md="6">
+                <b-form-group label="Alamat" label-for="alamat">
+                    <b-form-textarea id="alamat" v-model="dataCd.alamat" :disabled="disableInput">
+                    </b-form-textarea>
+                </b-form-group>
+            </b-col>
         </b-row>
+
+        <!-- Penumpang + NIB -->
         <b-row>
             <b-col md="6">
                 <b-form-group label="Penumpang" label-for="penumpang">
-                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang" :disabled="disableInput"></select-penumpang-2>
+                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang" :disabled="disableInput" :initial-options="dataCd.penumpang.data"></select-penumpang-2>
                 </b-form-group>
             </b-col>
             <b-col md="6">
@@ -32,13 +45,15 @@
                 </b-form-group>
             </b-col>
         </b-row>
+
+        <!-- Nomor & Tgl Flight + Airport -->
         <b-row>
             <b-col md="6">
                 <b-form-group label="Nomor &amp; Tgl. Flight">
                     <b-input-group>
                         <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
                         <template v-slot:append>
-                            <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput"></datepicker>
+                            <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
@@ -75,10 +90,12 @@
                 </b-row>
             </b-col>
         </b-row>
-        <!-- Flag deklarasi -->
+
+        <!-- Flag deklarasi + PERHITUNGAN -->
         <b-row>
-            <b-col>
-                <b-form-group label="Flag Deklarasi">
+            <!-- Flag Deklarasi -->
+            <b-col md="6">
+                <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
                     <b-form-checkbox-group
                         :options="flagDeklarasi"
                         stacked
@@ -89,8 +106,12 @@
                 </b-form-group>
             </b-col>
         </b-row>
-        <b-row>
-            <b-col><b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput"><font-awesome-icon icon="save"></font-awesome-icon> Simpan</b-button></b-col>
+        <b-row class="mt-2">
+            <b-col>
+                <b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput">
+                    <font-awesome-icon icon="save"></font-awesome-icon> Simpan
+                </b-button>
+            </b-col>
         </b-row>
         <hr>
         <h5>Data Detil Barang</h5>
@@ -312,6 +333,9 @@ export default {
                 },
                 "pelabuhan_tujuan": {
                     data: null
+                },
+                "penumpang" : {
+                    data: null
                 }
             }
         },
@@ -402,3 +426,18 @@ export default {
     }
 }
 </script>
+
+<style>
+.perhitungan {
+    position: relative;
+}
+
+.perhitungan::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 1.2em;
+    content: 'Rp.';
+}
+
+</style>

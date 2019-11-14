@@ -60,22 +60,24 @@
                             <hr>
                             <h5>Penumpang</h5>
                             <b-row>
-                                <b-col md="1">
+                                <b-col md="2">
                                     <strong>Nama:</strong>
                                 </b-col>
-                                <b-col md="2">
+                                <b-col md="4">
                                     {{ row.item.penumpang.data.nama }}
                                 </b-col>
                                 <b-col md="2">
                                     <strong>Tgl Lahir:</strong>
                                 </b-col>
-                                <b-col md="2">
+                                <b-col md="4">
                                     {{ row.item.penumpang.data.tgl_lahir }}
                                 </b-col>
+                            </b-row>
+                            <b-row>
                                 <b-col md="2">
                                     <strong>Pekerjaan:</strong>
                                 </b-col>
-                                <b-col md="3">
+                                <b-col md="4">
                                     {{ row.item.penumpang.data.pekerjaan }}
                                 </b-col>
                             </b-row>
@@ -108,6 +110,15 @@
                                             {{ flag }}
                                         </b-badge>
                                     </div>
+                                </b-col>
+                            </b-row>
+                            <!-- alamat -->
+                            <b-row>
+                                <b-col md="2">
+                                    <strong>Alamat/Domisili:</strong>
+                                </b-col>
+                                <b-col md="6">
+                                    {{ row.item.alamat }}
                                 </b-col>
                             </b-row>
                         </b-card>
