@@ -124,28 +124,29 @@
                     <template v-slot:row-details="row">
                         <b-card>
                             <!-- Show Kategori -->
+                            <h5>Kategori</h5>
                             <b-row>
-                                <b-col md="2">
-                                    <strong>Kategori:</strong>
-                                </b-col>
-                                <b-col md="10">
+                                <b-col>
                                     <v-select multiple disabled :value="row.item.kategori"></v-select>
                                 </b-col>
                             </b-row>
+                            <hr>
                             <!-- Detail Sekunder -->
-                            <h5 class="mt-2">Data Pendukung lainnya</h5>
+                            <h5>Data Pendukung lainnya</h5>
                             <template v-if="row.item.detailSekunders.data.length < 1">
                                 <b-alert variant="secondary" :show="true">
                                     Tidak ada data sekunder
                                 </b-alert>
                             </template>
                             <template v-else>
-                                <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id">
-                                    <b-col md="3">
-                                        <strong>{{idx+1}}. {{ secData.jenis }}:</strong>
+                                <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id" class="mb-2">
+                                    <b-col md="4" class="d-flex">
+                                        <!-- <strong>{{idx+1}}. {{ secData.jenis }}:</strong> -->
+                                        <span>{{ idx+1 }}.&nbsp;</span> <v-select disabled :value="secData.jenis" class="flex-grow-1"></v-select>
                                     </b-col>
-                                    <b-col md="9">
-                                        {{ secData.data }}
+                                    <b-col md="8">
+                                        <!-- {{ secData.data }} -->
+                                        <textarea disabled v-model="secData.data" class="form-control"></textarea>
                                     </b-col>
                                 </b-row>
                             </template>                            
