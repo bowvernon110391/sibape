@@ -19,7 +19,7 @@ export default new Vuex.Store({
         busy: false,    // status layar (busy) bakal mnculin modal
         lokasi: null,   // data lokasi
         // backend SiBAPE
-        api: new ApiSibape(process.env.API_URL, 15000),
+        api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
         refData: {
             kemasan: [],
             negara: [],
