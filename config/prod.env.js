@@ -1,6 +1,8 @@
 'use strict'
 
-var dotenv = require('dotenv').config()
+var dotenv = require('dotenv').config({
+  path: './.env.production'
+})
 
 console.log("In prod.env...")
 console.log(dotenv.parsed)
