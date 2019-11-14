@@ -3,12 +3,29 @@
         <!-- Title at the top, showing lock status too -->
         <h4>
             <template v-if="id != 'new'">
-                CD #{{ id }} <b-badge :variant="dataCd.is_locked ? 'danger' : 'primary'"><font-awesome-icon :icon="dataCd.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge>
+                <span :class="[ dataCd.is_locked ? 'bg-danger' : 'bg-primary', 'text-light', 'p-2', 'shadow', 'border', 'border-dark', 'rounded']">CD #{{ id }} <b-badge variant="light"><font-awesome-icon :icon="dataCd.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge></span>
             </template>
             <template v-else>
                 Input CD Baru
             </template>
         </h4>
+        <!-- Tombol Penyelesaian? -->
+        <b-row class="my-2">
+            <b-col>
+                <div class="text-right">
+                    <b-button-group size="sm" class="shadow">
+                        <b-button variant="danger" :disabled="disableInput">
+                            <font-awesome-icon icon="plane-departure"></font-awesome-icon>
+                            Impor Sementara
+                        </b-button>
+                        <b-button variant="success" :disabled="disableInput">
+                            <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
+                            Bayar Pungutan
+                        </b-button>
+                    </b-button-group>
+                </div>
+            </b-col>
+        </b-row>
         <!-- Nomor & Tgl Dokumen + Alamat -->
         <b-row>
             <!-- 1st col, nomor & tgl dokumen -->
@@ -403,6 +420,15 @@ export default {
                   vm.handleError(e)
                })
            }
+        },
+
+        // check if cd has some related documents
+        cdHasLink: function (rel) {
+            if (this.dataCd.links) {
+                // check by filtering it
+                return this.dataCd.links.filter(e => e.rel == rel).length > 0
+            }
+            return false
         }
     },
     created () {
