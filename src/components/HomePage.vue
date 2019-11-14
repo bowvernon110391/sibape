@@ -83,6 +83,11 @@
 
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre> -->
         <select-pelabuhan></select-pelabuhan>
+        <hr>
+        <select-kategori v-model="kategori"></select-kategori>
+
+
+        <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
 
@@ -97,10 +102,12 @@ import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectHs from '@/components/SelectHs'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
+import SelectKategori from '@/components/SelectKategori'
 
 export default {
     components: {
-        SelectPelabuhan
+        SelectPelabuhan,
+        SelectKategori
     },
     data () {
         return {
