@@ -74,14 +74,15 @@
         <p>
             <select-hs v-model="kodeHS" :initial-options="dataHs"></select-hs>
         </p> -->
-        <paginated-browser
+        <!-- <paginated-browser
             :data-callback="browseCd">
             <template v-slot:default="data">
                 <pre>{{ JSON.stringify(data, null, 2) }}</pre>
             </template>
         </paginated-browser>
 
-        <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
+        <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre> -->
+        <select-pelabuhan></select-pelabuhan>
     </div>
 </template>
 
@@ -95,16 +96,11 @@ import ApiSelect from '@/components/ApiSelect'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectHs from '@/components/SelectHs'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
+import SelectPelabuhan from '@/components/SelectPelabuhan'
 
 export default {
     components: {
-        Datepicker,
-        vSelect,
-        SelectNegara,
-        ApiSelect,
-        SelectPenumpang2,
-        SelectHs,
-        PaginatedBrowser
+        SelectPelabuhan
     },
     data () {
         return {

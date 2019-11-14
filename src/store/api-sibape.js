@@ -89,6 +89,18 @@ class ApiSibape {
         })
     }
 
+    // getPelabuhan (param) : GET /pelabuhan
+    getPelabuhan (param) {
+        return this.instance.get('/pelabuhan', {
+            params: param
+        })
+    }
+
+    // getPelabuhanByKode (kode) : GET /pelabuhan/:kode
+    getPelabuhanByKode (kode) {
+        return this.instance.get('/pelabuhan/' + kode)
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /dokumen/cd
     getCd (param) {
