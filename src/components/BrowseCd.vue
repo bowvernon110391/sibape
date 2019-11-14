@@ -92,7 +92,7 @@
                                     <strong>Dokumen terkait:</strong>
                                 </b-col>
                                 <b-col md="6">
-                                    <b-button size="sm" variant="primary" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
+                                    <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
                                         {{ r.rel | docName }}
                                     </b-button>
                                 </b-col>
@@ -145,7 +145,7 @@ export default {
     },
     computed: {
         ...mapGetters(['api']),
-        pillVariant (val) {
+        pillVariant () {
             const mapping = {
                 KARANTINA: 'warning',
                 NARKOTIKA: 'danger',
@@ -155,6 +155,13 @@ export default {
                 IMPOR_UNTUK_DIPAKAI: 'info'
             }
             return mapping
+        },
+        pillVariantDokumen () {
+            return {
+                cd: 'primary',
+                sspcp: 'success',
+                is: 'danger'
+            }
         }
     },
     methods: {
