@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="mb-2">
+            <b-button variant="primary" to="/cd/new">
+                <font-awesome-icon icon="plus-square"></font-awesome-icon> Input CD
+            </b-button>
+        </div>
         <!-- di dalem div, ada paginated browser -->
         <paginated-browser
             :data-callback="getCd">
@@ -87,13 +92,13 @@
                                 <b-col md="2">
                                     <strong>Jumlah Detail:</strong>
                                 </b-col>
-                                <b-col md="2">
+                                <b-col md="4">
                                     {{ row.item.jumlah_detail }}
                                 </b-col>
                                 <b-col md="2">
                                     <strong>Dokumen terkait:</strong>
                                 </b-col>
-                                <b-col md="6">
+                                <b-col md="4">
                                     <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
                                         {{ r.rel | docName }}
                                     </b-button>
