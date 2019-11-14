@@ -2,6 +2,7 @@
     <div>
         <!-- 1st row, length select and search box -->
         <!-- Make it a slot so it can be modified -->
+        <b-container>
         <slot name="header">
             <b-row class="mb-3 py-2 rounded border border-dark bg-light shadow bg-form-control">
                 <!-- length select -->
@@ -57,6 +58,7 @@
                 </slot>
             </b-row>
         </slot>
+        </b-container>
         
         <!-- 2nd row, content -->
         <b-row class="my-2 position-relative">
