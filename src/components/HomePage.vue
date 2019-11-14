@@ -90,7 +90,10 @@
         <select-negara v-model="negara"></select-negara> -->
         <label>Select Negara 2</label>
         <select-negara-2 v-model="negara"></select-negara-2>
+        <label>Select HS</label>
         <select-hs v-model="kodeHS"></select-hs>
+        <label>Select Satuan</label>
+        <select-satuan v-model="satuan"></select-satuan>
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
@@ -108,6 +111,7 @@ import PaginatedBrowser from '@/components/PaginatedBrowser'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 import SelectKategori from '@/components/SelectKategori'
 import SelectNegara2 from '@/components/SelectNegara2'
+import SelectSatuan from '@/components/SelectSatuan'
 
 export default {
     components: {
@@ -115,11 +119,13 @@ export default {
         SelectKategori,
         SelectNegara2,
         SelectNegara,
-        SelectHs
+        SelectHs,
+        SelectSatuan
     },
     data () {
         return {
             showAlert: true,
+            satuan: 'EA',
             kodeHS:'10063030',
             selectVal: [],
             selectedNumber: null,
