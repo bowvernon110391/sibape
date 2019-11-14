@@ -44,15 +44,35 @@
                 </b-form-group>
             </b-col>
             <b-col md="6">
-                <b-form-group label="Airport asal dan tujuan" label-for="kd_pelabuhan_asal">
-                    <b-input-group prepend="Dari" class="mb-2">
-                        <b-form-input v-model="dataCd.kd_pelabuhan_asal" id="kd_pelabuhan_asal" type="text" :disabled="disableInput"></b-form-input>
-                        <b-input-group-prepend is-text>
-                            Ke
-                        </b-input-group-prepend>
-                        <b-form-input v-model="dataCd.kd_pelabuhan_tujuan" id="kd_pelabuhan_tujuan" type="text" :disabled="disableInput"></b-form-input>
-                    </b-input-group>
-                </b-form-group>
+                <b-row>
+                    <b-col>
+                        <b-form-group label="Airport asal" label-for="kd_pelabuhan_asal">
+                            <!-- <b-input-group prepend="Dari" class="mb-2"> -->
+                                <!-- <b-form-input v-model="dataCd.kd_pelabuhan_asal" id="kd_pelabuhan_asal" type="text" :disabled="disableInput"></b-form-input> -->
+                                <select-pelabuhan 
+                                    id="kd_pelabuhan_asal" 
+                                    v-model="dataCd.kd_pelabuhan_asal" 
+                                    :disabled="disableInput"
+                                    :initial-options="dataCd.pelabuhan_asal.data"></select-pelabuhan>
+                                <!-- <b-input-group-prepend is-text>
+                                    Ke
+                                </b-input-group-prepend> -->
+                                <!-- <b-form-input v-model="dataCd.kd_pelabuhan_tujuan" id="kd_pelabuhan_tujuan" type="text" :disabled="disableInput"></b-form-input> -->
+                            <!-- </b-input-group> -->
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col>
+                        <b-form-group label="Airport Tujuan" label-for="kd_pelabuhan_tujuan">
+                            <select-pelabuhan 
+                                id="kd_pelabuhan_tujuan" 
+                                v-model="dataCd.kd_pelabuhan_tujuan" 
+                                :disabled="disableInput"
+                                :initial-options="dataCd.pelabuhan_tujuan.data"></select-pelabuhan>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
             </b-col>
         </b-row>
         <!-- Flag deklarasi -->
@@ -165,6 +185,7 @@ import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import vSelect from 'vue-select'
+import SelectPelabuhan from '@/components/SelectPelabuhan'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
@@ -173,7 +194,8 @@ export default {
         SelectPenumpang2,
         Datepicker,
         PaginatedBrowser,
-        vSelect
+        vSelect,
+        SelectPelabuhan
     },
     filters: {
         displayRupiah (val) {
@@ -266,7 +288,13 @@ export default {
                 "jumlah_detail": 0,
                 "last_status": null,
                 "is_locked": false,
-                "penumpang_id": null
+                "penumpang_id": null,
+                "pelabuhan_asal": {
+                    data: null
+                },
+                "pelabuhan_tujuan": {
+                    data: null
+                }
             }
         },
         loadCdData (cdId) {

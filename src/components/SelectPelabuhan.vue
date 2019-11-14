@@ -14,7 +14,12 @@
         <!-- what to display for selected option -->
         <template v-slot:selected-option="opt">
             <div>
-                <strong>{{ opt.nama }}</strong> <em>({{ opt.kode }})</em>
+                <template v-if="opt.nama">
+                    <strong>{{ opt.nama }}</strong> <em>({{ opt.kode }})</em>
+                </template>
+                <template v-else>
+                    <strong><em>Synchronizing...</em></strong>
+                </template>
             </div>
         </template>
     </api-select>
