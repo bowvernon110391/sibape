@@ -92,9 +92,22 @@
                                     <strong>Dokumen terkait:</strong>
                                 </b-col>
                                 <b-col md="6">
-                                    <b-button size="sm" variant="primary" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri">
+                                    <b-button size="sm" variant="primary" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
                                         {{ r.rel | docName }}
                                     </b-button>
+                                </b-col>
+                            </b-row>
+                            <b-row>
+                                <b-col md="2">
+                                    <strong>Flag:</strong>
+                                </b-col>
+                                <b-col md="6">
+                                    <div>
+                                        <!-- some pills here... -->
+                                        <b-badge v-for="(flag, idx) in row.item.declare_flags" :key="idx" :variant="pillVariant[flag]">
+                                            {{ flag }}
+                                        </b-badge>
+                                    </div>
                                 </b-col>
                             </b-row>
                         </b-card>
@@ -131,7 +144,18 @@ export default {
         PaginatedBrowser
     },
     computed: {
-        ...mapGetters(['api'])
+        ...mapGetters(['api']),
+        pillVariant (val) {
+            const mapping = {
+                KARANTINA: 'warning',
+                NARKOTIKA: 'danger',
+                UANG: 'success',
+                BKC: 'dark',
+                KOMERSIL: 'primary',
+                IMPOR_UNTUK_DIPAKAI: 'info'
+            }
+            return mapping
+        }
     },
     methods: {
         getCd (q, spinner, vm) {
