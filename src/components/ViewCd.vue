@@ -99,8 +99,10 @@
                 <font-awesome-icon icon="plus-square"></font-awesome-icon> Tambah Barang
             </b-button>
         </div>
+        <!-- paginated utk data detail -->
         <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false">
             <template v-slot:default="{ data, pagination }">
+                <!-- table utk details -->
                 <b-table
                     responsive="sm"
                     table-class="shadow"
@@ -113,14 +115,27 @@
                     primary-key="id"
                     :items="data"
                     :fields="fieldDetails">
+                    <!-- custom render : SATUAN -->
                     <template v-slot:cell(satuan)="data">
                         {{ data.item.satuan.jumlah }} {{ data.item.satuan.jenis }}
                     </template>
+                    <!-- custom render : KEMASAN -->
                     <template v-slot:cell(kemasan)="data">
                         {{ data.item.kemasan.jumlah }} {{ data.item.kemasan.jenis }}
                     </template>
+                    <!-- custom render : FOB -->
+                    <template v-slot:cell(fob)="data">
+                        <span>{{ data.item.kurs.data.kode_valas }}&nbsp;</span>
+                        <span class="float-right">
+                            {{ data.item.fob | formatCurrency(4) }}
+                        </span>
+                    </template>
+                    <!-- custom render : NILAI PABEAN -->
                     <template v-slot:cell(nilai_pabean)="data">
-                        {{ data.item.nilai_pabean | displayRupiah }}
+                        <span>Rp&nbsp;</span>
+                        <span class="float-right">
+                        {{ data.item.nilai_pabean | formatCurrency }}
+                        </span>
                     </template>
                     <!-- Tombol actions (edit, delete) -->
                     <template v-slot:cell(action)="data">
@@ -198,6 +213,9 @@ export default {
         SelectPelabuhan
     },
     filters: {
+        formatCurrency (val, decLength = 2) {
+            return Number(val).toFixed(decLength).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        },
         displayRupiah (val) {
             return "Rp. " + val
         }
