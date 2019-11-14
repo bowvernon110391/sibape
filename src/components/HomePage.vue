@@ -85,8 +85,12 @@
         <select-pelabuhan></select-pelabuhan>
         <hr>
         <select-kategori v-model="kategori"></select-kategori>
-
-
+        <hr>
+        <!-- <label>Select Negara</label>
+        <select-negara v-model="negara"></select-negara> -->
+        <label>Select Negara 2</label>
+        <select-negara-2 v-model="negara"></select-negara-2>
+        <select-hs v-model="kodeHS"></select-hs>
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
@@ -103,11 +107,15 @@ import SelectHs from '@/components/SelectHs'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 import SelectKategori from '@/components/SelectKategori'
+import SelectNegara2 from '@/components/SelectNegara2'
 
 export default {
     components: {
         SelectPelabuhan,
-        SelectKategori
+        SelectKategori,
+        SelectNegara2,
+        SelectNegara,
+        SelectHs
     },
     data () {
         return {

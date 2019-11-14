@@ -1,5 +1,6 @@
 <template>
    <api-select
+      label="uraian"
       :reduce="e => e.kode"
       :search-callback="searchHS"
       :sync-callback="searchHS"

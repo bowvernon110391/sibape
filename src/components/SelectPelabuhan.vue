@@ -1,5 +1,6 @@
 <template>
     <api-select
+        label="nama"
         :reduce="e => e.kode"
         :search-callback="searchPelabuhan"
         :sync-callback="syncPelabuhan"

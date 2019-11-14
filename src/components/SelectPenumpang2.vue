@@ -2,6 +2,7 @@
     <div>
         <b-input-group class="d-flex">
             <api-select 
+                label="nama"
                 ref="sel"
                 class="flex-grow-1"
                 :disabled="disabled"
