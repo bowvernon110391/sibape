@@ -1,0 +1,24 @@
+#app table, #app .vs__dropdown-toggle {
+    background-color: white;
+}
+
+body {
+    transition: background-color 1s ease;
+    animation: bg 1500s infinite;
+    background-attachment: fixed;
+}
+
+@keyframes bg {
+    0% {
+        background-color: rgb(240, 248, 255, .8);
+    }
+    33% {
+        background-color: rgba(239,237,202, .8);
+    }
+    67% {
+        background-color: rgb(255, 228, 196, .8);
+    }
+    100% {
+        background-color: rgb(240, 248, 255, .8);
+    }
+}

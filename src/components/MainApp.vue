@@ -44,7 +44,7 @@
         </b-navbar>
         <b-container>
             <!-- breadcrumb -->
-            <b-breadcrumb>
+            <b-breadcrumb class="shadow shadow-sm">
                 <b-breadcrumb-item v-for="(bc, id) in this.validBreadCrumbs" :key="id" :to="bc.path" :disabled="bc.disabled" :active="bc.disabled">{{ bc.title }}</b-breadcrumb-item>
             </b-breadcrumb>
             <span class="h4 data-title">{{ this.$route.meta.title }}</span>
