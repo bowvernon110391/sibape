@@ -31,7 +31,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-select/dist/vue-select.css'
 
 // our custom style.css
-// import './assets/style.css'
+import './assets/style.css'
 
 // mixins?
 // import axiosErrorHandler from './mixins/axiosErrorHandler'

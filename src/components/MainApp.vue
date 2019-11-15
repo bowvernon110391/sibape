@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="dark" class="mb-2">
+        <b-navbar toggleable="lg" type="dark" variant="dark" id="navbar">
             <b-container>
                 <b-navbar-brand to="/">
                     <img style="max-height: 25px;" src="../assets/logo.png"/>
@@ -42,9 +42,9 @@
                 </b-collapse>
             </b-container>
         </b-navbar>
-        <b-container>
+        <b-container id="contents-section" class="pt-2">
             <!-- breadcrumb -->
-            <b-breadcrumb class="shadow shadow-sm">
+            <b-breadcrumb class="border rounded bg-light shadow">
                 <b-breadcrumb-item v-for="(bc, id) in this.validBreadCrumbs" :key="id" :to="bc.path" :disabled="bc.disabled" :active="bc.disabled">{{ bc.title }}</b-breadcrumb-item>
             </b-breadcrumb>
             <span class="h4 data-title">{{ this.$route.meta.title }}</span>
@@ -113,3 +113,16 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#navbar {
+    box-shadow: 0 1px 8px 4px rgba(0, 0, 0, 0.5);
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#45484d+0,000000+100;Black+3D+%231 */
+background: #45484d; /* Old browsers */
+background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+}
+</style>
