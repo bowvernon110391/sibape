@@ -10,7 +10,7 @@
             </template>
         </h4>
         <!-- Tombol Penyelesaian? -->
-        <b-row class="my-2">
+        <b-row class="my-2" v-if="id != 'new'">
             <b-col>
                 <div class="text-right">
                     <b-button-group size="sm" class="shadow">

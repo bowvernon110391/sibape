@@ -15,7 +15,7 @@
         <!-- what to display for selected option -->
         <template v-slot:selected-option="opt">
             <div>
-                <template v-if="opt.nama">
+                <template v-if="opt.kode">
                     <strong>{{ opt.nama }}</strong> <em>({{ opt.kode }})</em>
                 </template>
                 <template v-else>
