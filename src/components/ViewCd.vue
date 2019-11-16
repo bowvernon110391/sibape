@@ -140,92 +140,16 @@
         <!-- paginated utk data detail -->
         <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false">
             <template v-slot:default="{ data, pagination }">
-                <!-- table utk details -->
-                <b-table
-                    responsive="sm"
-                    table-class="shadow"
-                    head-variant="dark"
-                    bordered
-                    outlined
-                    striped
-                    small
-                    hover
-                    primary-key="id"
-                    :items="data"
-                    :fields="fieldDetails">
-                    <!-- custom render : SATUAN -->
-                    <template v-slot:cell(satuan)="data">
-                        {{ data.item.satuan.jumlah }} {{ data.item.satuan.jenis }}
-                    </template>
-                    <!-- custom render : KEMASAN -->
-                    <template v-slot:cell(kemasan)="data">
-                        {{ data.item.kemasan.jumlah }} {{ data.item.kemasan.jenis }}
-                    </template>
-                    <!-- custom render : FOB -->
-                    <template v-slot:cell(fob)="data">
-                        <span>{{ data.item.kurs.data.kode_valas }}&nbsp;</span>
-                        <span class="float-right">
-                            {{ data.item.fob | formatCurrency(4) }}
-                        </span>
-                    </template>
-                    <!-- custom render : NILAI PABEAN -->
-                    <template v-slot:cell(nilai_pabean)="data">
-                        <span>Rp&nbsp;</span>
-                        <span class="float-right">
-                        {{ data.item.nilai_pabean | formatCurrency }}
-                        </span>
-                    </template>
-                    <!-- Tombol actions (edit, delete) -->
-                    <template v-slot:cell(action)="data">
-                        <b-button-group>
-                            <b-button size="sm" variant="primary" :disabled="disableInput">
-                                <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
-                            </b-button>
-                            <b-button size="sm" variant="danger" v-if="!disableInput">
-                                <font-awesome-icon icon="trash-alt"></font-awesome-icon>
-                            </b-button>
-                        </b-button-group>
-                    </template>
-                    <!-- Row detail button -->
-                    <template v-slot:cell(_showDetail)="row">
-                        <b-button variant="dark" size="sm" @click="row.toggleDetails">
-                            <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
-                            </font-awesome-icon>
-                        </b-button>
-                    </template>
-                    <!-- Row detail -->
-                    <template v-slot:row-details="row">
-                        <b-card>
-                            <!-- Show Kategori -->
-                            <h5>Kategori</h5>
-                            <b-row>
-                                <b-col>
-                                    <v-select multiple disabled :value="row.item.kategori"></v-select>
-                                </b-col>
-                            </b-row>
-                            <hr>
-                            <!-- Detail Sekunder -->
-                            <h5>Data Pendukung lainnya</h5>
-                            <template v-if="row.item.detailSekunders.data.length < 1">
-                                <b-alert variant="secondary" :show="true">
-                                    Tidak ada data sekunder
-                                </b-alert>
-                            </template>
-                            <template v-else>
-                                <b-row v-for="(secData, idx) in row.item.detailSekunders.data" :key="secData.id" class="mb-2">
-                                    <b-col md="4" class="d-flex">
-                                        <!-- <strong>{{idx+1}}. {{ secData.jenis }}:</strong> -->
-                                        <span>{{ idx+1 }}.&nbsp;</span> <v-select disabled :value="secData.jenis" class="flex-grow-1"></v-select>
-                                    </b-col>
-                                    <b-col md="8">
-                                        <!-- {{ secData.data }} -->
-                                        <textarea disabled v-model="secData.data" class="form-control"></textarea>
-                                    </b-col>
-                                </b-row>
-                            </template>                            
-                        </b-card>
-                    </template>
-                </b-table>
+                
+                <template v-for="(d, idx) in data">
+                    <card-view-detail-cd
+                        :key="pagination.start + idx"
+                        :index="pagination.start + idx"
+                        :data="d"
+                        class="mb-2 shadow">
+                    </card-view-detail-cd>               
+                </template>
+                
             </template>
         </paginated-browser>
         <!-- <pre>{{ dataCd }}</pre> -->
@@ -239,7 +163,9 @@ import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import vSelect from 'vue-select'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
+import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
+import { chunk } from '../etc'
 
 export default {
     mixins: [axiosErrorHandler],
@@ -248,15 +174,8 @@ export default {
         Datepicker,
         PaginatedBrowser,
         vSelect,
-        SelectPelabuhan
-    },
-    filters: {
-        formatCurrency (val, decLength = 2) {
-            return Number(val).toFixed(decLength).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-        },
-        displayRupiah (val) {
-            return "Rp. " + val
-        }
+        SelectPelabuhan,
+        CardViewDetailCd
     },
     data() {
         return {
@@ -429,7 +348,10 @@ export default {
                 return this.dataCd.links.filter(e => e.rel == rel).length > 0
             }
             return false
-        }
+        },
+
+        // make chunk usable inside component
+        chunk: chunk
     },
     created () {
         this.setBusyState(true)

@@ -33,6 +33,9 @@ import 'vue-select/dist/vue-select.css'
 // our custom style.css
 import './assets/style.css'
 
+// our custom filters
+import './filters'
+
 // mixins?
 // import axiosErrorHandler from './mixins/axiosErrorHandler'
 
