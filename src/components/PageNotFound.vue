@@ -12,7 +12,7 @@
                         <b-card-body
                             title="404 Page Not Found">
                             <b-card-text>
-                                Halaman yang ente cari kagak ketemu cuy :'(
+                                Halaman yang dimaksud tidak ditemukan :'(
                             </b-card-text>
                             <b-button variant="primary" to="/" @click="setBusy" :disabled="busy">
                                 <span v-if="busy">

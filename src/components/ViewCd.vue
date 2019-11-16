@@ -138,7 +138,7 @@
             </b-button>
         </div>
         <!-- paginated utk data detail -->
-        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false">
+        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false" ref="detailBrowser">
             <template v-slot:default="{ data, pagination }">
                 
                 <template v-for="(d, idx) in data">
@@ -146,7 +146,9 @@
                         :key="pagination.start + idx"
                         :index="pagination.start + idx"
                         :data="d"
-                        class="mb-2 shadow">
+                        :editable="!disableInput"
+                        class="mb-2 shadow"
+                        @detailChange="onDetailChange">
                     </card-view-detail-cd>               
                 </template>
                 
@@ -303,7 +305,9 @@ export default {
                     })
                 })
         },
-        onSave: function() {
+
+        // when save button clicked
+        onSave () {
            this.setBusyState(true)
            const vm = this
            // kalo id dataCd null, berarti buat baru
@@ -339,6 +343,11 @@ export default {
                   vm.handleError(e)
                })
            }
+        },
+
+        onDetailChange (id) {
+            // alert('Detail changed! -> #' + id)
+            this.$refs.detailBrowser.loadData()
         },
 
         // check if cd has some related documents
