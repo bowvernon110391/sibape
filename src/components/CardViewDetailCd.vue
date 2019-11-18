@@ -60,7 +60,13 @@
                     </b-form-group>
                 </b-col>
                 <b-col md="4">
-                    Kurs Select goes here...
+                    <b-form-group
+                        label="Kurs">
+                        <select-kurs 
+                            v-model="data.kurs.data.id"
+                            :initial-options="data.kurs.data"
+                            :disabled="!canEdit"></select-kurs>
+                    </b-form-group>
                 </b-col>
                 <b-col md="4">
                     <b-form-group
@@ -77,10 +83,14 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
+import SelectKurs from '@/components/SelectKurs'
 
 export default {
     props: [ 'index', 'data', 'editable' ],
     mixins: [ axiosErrorHandler ],
+    components: {
+        SelectKurs
+    },
     data () {
         return {
             showBody: false,

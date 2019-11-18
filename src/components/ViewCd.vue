@@ -129,31 +129,12 @@
                     <font-awesome-icon icon="save"></font-awesome-icon> Simpan
                 </b-button>
             </b-col>
-        </b-row>
-        <hr>
-        <h5>Data Detil Barang</h5>
-        <div class="my-2">
-            <b-button variant="primary" class="shadow" :disabled="disableInput">
-                <font-awesome-icon icon="plus-square"></font-awesome-icon> Tambah Barang
-            </b-button>
-        </div>
+        </b-row>        
         <!-- paginated utk data detail -->
-        <paginated-browser :data-callback="loadCdDetails" :search-date-range="false" :search-box="false" ref="detailBrowser">
-            <template v-slot:default="{ data, pagination }">
-                
-                <template v-for="(d, idx) in data">
-                    <card-view-detail-cd
-                        :key="pagination.start + idx"
-                        :index="pagination.start + idx"
-                        :data="d"
-                        :editable="!disableInput"
-                        class="mb-2 shadow"
-                        @detailChange="onDetailChange">
-                    </card-view-detail-cd>               
-                </template>
-                
-            </template>
-        </paginated-browser>
+        <template v-if="id != 'new'">
+            <hr>
+            <view-cd-details :cd-id="id"></view-cd-details>
+        </template>
         <!-- <pre>{{ dataCd }}</pre> -->
     </div>
 </template>
@@ -165,9 +146,9 @@ import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import vSelect from 'vue-select'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
-import CardViewDetailCd from '@/components/CardViewDetailCd'
+// import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
-import { chunk } from '../etc'
+import ViewCdDetails from '@/components/ViewCdDetails'
 
 export default {
     mixins: [axiosErrorHandler],
@@ -177,7 +158,8 @@ export default {
         PaginatedBrowser,
         vSelect,
         SelectPelabuhan,
-        CardViewDetailCd
+        // CardViewDetailCd
+        ViewCdDetails
     },
     data() {
         return {
@@ -358,9 +340,6 @@ export default {
             }
             return false
         },
-
-        // make chunk usable inside component
-        chunk: chunk
     },
     created () {
         this.setBusyState(true)

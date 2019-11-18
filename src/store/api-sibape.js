@@ -152,10 +152,33 @@ class ApiSibape {
         return this.instance.put('/cd/' + id, dataCd)
     }
 
-    getCdDetails(id, param) {
+    // getCdDetails (id, param) : GET /cd/:id/details?param
+    getCdDetails (id, param) {
         return this.instance.get(`/cd/${id}/details`, {
             params: param
         })
+    }
+
+    // getCdDetailById (id, param) : GET /cd/details/:id?param
+    getCdDetailById (id, param) {
+        return this.instance.get('/cd/details/' + id, {
+            params: param
+        })
+    }
+
+    // createCdDetail (id, data) : POST /cd/:id/details
+    createCdDetail (id, data) {
+        return this.instance.post(`/cd/${id}/details`, data)
+    }
+
+    // updateCdDetail (id, data) : PUT /cd/details/:id
+    updateCdDetail (id, data) {
+        return this.instance.put('/cd/details/' + id, data)
+    }
+
+    // deleteCdDetail (id) : DELETE /cd/details/:id
+    deleteCdDetail (id) {
+        return this.instance.delete('/cd/details/' + id)
     }
 }
 
