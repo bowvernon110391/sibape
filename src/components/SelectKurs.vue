@@ -40,7 +40,8 @@
                         id="btn-settings" 
                         variant="dark" 
                         :disabled="disabled" 
-                        size="sm">
+                        size="sm"
+                        style="z-index: 0">
                         <font-awesome-icon :icon="showSetting ? 'times' : 'wrench'">
                         </font-awesome-icon>
                     </b-button>

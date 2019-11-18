@@ -1,12 +1,11 @@
 <template>
-    <v-select
+    <api-select
         label="uraian"
-        :options="satuan"
         :reduce="e => e.kode"
-        :filter-by="searchSatuan"
-        :disabled="disabled || loading"
         v-bind="$attrs"
-        v-on="$listeners">
+        v-on="$listeners"
+        :search-callback="searchSatuan"
+        :sync-callback="syncSatuan">
 
         <!-- SLOT : OPTION -->
         <template v-slot:option="opt">
@@ -21,17 +20,18 @@
 
         <!-- SLOT : SELECTED-OPTION -->
         <template v-slot:selected-option="opt">
-            <template v-if="loading">
-                <div>Loading...<b-spinner small variant="dark"></b-spinner></div>
-            </template>
-            <template v-else>
-                <div>
-                    <!-- <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode }})</em> -->
+            <div>
+                <!-- <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode }})</em> -->
+                <template v-if="opt.id">
                     <strong>{{ opt.kode }}</strong> <em>({{ opt.uraian }})</em>
-                </div>
-            </template>
+                </template>
+                <!-- when uraian not exist, meaning it's syncing -->
+                <template v-else>
+                    <strong>Synchronizing...</strong>
+                </template>
+            </div>
         </template>
-    </v-select>
+    </api-select>
 </template>
 
 <script>
@@ -39,44 +39,52 @@
 // it loads from static .json file, 
 // should handle cache better
 
-import vSelect from 'vue-select'
+// import vSelect from 'vue-select'
+import ApiSelect from '@/components/ApiSelect'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
-const axios = require('axios').default
+import { mapGetters } from 'vuex'
 
 export default {
     inheritAttrs: false,
     mixins: [ axiosErrorHandler ],
-    props: [ 'disabled' ],
     components: {
-        vSelect
+        ApiSelect
     },
-    data () {
-        return {
-            loading: false,
-            satuan: []
-        }
+    computed: {
+        ...mapGetters(['api'])
     },
     methods: {
-        searchSatuan (option, label, search) {
-            return option.kode.toLowerCase().indexOf(search.toLowerCase()) >= 0
-                || option.uraian.toLowerCase().indexOf(search.toLowerCase()) >= 0;
-        }
-    },
-    mounted () {
-        // load if not loaded?
-        if (!this.satuan.length) {
-            this.loading = true
-            // now we try to read the json
-            axios.get('/static/satuan.json')
+        searchSatuan (q, spinner, vm) {
+            spinner(true)
+            var me = this
+
+            this.api.getSatuan({
+                q: q,
+                number: 50
+            })
             .then(e => {
-                this.loading = false
-                // console.log('loaded negara!')
-                // console.log(e.data)
-                this.satuan = e.data.data
+                spinner(false)
+                vm.setOptions(e.data.data)
             })
             .catch(e => {
-                this.loading = false
-                this.handleError(e)
+                spinner(false)
+                me.handleError(e)
+            })
+        },
+
+        // sync satuan by kode
+        syncSatuan (q, spinner, vm) {
+            spinner(true)
+            var me = this
+
+            this.api.getSatuanByKode(q)
+            .then(e => {
+                spinner(false)
+                vm.setOptions([e.data.data])
+            })
+            .catch(e => {
+                spinner(false)
+                me.handleError(e)
             })
         }
     }
