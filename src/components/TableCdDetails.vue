@@ -26,17 +26,30 @@
 
         <!-- Kemasan -->
         <template v-slot:cell(kemasan)="row">
+            <p class="text-center">
             {{ row.item.kemasan.jumlah }} <strong>{{ row.item.kemasan.jenis }}</strong>
+            </p>
         </template>
 
         <!-- Satuan -->
         <template v-slot:cell(satuan)="row">
+            <p class="text-center">
             {{ row.item.satuan.jumlah }} <strong>{{ row.item.satuan.jenis }}</strong>
+            </p>
         </template>
 
         <!-- FOB -->
         <template v-slot:cell(fob)="row">
-            <strong>{{ row.item.kurs.data.kode_valas }}</strong> <span class="float-right">{{ row.item.fob | formatCurrency(4) }}</span>
+            <p class="text-right">
+                <strong>{{ row.item.kurs.data.kode_valas }}</strong> {{ row.item.fob | formatCurrency(4) }}
+            </p>
+        </template>
+
+        <!-- Bruto -->
+        <template v-slot:cell(brutto)="row">
+            <p class="text-right">
+                {{ row.item.brutto | formatCurrency }} KG
+            </p>
         </template>
 
         <!-- Detail Row -->
@@ -45,6 +58,7 @@
             <card-view-detail-cd
                 :data="row.item"
                 :editable="!disabled"
+                :key="row.item.id"
                 @detailChange="handleDetailChange"></card-view-detail-cd>
         </template>
     </b-table>

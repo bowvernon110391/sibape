@@ -96,6 +96,22 @@
                         </div>
                     </b-form-group>                    
                 </b-col>
+
+                <!-- Bruto -->
+                <b-col md="2">
+                    <b-form-group
+                        label="Bruto (kg)">
+                        <b-form-input v-model="tempData.brutto" :disabled="!canEdit"></b-form-input>
+                    </b-form-group>
+                </b-col>
+
+                <!-- Neto -->
+                <b-col md="2">
+                    <b-form-group
+                        label="Netto (kg)">
+                        <b-form-input v-model="tempData.netto" :disabled="!canEdit"></b-form-input>
+                    </b-form-group>
+                </b-col>
             </b-row>
         </b-card-body>
     </b-card>
