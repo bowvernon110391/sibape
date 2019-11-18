@@ -94,6 +94,13 @@
         <select-hs v-model="kodeHS"></select-hs>
         <label>Select Satuan</label>
         <select-satuan v-model="satuan"></select-satuan>
+
+        <b-form-group
+            label="Select Kurs">
+            <select-kurs
+                v-model="kursId"></select-kurs>
+        </b-form-group>
+
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
@@ -112,6 +119,7 @@ import SelectPelabuhan from '@/components/SelectPelabuhan'
 import SelectKategori from '@/components/SelectKategori'
 import SelectNegara2 from '@/components/SelectNegara2'
 import SelectSatuan from '@/components/SelectSatuan'
+import SelectKurs from '@/components/SelectKurs'
 
 export default {
     components: {
@@ -120,7 +128,8 @@ export default {
         SelectNegara2,
         SelectNegara,
         SelectHs,
-        SelectSatuan
+        SelectSatuan,
+        SelectKurs
     },
     data () {
         return {
