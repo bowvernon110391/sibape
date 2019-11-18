@@ -92,8 +92,21 @@
         <select-negara-2 v-model="negara"></select-negara-2>
         <label>Select HS</label>
         <select-hs v-model="kodeHS"></select-hs>
-        <label>Select Satuan</label>
-        <select-satuan v-model="satuan"></select-satuan>
+
+        <b-row>
+            <b-col md="6">
+                <b-form-group
+                    label="Select Kemasan">
+                    <select-kemasan v-model="kemasan"></select-kemasan>
+                </b-form-group>
+            </b-col>
+            <b-col md="6">
+                <b-form-group
+                    label="Select Satuan">
+                    <select-satuan v-model="satuan"></select-satuan>
+                </b-form-group>
+            </b-col>
+        </b-row>
 
         <b-form-group
             label="Select Kurs">
@@ -120,6 +133,7 @@ import SelectKategori from '@/components/SelectKategori'
 import SelectNegara2 from '@/components/SelectNegara2'
 import SelectSatuan from '@/components/SelectSatuan'
 import SelectKurs from '@/components/SelectKurs'
+import SelectKemasan from '@/components/SelectKemasan'
 
 export default {
     components: {
@@ -129,12 +143,14 @@ export default {
         SelectNegara,
         SelectHs,
         SelectSatuan,
-        SelectKurs
+        SelectKurs,
+        SelectKemasan
     },
     data () {
         return {
             showAlert: true,
             satuan: 'EA',
+            kemasan: 'BX',
             kodeHS:'10063030',
             selectVal: [],
             selectedNumber: null,
