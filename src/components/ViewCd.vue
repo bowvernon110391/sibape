@@ -133,7 +133,7 @@
         <!-- paginated utk data detail -->
         <template v-if="id != 'new'">
             <hr>
-            <view-cd-details :cd-id="id"></view-cd-details>
+            <view-cd-details :cd-id="id" :disabled="disableInput"></view-cd-details>
         </template>
         <!-- <pre>{{ dataCd }}</pre> -->
     </div>

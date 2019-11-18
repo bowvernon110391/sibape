@@ -2,7 +2,7 @@
     <div>
         <h5>Data Detil Barang</h5>
         <div class="my-2">
-            <b-button variant="primary" class="shadow" :disabled="disableInput">
+            <b-button variant="primary" class="shadow" :disabled="disabled">
                 <font-awesome-icon icon="plus-square"></font-awesome-icon> Tambah Barang
             </b-button>
         </div>
@@ -34,6 +34,10 @@ export default {
         cdId: {
             type: [String, Number],
             default: null
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
