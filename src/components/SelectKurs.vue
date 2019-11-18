@@ -10,7 +10,6 @@
                     v-on="$listeners"
                     label="kode_valas"
                     class="flex-grow-1"
-                    style="z-index: 3"
                     :disabled="disabled"
                     :search-callback="searchKurs"
                     :sync-callback="searchKurs"
