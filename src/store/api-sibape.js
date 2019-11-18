@@ -101,6 +101,30 @@ class ApiSibape {
         return this.instance.get('/pelabuhan/' + kode)
     }
 
+    // getKemasan (param) : GET /kemasan
+    getKemasan (param) {
+        return this.instance.get('/kemasan', {
+            params: param
+        })
+    }
+
+    // getKemasanByKode (kode) : GET /kemasan/:kode
+    getKemasanByKode (kode) {
+        return this.instance.get('/kemasan/' + kode)
+    }
+
+    // getSatuan (param) : GET /satuan
+    getSatuan (param) {
+        return this.instance.get('/satuan', {
+            params: param
+        })
+    }
+
+    // getSatuanByKode (kode) : GET /satuan/:kode
+    getSatuanByKode (kode) {
+        return this.instance.get('/satuan/' + kode)
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /dokumen/cd
     getCd (param) {
