@@ -12,7 +12,7 @@
                     class="flex-grow-1"
                     :disabled="disabled"
                     :search-callback="searchKurs"
-                    :sync-callback="searchKurs"
+                    :sync-callback="syncKurs"
                     :reduce="e => e.id">
                     <!-- Slot for options -->
                     <template v-slot:option="opt">
@@ -39,10 +39,9 @@
                     <b-button 
                         id="btn-settings" 
                         variant="dark" 
-                        @click="showSetting = !showSetting" 
                         :disabled="disabled" 
                         size="sm">
-                        <font-awesome-icon icon="wrench">
+                        <font-awesome-icon :icon="showSetting ? 'times' : 'wrench'">
                         </font-awesome-icon>
                     </b-button>
                 </b-input-group-append>
@@ -50,7 +49,9 @@
         </div>
         <!-- <template v-if="showSetting"> -->
             <!-- our datepicker -->
-        <b-popover target="btn-settings" triggers="click" placement="bottomleft">
+        <b-popover target="btn-settings" triggers="click" 
+                    placement="bottomleft" @shown="showSetting = true" 
+                    @hidden="showSetting = false">
             <template v-slot:title>
                 Cari kurs per tanggal
             </template>
@@ -99,6 +100,7 @@ export default {
             // set reference and param
             var me = this
             var params = {
+                q: q,       // the query string
                 number: 50  // load 50 rows so it doesn't page (hopefully)
             }
             if (this.activeDate) {
@@ -111,6 +113,22 @@ export default {
                 spinner(false)
                 // set data?
                 vm.setOptions(e.data.data)
+            })
+            .catch(e => {
+                spinner(false)
+                me.handleError(e)
+            })
+        },
+
+        // to sync kurs
+        syncKurs (q, spinner, vm) {
+            spinner(true)
+            var me = this
+
+            this.api.getKursById(q)
+            .then(e => {
+                spinner(false)
+                vm.setOptions([e.data.data])
             })
             .catch(e => {
                 spinner(false)
