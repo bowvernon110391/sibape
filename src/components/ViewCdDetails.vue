@@ -13,8 +13,12 @@
             ref="detailBrowser">
             <!-- put TableCdDetails here -->
             <template v-slot:default="{ data, pagination }">
-                <pre>{{ data.length }} is loaded</pre>
-                <pre>{{ JSON.stringify(pagination, null, 2) }}</pre>
+                <!-- <pre>{{ data.length }} is loaded</pre>
+                <pre>{{ JSON.stringify(pagination, null, 2) }}</pre> -->
+                <table-cd-details
+                    :items="data"
+                    :pagination="pagination"
+                    :disabled="disabled"></table-cd-details>
             </template>
         </paginated-browser>
     </div>
@@ -24,10 +28,12 @@
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
+import TableCdDetails from '@/components/TableCdDetails'
 
 export default {
     components: {
-        PaginatedBrowser
+        PaginatedBrowser,
+        TableCdDetails
     },
     mixins: [ axiosErrorHandler ],
     props: {

@@ -2,17 +2,11 @@
     <b-card 
         no-body>
         <template v-slot:header>
-            <template v-if="data.id">
-                <strong>#{{ index }}:&nbsp;</strong> 
-                <span>
-                    {{ data.uraian }}, FOB({{ data.kurs.data.kode_valas }} {{ data.fob | formatCurrency }})
-                </span>
-            </template>
             <span class="float-right">
-                <b-button size="sm" variant="dark" @click="showBody = !showBody">
+                <!-- <b-button size="sm" variant="dark" @click="showBody = !showBody"> -->
                     <!-- {{ showBody ? 'hide' : 'show' }} -->
-                    <font-awesome-icon :icon="showBody ? 'eye-slash' : 'eye'"></font-awesome-icon>
-                </b-button>
+                    <!-- <font-awesome-icon :icon="showBody ? 'eye-slash' : 'eye'"></font-awesome-icon> -->
+                <!-- </b-button> -->
                 <template v-if="!editMode">
                     <b-button size="sm" variant="primary" :disabled="!editable" @click="showBody = editMode = true">
                         <font-awesome-icon icon="pencil-alt">
@@ -38,14 +32,14 @@
             </span>
         </template>
 
-        <b-card-body v-if="showBody">
+        <b-card-body>
             <!-- Uraian barang -->
             <b-row>
                 <b-col md="12">
                     <b-form-group
                         label="Uraian"
                         label-for="uraian">
-                        <b-form-textarea v-model="data.uraian" :disabled="!canEdit">
+                        <b-form-textarea v-model="tempData.uraian" :disabled="!canEdit">
                         </b-form-textarea>
                     </b-form-group>
                 </b-col>
@@ -55,7 +49,7 @@
                 <b-col md="4">
                     <b-form-group
                         label="FOB">
-                        <b-form-input type="text" v-model="data.fob" :disabled="!canEdit">
+                        <b-form-input type="text" v-model="tempData.fob" :disabled="!canEdit">
                         </b-form-input>
                     </b-form-group>
                 </b-col>
@@ -63,15 +57,15 @@
                     <b-form-group
                         label="Kurs">
                         <select-kurs 
-                            v-model="data.kurs.data.id"
-                            :initial-options="data.kurs.data"
+                            v-model="tempData.kurs.data.id"
+                            :initial-options="tempData.kurs.data"
                             :disabled="!canEdit"></select-kurs>
                     </b-form-group>
                 </b-col>
                 <b-col md="4">
                     <b-form-group
                         label="Nilai Pabean">
-                        <b-form-input type="text" disabled :value="data.nilai_pabean | formatCurrency | displayRupiah">
+                        <b-form-input type="text" disabled :value="tempData.nilai_pabean | formatCurrency | displayRupiah">
                         </b-form-input>
                     </b-form-group>
                 </b-col>
@@ -84,6 +78,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import SelectKurs from '@/components/SelectKurs'
+const cloneDeep = require('clone-deep')
 
 export default {
     props: [ 'index', 'data', 'editable' ],
@@ -94,7 +89,8 @@ export default {
     data () {
         return {
             showBody: false,
-            editMode: false
+            editMode: false,
+            tempData: cloneDeep(this.data)
         }
     },
     computed: {
@@ -121,6 +117,8 @@ export default {
         resetDetail () {
             this.showBody = this.editMode = false
             this.$emit('detailChange', null)
+            // reset data too
+            this.tempData = cloneDeep(this.data)
         }
     }
 }
