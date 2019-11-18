@@ -44,7 +44,8 @@
             <!-- <pre>{{ JSON.stringify(row, null, 2) }}</pre> -->
             <card-view-detail-cd
                 :data="row.item"
-                :editable="!disabled"></card-view-detail-cd>
+                :editable="!disabled"
+                @detailChange="handleDetailChange"></card-view-detail-cd>
         </template>
     </b-table>
 </template>
@@ -80,6 +81,12 @@ export default {
                     key: 'showDetail'
                 }
             ]
+        }
+    },
+    methods: {
+        handleDetailChange (id) {
+            console.log(`Detail ${id} changed!`)
+            this.$emit('detailChange', id)
         }
     }
 }

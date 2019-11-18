@@ -18,7 +18,8 @@
                 <table-cd-details
                     :items="data"
                     :pagination="pagination"
-                    :disabled="disabled"></table-cd-details>
+                    :disabled="disabled"
+                    @detailChange="detailChange"></table-cd-details>
             </template>
         </paginated-browser>
     </div>
@@ -69,6 +70,11 @@ export default {
                     me.handleError(e)
                 })
             }
+        },
+
+        detailChange () {
+            console.log("Refresh now!")
+            this.$refs.detailBrowser.loadData()
         }
     },
     mounted () {
