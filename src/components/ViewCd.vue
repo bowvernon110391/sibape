@@ -150,6 +150,12 @@ import SelectPelabuhan from '@/components/SelectPelabuhan'
 import { mapMutations, mapGetters } from 'vuex'
 import ViewCdDetails from '@/components/ViewCdDetails'
 
+// the default cd header
+import defaultCd from './defaultCd.json'
+
+// for deep copy
+const cloneDeep = require('clone-deep')
+
 export default {
     mixins: [axiosErrorHandler],
     components: {
@@ -232,32 +238,10 @@ export default {
             }
         },
         defaultData: function() {
-            return {
-                "id": null,
-                "no_dok": null,
-                "tgl_dok": null,
-                "nomor_lengkap": null,
-                "lokasi": this.lokasi,
-                "declare_flags": [],
-                "npwp_nib": null,
-                "no_flight": null,
-                "tgl_kedatangan": null,
-                "kd_pelabuhan_asal": null,
-                "kd_pelabuhan_tujuan": null,
-                "jumlah_detail": 0,
-                "last_status": null,
-                "is_locked": false,
-                "penumpang_id": null,
-                "pelabuhan_asal": {
-                    data: null
-                },
-                "pelabuhan_tujuan": {
-                    data: null
-                },
-                "penumpang" : {
-                    data: null
-                }
-            }
+            return cloneDeep({
+                ...defaultCd,
+                lokasi: this.lokasi
+            })
         },
         loadCdData (cdId) {
             if (cdId == 'new') {

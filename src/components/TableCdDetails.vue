@@ -67,6 +67,9 @@
 <script>
 import CardViewDetailCd from '@/components/CardViewDetailCd'
 
+// default json for cdDetail
+import defaultCdDetail from './defaultCdDetail.json'
+
 export default {
     inheritAttrs: false,
     components: {
@@ -98,10 +101,15 @@ export default {
         }
     },
     methods: {
+        // when detail changed
         handleDetailChange (id) {
             console.log(`Detail ${id} changed!`)
             this.$emit('detailChange', id)
         }
+    },
+    mounted () {
+        console.log('default cd Detail:')
+        console.log(defaultCdDetail)
     }
 }
 </script>
