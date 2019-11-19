@@ -13,8 +13,8 @@
         v-bind="$attrs"
         v-on="$listeners">
         <template v-slot:cell(showDetail)="row">
-            <b-button size="sm" variant="dark" @click="row.toggleDetails">
-                <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
+            <b-button size="sm" variant="dark" @click="viewDetail(row.item, row.index + pagination.start)">
+                <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
         </template>
@@ -53,14 +53,13 @@
         </template>
 
         <!-- Detail Row -->
-        <template v-slot:row-details="row">
-            <!-- <pre>{{ JSON.stringify(row, null, 2) }}</pre> -->
+        <!-- <template v-slot:row-details="row">
             <card-view-detail-cd
                 :data="row.item"
                 :editable="!disabled"
                 :key="row.item.id"
                 @detailChange="handleDetailChange"></card-view-detail-cd>
-        </template>
+        </template> -->
     </b-table>
 </template>
 
@@ -105,6 +104,14 @@ export default {
         handleDetailChange (id) {
             console.log(`Detail ${id} changed!`)
             this.$emit('detailChange', id)
+        },
+
+        // when view detail is clicked
+        viewDetail (data, index) {
+            this.$emit('viewDetail', {
+                data: data,
+                index: index
+            })
         }
     },
     mounted () {

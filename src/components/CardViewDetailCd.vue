@@ -152,17 +152,6 @@ export default {
         saveDetail () {
             this.setBusyState(true)
             var vm = this
-            /* setTimeout(() => {
-                this.setBusyState(false)
-                this.showBody = this.editMode = false
-
-                this.showToast('Detail saved!', `Detail cd tersimpan`, 'success')
-
-                // emit data to reload shit
-                this.$emit('detailChange', this.data.id)
-
-            }, 3000) */
-
             // the real deal
             this.api.updateCdDetail(this.data.id, this.tempData)
             .then(e => {

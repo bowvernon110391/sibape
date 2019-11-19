@@ -21,6 +21,7 @@
 <script>
 import vSelect from 'vue-select'
 import { debounce } from 'debounce'
+const cloneDeep = require('clone-deep')
 
 export default {
     components: {
@@ -53,7 +54,7 @@ export default {
             // make a 'debounced' version of our search callback
             debouncedSearch: debounce(this.doSearch, this.searchDelay),
             // fill internal options with initial options if exists
-            options: Array.isArray(this.initialOptions) ? this.initialOptions : (this.initialOptions ? [this.initialOptions] : []),
+            options: cloneDeep( Array.isArray(this.initialOptions) ? this.initialOptions : (this.initialOptions ? [this.initialOptions] : []) ),
             // loading and syncing state (only LOADING is used for now)
             loading: false,
             syncing: false
