@@ -135,7 +135,8 @@
                 </font-awesome-icon>
             </b-button>
             <!-- Delete Cd -->
-            <b-button variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)">
+            <b-button variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
+                @click="onDelete(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
             </b-button>
@@ -149,6 +150,28 @@ import userChecker from '../mixins/userChecker'
 export default {
     inheritAttrs: false,
     mixins: [ userChecker ],
+    methods: {
+        async onDelete (id, nomor) {
+            var msg = nomor ? nomor : 'Tanpa Nomor'
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data CD ini? (${msg})`, {
+                title: `Menghapus CD #${id}`,
+                size: 'md',
+                buttonSize: 'md',
+                okVariant: 'danger',
+                okTitle: 'YES',
+                cancelTitle: 'NO',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                centered: true
+            })
+
+            if (result) {
+                // alert("Hapuuus")
+                // emit delete event
+                this.$emit('deleteHeader', id)
+            }
+        }
+    },
     data () {
         return {
             fields: [

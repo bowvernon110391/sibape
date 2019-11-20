@@ -10,7 +10,8 @@
             :data-callback="getCd">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
-                <table-cd :items="data"></table-cd>
+                <table-cd :items="data"
+                    @deleteHeader="deleteCd"></table-cd>
             </template>
         </paginated-browser>
     </div>
@@ -32,6 +33,7 @@ export default {
         ...mapGetters(['api']),
     },
     methods: {
+        // ambil data cd
         getCd (q, spinner, vm) {
             spinner(true)
             this.api.getCd({
@@ -49,6 +51,11 @@ export default {
                 spinner(false)
                 this.handleError(e)
             })
+        },
+
+        // hapus data cd
+        deleteCd (id) {
+            alert(`Delete Cd #${id}`)
         }
     },
     data () {
