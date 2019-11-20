@@ -140,11 +140,14 @@
 </template>
 
 <script>
+// mixins
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
+import userChecker from '../mixins/userChecker'
+// components
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
-import vSelect from 'vue-select'
+// import vSelect from 'vue-select'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 // import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
@@ -157,12 +160,12 @@ import defaultCd from './defaultCd.json'
 const cloneDeep = require('clone-deep')
 
 export default {
-    mixins: [axiosErrorHandler],
+    mixins: [ axiosErrorHandler, userChecker ],
     components: {
         SelectPenumpang2,
         Datepicker,
         PaginatedBrowser,
-        vSelect,
+        // vSelect,
         SelectPelabuhan,
         // CardViewDetailCd
         ViewCdDetails
@@ -191,7 +194,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['api', 'lokasi', 'canEdit']),
+        ...mapGetters(['api', 'lokasi']),
         disableInput () {
            // only disable input if user can't edit
            // and the doc is locked

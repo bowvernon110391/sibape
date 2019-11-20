@@ -129,8 +129,14 @@
         </template>
 
         <template v-slot:cell(action)="data">
+            <!-- Edit Cd -->
             <b-button variant="primary" size="sm" :to="`/cd/${data.item.id}`">
                 <font-awesome-icon icon="pencil-alt">
+                </font-awesome-icon>
+            </b-button>
+            <!-- Delete Cd -->
+            <b-button variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)">
+                <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
             </b-button>
         </template>
@@ -138,8 +144,11 @@
 </template>
 
 <script>
+import userChecker from '../mixins/userChecker'
+
 export default {
     inheritAttrs: false,
+    mixins: [ userChecker ],
     data () {
         return {
             fields: [

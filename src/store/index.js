@@ -57,9 +57,6 @@ export default new Vuex.Store({
             state.userInfo = null
             state.lokasi = null
             localStorage.clear()
-        },
-        canModify (state, dockIsLocked) {
-            return !dockIsLocked || state.getters.canEdit
         }
     },
     getters: {
@@ -90,6 +87,9 @@ export default new Vuex.Store({
             if (!state.userInfo.apps_data['5']) return false
             // ok, check privileges
             return state.userInfo.apps_data['5'].roles.filter(e => e == 'KASI' || e == 'CONSOLE').length > 0
+        },
+        canDelete: (state, getters) => isDocLocked => {
+            return getters.canEdit || !isDocLocked
         }
     },
     actions: {
@@ -181,28 +181,32 @@ export default new Vuex.Store({
 
                 // return promise from axios
                 return api.getNegara()
-                    .then(e => {
-                        // data is in e.data.data
-                        var data = e.data.data
+                .then(e => {
+                    // data is in e.data.data
+                    var data = e.data.data
 
-                        if (STORE_DEBUG) {
-                            console.log('fetched Data: ')
-                            console.log(data)
-                        }
+                    if (STORE_DEBUG) {
+                        console.log('fetched Data: ')
+                        console.log(data)
+                    }
 
-                        // store locally
-                        context.commit('setRefDataNegara', data)
-                        // store in localStorage using its JSON string
-                        localStorage.setItem('ref_negara', JSON.stringify(data))
-                        // remove dirty flag
-                        context.commit('setDirtyFlagNegara', false)
+                    // store locally
+                    context.commit('setRefDataNegara', data)
+                    // store in localStorage using its JSON string
+                    localStorage.setItem('ref_negara', JSON.stringify(data))
+                    // remove dirty flag
+                    context.commit('setDirtyFlagNegara', false)
 
-                        if (STORE_DEBUG) {
-                            console.log('-> success')
-                            console.log(context.state.refData.negara)
-                        }
-                    })
+                    if (STORE_DEBUG) {
+                        console.log('-> success')
+                        console.log(context.state.refData.negara)
+                    }
+                })
             }
+        },
+        // check if can delete
+        canDelete (context, isDocLocked) {
+            return context.getters.canEdit || !isDocLocked
         }
     }
 })
