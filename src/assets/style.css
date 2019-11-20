@@ -25,9 +25,7 @@ body {
     background-color: white;
 }
 
-
-
-.vs__selected-options {
+.vs--single .vs__selected-options {
     pointer-events: none !important;
 }
 /* 

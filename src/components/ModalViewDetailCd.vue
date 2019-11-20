@@ -43,13 +43,23 @@
 
         <!-- body -->
         <template v-slot:default>
+            <!-- Uraian + Kode HS -->
             <b-row>
-                <b-col md="12">
+                <!-- Uraian -->
+                <b-col md="6">
                     <b-form-group
                         label="Uraian"
                         label-for="uraian">
                         <b-form-textarea v-model="tempData.uraian" :disabled="!canEdit">
                         </b-form-textarea>
+                    </b-form-group>
+                </b-col>
+                <!-- Kode HS -->
+                <b-col md="6">
+                    <b-form-group
+                        label="Kode HS">
+                        <select-hs v-model="tempData.hscode">
+                        </select-hs>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -122,6 +132,26 @@
                     </b-form-group>
                 </b-col>
             </b-row>
+
+            <!-- Kategori + Detail sekunder -->
+            <b-row>
+                <!-- Detail Sekunder -->
+                <b-col md="6">
+                    <label>Detail Tambahan</label>
+                    <div>
+
+                    </div>
+                </b-col>
+
+                <!-- Kategori -->
+                <b-col md="6">
+                    <b-form-group
+                        label="Kategori">
+                        <select-kategori v-model="tempData.kategori" :disabled="!canEdit">
+                        </select-kategori>
+                    </b-form-group>
+                </b-col>
+            </b-row>
         </template>
 
     </b-modal>
@@ -133,6 +163,8 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import SelectKurs from '@/components/SelectKurs'
 import SelectKemasan from '@/components/SelectKemasan'
 import SelectSatuan from '@/components/SelectSatuan'
+import SelectHs from '@/components/SelectHs'
+import SelectKategori from '@/components/SelectKategori'
 
 const cloneDeep = require('clone-deep')
 
@@ -149,26 +181,53 @@ export default {
         saveDetail () {
             // this.setBusyState(true)
             var vm = this
-            // disable editing
-            this.saving = true
+            
             // the real deal, saving or creating?
-            this.api.updateCdDetail(this.data.id, this.tempData)
-            .then(e => {
-                // alert?
-                // vm.setBusyState(false)
-                vm.showToast('Detail saved!', `Detail Cd #${vm.data.id} tersimpan`, 'success')
 
-                // emit event
-                vm.$emit('detailChange', vm.data.id)
+            if (this.data.id) {
+                // disable editing
+                this.saving = true
+                // data.id is number, so it's updating
+                this.api.updateCdDetail(this.data.id, this.tempData)
+                .then(e => {
+                    // alert?
+                    // vm.setBusyState(false)
+                    vm.showToast('Detail saved!', `Detail Cd #${vm.data.id} tersimpan`, 'success')
 
-                this.editMode = false
-                this.saving = false
-            })
-            .catch(e => {
-                this.saving = false
-                // vm.setBusyState(false)
-                vm.handleError(e)
-            })
+                    // emit event
+                    vm.$emit('detailChange', vm.data.id)
+
+                    this.editMode = false
+                    this.saving = false
+                })
+                .catch(e => {
+                    this.saving = false
+                    // vm.setBusyState(false)
+                    vm.handleError(e)
+                })
+            } else {
+                // this is saving new
+                // alert(`Creating cd detail fro cd#${this.cdId}`)
+                // disable editing
+                this.saving = true
+                // call api to save
+                this.api.createCdDetail(this.cdId, this.tempData)
+                .then(e => {
+                    vm.showToast('Detail Created', `Detail cd tersimpan dengan id ${e.data.id}`, 'success')
+
+                    // emit event
+                    vm.$emit('detailChange', vm.data.id)
+                    // reset state
+                    this.editMode = false
+                    this.saving = false
+                })
+                .catch(e => {
+                    this.saving = false
+                    // vm.setBusyState(false)
+                    vm.handleError(e)
+                })
+            }
+            
         },
 
         // when reset detail is clicked
@@ -199,7 +258,9 @@ export default {
     components: {
         SelectKurs,
         SelectKemasan,
-        SelectSatuan
+        SelectSatuan,
+        SelectHs,
+        SelectKategori
     },
     watch: {
         data: {
