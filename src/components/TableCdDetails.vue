@@ -17,6 +17,10 @@
                 <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
+            <b-button size="sm" variant="danger" :disabled="!canDelete(disabled)">
+                <font-awesome-icon icon="trash-alt">
+                </font-awesome-icon>
+            </b-button>
         </template>
 
         <!-- seri -->
@@ -69,8 +73,12 @@ import CardViewDetailCd from '@/components/CardViewDetailCd'
 // default json for cdDetail
 import defaultCdDetail from './defaultCdDetail.json'
 
+// mixin for checking user's shits
+import userChecker from '../mixins/userChecker'
+
 export default {
     inheritAttrs: false,
+    mixins: [ userChecker ],
     components: {
         CardViewDetailCd
     },
