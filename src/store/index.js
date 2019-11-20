@@ -57,6 +57,9 @@ export default new Vuex.Store({
             state.userInfo = null
             state.lokasi = null
             localStorage.clear()
+        },
+        canModify (state, dockIsLocked) {
+            return !dockIsLocked || state.getters.canEdit
         }
     },
     getters: {
