@@ -17,7 +17,8 @@
                 <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
-            <b-button size="sm" variant="danger" :disabled="!canDelete(disabled)">
+            <b-button size="sm" variant="danger" :disabled="!canDelete(disabled)"
+                @click="onDelete(pagination.start + row.index, row.item.id)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
             </b-button>
@@ -120,6 +121,30 @@ export default {
                 data: data,
                 index: index
             })
+        },
+
+        // when delete is clicked
+        async onDelete (seri, id) {
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data barang ini? DetailCdId(${id})`, {
+                title: `Menghapus Detail CD Seri #${seri}`,
+                size: 'md',
+                buttonSize: 'md',
+                okVariant: 'danger',
+                okTitle: 'YES',
+                cancelTitle: 'NO',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                centered: true
+            })
+
+            if (result) {
+                // alert("Hapuuus")
+                // emit delete event
+                this.$emit('deleteDetail', {
+                    seri: seri,
+                    id: id
+                })
+            }
         }
     },
     mounted () {

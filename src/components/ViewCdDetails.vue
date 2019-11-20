@@ -24,7 +24,8 @@
                     :pagination="pagination"
                     :disabled="disabled"
                     @detailChange="detailChange"
-                    @viewDetail="viewDetail"></table-cd-details>
+                    @viewDetail="viewDetail"
+                    @deleteDetail="deleteDetail"></table-cd-details>
             </template>
         </paginated-browser>
 
@@ -123,6 +124,11 @@ export default {
             this.viewData = cloneDeep(e.data)
             this.index = e.index
             this.modalShown = true
+        },
+
+        // when deleting a detail
+        deleteDetail (data) {
+            alert(`Deleting detail seri #${data.seri} id: ${data.id}`)
         },
 
         tambahBarang () {
