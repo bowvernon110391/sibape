@@ -29,6 +29,10 @@ body {
     pointer-events: none;
 }
 
+li.vs__dropdown-option {
+    white-space: normal !important;
+}
+
 /* 
 body {
     transition: background-color 1s ease;

@@ -2,9 +2,10 @@
    <api-select
       label="uraian"
       :reduce="e => e.kode"
+      :selectable="e => e.usable"
+      :get-option-key="e => e.id"
       :search-callback="searchHS"
       :sync-callback="searchHS"
-      :clear-search-on-select="true"
       v-bind="$attrs"
       v-on="$listeners"
       >
@@ -13,15 +14,15 @@
                <span v-if="opt.jenis_tarif == 'SPESIFIK'">
                   <strong class="float-right text-danger">(SPESIFIK)</strong>
                </span>
-               <b-col md="2">
+               <p>
                   {{ opt.raw_code }}
-               </b-col>
-               <b-col md="6">
+               </p>
+               <p>
                   {{ opt.uraian }}
-               </b-col>
-               <b-col md="4" v-if="opt.usable">
+               </p>
+               <p v-if="opt.usable" class="mt-0">
                   (bm: {{ opt.jenis_tarif=='SPESIFIK' ? 'Rp.' + opt.bm_tarif + ' ' +opt.satuan_spesifik : opt.bm_tarif }}, ppn: {{ opt.ppn_text }}, ppnbm: {{ opt.ppnbm_text }} )
-               </b-col>
+               </p>
          </div>
       </template>
       <template v-slot:selected-option="opt">
