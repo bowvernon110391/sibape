@@ -7,7 +7,8 @@
         </div>
         <!-- di dalem div, ada paginated browser -->
         <paginated-browser
-            :data-callback="getCd">
+            :data-callback="getCd"
+            ref="browserCd">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
                 <table-cd :items="data"
@@ -69,6 +70,8 @@ export default {
                 this.setBusyState(false)
                 // give warning
                 this.showToast(`Data deleted`, `CD #${id} deleted successfully`, 'warning')
+                // force reload current page?
+                this.$refs.browserCd.stayAtCurrentPage(-1)
             })
             .catch(e => {
                 // stop loading

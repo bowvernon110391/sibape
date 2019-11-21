@@ -195,6 +195,35 @@ export default {
                 this.dataCallback(this.browseData, this.setBusyState, this)
             }
         },
+        calcLastPage (offset) {
+            var newTotal = this.totalRows + offset
+            // set new page?
+            return Math.ceil(newTotal / this.length)
+        },
+        // this will move to end of page after item is added by offset
+        moveToEnd (offset) {
+            // set page to last
+            var lastPage = this.calcLastPage(offset)
+            // if we're already at last
+            // reload
+            if (this.internalPage == lastPage) { 
+                this.loadData()
+            } else {
+                this.internalPage = lastPage
+            }
+        },
+        // this will stay but will shrink if num page is not enough
+        stayAtCurrentPage (offset) {
+            var newTotal = this.totalRows + offset
+            // set whichever is smallest
+            var targetPage = Math.min(this.internalPage, this.calcLastPage(offset))
+            // 
+            if (this.internalPage == targetPage) {
+                this.loadData()
+            } else {
+                this.internalPage = targetPage
+            }
+        },
         // set data
         setData (data) {
             this.internalData = data

@@ -142,6 +142,8 @@ export default {
                 this.setBusyState(false)
                 // alert user
                 this.showToast(`Deletion successful`, `Detil Barang #${data.seri} berhasil dihapus`, 'warning')
+                // stay
+                this.$refs.detailBrowser.stayAtCurrentPage(-1)
             })
             .catch(e => {
                 // stop spinning
