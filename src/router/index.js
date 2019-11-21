@@ -86,6 +86,15 @@ router.beforeEach((to, from, next) => {
   // also, set default userInfo
   if (process.env.NODE_ENV != 'production') {
      console.log("Not in production. Bypassing login and authentication and using default user")
+
+     var mockRoles = {
+       token_pdtt: ['PDTT'],
+       token_admin: ['CONSOLE','KASI']
+     }
+
+     var lokasiDemo = process.env.MOCK_LOKASI || "KANTOR"
+     var tokenDemo = process.env.MOCK_TOKEN || 'token_admin'
+
      var userDemo = {
       "user_id": "666",
       "username": "user.demo",
@@ -116,16 +125,11 @@ router.beforeEach((to, from, next) => {
         },
         "5": {
           "app_name": "SiBAPE",
-          "roles": [
-            // "KASI",
-            // "CONSOLE"
-            "PDTT"
-          ]
+          "roles": mockRoles[tokenDemo]
         }
       }
     }
-    var lokasiDemo = "KANTOR"
-    var tokenDemo = 'token_admin'
+    
     // store default data
     store.commit('setUserInfo', userDemo)
     store.commit('setLokasi', lokasiDemo)

@@ -9,7 +9,7 @@ export default {
     },
     methods: {
         canDelete: (isDocLocked) => {
-            return this.canEdit || !isDocLocked
+            return store.getters.canEdit || !isDocLocked
         }
     }
 }
