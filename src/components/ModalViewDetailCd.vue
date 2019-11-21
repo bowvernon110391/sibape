@@ -219,7 +219,7 @@ export default {
                     vm.showToast('Detail Created', `Detail cd tersimpan dengan id ${e.data.id}`, 'success')
 
                     // emit event
-                    vm.$emit('detailChange', vm.data.id)
+                    vm.$emit('detailCreated', vm.data.id)
                     // reset state
                     this.editMode = false
                     this.saving = false

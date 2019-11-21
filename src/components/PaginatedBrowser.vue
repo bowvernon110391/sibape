@@ -198,12 +198,16 @@ export default {
         calcLastPage (offset) {
             var newTotal = this.totalRows + offset
             // set new page?
-            return Math.ceil(newTotal / this.length)
+            return Math.ceil(newTotal / this.internalLength)
         },
         // this will move to end of page after item is added by offset
-        moveToEnd (offset) {
+        moveToLastPage (offset) {
             // set page to last
             var lastPage = this.calcLastPage(offset)
+
+            console.log("moving to last page")
+            console.log(lastPage)
+
             // if we're already at last
             // reload
             if (this.internalPage == lastPage) { 

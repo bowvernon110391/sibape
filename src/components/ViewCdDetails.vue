@@ -40,7 +40,8 @@
             :index="index"
             :editable="!disabled"
             v-model="modalShown"
-            @detailChange="$refs.detailBrowser.loadData()">
+            @detailChange="$refs.detailBrowser.loadData()"
+            @detailCreated="$refs.detailBrowser.moveToLastPage(1)">
         </modal-view-detail-cd>
     </div>
 </template>
