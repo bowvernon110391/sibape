@@ -126,14 +126,14 @@ class ApiSibape {
     }
 
     //==================RESOURCE : CD===========================================================
-    // getCd () : GET /dokumen/cd
+    // getCd () : GET /cd
     getCd (param) {
         return this.instance.get('/cd', {
             params: param
         })
     }
 
-    // getCdById (id) : GET /dokumen/cd/{id}
+    // getCdById (id) : GET /cd/{id}
     getCdById (id) {
         return this.instance.get('/cd/' + id, {
             params: {
@@ -142,14 +142,19 @@ class ApiSibape {
         })
     }
 
-    // createCd (data) : POST /dokumen/cd
+    // createCd (data) : POST /cd
     createCd (dataCd) {
         return this.instance.post('/cd', dataCd)
     }
 
-    // updateCd (dataCd) : PUT /dokumen/cd/{id}
+    // updateCd (dataCd) : PUT /cd/{id}
     updateCd (id, dataCd) {
         return this.instance.put('/cd/' + id, dataCd)
+    }
+
+    // deleteCd (id) : DELETE /cd/{id}
+    deleteCd (id) {
+        return this.instance.delete('/cd/' + id)
     }
 
     // getCdDetails (id, param) : GET /cd/:id/details?param

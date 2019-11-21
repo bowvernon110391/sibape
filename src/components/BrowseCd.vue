@@ -19,7 +19,7 @@
 
 <script>
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import TableCd from '@/components/TableCd'
 
@@ -33,6 +33,9 @@ export default {
         ...mapGetters(['api']),
     },
     methods: {
+        // grab some from store
+        ...mapMutations(['setBusyState']),
+
         // ambil data cd
         getCd (q, spinner, vm) {
             spinner(true)
@@ -55,7 +58,24 @@ export default {
 
         // hapus data cd
         deleteCd (id) {
-            alert(`Delete Cd #${id}`)
+            // alert(`Delete Cd #${id}`)
+            // loading screen
+            this.setBusyState(true)
+
+            // delet dis
+            this.api.deleteCd(id)
+            .then(e => {
+                // stop loading
+                this.setBusyState(false)
+                // give warning
+                this.showToast(`Data deleted`, `CD #${id} deleted successfully`, 'warning')
+            })
+            .catch(e => {
+                // stop loading
+                this.setBusyState(false)
+                // handle error
+                this.handleError(e)
+            })
         }
     },
     data () {

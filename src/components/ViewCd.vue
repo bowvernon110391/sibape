@@ -66,15 +66,47 @@
         <!-- Nomor & Tgl Flight + Airport -->
         <b-row>
             <b-col md="6">
-                <b-form-group label="Nomor &amp; Tgl. Flight">
-                    <b-input-group>
-                        <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
-                        <template v-slot:append>
-                            <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
-                        </template>
-                    </b-input-group>
-                </b-form-group>
+                <!-- No tgl flight -->
+                <b-row>
+                    <b-col>
+                        <b-form-group label="Nomor &amp; Tgl. Flight">
+                            <b-input-group>
+                                <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
+                                <template v-slot:append>
+                                    <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
+                                </template>
+                            </b-input-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <!-- bagasi dibawa + tdk dbawa (lnf) -->
+                <b-row>
+                    <b-col>
+                        <b-form-group label="Bagasi dibawa">
+                            <b-form-input class="text-right" size="sm" :disabled="disableInput" v-model="dataCd.jml_bagasi_dibawa">
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col>
+                        <b-form-group label="Bagasi tertinggal">
+                            <b-form-input class="text-right" size="sm" :disabled="disableInput" v-model="dataCd.jml_bagasi_tdk_dibawa">
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    
+                    <b-col>
+                        <b-form-group label="Pembebasan (USD)">
+                            <b-form-select size="sm" :disabled="disableInput" v-model="dataCd.pembebasan">
+                                <option value="0">0</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
             </b-col>
+
+            <!-- airport asal + tujuan -->
             <b-col md="6">
                 <b-row>
                     <b-col>
@@ -108,8 +140,15 @@
             </b-col>
         </b-row>
 
-        <!-- Flag deklarasi + PERHITUNGAN -->
+        <!-- Jml anggota keluarga + Flag deklarasi -->
         <b-row>
+            <!-- Jml Keluarga -->
+            <b-col md="6">
+                <b-form-group label="Jumlah Anggota Keluarga" description="Yang datang bersamaan">
+                    <b-form-input type="number" class="text-right" v-model="dataCd.jml_anggota_keluarga">
+                    </b-form-input>
+                </b-form-group>
+            </b-col>
             <!-- Flag Deklarasi -->
             <b-col md="6">
                 <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
