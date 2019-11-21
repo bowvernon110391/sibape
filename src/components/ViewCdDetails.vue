@@ -47,7 +47,7 @@
 
 <script>
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import TableCdDetails from '@/components/TableCdDetails'
 import ModalViewDetailCd from '@/components/ModalViewDetailCd'
@@ -87,6 +87,10 @@ export default {
         }
     },
     methods: {
+        // some from store...
+        ...mapMutations(['setBusyState']),
+
+        // load cd details data
         loadCdDetails (q, spinner, vm) {
             spinner(true)
             // make sure the cd id is valid
@@ -128,7 +132,23 @@ export default {
 
         // when deleting a detail
         deleteDetail (data) {
-            alert(`Deleting detail seri #${data.seri} id: ${data.id}`)
+            // alert(`Deleting detail seri #${data.seri} id: ${data.id}`)
+            this.setBusyState(true)
+
+            // delet dis
+            this.api.deleteCdDetail(data.id)
+            .then(e => {
+                // stop spinning
+                this.setBusyState(false)
+                // alert user
+                this.showToast(`Deletion successful`, `Detil Barang #${data.seri} berhasil dihapus`, 'warning')
+            })
+            .catch(e => {
+                // stop spinning
+                this.setBusyState(false)
+                // handle error
+                this.handleError(e)
+            })
         },
 
         tambahBarang () {
