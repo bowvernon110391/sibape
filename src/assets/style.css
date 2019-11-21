@@ -26,8 +26,9 @@ body {
 }
 
 .vs--single .vs__selected-options {
-    pointer-events: none !important;
+    pointer-events: none;
 }
+
 /* 
 body {
     transition: background-color 1s ease;

@@ -143,14 +143,18 @@
         <!-- Jml anggota keluarga + Flag deklarasi -->
         <b-row>
             <!-- Jml Keluarga -->
-            <b-col md="6">
+            <b-col md="2" sm="6">
                 <b-form-group label="Jumlah Anggota Keluarga" description="Yang datang bersamaan">
-                    <b-form-input type="number" class="text-right" v-model="dataCd.jml_anggota_keluarga">
+                    <b-form-input type="number" 
+                        class="text-right" 
+                        v-model="dataCd.jml_anggota_keluarga"
+                        :disabled="disableInput"
+                        size="sm">
                     </b-form-input>
                 </b-form-group>
             </b-col>
             <!-- Flag Deklarasi -->
-            <b-col md="6">
+            <b-col md="6" offset-md="4" sm="12">
                 <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
                     <b-form-checkbox-group
                         :options="flagDeklarasi"

@@ -61,7 +61,7 @@
                 <b-col md="6">
                     <b-form-group
                         label="Kode HS">
-                        <select-hs v-model="tempData.hscode">
+                        <select-hs v-model="tempData.hscode" :disabled="!canEdit">
                         </select-hs>
                     </b-form-group>
                 </b-col>
@@ -138,20 +138,21 @@
 
             <!-- Kategori + Detail sekunder -->
             <b-row>
-                <!-- Detail Sekunder -->
-                <b-col md="6">
-                    <label>Detail Tambahan</label>
-                    <div>
-
-                    </div>
-                </b-col>
-
                 <!-- Kategori -->
                 <b-col md="6">
                     <b-form-group
                         label="Kategori">
                         <select-kategori v-model="tempData.kategori" :disabled="!canEdit">
                         </select-kategori>
+                    </b-form-group>
+                </b-col>
+
+                <!-- Detail Sekunder -->
+                <b-col md="6">
+                    <b-form-group label="Data Tambahan">
+                        <list-cd-detail-sekunder 
+                            v-model="tempData.detailSekunders.data"
+                            :disabled="!canEdit"></list-cd-detail-sekunder>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -168,6 +169,7 @@ import SelectKemasan from '@/components/SelectKemasan'
 import SelectSatuan from '@/components/SelectSatuan'
 import SelectHs from '@/components/SelectHs'
 import SelectKategori from '@/components/SelectKategori'
+import ListCdDetailSekunder from '@/components/ListCdDetailSekunder'
 
 const cloneDeep = require('clone-deep')
 
@@ -265,7 +267,8 @@ export default {
         SelectKemasan,
         SelectSatuan,
         SelectHs,
-        SelectKategori
+        SelectKategori,
+        ListCdDetailSekunder
     },
     watch: {
         data: {

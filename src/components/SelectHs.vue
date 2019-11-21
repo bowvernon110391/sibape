@@ -42,6 +42,7 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 export default {
    inheritAttrs: false,
+   mixins: [ axiosErrorHandler ],
    components: {
       ApiSelect
    },
