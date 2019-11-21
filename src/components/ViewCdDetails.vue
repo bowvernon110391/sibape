@@ -136,6 +136,8 @@ export default {
             this.viewData = cloneDeep(defaultCdDetail)
             // then, show modal
             this.modalShown = true
+            // index is nullified
+            this.index = null
 
             // log
             console.log("Adding barang...")

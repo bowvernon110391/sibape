@@ -13,11 +13,14 @@
         <!-- header -->
         <template v-slot:modal-header>
             <div>
-                <h4 v-if="tempData.id">
+                <h4 v-if="index">
                     Detail Seri Barang <b-badge variant="dark">#{{ index }}</b-badge>
                 </h4>
+                <h4 v-else-if="tempData.id">
+                    Detail CD <b-badge variant="dark">#{{ tempData.id }}</b-badge>
+                </h4>
                 <h4 v-else>
-                    Input data barang...
+                    Input Detail Barang...
                 </h4>
             </div>
             <div>
@@ -220,6 +223,8 @@ export default {
                     // reset state
                     this.editMode = false
                     this.saving = false
+                    // set id
+                    this.tempData.id = e.data.id
                 })
                 .catch(e => {
                     this.saving = false
