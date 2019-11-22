@@ -2,7 +2,7 @@
     <div>
         <!-- Title at the top, showing lock status too -->
         <h4>
-            <template v-if="id != 'new'">
+            <template v-if="!isNew">
                 <span :class="[ dataCd.is_locked ? 'bg-danger' : 'bg-primary', 'text-light', 'p-2', 'shadow', 'border', 'border-dark', 'rounded']">CD #{{ id }} <b-badge variant="light"><font-awesome-icon :icon="dataCd.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataCd.is_locked ? "LOCKED" : "OPEN" }}</b-badge></span>
             </template>
             <template v-else>
@@ -53,7 +53,7 @@
         <b-row>
             <b-col md="6">
                 <b-form-group label="Penumpang" label-for="penumpang">
-                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang" :disabled="disableInput" :initial-options="dataCd.penumpang.data"></select-penumpang-2>
+                    <select-penumpang-2 v-model="dataCd.penumpang_id" id="penumpang" :disabled="disableInput" :initial-options="dataCd.penumpang.data" :search-on-empty="isNew"></select-penumpang-2>
                 </b-form-group>
             </b-col>
             <b-col md="6">
@@ -117,7 +117,8 @@
                                     id="kd_pelabuhan_asal" 
                                     v-model="dataCd.kd_pelabuhan_asal" 
                                     :disabled="disableInput"
-                                    :initial-options="dataCd.pelabuhan_asal.data"></select-pelabuhan>
+                                    :initial-options="dataCd.pelabuhan_asal.data"
+                                    :search-on-empty="isNew"></select-pelabuhan>
                                 <!-- <b-input-group-prepend is-text>
                                     Ke
                                 </b-input-group-prepend> -->
@@ -133,7 +134,8 @@
                                 id="kd_pelabuhan_tujuan" 
                                 v-model="dataCd.kd_pelabuhan_tujuan" 
                                 :disabled="disableInput"
-                                :initial-options="dataCd.pelabuhan_tujuan.data"></select-pelabuhan>
+                                :initial-options="dataCd.pelabuhan_tujuan.data"
+                                :search-on-empty="isNew"></select-pelabuhan>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -174,7 +176,7 @@
             </b-col>
         </b-row>        
         <!-- paginated utk data detail -->
-        <template v-if="id != 'new'">
+        <template v-if="!isNew">
             <hr>
             <view-cd-details :cd-id="id" :disabled="disableInput"></view-cd-details>
         </template>
@@ -258,6 +260,9 @@ export default {
                   return 'NPWP'
            }
            return defaultLabel
+        },
+        isNew () {
+            return this.id == 'new'
         }
     },
     props: {
@@ -372,19 +377,20 @@ export default {
         },
     },
     created () {
-        this.setBusyState(true)
+        // this.setBusyState(true)
+        this.loadCdData(this.id)
     },
     mounted () {
-        this.setBusyState(false)
-        // console.log(this.$route);
-        console.log('Data CD:')
-        console.log(this.dataCd)
-        console.log(this.id)
-        console.log(Number(this.id))
+        // this.setBusyState(false)
+        // // console.log(this.$route);
+        // console.log('Data CD:')
+        // console.log(this.dataCd)
+        // console.log(this.id)
+        // console.log(Number(this.id))
     },
     watch: {
         id: {
-            immediate: true,
+            immediate: false,
             handler (newVal) {
                 this.loadCdData(newVal)
             }

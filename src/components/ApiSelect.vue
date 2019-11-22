@@ -11,6 +11,10 @@
         @search="debouncedSearch"
         :class="{ busy: loading }"
         @search:blur="fallbackSync"
+        :value="value"
+        @input="onInput"
+        :reduce="reduce"
+        :multiple="multiple"
         >
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
             <slot :name="slot" v-bind="scope"></slot>
@@ -45,9 +49,21 @@ export default {
         },
         searchOnEmpty: {
             type: Boolean,
-            default: true
+            default: false
         },
-        initialOptions: [Array,Object,String,Number]
+        initialOptions: {
+            default: null
+        },
+        value: {
+            default: null
+        },
+        reduce: {
+            type: Function
+        },
+        multiple: {
+            type: Boolean,
+            default: false
+        }
     },
     data () {
         return {
@@ -63,15 +79,18 @@ export default {
     computed: {
         // tell if the value and option is synched
         synchronized () {
-            if (this.$refs.sel) {
-                const reduce = this.$refs.sel.reduce
-                const val = this.$refs.sel.value
+            // if (this.$refs.sel) {
+                const reduce = this.reduce
+                const val = this.value
                 return this.options.filter(e => reduce(e) == val ).length > 0
-            }
-            return false
+            // }
+            // return false
         }
     },
     methods: {
+        onInput (e) {
+            return this.$emit('input', e)
+        },
         fallbackSync () {
             if (!this.synchronized) {
                 this.syncValueOptions()
@@ -79,12 +98,12 @@ export default {
         },
         syncValueOptions () {
             // if sel is not defined yet, can't sync
-            if (typeof this.$refs.sel == 'undefined') {
+            /* if (typeof this.$refs.sel == 'undefined') {
                 console.log("$refs sel is still undefined. bailing...")
                 return
-            }
+            } */
 
-            const val = this.$refs.sel.value
+            const val = this.value
             if (!val) {
                 // value is null, but is our options also empty?
                 if (!this.options.length || this.searchOnEmpty) {
@@ -107,7 +126,7 @@ export default {
         },
         doSearch (search, loading) {
             // if search is empty but we have value, force using value instead
-            const val = this.$refs.sel.value
+            const val = this.value
             if (!search && val) {
                 console.log(`Empty search but..Wait! can force search using value instead using: ${val}`)
                 this.syncValueOptions()
@@ -128,7 +147,7 @@ export default {
                 } else if (search) {
                     console.log("normal callback search")
                     this.searchCallback(search, this.setLoading, this)
-                } else if (!search && !this.$refs.sel.value && this.searchOnEmpty) {
+                } else if (!search && !this.value && this.searchOnEmpty) {
                     console.log("Re fetching empty options")
                     this.searchCallback(search, this.setLoading, this)
                 } else {
@@ -151,14 +170,35 @@ export default {
             this.loading = /* this.syncing = */ flag
         }
     },
+    created () {
+        console.log(`Created ApiSelect with value: ${this.value}, initial-opts + opts:`)
+        console.log(this.initialOptions)
+        console.log(this.options)
+
+        // synchronize if we got some kind of value
+        // but we ain't synced yet
+        console.log("Synchronized? " + this.synchronized)
+        if ( (this.value && !this.synchronized) || this.searchOnEmpty) {
+            this.syncValueOptions()
+        }
+    },
     mounted () {
-        console.log("Mounted biatch!")
+        console.log(`Mounted biatch! value: ${this.value}`)
+        console.log("Initial-opts+Opts")
+        console.log(this.initialOptions)
+        console.log(this.options)
         // fill initial options with synced value
         // this.syncValueOptions()
 
         // add watcher for wrapped component's value
         var vm = this
-        this.$watch('$refs.sel.value', function (nv, ov) {
+        /* this.$watch('$refs.sel.value', function (nv, ov) {
+            if (typeof ov == 'undefined') {
+                console.log('watch trigger on first init...do nothing')
+                console.log(vm.initialOptions)
+                return
+            }
+
             console.log(`changed! ${ov} -> ${nv}`)
             console.log('Synched? ' + this.synchronized)
             // are we in multiple mode
@@ -187,7 +227,61 @@ export default {
         }, 
         {
             immediate: true
-        })
+        }) */
+    },
+    watch: {
+        initialOptions: function (newVal) {
+            // if it's valid, set option
+            if (newVal) {
+                this.setOptions([newVal])
+            }
+        },
+        value: function (nv, ov) {
+            const vm = this
+
+            if (typeof ov == 'undefined') {
+                console.log('watch trigger on first init...do nothing')
+                console.log(vm.initialOptions)
+                return
+            }
+
+            console.log(`changed! ${ov} -> ${nv}`)
+            console.log('Synched? ' + this.synchronized)
+
+            if (vm.multiple) {
+                // check for invalid values
+                console.log(`Validating values...`)
+                if (nv.some(e => e == null || e == 0 )) {
+                    console.log('new value contains invalids: must purge')
+
+                    vm.$refs.sel.$emit('input', nv.filter(e => e != null && e != 0))
+                    // prevent sync, and set new value instead
+                    return
+                }
+                console.log('already valid it seems')
+
+                // for multiple, gotta compare both
+                const jsonOldValue = JSON.stringify(ov)
+                const jsonNewValue = JSON.stringify(nv)
+
+                if (jsonOldValue != jsonNewValue) {
+                    console.log("Multiple value really changed")
+                    // sync here
+                    vm.syncValueOptions()
+                } else {
+                    console.log("Multiple value DIDN'T change")
+                }
+                // no need
+                return
+            } 
+            // if not sycnhronized, call syncvalueopts
+            // if (!this.synchronized) {
+            if (vm.synchronized) {
+                console.log("Already in sync. SHouldn't need to do anything...")
+                return
+            }
+            vm.syncValueOptions()
+        }
     }
 }
 </script>

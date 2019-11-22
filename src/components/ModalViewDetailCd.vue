@@ -9,6 +9,7 @@
         hide-footer
         no-close-on-backdrop
         no-close-on-esc
+        :key="data.id"
         >
         <!-- header -->
         <template v-slot:modal-header>
