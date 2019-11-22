@@ -19,7 +19,7 @@
 
         <!-- data -->
         <template v-slot:cell(data)="row">
-            <b-form-textarea v-model="row.value" :disabled="disabled">
+            <b-form-textarea v-model="row.item.data" :disabled="disabled">
             </b-form-textarea>
         </template>
 
@@ -62,6 +62,24 @@ export default {
                 '#', 'jenis', 'data', { label: '', key: 'action' }
             ],
             internalValue: cloneDeep(this.value)
+        }
+    },
+    watch: {
+        internalValue: {
+            handler (newVal) {
+                // console.log('internalValue change')
+                this.$emit('input', newVal)
+            },
+            deep: true
+        }
+    },
+    methods: {
+        addNewDetail () {
+            this.internalValue.push({
+                id: null,
+                jenis: null,
+                data: ''
+            })
         }
     }
 }

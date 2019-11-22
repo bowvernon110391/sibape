@@ -151,9 +151,27 @@
                 <!-- Detail Sekunder -->
                 <b-col md="6">
                     <b-form-group label="Data Tambahan">
-                        <list-cd-detail-sekunder 
+                        <!-- <list-cd-detail-sekunder 
                             v-model="tempData.detailSekunders.data"
-                            :disabled="!canEdit"></list-cd-detail-sekunder>
+                            :disabled="!canEdit"></list-cd-detail-sekunder> -->
+                        <template v-slot:label>
+                            <span>Data Tambahan</span>
+                            <span class="float-right">
+                                <b-button 
+                                    size="sm" 
+                                    variant="primary"
+                                    @click="$refs.detailSekunder.addNewDetail()">
+                                    <font-awesome-icon icon="plus-square">
+                                    </font-awesome-icon>
+                                    Tambah
+                                </b-button>
+                            </span>
+                        </template>
+                        <table-cd-detail-sekunder
+                            v-model="tempData.detailSekunders.data"
+                            :disabled="!canEdit"
+                            ref="detailSekunder">
+                        </table-cd-detail-sekunder>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -171,6 +189,7 @@ import SelectSatuan from '@/components/SelectSatuan'
 import SelectHs from '@/components/SelectHs'
 import SelectKategori from '@/components/SelectKategori'
 import ListCdDetailSekunder from '@/components/ListCdDetailSekunder'
+import TableCdDetailSekunder from '@/components/TableCdDetailSekunder'
 
 const cloneDeep = require('clone-deep')
 
@@ -269,7 +288,8 @@ export default {
         SelectSatuan,
         SelectHs,
         SelectKategori,
-        ListCdDetailSekunder
+        ListCdDetailSekunder,
+        TableCdDetailSekunder
     },
     watch: {
         data: {
