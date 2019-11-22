@@ -21,7 +21,7 @@ const axiosErrorHandler = {
             // e is axios error
             if (e.response) {
                 // got response
-                if (e.response.data) {
+                if (e.response.data && e.response.data.error) {
                     // stylized error
                     code = e.response.data.error.http_code
                     msg = e.response.data.error.message
