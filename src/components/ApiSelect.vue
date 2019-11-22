@@ -96,7 +96,7 @@ export default {
                 this.syncValueOptions()
             }
         },
-        syncValueOptions () {
+        syncValueOptions (force) {
             // if sel is not defined yet, can't sync
             /* if (typeof this.$refs.sel == 'undefined') {
                 console.log("$refs sel is still undefined. bailing...")
@@ -106,7 +106,7 @@ export default {
             const val = this.value
             if (!val) {
                 // value is null, but is our options also empty?
-                if (!this.options.length || this.searchOnEmpty) {
+                if ((!this.options.length || this.searchOnEmpty) || force) {
                     // that means, initial load
                     this.doSearch('', this.setLoading)
                 }
@@ -147,7 +147,7 @@ export default {
                 } else if (search) {
                     console.log("normal callback search")
                     this.searchCallback(search, this.setLoading, this)
-                } else if (!search && !this.value && this.searchOnEmpty) {
+                } else if (!search && !this.value) {
                     console.log("Re fetching empty options")
                     this.searchCallback(search, this.setLoading, this)
                 } else {
@@ -280,7 +280,7 @@ export default {
                 console.log("Already in sync. SHouldn't need to do anything...")
                 return
             }
-            vm.syncValueOptions()
+            vm.syncValueOptions(nv === null)
         }
     }
 }
