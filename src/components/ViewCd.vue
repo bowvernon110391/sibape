@@ -99,6 +99,7 @@
                         <b-form-group label="Pembebasan (USD)">
                             <b-form-select size="sm" :disabled="disableInput || isCommercial" v-model="dataCd.pembebasan">
                                 <option value="0">0</option>
+                                <option value="50" :disabled="isCommercial">50</option>
                                 <option value="500" :disabled="isCommercial">500</option>
                                 <option value="1000" :disabled="isCommercial">1000</option>
                             </b-form-select>

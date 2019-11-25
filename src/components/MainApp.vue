@@ -54,7 +54,7 @@
             
         <b-container>
             <hr />
-            @ footer 2019
+            &copy; <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
         </b-container>
     </div>
 </template>
