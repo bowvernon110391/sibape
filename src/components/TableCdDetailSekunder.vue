@@ -18,6 +18,13 @@
             {{ row.index + 1 }}
         </template>
 
+        <!-- jenis detail sekunder -->
+        <template v-slot:cell(jenis)="row">
+            <select-jenis-detail-sekunder
+                v-model="row.item.jenis">
+            </select-jenis-detail-sekunder>
+        </template>
+
         <!-- data -->
         <template v-slot:cell(data)="row">
             <b-form-textarea v-model="row.item.data" :disabled="disabled">
@@ -43,8 +50,13 @@
 <script>
 const cloneDeep = require('clone-deep')
 
+import SelectJenisDetailSekunder from '@/components/SelectJenisDetailSekunder'
+
 export default {
     inheritAttrs: false,
+    components: {
+        SelectJenisDetailSekunder
+    },
     props: {
         value: {
             type: Array,

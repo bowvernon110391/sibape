@@ -121,6 +121,12 @@
             v-model="idDetailSekunder">
         </b-form-select>
 
+        <br>
+
+        <select-jenis-detail-sekunder
+            v-model="idDetailSekunder">
+        </select-jenis-detail-sekunder>
+
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
@@ -141,6 +147,7 @@ import SelectNegara2 from '@/components/SelectNegara2'
 import SelectSatuan from '@/components/SelectSatuan'
 import SelectKurs from '@/components/SelectKurs'
 import SelectKemasan from '@/components/SelectKemasan'
+import SelectJenisDetailSekunder from '@/components/SelectJenisDetailSekunder'
 
 export default {
     components: {
@@ -151,7 +158,8 @@ export default {
         SelectHs,
         SelectSatuan,
         SelectKurs,
-        SelectKemasan
+        SelectKemasan,
+        SelectJenisDetailSekunder
     },
     data () {
         return {
