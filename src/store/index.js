@@ -37,6 +37,8 @@ export default new Vuex.Store({
         },
         setBusyState (state, payload) {
             state.busy = payload
+            // log it?
+            console.log("BUSY? " + state.busy)
         },
         setLokasi (state, payload) {
             state.lokasi = payload

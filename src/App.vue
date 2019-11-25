@@ -2,11 +2,12 @@
   <div id="app">
     <router-view/>
     <b-modal 
-          v-model="modalShown"
+          :visible="modalShown"
           id="loading-screen"
           centered 
           title="Loading..."
-          no-close-on-backdrop
+          no-stacking
+          no-fade
           ok-disabled
           hide-header-close
           size="sm"

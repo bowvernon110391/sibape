@@ -93,7 +93,7 @@ export default {
 
         // load cd details data
         loadCdDetails (q, spinner, vm) {
-            spinner(true)
+            // spinner(true)
             // make sure the cd id is valid
             const id = Number(this.cdId)
             if (!isNaN(Number(id)) && typeof id != 'undefined') {
