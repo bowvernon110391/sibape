@@ -125,6 +125,11 @@ class ApiSibape {
         return this.instance.get('/satuan/' + kode)
     }
 
+    // getJenisDetailSekunder () : GET /jenis-detail-sekunder
+    getJenisDetailSekunder () {
+        return this.instance.get('/jenis-detail-sekunder')
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {

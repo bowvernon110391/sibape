@@ -24,6 +24,7 @@ export default new Vuex.Store({
             kemasan: [],
             negara: [],
             satuan: [],
+            jenisDetailSekunder: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -57,6 +58,9 @@ export default new Vuex.Store({
             state.userInfo = null
             state.lokasi = null
             localStorage.clear()
+        },
+        setRefDataJenisDetailSekunder(state, payload) {
+            state.refData.jenisDetailSekunder = payload
         }
     },
     getters: {
@@ -76,6 +80,9 @@ export default new Vuex.Store({
         },
         negaraDirty: state => {
             return state.refData.isNegaraDirty
+        },
+        jenisDetailSekunder: state => {
+            return state.refData.jenisDetailSekunder
         },
         canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'
@@ -207,6 +214,19 @@ export default new Vuex.Store({
         // check if can delete
         canDelete (context, isDocLocked) {
             return context.getters.canEdit || !isDocLocked
+        },
+        // get data jenis detail sekunder, 
+        fetchRefDataJenisDetailSekunder (context) {
+            // check if refDataIsThere, returning it anyway
+            if (!context.state.refData.jenisDetailSekunder.length) {
+                // load that shit here
+                context.getters.api.getJenisDetailSekunder()
+                .then(e => {
+                    // store the data
+                    context.commit('setRefDataJenisDetailSekunder', e.data.data)
+                })
+                .catch(e => {})
+            }
         }
     }
 })

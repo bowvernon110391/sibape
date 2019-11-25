@@ -114,6 +114,13 @@
                 v-model="kursId"></select-kurs>
         </b-form-group>
 
+        <b-form-select
+            :options="jenisDetailSekunder"
+            value-field="id"
+            text-field="nama"
+            v-model="idDetailSekunder">
+        </b-form-select>
+
         <pre class="bg-light dark p-3 m-2">{{ jsonData }}</pre>
     </div>
 </template>
@@ -148,6 +155,7 @@ export default {
     },
     data () {
         return {
+            idDetailSekunder: null,
             showAlert: true,
             satuan: 'EA',
             kemasan: 'BX',
@@ -202,8 +210,14 @@ export default {
             }
         }
     },
+    created () {
+        // fetch data if not exist yet
+        if (!this.jenisDetailSekunder.length) {
+            this.$store.dispatch('fetchRefDataJenisDetailSekunder')
+        }
+    },
     computed: {
-        ...mapGetters(['api']),
+        ...mapGetters(['api', 'jenisDetailSekunder']),
         jsonData () {
             let dats = {
                 ...this.$data
