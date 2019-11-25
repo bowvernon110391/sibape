@@ -21,7 +21,8 @@
         <!-- jenis detail sekunder -->
         <template v-slot:cell(jenis)="row">
             <select-jenis-detail-sekunder
-                v-model="row.item.jenis">
+                v-model="row.item.jenis"
+                :disabled="disabled">
             </select-jenis-detail-sekunder>
         </template>
 

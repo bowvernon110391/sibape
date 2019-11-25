@@ -29,9 +29,9 @@
             </template>
         </paginated-browser>
 
-        <hr>
+        <!-- <hr>
         <pre>{{ modalShown }}</pre>
-        <hr>
+        <hr> -->
 
         <!-- modal view of detail cd -->
         <modal-view-detail-cd

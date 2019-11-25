@@ -169,7 +169,8 @@
                                 <b-button 
                                     size="sm" 
                                     variant="primary"
-                                    @click="$refs.detailSekunder.addNewDetail()">
+                                    @click="$refs.detailSekunder.addNewDetail()"
+                                    :disabled="!canEdit">
                                     <font-awesome-icon icon="plus-square">
                                     </font-awesome-icon>
                                     Tambah
