@@ -95,11 +95,12 @@
                     </b-col>
                     
                     <b-col>
+                        <!-- Pembebasan select. Disabled if commercial, also set to 0 if commercial -->
                         <b-form-group label="Pembebasan (USD)">
-                            <b-form-select size="sm" :disabled="disableInput" v-model="dataCd.pembebasan">
+                            <b-form-select size="sm" :disabled="disableInput || isCommercial" v-model="dataCd.pembebasan">
                                 <option value="0">0</option>
-                                <option value="500">500</option>
-                                <option value="1000">1000</option>
+                                <option value="500" :disabled="isCommercial">500</option>
+                                <option value="1000" :disabled="isCommercial">1000</option>
                             </b-form-select>
                         </b-form-group>
                     </b-col>
@@ -155,14 +156,15 @@
                     </b-form-input>
                 </b-form-group>
             </b-col>
-            <!-- Flag Deklarasi -->
+            <!-- Flag Deklarasi, special check utk flag KOMERSIL -->
             <b-col md="6" offset-md="4" sm="12">
                 <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
                     <b-form-checkbox-group
                         :options="flagDeklarasi"
                         stacked
                         :disabled="disableInput"
-                        v-model="dataCd.declare_flags">
+                        v-model="dataCd.declare_flags"
+                        @change="checkForCommercialFlag">
 
                     </b-form-checkbox-group>
                 </b-form-group>
@@ -239,20 +241,29 @@ export default {
         }
     },
     computed: {
+        // pick api and lokasi from our store
         ...mapGetters(['api', 'lokasi']),
+
+        // when to disable input?
         disableInput () {
            // only disable input if user can't edit
            // and the doc is locked
            return !this.canEdit && this.dataCd.is_locked
         },
+
+        // change npwp label depends on what data is being input
+        // 15 digits: npwp
+        // 13 digits: nib
+        // 6/8 digits: nik
         labelNpwp () {
            var defaultLabel = 'NPWP/NIB/NIK'
            if (!this.dataCd.npwp_nib) {
               return defaultLabel
            }
            
-           switch (this.dataCd.npwp_nib.length) {
+           switch (this.dataCd.npwp_nib.replace(/\.\-/i, '').length) {
               case 6:
+              case 8:
                  return 'NIK'
                case 13:
                   return 'NIB'
@@ -261,8 +272,22 @@ export default {
            }
            return defaultLabel
         },
+
+        // check if this is a new data
         isNew () {
             return this.id == 'new'
+        },
+
+        // check if this is commercial
+        isCommercial () {
+            var commercial = this.dataCd.declare_flags.includes("KOMERSIL")
+
+            // if flag set, reset pembebasan to 0
+            if (commercial) {
+                this.dataCd.pembebasan = 0
+            }
+
+            return commercial
         }
     },
     props: {
@@ -362,6 +387,8 @@ export default {
            }
         },
 
+        // when the detail is changed, what do?
+        // well, we reload the current paginated data
         onDetailChange (id) {
             // alert('Detail changed! -> #' + id)
             this.$refs.detailBrowser.loadData()
@@ -375,6 +402,7 @@ export default {
             }
             return false
         },
+        
     },
     created () {
         // this.setBusyState(true)
