@@ -29,5 +29,14 @@
             "tanggal_akhir": null,
             "created_at": null
         }
+    },
+    "refHs": {
+        "data": null
+    },
+    "refKemasan": {
+        "data": null
+    },
+    "refSatuan": {
+        "data": null
     }
 }

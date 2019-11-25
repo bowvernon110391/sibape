@@ -62,7 +62,10 @@
                 <b-col md="6">
                     <b-form-group
                         label="Kode HS">
-                        <select-hs v-model="tempData.hscode" :disabled="!canEdit">
+                        <select-hs 
+                            v-model="tempData.hscode" 
+                            :disabled="!canEdit"
+                            :initial-options="tempData.refHs.data">
                         </select-hs>
                     </b-form-group>
                 </b-col>
@@ -103,7 +106,10 @@
                         <div>
                             <b-form-input class="d-inline w-25 mx-0" v-model="tempData.kemasan.jumlah" :disabled="!canEdit">
                             </b-form-input>
-                            <select-kemasan class="d-inline-block mx-0" style="width: 72.5%" v-model="tempData.kemasan.jenis" :disabled="!canEdit"></select-kemasan>
+                            <select-kemasan class="d-inline-block mx-0" 
+                                style="width: 72.5%" v-model="tempData.kemasan.jenis" 
+                                :disabled="!canEdit"
+                                :initial-options="tempData.refKemasan.data"></select-kemasan>
                         </div>
                     </b-form-group>                    
                 </b-col>
@@ -115,7 +121,10 @@
                         <div>
                             <b-form-input class="d-inline w-25 mx-0" v-model="tempData.satuan.jumlah" :disabled="!canEdit">
                             </b-form-input>
-                            <select-satuan class="d-inline-block mx-0" style="width: 72.5%" v-model="tempData.satuan.jenis" :disabled="!canEdit"></select-satuan>
+                            <select-satuan class="d-inline-block mx-0" style="width: 72.5%" 
+                                v-model="tempData.satuan.jenis" 
+                                :disabled="!canEdit"
+                                :initial-options="tempData.refSatuan.data"></select-satuan>
                         </div>
                     </b-form-group>                    
                 </b-col>

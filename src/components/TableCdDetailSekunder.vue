@@ -11,7 +11,8 @@
         head-variant="dark"
         bordered
         v-bind="$attrs"
-        v-on="$listeners">
+        v-on="$listeners"
+        show-empty>
         <!-- nomor -->
         <template v-slot:cell(#)="row">
             {{ row.index + 1 }}
@@ -25,18 +26,16 @@
 
         <!-- delete -->
         <template v-slot:cell(action)="row">
-            <b-button size="sm" variant="danger" class="shadow" :disabled="disabled">
+            <b-button size="sm" variant="danger" class="shadow" 
+                :disabled="disabled" @click="deleteDetail(row.index)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
             </b-button>
         </template>
 
         <!-- empty -->
-        <template v-slot:empty="scope">
-            Tidak ada data tambahan
-        </template>
-        <template v-slot:emptyfiltered="scope">
-            Tidak ada data tambahan
+        <template v-slot:empty="row">
+            <p class="text-center">Tidak ada data tambahan</p>
         </template>
     </b-table>
 </template>
@@ -61,7 +60,7 @@ export default {
             fields: [
                 '#', 'jenis', 'data', { label: '', key: 'action' }
             ],
-            internalValue: cloneDeep(this.value)
+            internalValue: this.value.length ? cloneDeep(this.value) : []
         }
     },
     watch: {
@@ -74,12 +73,34 @@ export default {
         }
     },
     methods: {
+        // push new row into the back
         addNewDetail () {
             this.internalValue.push({
                 id: null,
                 jenis: null,
                 data: ''
             })
+        },
+
+        // remove specified row
+        async deleteDetail (id) {
+            // alert("Deleting " + id)
+            // console.log(`deleting sekunder ${id}`)
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data ini? (${this.internalValue[id].jenis})`, {
+                title: `Deleting data tambahan`,
+                size: 'md',
+                buttonSize: 'md',
+                okVariant: 'danger',
+                okTitle: 'YES',
+                cancelTitle: 'NO',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                centered: true
+            })
+
+            if (result) {
+                this.internalValue.splice(id, 1)
+            }
         }
     }
 }
