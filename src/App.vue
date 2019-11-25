@@ -6,7 +6,7 @@
           id="loading-screen"
           centered 
           title="Loading..."
-          no-stacking
+          
           no-fade
           ok-disabled
           hide-header-close
