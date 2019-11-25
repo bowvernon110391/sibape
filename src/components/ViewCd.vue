@@ -164,8 +164,7 @@
                         :options="flagDeklarasi"
                         stacked
                         :disabled="disableInput"
-                        v-model="dataCd.declare_flags"
-                        @change="checkForCommercialFlag">
+                        v-model="dataCd.declare_flags">
 
                     </b-form-checkbox-group>
                 </b-form-group>
