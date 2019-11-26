@@ -17,7 +17,7 @@ export default new Vuex.Store({
     state: {
         userInfo: null, // user info dari sso
         busy: false,    // status layar (busy) bakal mnculin modal
-        lokasi: null,   // data lokasi
+        lokasi: 'KANTOR',   // data lokasi
         // backend SiBAPE
         api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
         refData: {
