@@ -8,11 +8,11 @@ const axios = require('axios').default
 const STORE_DEBUG = true
 
 // now we grab variable
-const proc_env = process.env.NODE_ENV
+/* const proc_env = process.env.NODE_ENV
 console.log('App run in : ' + proc_env)
 console.log('Complete env : ')
 console.log(process.env)
-
+ */
 export default new Vuex.Store({
     state: {
         userInfo: null, // user info dari sso
