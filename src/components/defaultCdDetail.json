@@ -11,10 +11,13 @@
     },
     "hscode": null,
     "fob": 0,
+    "insurance": 0,
+    "freight": 0,
     "brutto": 0,
     "netto": 0,
     "cif": 0,
     "nilai_pabean": 0,
+    "ppnbm_tarif": null,
     "kategori": [],
     "detailSekunders": {
         "data": []

@@ -20,7 +20,12 @@
                         </b-button>
                         <b-button variant="success" :disabled="disableInput">
                             <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
-                            Bayar Pungutan
+                            <template v-if="cdHasLink('sspcp')">
+                                Lihat Pungutan
+                            </template>
+                            <template v-else>
+                                Perhitungan Pembayaran
+                            </template>
                         </b-button>
                     </b-button-group>
                 </div>

@@ -72,10 +72,24 @@
             </b-row>
             <!-- Nilai Barang + Kurs + Nilai Pabean -->
             <b-row>
-                <b-col md="4">
+                <b-col md="2">
                     <b-form-group
                         label="FOB">
                         <b-form-input type="text" v-model="tempData.fob" :disabled="!canEdit" class="text-right">
+                        </b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col md="2">
+                    <b-form-group
+                        label="Asuransi">
+                        <b-form-input type="text" v-model="tempData.insurance" :disabled="!canEdit" class="text-right">
+                        </b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col md="2">
+                    <b-form-group
+                        label="Freight">
+                        <b-form-input type="text" v-model="tempData.freight" :disabled="!canEdit" class="text-right">
                         </b-form-input>
                     </b-form-group>
                 </b-col>
@@ -88,7 +102,7 @@
                             :disabled="!canEdit"></select-kurs>
                     </b-form-group>
                 </b-col>
-                <b-col md="4">
+                <b-col md="2">
                     <b-form-group
                         label="Nilai Pabean">
                         <b-form-input type="text" disabled :value="tempData.nilai_pabean | formatCurrency | displayRupiah" class="text-right">
@@ -157,6 +171,23 @@
                     </b-form-group>
                 </b-col>
 
+                <!-- Tarif PPnBM -->
+                <b-col md="2">
+                    <b-form-group
+                        label="Tarif PPnBM (%)"
+                        description="*) beberapa barang punya beberapa opsi tarif">
+                        <b-form-input type="text" class="text-right" v-model="tempData.ppnbm_tarif"
+                            :disabled="!canEdit"
+                            >
+                        </b-form-input>
+                    </b-form-group>
+                </b-col>
+
+                
+            </b-row>
+
+            <!-- Detil sekunder -->
+            <b-row>
                 <!-- Detail Sekunder -->
                 <b-col md="6">
                     <b-form-group label="Data Tambahan">
