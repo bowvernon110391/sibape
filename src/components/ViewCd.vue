@@ -153,7 +153,7 @@
         <b-row>
             <!-- Jml Keluarga -->
             <b-col md="2" sm="6">
-                <b-form-group label="Jumlah Anggota Keluarga" description="Yang datang bersamaan">
+                <b-form-group label="Jumlah Keluarga" description="Yang datang bersamaan">
                     <b-form-input type="number" 
                         class="text-right" 
                         v-model="dataCd.jml_anggota_keluarga"
@@ -162,8 +162,21 @@
                     </b-form-input>
                 </b-form-group>
             </b-col>
+
+            <!-- Tarif PPh -->
+            <b-col md="2" sm="6">
+                <b-form-group label="Tarif PPh (%)">
+                    <b-form-select v-model="dataCd.pph_tarif" :disabled="disableInput" size="sm">
+                        <option value="2.5">2.5</option>
+                        <option value="7.5">7.5</option>
+                        <option value="15">15</option>
+                        <option value="22.5">22.5</option>
+                    </b-form-select>
+                </b-form-group>
+            </b-col>
+
             <!-- Flag Deklarasi, special check utk flag KOMERSIL -->
-            <b-col md="6" offset-md="4" sm="12">
+            <b-col md="6" offset-md="2" sm="12">
                 <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
                     <b-form-checkbox-group
                         :options="flagDeklarasi"
