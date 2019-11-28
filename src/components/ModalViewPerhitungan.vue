@@ -8,6 +8,8 @@
         <!-- header -->
         <template v-slot:modal-header>
             <h4>
+                <font-awesome-icon icon="cash-register">
+                </font-awesome-icon>
                 {{ simulate ? 'Simulasi Pungutan Bea Masuk &amp; Pajak' : 'Data Pungutan Bea Masuk &amp; Pajak' }}
             </h4>
         </template>
@@ -123,9 +125,13 @@
         <!-- footer -->
         <template v-slot:modal-footer="{ visible, ok, cancel, close, hide }">
             <b-button variant="primary" size="sm">
+                <font-awesome-icon icon="stamp">
+                </font-awesome-icon>
                 Tetapkan
             </b-button>
             <b-button variant="danger" @click="cancel" size="sm">
+                <font-awesome-icon icon="times">
+                </font-awesome-icon>
                 Tutup
             </b-button>
         </template>
