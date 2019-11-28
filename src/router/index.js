@@ -20,7 +20,7 @@ const router = new Router({
          path: '/',
          component: MainApp,
          meta: {
-            breadcrumb: 'Home',
+            breadcrumb: '🏠Home',
             authRequired: true
          },
          children: [
@@ -36,7 +36,7 @@ const router = new Router({
                path: 'cd',
                component: DummyView,
                meta: {
-                  breadcrumb: 'Browse CD'
+                  breadcrumb: '🔍Browse CD'
                },
                children: [
                   { // /cd/{id}
@@ -46,7 +46,7 @@ const router = new Router({
                      props: true,
                      meta: {
                         title: 'Detail CD',
-                        breadcrumb: 'Lihat Detail CD'
+                        breadcrumb: '💰Lihat Detail CD'
                      }
                   },
                   { //
