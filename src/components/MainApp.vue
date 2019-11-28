@@ -12,6 +12,8 @@
                             <b-dropdown-item to="/cd">💰Customs Declaration</b-dropdown-item>
                             <b-dropdown-item to="/is">⏲️Impor Sementara</b-dropdown-item>
                             <b-dropdown-item to="/spmb">🛫SPMB</b-dropdown-item>
+                            <b-dropdown-item to="/st">🛅Surat Titipan</b-dropdown-item>
+                            <b-dropdown-item to="/bc32">💸Pembawaan Mata Uang</b-dropdown-item>
                             <!-- <b-dropdown-item to="/sspcp">💸SSPCP</b-dropdown-item> -->
                         </b-nav-item-dropdown>
                     </b-navbar-nav>

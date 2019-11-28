@@ -12,19 +12,28 @@
         <!-- Tombol Penyelesaian? -->
         <b-row class="my-2" v-if="id != 'new'">
             <b-col>
-                <div class="text-right">
+                <div class="text-right" ref="btnGroupPenyelesaian">
                     <b-button-group size="sm" class="shadow">
+                        <!-- apabila dijadikan impor sementara -->
                         <b-button variant="danger" :disabled="disableInput">
                             <font-awesome-icon icon="plane-departure"></font-awesome-icon>
                             Impor Sementara
                         </b-button>
+
+                        <!-- titip (gk mampu/mau bayar) -->
+                        <b-button variant="dark" :disabled="disableInput">
+                            <font-awesome-icon icon="lock"></font-awesome-icon>
+                            Titipkan
+                        </b-button>
+
+                        <!-- apabila dibayar (Terbit SPPBMCP) -->
                         <b-button variant="success" :disabled="disableInput" @click="showPungutan">
                             <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
                             <template v-if="cdHasLink('sspcp')">
                                 Lihat Pungutan
                             </template>
                             <template v-else>
-                                Perhitungan Pembayaran
+                                Bayar
                             </template>
                         </b-button>
                     </b-button-group>
