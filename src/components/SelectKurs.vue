@@ -17,7 +17,7 @@
                     <!-- Slot for options -->
                     <template v-slot:option="opt">
                         <div>
-                            <h5>{{ `#${opt.id} ${opt.kode_valas} @ Rp ${opt.kurs_idr}` }}</h5>
+                            <h5># {{opt.id}} {{opt.kode_valas}} @ {{ opt.kurs_idr | formatCurrency(2) | displayRupiah }}</h5>
                             <h6>{{ opt.jenis }}</h6>
                             <p>
                                 <em>{{ opt.tanggal_awal }}</em> s/d <em>{{ opt.tanggal_akhir }}</em>
@@ -27,7 +27,7 @@
                     <!-- Slot for selected option -->
                     <template v-slot:selected-option="opt">
                         <template v-if="opt.kurs_idr">
-                            <span>#{{ opt.id }} : <strong>{{ opt.kode_valas }} @ Rp. {{ opt.kurs_idr }}</strong></span>
+                            <span>#{{ opt.id }} : <strong>{{ opt.kode_valas }} @ {{ opt.kurs_idr | formatCurrency(2) | displayRupiah }}</strong></span>
                         </template>
                         <template v-else>
                             <strong>Synchronizing...</strong>

@@ -275,8 +275,11 @@ export default {
                 return
             } 
             // if not sycnhronized, call syncvalueopts
+            if (nv === null) {
+                this.options = []
+            }
             // if (!this.synchronized) {
-            if (vm.synchronized) {
+            if (vm.synchronized && (nv !== null)) {
                 console.log("Already in sync. SHouldn't need to do anything...")
                 return
             }
