@@ -182,7 +182,7 @@
                         id="cd-ndpbm"
                         :disabled="disableInput"
                         v-model="dataCd.ndpbm.data.id"
-                        :initial-options="dataCd.ndpbm.data"
+                        :initial-options="isNew ? null : dataCd.ndpbm.data"
                         :search-on-empty="isNew">
                     </select-kurs>
                 </b-form-group>
