@@ -57,6 +57,7 @@
                     <b-form-group
                         label="Kurs">
                         <select-kurs 
+                            id="card-kurs"
                             v-model="tempData.kurs.data.id"
                             :initial-options="tempData.kurs.data"
                             :disabled="!canEdit"></select-kurs>

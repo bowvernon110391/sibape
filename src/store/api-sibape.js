@@ -190,6 +190,11 @@ class ApiSibape {
     deleteCdDetail (id) {
         return this.instance.delete('/cd/details/' + id)
     }
+
+    // getPerhitunganCd (id) : GET /cd/:id/simulasi
+    getPerhitunganCd (id) {
+        return this.instance.get(`/cd/${id}/simulasi`)
+    }
 }
 
 export {

@@ -37,7 +37,7 @@
                 <!-- button setting as append -->
                 <b-input-group-append>
                     <b-button 
-                        id="btn-settings" 
+                        :id="'btn-settings-'+id" 
                         variant="dark" 
                         :disabled="disabled" 
                         size="sm"
@@ -50,7 +50,7 @@
         </div>
         <!-- <template v-if="showSetting"> -->
             <!-- our datepicker -->
-        <b-popover target="btn-settings" triggers="click" 
+        <b-popover :target="'btn-settings-'+id" triggers="click" 
                     placement="bottomleft" @shown="showSetting = true" 
                     @hidden="showSetting = false">
             <template v-slot:title>
@@ -83,6 +83,9 @@ export default {
         disabled: {
             type: Boolean,
             default: false
+        },
+        id: {
+            required: true
         }
     },
     data () {

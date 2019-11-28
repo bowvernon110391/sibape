@@ -65,7 +65,8 @@
                         <select-hs 
                             v-model="tempData.hscode" 
                             :disabled="!canEdit"
-                            :initial-options="tempData.refHs.data">
+                            :initial-options="tempData.refHs.data"
+                            :search-on-empty="!tempData.id">
                         </select-hs>
                     </b-form-group>
                 </b-col>
@@ -97,8 +98,10 @@
                     <b-form-group
                         label="Kurs">
                         <select-kurs 
+                            id="detail-kurs"
                             v-model="tempData.kurs.data.id"
                             :initial-options="tempData.id ? tempData.kurs.data : null"
+                            :search-on-empty="!tempData.id"
                             :disabled="!canEdit"></select-kurs>
                     </b-form-group>
                 </b-col>
@@ -123,7 +126,8 @@
                             <select-kemasan class="d-inline-block mx-0" 
                                 style="width: 72.5%" v-model="tempData.kemasan.jenis" 
                                 :disabled="!canEdit"
-                                :initial-options="tempData.refKemasan.data"></select-kemasan>
+                                :initial-options="tempData.refKemasan.data"
+                                :search-on-empty="!tempData.id"></select-kemasan>
                         </div>
                     </b-form-group>                    
                 </b-col>
@@ -138,7 +142,8 @@
                             <select-satuan class="d-inline-block mx-0" style="width: 72.5%" 
                                 v-model="tempData.satuan.jenis" 
                                 :disabled="!canEdit"
-                                :initial-options="tempData.refSatuan.data"></select-satuan>
+                                :initial-options="tempData.refSatuan.data"
+                                :search-on-empty="!tempData.id"></select-satuan>
                         </div>
                     </b-form-group>                    
                 </b-col>

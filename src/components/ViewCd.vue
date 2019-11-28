@@ -18,7 +18,7 @@
                             <font-awesome-icon icon="plane-departure"></font-awesome-icon>
                             Impor Sementara
                         </b-button>
-                        <b-button variant="success" :disabled="disableInput">
+                        <b-button variant="success" :disabled="disableInput" @click="showPungutan">
                             <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
                             <template v-if="cdHasLink('sspcp')">
                                 Lihat Pungutan
@@ -175,8 +175,21 @@
                 </b-form-group>
             </b-col>
 
+            <!-- NDPBM -->
+            <b-col md="4">
+                <b-form-group label="NDPBM">
+                    <select-kurs
+                        id="cd-ndpbm"
+                        :disabled="disableInput"
+                        v-model="dataCd.ndpbm.data.id"
+                        :initial-options="dataCd.ndpbm.data"
+                        :search-on-empty="isNew">
+                    </select-kurs>
+                </b-form-group>
+            </b-col>
+
             <!-- Flag Deklarasi, special check utk flag KOMERSIL -->
-            <b-col md="6" offset-md="2" sm="12">
+            <b-col md="4"  sm="12">
                 <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
                     <b-form-checkbox-group
                         :options="flagDeklarasi"
@@ -199,8 +212,23 @@
         <template v-if="!isNew">
             <hr>
             <view-cd-details :cd-id="id" :disabled="disableInput"></view-cd-details>
+
+            <!-- modal view utk perhitungan -->
+            <template v-if="!cdHasLink('sspcp') && dataCd.id">
+                <modal-view-perhitungan
+                    :cd-id="dataCd.id"
+                    v-model="viewPungutan">
+                </modal-view-perhitungan>
+            </template>
+
+            <!-- utk nampilin respon sspcp -->
+            <template v-else>
+                <!-- TODO: buat komponen baru -->
+            </template>
         </template>
         <!-- <pre>{{ dataCd }}</pre> -->
+
+        
     </div>
 </template>
 
@@ -218,6 +246,12 @@ import SelectPelabuhan from '@/components/SelectPelabuhan'
 import { mapMutations, mapGetters } from 'vuex'
 import ViewCdDetails from '@/components/ViewCdDetails'
 
+// utk menampilkan pungutan
+import ModalViewPerhitungan from '@/components/ModalViewPerhitungan'
+
+// ndpbm (USD)
+import SelectKurs from '@/components/SelectKurs'
+
 // the default cd header
 import defaultCd from './defaultCd.json'
 
@@ -233,7 +267,9 @@ export default {
         // vSelect,
         SelectPelabuhan,
         // CardViewDetailCd
-        ViewCdDetails
+        ViewCdDetails,
+        ModalViewPerhitungan,
+        SelectKurs
     },
     data() {
         return {
@@ -255,7 +291,8 @@ export default {
                 'fob',
                 'nilai_pabean',
                 { label: '', key: 'action' }
-            ]
+            ],
+            viewPungutan: false
         }
     },
     computed: {
@@ -421,6 +458,11 @@ export default {
             return false
         },
         
+        // tampilkan perhitungan
+        showPungutan () {
+            // tergantung status cd
+            this.viewPungutan = true
+        }
     },
     created () {
         // this.setBusyState(true)
