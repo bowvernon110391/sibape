@@ -2,23 +2,30 @@
     <div>
         <!-- paginated browser -->
         <paginated-browser
+            :search-date-range="false"
             :data-callback="getPenumpang"
             ref="browserPenumpang">
             <!-- di dalem ada tabel -->
-
+            <template v-slot:default="{ data, pagination }">
+                <table-penumpang
+                    :items="data">
+                </table-penumpang>
+            </template>
         </paginated-browser>
     </div>
 </template>
 
 <script>
 import PaginatedBrowser from '@/components/PaginatedBrowser'
+import TablePenumpang from '@/components/TablePenumpang'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters } from 'vuex'
 
 export default {
     mixins: [axiosErrorHandler],
     components: {
-        PaginatedBrowser
+        PaginatedBrowser,
+        TablePenumpang
     },
     methods: {
 
@@ -28,9 +35,7 @@ export default {
 
             var me = this
 
-            this.api.getPenumpang({
-                q: q
-            })
+            this.api.getPenumpang(q)
             .then(e => {
                 spinner(false)
 

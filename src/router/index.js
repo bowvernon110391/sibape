@@ -7,6 +7,7 @@ import ViewCd from '@/components/ViewCd'
 import DummyView from '@/components/DummyView'
 import LoginPage from '@/components/LoginPage'
 import PageNotFound from '@/components/PageNotFound'
+import BrowsePenumpang from '@/components/BrowsePenumpang'
 import store from '../store'
 
 const axios = require('axios').default
@@ -58,6 +59,15 @@ const router = new Router({
                      component: BrowseCd
                   }
                ]
+            },
+            {
+              path: 'penumpang',
+              name: 'BrowsePenumpang',
+              meta: {
+                breadcrumb: '🔍Browse Penumpang',
+                title: 'Browse Data Penumpang'
+              },
+              component: BrowsePenumpang
             }
          ]
       },
