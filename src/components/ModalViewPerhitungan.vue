@@ -10,7 +10,7 @@
             <h4>
                 <font-awesome-icon icon="cash-register">
                 </font-awesome-icon>
-                {{ simulate ? 'Perhitungan Pungutan Bea Masuk &amp; Pajak' : 'Data Pungutan Bea Masuk &amp; Pajak' }}
+                {{ simulate ? 'Perhitungan Bea Masuk &amp; Pajak' : 'Data Bea Masuk &amp; Pajak' }}
             </h4>
         </template>
 
