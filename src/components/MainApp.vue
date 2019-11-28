@@ -22,6 +22,7 @@
                         <b-nav-item-dropdown text="Referensi">
                             <b-dropdown-item to="/penumpang">👨Penumpang</b-dropdown-item>
                             <b-dropdown-item to="/kurs">💲Kurs</b-dropdown-item>
+                            <b-dropdown-item to="/jaminan">🧾Jaminan</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
 
