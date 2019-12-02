@@ -24,7 +24,7 @@ export default {
             language: 'id',
             weekStart: 1,
             todayHighlight: true,
-            orientation: 'left bottom',
+            orientation: 'left auto',
             clearBtn: true
         }).on('changeDate', function(e) {
             vm.$emit('input', vm.$refs.dp.value)

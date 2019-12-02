@@ -112,19 +112,67 @@
                 <hr>
 
                 <!-- catatan -->
-                <b-form-group
-                    label="Catatan"
-                    description="catatan khusus terkait penetapan">
-                    <b-form-textarea rows="3" v-model="catatan">
-                    </b-form-textarea>
-                </b-form-group>
+                <b-row>
+                    <b-col>
+                        <b-form-group
+                            label="Catatan"
+                            description="catatan khusus terkait penetapan"
+                            :disabled="!simulate">
+                            <b-form-textarea rows="3" v-model="catatan">
+                            </b-form-textarea>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <!-- metode pembayaran -->
+                <b-row>
+                    <!-- Jenis pembayaran -->
+                    <b-col md="4">
+                        <b-form-group
+                            label="Jenis Pembayaran"
+                            :disabled="!simulate">
+                            <b-form-select v-model="jenis" size="sm">
+                                <option value="TUNAI">Tunai</option>
+                                <option value="JAMINAN">Jaminan</option>
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+
+                    <!-- Inputan detil? -->
+                    <b-col md="8">
+                        <!-- Apabila tunai, input no + tgl billing (dari BayMan) -->
+                        <template v-if="jenis == 'TUNAI'">
+                            <b-row>
+                                <!-- Nomor Billing -->
+                                <b-col md="12">
+                                    <b-form-group label="No Billing">
+                                        <b-form-input type="text">
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                                <!-- Tanggal Billing -->
+                                <b-col md="7">
+                                    <b-form-group label="Tgl Billing">
+                                        <datepicker></datepicker>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                        </template>
+
+                        <!-- Apabila jaminan, select-jaminan -->
+                        <template v-else-if="jenis == 'JAMINAN'">
+                        </template>
+
+                        <!-- Lain lain, input catatan aja kali ya -->
+                    </b-col>
+                </b-row>
             </template>
 
         </template>
 
         <!-- footer -->
         <template v-slot:modal-footer="{ visible, ok, cancel, close, hide }">
-            <b-button variant="primary" size="sm">
+            <b-button variant="primary" size="sm" :disabled="!simulate">
                 <font-awesome-icon icon="stamp">
                 </font-awesome-icon>
                 Tetapkan
@@ -144,9 +192,14 @@ import { mapGetters } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import defaultHitungCd from './defaultHitungCd.json'
 
+import Datepicker from '@/components/Datepicker'
+
 export default {
     inheritAttrs: false,
     mixins: [ axiosErrorHandler ],
+    components: {
+        Datepicker
+    },
     props: {
         cdId: {
             type: [Number, String],
@@ -158,6 +211,10 @@ export default {
         },
         value: {
             required: true
+        },
+        initialData: {
+            type: Object,
+            default: null
         }
     },
     data () {
@@ -165,7 +222,8 @@ export default {
             // busy flag
             busy: false,
             perhitungan: defaultHitungCd,
-            catatan:''
+            catatan: this.initialData ? this.initialData.catatan : '',
+            jenis: this.initialData ? this.initialData.jenis : null
         }
     },
     computed: {
