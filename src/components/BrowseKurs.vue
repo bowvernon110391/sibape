@@ -2,7 +2,8 @@
     <div>
         <!-- Button control -->
         <div class="mb-2">
-            <b-button variant="primary" class="shadow">
+            <b-button variant="primary" class="shadow"
+                @click="grabKurs">
                 <font-awesome-icon icon="cloud-download-alt"></font-awesome-icon>
                 Tarik dari Situs BKF
             </b-button>
@@ -80,6 +81,28 @@ export default {
                 vm.setBusyState(false)
 
                 vm.handleError(e)
+            })
+        },
+
+        // grab kurs
+        grabKurs() {
+            // alert(pindah)
+            this.setBusyState(true)
+
+            var vm = this
+            // panggil api
+            this.api.grabKurs()
+            .then(e => {
+                // hide
+                vm.setBusyState(false)
+                // reload
+                vm.$refs.kursBrowser.loadData()
+                // 
+                vm.showToast('Kurs seeded!', 'Berhasil menarik kurs dari BKF. reloading...','success')
+            })
+            .catch(e => {
+                // hide
+                vm.setBusyState(false)
             })
         }
     },
