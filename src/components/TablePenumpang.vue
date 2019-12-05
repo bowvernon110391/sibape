@@ -11,7 +11,8 @@
         primary-key="id"
         :fields="fields"
         v-bind="$attrs"
-        v-on="$listeners">
+        v-on="$listeners"
+        thead-tr-class="text-center">
         <!-- special rendered column goes here -->
         <!-- action column -->
         <template v-slot:cell(_showDetails)="row">
