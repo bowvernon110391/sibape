@@ -2,14 +2,12 @@
     <div>
         <!-- paginated browser -->
         <paginated-browser
-            :search-date-range="false"
-            :data-callback="getPenumpang"
-            ref="browserPenumpang">
-            <!-- di dalem ada tabel -->
+            :data-callback="getKurs">
             <template v-slot:default="{ data, pagination }">
-                <table-penumpang
+                <!-- table kurs -->
+                <table-kurs
                     :items="data">
-                </table-penumpang>
+                </table-kurs>
             </template>
         </paginated-browser>
     </div>
@@ -17,25 +15,24 @@
 
 <script>
 import PaginatedBrowser from '@/components/PaginatedBrowser'
-import TablePenumpang from '@/components/TablePenumpang'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
+import TableKurs from '@/components/TableKurs'
 import { mapGetters } from 'vuex'
 
 export default {
     mixins: [axiosErrorHandler],
     components: {
         PaginatedBrowser,
-        TablePenumpang
+        TableKurs
     },
     methods: {
-
-        // panggil api utk ambil data penumpang
-        getPenumpang(q, spinner, vm) {
+        // panggil api utk ambil data kurs
+        getKurs(q, spinner, vm) {
             spinner(true)
 
             var me = this
 
-            this.api.getPenumpang(q)
+            this.api.getKurs(q)
             .then(e => {
                 spinner(false)
 
