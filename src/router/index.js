@@ -8,6 +8,7 @@ import DummyView from '@/components/DummyView'
 import LoginPage from '@/components/LoginPage'
 import PageNotFound from '@/components/PageNotFound'
 import BrowsePenumpang from '@/components/BrowsePenumpang'
+import BrowseKurs from '@/components/BrowseKurs'
 import store from '../store'
 
 const axios = require('axios').default
@@ -68,6 +69,15 @@ const router = new Router({
                 title: 'Browse Data Penumpang'
               },
               component: BrowsePenumpang
+            },
+            {
+              path: 'kurs',
+              name: 'BrowsePenumpang',
+              meta: {
+                breadcrumb: '🔍Browse Data Kurs',
+                title: 'Browse Data Kurs'
+              },
+              component: BrowseKurs
             }
          ]
       },

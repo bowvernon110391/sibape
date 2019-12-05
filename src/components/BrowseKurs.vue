@@ -1,15 +1,25 @@
 <template>
     <div>
+        <!-- Button control -->
+        <div class="mb-2">
+            <b-button variant="primary" class="shadow">
+                <font-awesome-icon icon="cloud-download-alt"></font-awesome-icon>
+                Tarik dari Situs BKF
+            </b-button>
+        </div>
         <!-- paginated browser -->
         <paginated-browser
             :data-callback="getKurs">
             <template v-slot:default="{ data, pagination }">
                 <!-- table kurs -->
                 <table-kurs
-                    :items="data">
+                    :items="data"
+                    @deleteKurs="handleDelete">
                 </table-kurs>
             </template>
         </paginated-browser>
+
+        <!-- confirm box -->
     </div>
 </template>
 
@@ -43,6 +53,11 @@ export default {
                 spinner(false)
                 me.handleError(e)
             })
+        },
+
+        // handle deletion
+        handleDelete(id) {
+            alert(`deleting kurs...${id}`)
         }
     },
     computed: {
