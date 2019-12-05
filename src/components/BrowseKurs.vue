@@ -103,6 +103,8 @@ export default {
             .catch(e => {
                 // hide
                 vm.setBusyState(false)
+
+                vm.handleError(e)
             })
         }
     },
