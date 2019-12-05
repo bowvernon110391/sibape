@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mb-2">
-            <b-button variant="primary" to="/cd/new">
+            <b-button variant="primary" to="/cd/new" class="shadow">
                 <font-awesome-icon icon="plus-square"></font-awesome-icon> Input CD
             </b-button>
         </div>

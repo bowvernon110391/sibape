@@ -257,7 +257,7 @@
         </b-row>
         <b-row class="mt-2">
             <b-col>
-                <b-button @click="onSave" class="float-right" variant="primary" :disabled="disableInput">
+                <b-button @click="onSave" class="float-right shadow" variant="primary" :disabled="disableInput">
                     <font-awesome-icon icon="save"></font-awesome-icon> Simpan
                 </b-button>
             </b-col>
