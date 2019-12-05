@@ -33,6 +33,11 @@ class ApiSibape {
         return this.instance.get('/kurs/' + id)
     }
 
+    // deleteKurs (id) : DELETE /kurs/:id
+    deleteKurs (id) {
+        return this.instance.delete('/kurs/' + id)
+    }
+
     //=================RESOURCE : PENUMPANG====================================
     // getPenumpang (param) : GET /penumpang. param = search data
     getPenumpang (param) {

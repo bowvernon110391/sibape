@@ -9,7 +9,8 @@
         </div>
         <!-- paginated browser -->
         <paginated-browser
-            :data-callback="getKurs">
+            :data-callback="getKurs"
+            ref="kursBrowser">
             <template v-slot:default="{ data, pagination }">
                 <!-- table kurs -->
                 <table-kurs
@@ -27,7 +28,7 @@
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import TableKurs from '@/components/TableKurs'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     mixins: [axiosErrorHandler],
@@ -36,6 +37,9 @@ export default {
         TableKurs
     },
     methods: {
+        // grab set busy state
+        ...mapMutations(['setBusyState']),
+
         // panggil api utk ambil data kurs
         getKurs(q, spinner, vm) {
             spinner(true)
@@ -57,7 +61,26 @@ export default {
 
         // handle deletion
         handleDelete(id) {
-            alert(`deleting kurs...${id}`)
+            // alert(`deleting kurs...${id}`)
+            this.setBusyState(true)
+
+            var vm = this
+
+            // call api
+            this.api.deleteKurs(id)
+            .then(e => {
+                // success
+                vm.setBusyState(false)
+
+                // reload
+                vm.$refs.kursBrowser.loadData()
+            })
+            .catch(e => {
+                // fail
+                vm.setBusyState(false)
+
+                vm.handleError(e)
+            })
         }
     },
     computed: {
