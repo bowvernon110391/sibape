@@ -270,6 +270,9 @@ export default {
 
                     this.editMode = false
                     this.saving = false
+
+                    // close ourself?
+                    vm.$emit('input', false)
                 })
                 .catch(e => {
                     this.saving = false
@@ -293,6 +296,8 @@ export default {
                     this.saving = false
                     // set id
                     this.tempData.id = e.data.id
+                    // close ourself?
+                    vm.$emit('input', false)
                 })
                 .catch(e => {
                     this.saving = false
