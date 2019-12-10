@@ -9,6 +9,7 @@ import LoginPage from '@/components/LoginPage'
 import PageNotFound from '@/components/PageNotFound'
 import BrowsePenumpang from '@/components/BrowsePenumpang'
 import BrowseKurs from '@/components/BrowseKurs'
+import PrintSppbmcp from '@/components/PrintSppbmcp'
 import store from '../store'
 
 const axios = require('axios').default
@@ -18,7 +19,13 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-      { /* root path */
+      // specific path put first so it can resolve
+      {
+         path: '/print-sppbmcp',
+         component: PrintSppbmcp
+      },
+      { 
+        /* root path */
          path: '/',
          component: MainApp,
          meta: {
