@@ -232,11 +232,13 @@
 
                 <div class="tanda">
                     <table class="perhatian">
-                        <tr>
+                        <tr style="height: 1em">
                             <td>PERHATIAN:</td>
                         </tr>
                         <tr>
-                            <td style="min-height: 4rem;">
+                            <td>
+                                <!-- Catatan goes here -->
+                                Some dummy note about smth
                             </td>
                         </tr>
                     </table>
@@ -446,8 +448,10 @@ export default {
         margin-left: 13px;
         border: 1px solid black;
         /* width: 50%; */
-        min-height: 100px;
+        /* min-height: 100px; */
         /* float: left; */
+        max-height: 6em;
+        /* max-height: 8em; */
     }
 
     .perhatian td {
@@ -479,12 +483,6 @@ export default {
         text-align: left;
         padding-left: 0px;
     }
-
-
-
-
-
-
 
     @page {
         size: A4;
