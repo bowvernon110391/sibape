@@ -99,18 +99,18 @@
                     <table class="table-penetapan">
                         <thead>
                             <tr>
-                                <td style="width: 25px;">No.</td>
-                                <td style="width: 275px;">Uraian Barang Secara Lengkap meliputi Jenis, Jumlah, Merek,
+                                <th style="width: 25px;">No.</th>
+                                <th style="width: 275px;">Uraian Barang Secara Lengkap meliputi Jenis, Jumlah, Merek,
                                     Tipe, Ukuran, dan
-                                    Spesifikasi Lainnya</td>
-                                <td style="width: 115px;">Jumlah dan jenis Satuan</td>
-                                <td style="width: 95px;">Nilai Pabean</td>
-                                <td>
+                                    Spesifikasi Lainnya</th>
+                                <th style="width: 115px;">Jumlah dan jenis Satuan</th>
+                                <th style="width: 95px;">Nilai Pabean</th>
+                                <th style="max-width: 200px;">
                                     <ul>
                                         <li>Pos Tarif/HS</li>
                                         <li>Tarif BM, Cukai, PPh, PPN, PPNBM</li>
                                     </ul>
-                                </td>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -316,7 +316,7 @@ export default {
     .page {
         width: 210mm;
         min-height: 297mm !important;
-        padding: 15mm;
+        padding: 1.5em;
         margin: 15mm auto;
         border: 1px #D3D3D3 solid;
         border-radius: 5px;
@@ -391,13 +391,17 @@ export default {
         width: 95%;
     }
 
-    .penetapan table thead td {
+    .penetapan table thead tr {
         text-align: center;
         vertical-align: middle;
     }
 
+    .penetapan th {
+        border: 1px solid black;
+    }
 
-    .penetapan table thead td ul {
+
+    .penetapan table thead tr ul {
         text-align: left;
         vertical-align: middle;
         padding-left: 15px;
@@ -450,7 +454,8 @@ export default {
         /* width: 50%; */
         /* min-height: 100px; */
         /* float: left; */
-        max-height: 6em;
+        min-height: 4em;
+        max-height: 8em;
         /* max-height: 8em; */
     }
 
@@ -461,6 +466,9 @@ export default {
 
     .tanda-tangan {
         margin-left: 30px;
+        /* z-index: -1; */
+        /* margin-right: auto; */
+        max-width: 350px;
     }
 
     .footer {
@@ -499,6 +507,7 @@ export default {
 
         .page {
             margin: 0;
+            padding: 2rem;
             border: initial;
             border-radius: initial;
             width: initial;
@@ -510,6 +519,10 @@ export default {
 
         .subpage {
             border: none;
+        }
+
+        .footer {
+            margin-top: 2em;
         }
     }
 </style>
