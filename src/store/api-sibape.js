@@ -205,6 +205,34 @@ class ApiSibape {
     getPerhitunganCd (id) {
         return this.instance.get(`/cd/${id}/simulasi`)
     }
+
+    //==================RESOURCE : BPJ===========================================================
+    // getBpj () : GET /bpj
+    getBpj (param) {
+        return this.instance.get('/bpj', {
+            params: param
+        })
+    }
+
+    // getBpjById () : GET /bpj/{id}
+    getBpjById (id) {
+        return this.instance.get('/bpj/' + id)
+    }
+
+    // createBpj (dataBpj) : POST /bpj
+    createBpj (dataBpj) {
+        return this.instance.post('/bpj', dataBpj)
+    }
+
+    // updateBpj (dataBpj) : PUT /bpj/{id}
+    updateBpj (id, dataBpj) {
+        return this.instance.put('/cd/' + id, dataBpj)
+    }
+
+    // deleteBpj (id) : DELETE /bpj/{id}
+    deleteBpj (id) {
+        return this.instance.delete('/bpj/' + id)
+    }
 }
 
 export {

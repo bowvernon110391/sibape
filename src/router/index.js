@@ -10,6 +10,8 @@ import PageNotFound from '@/components/PageNotFound'
 import BrowsePenumpang from '@/components/BrowsePenumpang'
 import BrowseKurs from '@/components/BrowseKurs'
 import PrintSppbmcp from '@/components/PrintSppbmcp'
+import BrowseBpj from '@/components/BrowseBpj'
+
 import store from '../store'
 
 const axios = require('axios').default
@@ -79,12 +81,21 @@ const router = new Router({
             },
             {
               path: 'kurs',
-              name: 'BrowsePenumpang',
+              name: 'BrowseKurs',
               meta: {
                 breadcrumb: '🔍Browse Data Kurs',
                 title: 'Browse Data Kurs'
               },
               component: BrowseKurs
+            },
+            {
+              path: 'bpj',
+              name: 'BrowseBpj',
+              meta: {
+                breadcrumb: '🔍Browse BPJ',
+                title: 'Browse Data BPJ'
+              },
+              component: BrowseBpj
             }
          ]
       },
