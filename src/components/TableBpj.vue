@@ -21,6 +21,7 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
+            <card-view-bpj :data="row.item"></card-view-bpj>
             <!-- <card-view-cd :row="row"></card-view-cd> -->
             <pre>{{ JSON.stringify(row, null, 2) }}</pre>
         </template>
@@ -31,6 +32,12 @@
                 <font-awesome-icon :icon="data.item.is_locked ? 'lock' : 'lock-open'">
                 </font-awesome-icon>
             </b-badge>
+        </template>
+
+        <template v-slot:cell(jumlah)="data">
+            <div class="text-right">
+            {{ data.item.jumlah | formatCurrency | displayRupiah }}
+            </div>
         </template>
 
         <template v-slot:cell(action)="data">
@@ -52,12 +59,14 @@
 <script>
 import userChecker from '../mixins/userChecker'
 // import CardViewCd from '@/components/CardViewCd'
+import CardViewBpj from '@/components/CardViewBpj'
 
 export default {
     inheritAttrs: false,
     mixins: [ userChecker ],
     components: {
         // CardViewCd
+        CardViewBpj
     },
     methods: {
         async onDelete (id, nomor) {
@@ -84,8 +93,13 @@ export default {
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 'nomor', 'tanggal', 'penjamin', 
-                { label: 'Penumpang', key: 'penumpang.data.nama' }, 'jumlah', { label: 'Terkunci', key: 'is_locked' },
+                { label: '', key: 'showDetail' }, 
+                { label: 'Nomor BPJ', key: 'nomor_lengkap' }, 
+                { label: 'Tanggal', key: 'tgl_dok'}, 'penjamin', 
+                { label: 'Penumpang', key: 'penumpang.data.nama' }, 
+                'jumlah', 
+                // { label: 'Last Status', key: 'last_status.status'},
+                { label: 'Terkunci', key: 'is_locked' },
                 'action'
             ]
         }

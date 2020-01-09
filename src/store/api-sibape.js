@@ -216,7 +216,11 @@ class ApiSibape {
 
     // getBpjById () : GET /bpj/{id}
     getBpjById (id) {
-        return this.instance.get('/bpj/' + id)
+        return this.instance.get('/bpj/' + id, {
+            params: {
+                include: 'guaranteeable,status'
+            }
+        })
     }
 
     // createBpj (dataBpj) : POST /bpj
