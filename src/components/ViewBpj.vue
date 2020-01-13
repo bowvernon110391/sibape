@@ -67,7 +67,11 @@
             </b-col>
             <b-col md="6">
                 <b-form-group label="Nomor Identitas" label-for="no_identitas">
-                    <b-form-input v-model="dataBpj.no_identitas" type="text" id="no_identitas" :disabled="disableInput"></b-form-input>
+                    <b-form-input 
+                        v-model="dataBpj.no_identitas" 
+                        type="text" 
+                        id="no_identitas" 
+                        :disabled="disableInput"></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -97,19 +101,75 @@
 
             </b-col>
 
+            <!-- nomor + tgl jaminan -->
+            <b-col md="4">
+                <b-form-group label="Nomor Jaminan" label-for="nomor-jaminan">
+                    <b-form-input
+                        id="nomor-jaminan"
+                        v-model="dataBpj.nomor_jaminan"
+                        :disabled="disableInput"></b-form-input>
+                </b-form-group>
+            </b-col>
 
+            <!-- Tanggal jaminan -->
+            <b-col md="2">
+                <b-form-group label="Tanggal Jaminan" label-for="tanggal-jaminan">
+                    <datepicker
+                        id="tanggal-jaminan"
+                        v-model="dataBpj.tanggal_jaminan"
+                        :disabled="disableInput">
+                    </datepicker>
+                </b-form-group>
+            </b-col>
+        </b-row>        
+
+        <!-- nomor jaminan + tgl jaminan -->
+        <b-row>
             <!-- Jumlah -->
-            <b-col md="6">
+            <b-col md="4" offset-md="6">
                 <b-form-group label="Jumlah (Rp)." label-for="jumlah">
                     <b-form-input
                         v-model="dataBpj.jumlah"
                         :disabled="disableInput"
 
-                        lazy-formatter
-                        :formatter="formatCurrency"></b-form-input>
+                        class="text-right"></b-form-input>
                 </b-form-group>
             </b-col>
-        </b-row>        
+
+            <!-- Tgl Jatuh Tempo -->
+            <b-col md="2">
+                <b-form-group label="Tgl Jatuh Tempo" label-for="tanggal-jatuh-tempo">
+                    <datepicker 
+                        id="tanggal-jatuh-tempo"
+                        v-model="dataBpj.tanggal_jatuh_tempo"
+                        :disabled="disableInput">
+                    </datepicker>
+                </b-form-group>
+            </b-col>
+        </b-row>
+
+        <!-- Penjamin + Alamat -->
+        <b-row>
+            <!-- penjamin -->
+            <b-col md="6">
+                <b-form-group label="Penjamin" label-for="penjamin">
+                    <b-form-input
+                        v-model="dataBpj.penjamin"
+                        :disabled="disableInput"
+                        ></b-form-input>
+                </b-form-group>
+            </b-col>
+
+            <!-- alamat penjamin -->
+            <b-col md="6">
+                <b-form-group label="Alamat Penjamin" label-for="alamat-penjamin">
+                    <b-form-textarea
+                        v-model="dataBpj.alamat_penjamin"
+                        :disabled="disableInput"
+                        ></b-form-textarea>
+                </b-form-group>
+            </b-col>
+        </b-row>
 
         <hr>
 
@@ -196,13 +256,17 @@ export default {
             })
         },
 
+        displayJumlah (value, event) {
+            return this.$options.filters.formatCurrency(value)
+        },
+
         penumpangChange(data) {
             if (data) {
                 console.log('penumpang changed:')
                 console.log(data)
 
-                if (this.dataBpj.jenis_identitas == 'PASPOR') {
-                    this.dataBpj.no_identitas = data.no_paspor + ' <---> ' + this.dataBpj.penumpang_id
+                if (this.dataBpj.jenis_identitas == 'PASPOR' && !this.dataBpj.no_identitas) {
+                    this.dataBpj.no_identitas = data.no_paspor // + ' <---> ' + this.dataBpj.penumpang_id
                 }
             }
         },
