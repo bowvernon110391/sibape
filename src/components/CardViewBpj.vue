@@ -103,7 +103,7 @@
                 <strong>Telah Digunakan:</strong>
             </b-col>
             <b-col md="4">
-                <strong>{{ data.guaranteeable ? 'SUDAH' : 'BELUM' }}</strong>
+                <strong>{{ data.guaranteeable ? 'YA' : 'TIDAK' }}</strong>
             </b-col>
             <b-col md="2">
                 <strong>Status Terakhir:</strong>
