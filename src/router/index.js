@@ -4,13 +4,16 @@ import HomePage from '@/components/HomePage'
 import MainApp from '@/components/MainApp'
 import BrowseCd from '@/components/BrowseCd'
 import ViewCd from '@/components/ViewCd'
+
 import DummyView from '@/components/DummyView'
 import LoginPage from '@/components/LoginPage'
 import PageNotFound from '@/components/PageNotFound'
 import BrowsePenumpang from '@/components/BrowsePenumpang'
 import BrowseKurs from '@/components/BrowseKurs'
 import PrintSppbmcp from '@/components/PrintSppbmcp'
+
 import BrowseBpj from '@/components/BrowseBpj'
+import ViewBpj from '@/components/ViewBpj'
 
 import store from '../store'
 
@@ -70,6 +73,7 @@ const router = new Router({
                   }
                ]
             },
+            /* penumpang */
             {
               path: 'penumpang',
               name: 'BrowsePenumpang',
@@ -79,23 +83,45 @@ const router = new Router({
               },
               component: BrowsePenumpang
             },
+            /* kurs */
             {
               path: 'kurs',
-              name: 'BrowseKurs',
+              component: DummyView,
               meta: {
                 breadcrumb: '🔍Browse Data Kurs',
                 title: 'Browse Data Kurs'
               },
               component: BrowseKurs
             },
+            /* bpj */
             {
               path: 'bpj',
               name: 'BrowseBpj',
               meta: {
-                breadcrumb: '🔍Browse BPJ',
-                title: 'Browse Data BPJ'
+                breadcrumb: '🔍Browse BPJ'
               },
-              component: BrowseBpj
+              component: DummyView,
+              children: [
+                // /bpj/:id (ViewBpj)
+                {
+                  path: ':id',
+                  name: ViewBpj,
+                  component: ViewBpj,
+                     props: true,
+                     meta: {
+                        title: 'Detail BPJ',
+                        breadcrumb: '📝Lihat Detail BPJ'
+                     }
+                },
+                // default (Browse BPJ)
+                {
+                  path: '',
+                  component: BrowseBpj,
+                  meta: {
+                    title: 'Browse BPJ'
+                  }
+                }
+              ]              
             }
          ]
       },

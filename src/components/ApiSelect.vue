@@ -248,6 +248,9 @@ export default {
             console.log(`changed! ${ov} -> ${nv}`)
             console.log('Synched? ' + this.synchronized)
 
+            // gotta emit event I guess
+            this.$emit('valueChanged', nv)
+
             if (vm.multiple) {
                 // check for invalid values
                 console.log(`Validating values...`)

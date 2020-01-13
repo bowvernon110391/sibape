@@ -10,7 +10,8 @@
                 v-on="$listeners"
                 :reduce="e => e.id"
                 :search-callback="searchPenumpang"
-                :sync-callback="syncPenumpang">
+                :sync-callback="syncPenumpang"
+                @valueChanged="handleValueChange">
                 <template v-slot:selected-option="opt">
                     <div v-if="'kebangsaan' in opt">
                         {{ opt.nama }}
@@ -133,7 +134,7 @@
 import ApiSelect from '@/components/ApiSelect'
 import Datepicker from '@/components/Datepicker'
 import SelectNegara from '@/components/SelectNegara'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 export default {
@@ -213,6 +214,8 @@ export default {
             } else {
                 this.detail = {...this.defaultPenumpang}
             }
+
+            this.$emit('penumpangChange', newVal)
         },
         showDetail: function (newVal) {
             // if we're closing, force sync
@@ -222,6 +225,8 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['setBusyState']),
+
         forceEmitInput (val) {
             if (this.$refs.sel) {
                 this.$refs.sel.$emit('input', val)
@@ -235,6 +240,21 @@ export default {
                 this.$refs.sel.syncValueOptions()
             }
         },
+
+        handleValueChange (id) {
+            var vm = this
+            this.setBusyState(true)
+
+            this.api.getPenumpangById(id)
+            .then(e => {
+                this.setBusyState(false)
+                vm.innerData = e.data.data
+            })
+            .catch(e => {
+                this.setBusyState(false)
+            })
+        },
+
         searchPenumpang(q, spinner, vm) {
             // search means innerData needs to be nulled
             this.innerData = null           
