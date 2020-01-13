@@ -72,21 +72,48 @@
             </b-col>
         </b-row>
 
-        <!-- Bentuk Jaminan -->
+        <!-- Bentuk Jaminan + jumlah-->
         <b-row>
-            <b-col>
-                <!-- Bentuk Jaminan -->                
+            <!-- Bentuk Jaminan -->     
+            <b-col md="6">
+                           
                 <b-form-group label="Bentuk Jaminan" label-for="bentuk_jaminan">
-                    <b-form-radio-group id="bentuk_jaminan" v-model="dataBpj.bentuk_jaminan">
+                    <b-form-radio-group 
+                        id="bentuk_jaminan" 
+                        v-model="dataBpj.bentuk_jaminan"
+                        :disabled="disableInput">
                         <b-form-radio value="TUNAI">TUNAI</b-form-radio>
                         <b-form-radio value="BANK">BANK</b-form-radio>
                         <b-form-radio value="CUSTOMS_BOND"><em>Customs Bond</em></b-form-radio>
-                        <b-form-radio >Lainnya</b-form-radio>
+                        <b-form-radio :checked="true">Lainnya</b-form-radio>
                     </b-form-radio-group>
                 </b-form-group>
+
+                
+                <b-form-input 
+                    v-show="jaminanLainnya" 
+                    v-model="dataBpj.bentuk_jaminan"
+                    :disabled="disableInput"></b-form-input>
+
             </b-col>
-            
+
+
+            <!-- Jumlah -->
+            <b-col md="6">
+                <b-form-group label="Jumlah (Rp)." label-for="jumlah">
+                    <b-form-input
+                        v-model="dataBpj.jumlah"
+                        :disabled="disableInput"
+
+                        lazy-formatter
+                        :formatter="formatCurrency"></b-form-input>
+                </b-form-group>
+            </b-col>
         </b-row>        
+
+        <hr>
+
+        <pre>{{ dataBpj }}</pre>
     </div>
 </template>
 
@@ -148,6 +175,13 @@ export default {
         // check if this is a new data
         isNew () {
             return this.id == 'new'
+        },
+
+        // check if jenis jaminan is lain2
+        jaminanLainnya () {
+            return this.dataBpj.bentuk_jaminan != 'TUNAI'
+                && this.dataBpj.bentuk_jaminan != 'BANK'
+                && this.dataBpj.bentuk_jaminan != 'CUSTOMS_BOND';
         }
     },
     props: {
@@ -163,8 +197,14 @@ export default {
         },
 
         penumpangChange(data) {
-            console.log('penumpang changed:')
-            console.log(data)
+            if (data) {
+                console.log('penumpang changed:')
+                console.log(data)
+
+                if (this.dataBpj.jenis_identitas == 'PASPOR') {
+                    this.dataBpj.no_identitas = data.no_paspor + ' <---> ' + this.dataBpj.penumpang_id
+                }
+            }
         },
 
         loadBpjData (bpjId) {
