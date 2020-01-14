@@ -2,10 +2,13 @@
   <div id="app">
     <router-view/>
     <b-modal 
-          :visible="modalShown"
+          :visible="busy"
+          @show="preventShow"
           id="loading-screen"
           centered 
           title="Loading..."
+
+          static
           
           no-fade
           ok-disabled
@@ -26,11 +29,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
   computed: {
-    modalShown: function () {
-      return this.$store.state.busy
+    ...mapState(['busy'])
+  },
+  methods: {
+    preventShow(bvModalEvt) {
+      if (!this.busy) {
+        bvModalEvt.preventDefault()
+      }
     }
   }
 }
