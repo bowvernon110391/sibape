@@ -76,6 +76,19 @@
             </b-col>
         </b-row>
 
+        <!-- Alamat penumpang -->
+        <b-row>
+            <b-col offset-md="6" md="6">
+                <b-form-group label="Alamat" label-for="alamat">
+                    <b-form-textarea
+                        id="alamat"
+                        v-model="dataBpj.alamat"
+                        :disabled="disableInput">
+                    </b-form-textarea>
+                </b-form-group>
+            </b-col>
+        </b-row>
+
         <!-- Bentuk Jaminan + jumlah-->
         <b-row>
             <!-- Bentuk Jaminan -->     
@@ -168,6 +181,27 @@
                         :disabled="disableInput"
                         ></b-form-textarea>
                 </b-form-group>
+            </b-col>
+        </b-row>
+
+        <b-row>
+            <!-- catatan -->
+            <b-col md="6">
+                <b-form-group label="Catatan" label-for="catatan" description="Bisa juga direkam saat digunakan (utk pelunasan dokumen)">
+                    <b-form-textarea
+                        v-model="dataBpj.catatan"
+                        :disabled="disableInput"
+                        ></b-form-textarea>
+                </b-form-group>
+            </b-col>
+        </b-row>
+
+        <!-- Simpan -->
+        <b-row class="mt-2">
+            <b-col>
+                <b-button @click="onSave" class="float-right shadow" variant="primary" :disabled="disableInput">
+                    <font-awesome-icon icon="save"></font-awesome-icon> Simpan
+                </b-button>
             </b-col>
         </b-row>
 
@@ -284,7 +318,7 @@ export default {
             this.setBusyState(true)
             // api
             const vm = this
-            this.api.getBpjById(cdId)
+            this.api.getBpjById(bpjId)
                 .then(e => {
                     vm.setBusyState(false)
                     vm.dataBpj = e.data.data

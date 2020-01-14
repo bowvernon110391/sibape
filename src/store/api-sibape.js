@@ -230,7 +230,7 @@ class ApiSibape {
 
     // updateBpj (dataBpj) : PUT /bpj/{id}
     updateBpj (id, dataBpj) {
-        return this.instance.put('/cd/' + id, dataBpj)
+        return this.instance.put('/bpj/' + id, dataBpj)
     }
 
     // deleteBpj (id) : DELETE /bpj/{id}

@@ -3,11 +3,11 @@
     "no_dok": null,
     "tgl_dok": null,
     "nomor_lengkap": null,
-    "jenis_identitas": "PASPOR",
+    "jenis_identitas": null,
     "no_identitas": null,
     "alamat": null,
-    "nomor_jaminan": "8293-BB/CIMB/IX/2020",
-    "tanggal_jaminan": "2019-02-12",
+    "nomor_jaminan": null,
+    "tanggal_jaminan": null,
     "penjamin": null,
     "alamat_penjamin": null,
     "bentuk_jaminan": "TUNAI",
@@ -31,5 +31,5 @@
       "data": null
     },
 
-    "penumpang_id": 2
+    "penumpang_id": null
   }

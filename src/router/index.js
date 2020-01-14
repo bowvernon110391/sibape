@@ -10,7 +10,7 @@ import LoginPage from '@/components/LoginPage'
 import PageNotFound from '@/components/PageNotFound'
 import BrowsePenumpang from '@/components/BrowsePenumpang'
 import BrowseKurs from '@/components/BrowseKurs'
-import PrintSppbmcp from '@/components/PrintSppbmcp'
+// import PrintSppbmcp from '@/components/PrintSppbmcp'
 
 import BrowseBpj from '@/components/BrowseBpj'
 import ViewBpj from '@/components/ViewBpj'
@@ -25,10 +25,10 @@ Vue.use(Router)
 const router = new Router({
   routes: [
       // specific path put first so it can resolve
-      {
+      /* {
          path: '/print-sppbmcp',
          component: PrintSppbmcp
-      },
+      }, */
       { 
         /* root path */
          path: '/',
@@ -96,7 +96,6 @@ const router = new Router({
             /* bpj */
             {
               path: 'bpj',
-              name: 'BrowseBpj',
               meta: {
                 breadcrumb: '🔍Browse BPJ'
               },
@@ -105,7 +104,7 @@ const router = new Router({
                 // /bpj/:id (ViewBpj)
                 {
                   path: ':id',
-                  name: ViewBpj,
+                  name: 'ViewBpj',
                   component: ViewBpj,
                      props: true,
                      meta: {
@@ -116,6 +115,7 @@ const router = new Router({
                 // default (Browse BPJ)
                 {
                   path: '',
+                  name: 'BrowseBpj',
                   component: BrowseBpj,
                   meta: {
                     title: 'Browse BPJ'

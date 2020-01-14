@@ -23,7 +23,6 @@
         <template v-slot:row-details="row">
             <card-view-bpj :data="row.item"></card-view-bpj>
             <!-- <card-view-cd :row="row"></card-view-cd> -->
-            <pre>{{ JSON.stringify(row, null, 2) }}</pre>
         </template>
 
         <template v-slot:cell(is_locked)="data">

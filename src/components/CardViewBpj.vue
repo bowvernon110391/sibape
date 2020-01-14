@@ -22,7 +22,11 @@
                 <strong>Nama Penumpang:</strong>
             </b-col>
             <b-col md="4">
-                {{ data.penumpang.data.nama }}
+                <b-button 
+                    v-b-popover.hover="popoverPenumpang"
+                    variant="success">
+                    {{ data.penumpang.data.nama }}
+                </b-button>
             </b-col>
             <b-col md="2">
                 <strong>Alamat:</strong>
@@ -153,7 +157,7 @@
                 </table-status>
             </b-col>
         </b-row>
-
+        <!-- <pre>{{ JSON.stringify(data, null, 2) }}</pre> -->
     </b-card>
 </template>
 
@@ -190,6 +194,22 @@ export default {
                 cd: 'primary',
                 sspcp: 'success',
                 is: 'danger'
+            }
+        },
+        popoverPenumpang() {
+            return {
+                title: `#${this.data.penumpang.data.id} <strong>${this.data.penumpang.data.nama}</strong>`,
+                content: `
+                <strong>Kewarganegaraan:</strong>&nbsp;${this.data.penumpang.data.negara.data.uraian} (${this.data.penumpang.data.negara.data.kode})
+                <br>
+                <strong>No Paspor:</strong>&nbsp;${this.data.penumpang.data.no_paspor}
+                <br>
+                <strong>Pekerjaan:</strong>&nbsp;${this.data.penumpang.data.pekerjaan}
+                <br>
+                <strong>Tgl Lahir:</strong>&nbsp;${this.data.penumpang.data.tgl_lahir}
+                `,
+                html: true,
+                variant: 'info'
             }
         }
     },
