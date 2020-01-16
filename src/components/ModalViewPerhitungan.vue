@@ -125,7 +125,7 @@
                 </b-row>
 
                 <!-- metode pembayaran -->
-                <b-row>
+                <b-row v-if="simulate">
                     <!-- Jenis pembayaran -->
                     <b-col md="4">
                         <b-form-group
@@ -161,6 +161,30 @@
 
                         <!-- Apabila jaminan, select-jaminan -->
                         <template v-else-if="jenis == 'JAMINAN'">
+                            <b-row>
+                                <!-- Select BPJ -->
+                                <b-col md="12">
+                                    <b-form-group
+                                        label="Nomor BPJ"
+                                        label-for="bpj-id"
+                                        description="Pilih dari BPJ yang BELUM digunakan">
+                                        <select-bpj
+                                            id="bpj-id"
+                                            search-on-empty>
+                                        </select-bpj>
+                                    </b-form-group>
+                                </b-col>
+                                <!-- Catatan BPJ -->
+                                <b-col md="12">
+                                    <b-form-group
+                                        label="Catatan BPJ"
+                                        label-for="catatan-bpj"
+                                        description="Catatan khusus utk BPJ">
+                                        <b-form-textarea>
+                                        </b-form-textarea>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
                         </template>
 
                         <!-- Lain lain, input catatan aja kali ya -->
@@ -193,12 +217,14 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import defaultHitungCd from './defaultHitungCd.json'
 
 import Datepicker from '@/components/Datepicker'
+import SelectBpj from '@/components/SelectBpj'
 
 export default {
     inheritAttrs: false,
     mixins: [ axiosErrorHandler ],
     components: {
-        Datepicker
+        Datepicker,
+        SelectBpj
     },
     props: {
         cdId: {
