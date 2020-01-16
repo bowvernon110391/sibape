@@ -78,7 +78,7 @@
 
         <!-- Alamat penumpang -->
         <b-row>
-            <b-col offset-md="6" md="6">
+            <b-col md="6" order-md="6">
                 <b-form-group label="Alamat" label-for="alamat">
                     <b-form-textarea
                         id="alamat"
@@ -87,12 +87,8 @@
                     </b-form-textarea>
                 </b-form-group>
             </b-col>
-        </b-row>
-
-        <!-- Bentuk Jaminan + jumlah-->
-        <b-row>
             <!-- Bentuk Jaminan -->     
-            <b-col md="6">
+            <b-col md="6" order-md="0">
                            
                 <b-form-group label="Bentuk Jaminan" label-for="bentuk_jaminan">
                     <b-form-radio-group 
@@ -113,14 +109,20 @@
                     :disabled="disableInput"></b-form-input>
 
             </b-col>
+        </b-row>
 
+        <!-- Bentuk Jaminan + jumlah-->
+        <b-row>        
             <!-- nomor + tgl jaminan -->
             <b-col md="4">
-                <b-form-group label="Nomor Jaminan" label-for="nomor-jaminan">
+                <b-form-group 
+                    label="Nomor Jaminan" 
+                    label-for="nomor-jaminan"
+                    description="Untuk Jaminan Tunai penomoran otomatis">
                     <b-form-input
                         id="nomor-jaminan"
                         v-model="dataBpj.nomor_jaminan"
-                        :disabled="disableInput"></b-form-input>
+                        :disabled="disableInput || dataBpj.bentuk_jaminan == 'TUNAI'"></b-form-input>
                 </b-form-group>
             </b-col>
 
@@ -134,12 +136,9 @@
                     </datepicker>
                 </b-form-group>
             </b-col>
-        </b-row>        
 
-        <!-- nomor jaminan + tgl jaminan -->
-        <b-row>
             <!-- Jumlah -->
-            <b-col md="4" offset-md="6">
+            <b-col md="4">
                 <b-form-group label="Jumlah (Rp)." label-for="jumlah">
                     <b-form-input
                         v-model="dataBpj.jumlah"
@@ -159,6 +158,11 @@
                     </datepicker>
                 </b-form-group>
             </b-col>
+        </b-row>        
+
+        <!-- nomor jaminan + tgl jaminan -->
+        <b-row>
+            
         </b-row>
 
         <!-- Penjamin + Alamat -->
@@ -390,6 +394,16 @@ export default {
             immediate: false,
             handler (newVal) {
                 this.loadBpjData(newVal)
+            }
+        },
+        "dataBpj.bentuk_jaminan": {
+            immediate: true,
+            handler (val, oldVal) {
+                if (val == 'TUNAI' && oldVal !== 'TUNAI') {
+                    // change to tunai requires renumbering
+                    // so, delete current number
+                    this.dataBpj.nomor_jaminan = null
+                }
             }
         }
     }
