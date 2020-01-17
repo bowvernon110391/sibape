@@ -10,7 +10,6 @@
 
           static
           
-          no-fade
           ok-disabled
           hide-header-close
           size="sm"

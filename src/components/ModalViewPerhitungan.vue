@@ -195,7 +195,7 @@
         </template>
 
         <!-- footer -->
-        <template v-slot:modal-footer="{ visible, ok, cancel, close, hide }">
+        <template v-slot:modal-footer="{ visible, ok, cancel }">
             <b-button variant="primary" size="sm" :disabled="!simulate">
                 <font-awesome-icon icon="stamp">
                 </font-awesome-icon>
