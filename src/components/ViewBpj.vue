@@ -43,7 +43,7 @@
             <!-- 2nd col, jenis identitas -->
             <b-col md="6">
                 <b-form-group label="Jenis Identitas" label-for="jenis-identitas">
-                    <b-form-radio-group id="jenis-identitas" v-model="dataBpj.jenis_identitas">
+                    <b-form-radio-group id="jenis-identitas" v-model="dataBpj.jenis_identitas" :disabled="disableInput">
                         <b-form-radio value="NPWP">NPWP</b-form-radio>
                         <b-form-radio value="KTP">KTP</b-form-radio>
                         <b-form-radio value="PASPOR">Paspor</b-form-radio>
