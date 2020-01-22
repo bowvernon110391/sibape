@@ -28,7 +28,7 @@
                     <b-col sm="4">
                         Bea Masuk
                     </b-col>
-                    <b-col sm="1">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -42,7 +42,7 @@
                     <b-col sm="4">
                         Cukai
                     </b-col>
-                    <b-col sm="1">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -56,7 +56,7 @@
                     <b-col sm="4">
                         PPN
                     </b-col>
-                    <b-col sm="1">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -70,7 +70,7 @@
                     <b-col sm="4">
                         PPh
                     </b-col>
-                    <b-col sm="1">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -84,7 +84,7 @@
                     <b-col sm="4">
                         PPNBM
                     </b-col>
-                    <b-col sm="1">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -99,7 +99,7 @@
                     <b-col sm="4">
                         Total
                     </b-col>
-                    <b-col md="1" sm="0">
+                    <b-col sm="1" offset-md="2">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
