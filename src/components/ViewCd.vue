@@ -52,6 +52,7 @@
                             split-variant="dark"
                             variant="dark"
                             class="shadow"
+                            @click="printSspcp"
                             >
                             <!-- text and icon for button -->
                             <template v-slot:button-content>
@@ -60,7 +61,7 @@
                                 Cetak
                             </template>
                             <!-- opsi yang selalu ada -->
-                            <b-dropdown-item>
+                            <b-dropdown-item @click="printSspcp">
                                 SSPCP
                             </b-dropdown-item>
                             <!-- opsi tergantung link yg ada -->
@@ -74,7 +75,7 @@
                             </template> -->
                             <!-- SSPCP -->
                             <template v-if="cdHasLink('bpj')">
-                                <b-dropdown-item>
+                                <b-dropdown-item @click="printBpj">
                                     BPJ (jaminan)
                                 </b-dropdown-item>
                             </template>
@@ -515,6 +516,16 @@ export default {
         showPungutan () {
             // tergantung status cd
             this.viewPungutan = true
+        },
+
+        // print sspcp
+        printSspcp () {
+            alert("Printing SSPCP...")
+        },
+
+        // print bpj
+        printBpj () {
+            alert("Printing BPJ...")
         }
     },
     created () {
