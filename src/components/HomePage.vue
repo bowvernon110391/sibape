@@ -1,12 +1,12 @@
 <template>
     <div>
         <p>
-            Homepage sekedar untuk testing. Nantinya berisi pengumuman.
+            Sistem Aplikasi Barang Penumpang. v[BETA]
         </p>
-        <select-bpj 
+        <!-- <select-bpj 
             v-model="bpjId"
             :search-on-empty="!bpjId"></select-bpj>
-        <input type="text" v-model="bpjId"/>
+        <input type="text" v-model="bpjId"/> -->
     </div>
 </template>
 
