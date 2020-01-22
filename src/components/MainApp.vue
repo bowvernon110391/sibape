@@ -10,7 +10,7 @@
                     <b-navbar-nav>
                         <b-nav-item-dropdown text="Dokumen">
                             <b-dropdown-item to="/cd">💰Customs Declaration (CD)</b-dropdown-item>
-                            <b-dropdown-item to="/sbp">👮Bukti Penindakan (SBP)</b-dropdown-item>
+                            <!-- <b-dropdown-item to="/sbp">👮Bukti Penindakan (SBP)</b-dropdown-item> -->
                             <b-dropdown-item to="/is">⏲️Impor Sementara (IS)</b-dropdown-item>
                             <b-dropdown-item to="/spmb">🛫SPMB</b-dropdown-item>
                             <b-dropdown-item to="/st">🛅Surat Titipan (ST)</b-dropdown-item>
