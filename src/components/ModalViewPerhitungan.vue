@@ -125,7 +125,7 @@
                 </b-row>
 
                 <!-- metode pembayaran -->
-                <b-row v-if="simulate">
+                <b-row v-if="true">
                     <!-- Jenis pembayaran -->
                     <b-col md="4">
                         <b-form-group
@@ -156,7 +156,8 @@
                                         <select-bpj
                                             id="bpj-id"
                                             search-on-empty
-                                            v-model="jaminan_id">
+                                            v-model="jaminan_id"
+                                            :disabled="!simulate">
                                         </select-bpj>
                                     </b-form-group>
                                 </b-col>
@@ -167,7 +168,8 @@
                                         label-for="catatan-bpj"
                                         description="Catatan khusus utk BPJ">
                                         <b-form-textarea
-                                            v-model="catatan_jaminan">
+                                            v-model="catatan_jaminan"
+                                            :disabled="!simulate">
                                         </b-form-textarea>
                                     </b-form-group>
                                 </b-col>
@@ -317,6 +319,16 @@ export default {
                     vm.$emit('input', false)
                 })
             }
+        },
+
+        perhitungan (nv, ov) {
+            this.catatan = nv.catatan
+            this.jenis = nv.jenis_pembayaran
+            this.jaminan_id = nv.jaminan_id
+            this.catatan_jaminan = nv.catatan_jaminan
+
+            console.log("Got Data:")
+            console.log(nv)
         }
     }
 }
