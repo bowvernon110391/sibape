@@ -15,15 +15,21 @@
                 <div class="text-right" ref="btnGroupPenyelesaian">
                     <b-button-group size="sm" class="shadow">
                         <!-- apabila dijadikan impor sementara -->
-                        <b-button variant="danger" :disabled="cdHasLink('is') || cdHasLink('sspcp')">
+                        <!-- <b-button variant="danger" :disabled="cdHasLink('is') || cdHasLink('sspcp')">
                             <font-awesome-icon icon="plane-departure"></font-awesome-icon>
                             Impor Sementara
-                        </b-button>
+                        </b-button> -->
 
                         <!-- titip (gk mampu/mau bayar) -->
                         <b-button variant="dark" :disabled="disableInput">
                             <font-awesome-icon icon="lock"></font-awesome-icon>
                             Titipkan
+                        </b-button>
+
+                        <!-- tunda pengeluaran -->
+                        <b-button variant="warning" :disabled="cdHasLink('spp') || disableInput">
+                            <font-awesome-icon icon="hand-paper"></font-awesome-icon>
+                            Tunda Pengeluaran
                         </b-button>
 
                         <!-- apabila dibayar (Terbit SPPBMCP) -->
@@ -39,7 +45,7 @@
                     </b-button-group>
 
                     <!-- tombol cetak -->
-                    <template v-if="cdHasLink('is') || cdHasLink('sspcp')">
+                    <template v-if="cdHasLink('sspcp')">
                         <b-dropdown 
                             size="sm"
                             split
@@ -55,29 +61,21 @@
                             </template>
                             <!-- opsi yang selalu ada -->
                             <b-dropdown-item>
-                                Semua (Bundle)
+                                SSPCP
                             </b-dropdown-item>
                             <!-- opsi tergantung link yg ada -->
                             <!-- Impor Sementara -->
-                            <template v-if="cdHasLink('is')">
+                            <!-- <template v-if="cdHasLink('is')">
                                 <b-dropdown-divider>
                                 </b-dropdown-divider>
                                 <b-dropdown-item>
                                     Form Impor Sementara
                                 </b-dropdown-item>
-                            </template>
+                            </template> -->
                             <!-- SSPCP -->
-                            <template v-if="cdHasLink('sspcp')">
-                                <b-dropdown-divider>
-                                </b-dropdown-divider>
-                                <b-dropdown-item>
-                                    Form SPPBMCP
-                                </b-dropdown-item>
+                            <template v-if="cdHasLink('bpj')">
                                 <b-dropdown-item>
                                     BPJ (jaminan)
-                                </b-dropdown-item>
-                                <b-dropdown-item>
-                                    Billing (cash)
                                 </b-dropdown-item>
                             </template>
                         </b-dropdown>
