@@ -209,9 +209,9 @@
             </b-col>
         </b-row>
 
-        <hr>
+        <!-- <hr>
 
-        <pre>{{ dataBpj }}</pre>
+        <pre>{{ dataBpj }}</pre> -->
     </div>
 </template>
 
