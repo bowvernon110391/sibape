@@ -91,15 +91,25 @@
                 {{ row.item.alamat }}
             </b-col>
         </b-row>
-        <!-- alamat -->
+        
+        <hr>
+        <h5>Status</h5>
         <b-row>
-            
+            <b-col md="6">
+                <table-status :data="row.item.status.data">
+                </table-status>
+            </b-col>
         </b-row>
     </b-card>
 </template>
 
 <script>
+import TableStatus from '@/components/TableStatus'
+
 export default {
+    components: {
+        TableStatus
+    },
     props: {
         row: {
             type: Object
