@@ -206,6 +206,11 @@ class ApiSibape {
         return this.instance.get(`/cd/${id}/simulasi`)
     }
 
+    // createPenetapanCd (id) : POST /cd/:id/penetapan
+    createPenetapanCd (id, data) {
+        return this.instance.post(`/cd/${id}/penetapan`, data)
+    }
+
     //==================RESOURCE : BPJ===========================================================
     // getBpj () : GET /bpj
     getBpj (param) {

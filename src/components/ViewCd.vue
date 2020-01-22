@@ -537,6 +537,13 @@ export default {
             handler (newVal) {
                 this.loadCdData(newVal)
             }
+        },
+
+        viewPungutan (newVal, oldVal) {
+            if (!newVal) {
+                // alert("Closing view pungutan, reload pls")
+                this.loadCdData(this.id)
+            }
         }
     }
 }

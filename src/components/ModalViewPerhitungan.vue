@@ -142,21 +142,6 @@
                     <b-col md="8">
                         <!-- Apabila tunai, input no + tgl billing (dari BayMan) -->
                         <template v-if="jenis == 'TUNAI'">
-                            <b-row>
-                                <!-- Nomor Billing -->
-                                <b-col md="12">
-                                    <b-form-group label="No Billing">
-                                        <b-form-input type="text">
-                                        </b-form-input>
-                                    </b-form-group>
-                                </b-col>
-                                <!-- Tanggal Billing -->
-                                <b-col md="7">
-                                    <b-form-group label="Tgl Billing">
-                                        <datepicker></datepicker>
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
                         </template>
 
                         <!-- Apabila jaminan, select-jaminan -->
@@ -170,7 +155,8 @@
                                         description="Pilih dari BPJ yang BELUM digunakan">
                                         <select-bpj
                                             id="bpj-id"
-                                            search-on-empty>
+                                            search-on-empty
+                                            v-model="jaminan_id">
                                         </select-bpj>
                                     </b-form-group>
                                 </b-col>
@@ -179,7 +165,8 @@
                                     <b-form-group
                                         label="Catatan BPJ"
                                         label-for="catatan-bpj"
-                                        description="Catatan khusus utk BPJ">
+                                        description="Catatan khusus utk BPJ"
+                                        v-model="catatan_jaminan">
                                         <b-form-textarea>
                                         </b-form-textarea>
                                     </b-form-group>
@@ -196,7 +183,11 @@
 
         <!-- footer -->
         <template v-slot:modal-footer="{ visible, ok, cancel }">
-            <b-button variant="primary" size="sm" :disabled="!simulate">
+            <b-button 
+                variant="primary" 
+                size="sm" 
+                :disabled="!simulate"
+                @click="createPenetapan">
                 <font-awesome-icon icon="stamp">
                 </font-awesome-icon>
                 Tetapkan
@@ -212,7 +203,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import defaultHitungCd from './defaultHitungCd.json'
 
@@ -249,11 +240,57 @@ export default {
             busy: false,
             perhitungan: defaultHitungCd,
             catatan: this.initialData ? this.initialData.catatan : '',
-            jenis: this.initialData ? this.initialData.jenis : null
+            jenis: this.initialData ? this.initialData.jenis : null,
+            jaminan_id: this.initialData ? this.initialData.jaminan_id : null,
+            catatan_jaminan: this.initialData ? this.initialData.catatan_jaminan : null
+        }
+    },
+    methods: {
+        ...mapMutations(['setBusyState']),
+        createPenetapan () {
+            // gather essential data
+            var reqData = {
+                jenis_pembayaran: this.jenis,
+                catatan: this.catatan,
+                lokasi: this.lokasi,
+                jaminan_id: this.jaminan_id,
+                catatan_jaminan: this.catatan_jaminan
+            }
+
+            // alert(JSON.stringify(reqData))
+            this.setBusyState(true)
+
+            // call api
+            const vm = this
+
+            this.api.createPenetapanCd(this.cdId, reqData)
+            .then(e => {
+                vm.setBusyState(false)
+                
+                // close self, and force parent to reload? or just send event
+                vm.$emit('input', false)
+
+                // show toast
+                vm.showToast("Penetapan CD", `CD #${vm.cdId} berhasil ditetapkan dengan SSPCP #${e.data.id}`, 'success')
+
+                /* // re route
+                vm.$router.replace({
+                    name: 'ViewCd',
+                    params: {
+                    id: vm.cdId
+                    }
+                }) */
+            })
+            .catch(e => {
+                vm.setBusyState(false)
+
+                // delegate error handling
+                vm.handleError(e)
+            })
         }
     },
     computed: {
-        ...mapGetters(['api'])
+        ...mapGetters(['api', 'lokasi'])
     },
     watch: {
         value: {
