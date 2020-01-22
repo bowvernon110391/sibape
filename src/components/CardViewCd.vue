@@ -67,7 +67,7 @@
                 <strong>Dokumen terkait:</strong>
             </b-col>
             <b-col md="4">
-                <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'is')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
+                <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'bpj')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
                     {{ r.rel | docName }}
                 </b-button>
             </b-col>
@@ -135,7 +135,8 @@ export default {
             return {
                 cd: 'primary',
                 sspcp: 'success',
-                is: 'danger'
+                is: 'danger',
+                bpj: 'warning'
             }
         }
     },
@@ -148,6 +149,8 @@ export default {
                     return 'Customs Declaration';
                 case 'is':
                     return 'Impor Sementara';
+                case 'bpj':
+                    return 'Bukti Penerimaan Jaminan'
             }
             return String(name).toUpperCase()
         }

@@ -165,9 +165,9 @@
                                     <b-form-group
                                         label="Catatan BPJ"
                                         label-for="catatan-bpj"
-                                        description="Catatan khusus utk BPJ"
-                                        v-model="catatan_jaminan">
-                                        <b-form-textarea>
+                                        description="Catatan khusus utk BPJ">
+                                        <b-form-textarea
+                                            v-model="catatan_jaminan">
                                         </b-form-textarea>
                                     </b-form-group>
                                 </b-col>
