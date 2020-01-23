@@ -11,11 +11,17 @@
         taggable>
         <template v-slot:option="opt">
             <template v-if="opt.id">
-                <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode }})</em>
+                <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode_alpha3 }})</em>
             </template>
             <template v-else>
                 Tambahkan <strong>{{ opt.uraian }}</strong>...
             </template>
+        </template>
+        <!-- selected view? -->
+        <template v-slot:selected-option="opt">
+            <div>
+                <strong>{{ opt.uraian }}</strong> <em>({{ opt.kode_alpha3 }})</em>
+            </div>
         </template>
     </v-select>
 </template>
@@ -44,14 +50,14 @@ export default {
     methods: {
         ...mapActions(['fetchNegara', 'storeNegara', 'extractError']),
         searchNegara (option, label, search) {
-            return option.kode.toLowerCase().indexOf(search.toLowerCase()) >= 0
+            return option.kode_alpha3.toLowerCase().indexOf(search.toLowerCase()) >= 0
                 || option.uraian.toLowerCase().indexOf(search.toLowerCase()) >= 0;
         },
         onCreateOption (opt) {
             // default state
             var dataValid=true
             // check user input
-            var kode_id = prompt('Masukkan kode + id dalam format kode,id untuk negara '+opt.uraian, 'CONTOH_KODE,CONTOH_ID')
+            var kode_id = prompt('Masukkan kode + id dalam format kode 2 huruf, kode 3 huruf, id numerik (3 digit) untuk negara: '+opt.uraian, 'KODE_ALPHA_2,KODE_ALPHA_3,CONTOH_ID')
             if (!kode_id) {
                 kode_id = ''
                 dataValid = false
@@ -60,17 +66,21 @@ export default {
             var data = kode_id.split(',').map(e => e.trim())
 
             // cek kembalian
-            if (data.length >= 2) {
+            if (data.length >= 3) {
                 // cek tipe data id
-                var id = Number(data[1])
+                var id = Number(data[2])
                 if (isNaN(id)) {
                     alert("Kode bukan angka woe! --> " + data[1])
                     dataValid=false
                 }
                 // cek kode
                 if (data[0].length != 2) {
-                    alert('Kode negara harus 2 digit')
+                    alert('Kode negara harus 2 huruf')
                     dataValid=false
+                }
+                // cek kode 3 huruf
+                if (data[1].length != 3) {
+                    alert('Kode alpha 3 harus 3 huruf')
                 }
             }
 
@@ -81,11 +91,13 @@ export default {
                 var vm = this
 
                 // pangil api utk store data
-                var id = Number(data[1])
+                var id = Number(data[2])
                 var kode = data[0].toUpperCase()
+                var kode3 = data[1].toUpperCase()
                 this.storeNegara({
                     id: id,
                     kode: kode,
+                    kode_alpha3: kode3,
                     uraian: opt.uraian
                 })
                 .then(e => {
