@@ -296,7 +296,7 @@
             <object
                 type="application/pdf"
                 width="100%"
-                height="600px"
+                height="500px"
                 :data="pdfUrl">
                 <embed
                     type="application/pdf"
