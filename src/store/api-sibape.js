@@ -242,6 +242,33 @@ class ApiSibape {
     deleteBpj (id) {
         return this.instance.delete('/bpj/' + id)
     }
+
+    //===================RESOURCE : PDF======================================================
+    getPdf (doctype, id, param) {
+        return this.instance.get('/pdf', {
+            headers: {
+                'Content-Type' : 'text/html'
+            },
+            params: {
+                doc: doctype,
+                id: id,
+                ...param
+            }
+        })
+    }
+
+    // this one generate accessible url (supposedly) to download pdf
+    generatePdfUrl (doctype, id, param) {
+        var url = this.instance.defaults.baseURL + 'pdf' + `?doc=${doctype}&id=${id}`
+        // dynamically add more to param
+        if (param) {
+            for (var k in param) {
+                url += `&${k}=${param[k]}`
+            }
+        }
+
+        return url
+    }
 }
 
 export {
