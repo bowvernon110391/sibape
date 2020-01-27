@@ -270,6 +270,7 @@
             <template v-if="dataCd.id">
                 <modal-view-perhitungan
                     :cd-id="dataCd.id"
+                    size="xl"
                     v-model="viewPungutan"
                     :simulate="!cdHasLink('sspcp')">
                 </modal-view-perhitungan>
@@ -282,6 +283,27 @@
         </template>
         <!-- <pre>{{ dataCd }}</pre> -->
 
+        <!-- PRINT MODAL -->
+        <b-modal
+            size="xl"
+            centered
+            hide-footer
+            v-model="viewPrintDialog"
+            title="Cetak PDF"
+            >
+            
+            <!-- embed pdf -->
+            <object
+                type="application/pdf"
+                width="100%"
+                height="600px"
+                :data="pdfUrl">
+                <embed
+                    type="application/pdf"
+                    :src="pdfUrl">
+            </object>
+
+        </b-modal>
         
     </div>
 </template>
@@ -346,7 +368,13 @@ export default {
                 'nilai_pabean',
                 { label: '', key: 'action' }
             ],
-            viewPungutan: false
+            
+            // pungutan data
+            viewPungutan: false,
+
+            // print data
+            viewPrintDialog: false,
+            pdfUrl: null
         }
     },
     computed: {
@@ -511,6 +539,22 @@ export default {
             }
             return false
         },
+
+        // grab link detail
+        cdGetLinkDetails: function (rel) {
+            if (this.dataCd.links) {
+                var filtered = this.dataCd.links.filter(e => e.rel == rel)
+
+                if (filtered.length) {
+                    var link = filtered[0]
+                    return {
+                        doctype: link.rel,
+                        id: link.uri.match(/^\/.+\/(\d+)$/i)[1]
+                    }
+                }
+            }
+            return false
+        },
         
         // tampilkan perhitungan
         showPungutan () {
@@ -520,7 +564,14 @@ export default {
 
         // print sspcp
         printSspcp () {
-            alert("Printing SSPCP...")
+            // alert("Printing SSPCP...")
+            var printData = this.cdGetLinkDetails('sspcp')
+
+            console.log("SSPCP PDF GENERATION DATA:")
+            console.log(this.cdGetLinkDetails('sspcp'))
+            // let's set data
+            this.pdfUrl = this.api.generatePdfUrl(printData.doctype, printData.id)
+            this.viewPrintDialog = true
         },
 
         // print bpj

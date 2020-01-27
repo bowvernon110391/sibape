@@ -7,7 +7,7 @@
             v-model="bpjId"
             :search-on-empty="!bpjId"></select-bpj>
         <input type="text" v-model="bpjId"/> -->
-        <p>
+        <!-- <p>
             <template v-if="dataString">
                 <object 
                     :data="dataString"
@@ -23,7 +23,7 @@
             <template v-else>
                 Loading PDF...
             </template>
-        </p>
+        </p> -->
     </div>
 </template>
 
@@ -57,9 +57,6 @@ export default {
         .catch(e => {
             alert("Failed to fetch PDF!")
         }) */
-        alert(this.api.generatePdfUrl('sspcp', 2, {
-            include:'lembar_perhitungan'
-        }))
     }
 }
 </script>
