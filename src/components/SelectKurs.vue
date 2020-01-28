@@ -16,7 +16,7 @@
                     :reduce="e => e.id">
                     <!-- Slot for options -->
                     <template v-slot:option="opt">
-                        <div>
+                        <div v-if="opt.id !== null">
                             <h5># {{opt.id}} {{opt.kode_valas}} @ {{ opt.kurs_idr | formatCurrency(2) | displayRupiah }}</h5>
                             <h6>{{ opt.jenis }}</h6>
                             <p>
