@@ -15,13 +15,13 @@
                 <div class="text-right" ref="btnGroupPenyelesaian">
                     <b-button-group size="sm" class="shadow">
                         <!-- apabila dijadikan impor sementara -->
-                        <!-- <b-button variant="danger" :disabled="cdHasLink('is') || cdHasLink('sspcp')">
+                        <b-button variant="danger" :disabled="cdHasLink('bpj') || disableInput">
                             <font-awesome-icon icon="plane-departure"></font-awesome-icon>
-                            Impor Sementara
-                        </b-button> -->
+                            Jaminkan (Impor Sementara)
+                        </b-button>
 
                         <!-- titip (gk mampu/mau bayar) -->
-                        <b-button variant="dark" :disabled="disableInput">
+                        <b-button variant="dark" :disabled="cdHasLink('st') || disableInput">
                             <font-awesome-icon icon="lock"></font-awesome-icon>
                             Titipkan
                         </b-button>
@@ -45,7 +45,7 @@
                     </b-button-group>
 
                     <!-- tombol cetak -->
-                    <template v-if="cdHasLink('sspcp')">
+                    <template v-if="cdHasLink('sspcp') || cdHasLink('bpj')">
                         <b-dropdown 
                             size="sm"
                             split
@@ -375,6 +375,7 @@ export default {
            // and the doc is locked
            return !this.canEdit && this.dataCd.is_locked
         },
+        
 
         // change npwp label depends on what data is being input
         // 15 digits: npwp
