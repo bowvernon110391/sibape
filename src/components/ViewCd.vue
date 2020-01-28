@@ -284,26 +284,10 @@
         <!-- <pre>{{ dataCd }}</pre> -->
 
         <!-- PRINT MODAL -->
-        <b-modal
-            size="xl"
-            centered
-            hide-footer
+        <modal-view-pdf
             v-model="viewPrintDialog"
-            title="Cetak PDF"
-            >
-            
-            <!-- embed pdf -->
-            <object
-                type="application/pdf"
-                width="100%"
-                height="500px"
-                :data="pdfUrl">
-                <embed
-                    type="application/pdf"
-                    :src="pdfUrl">
-            </object>
-
-        </b-modal>
+            :url="pdfUrl"
+            ></modal-view-pdf>
         
     </div>
 </template>
@@ -328,6 +312,9 @@ import ModalViewPerhitungan from '@/components/ModalViewPerhitungan'
 // ndpbm (USD)
 import SelectKurs from '@/components/SelectKurs'
 
+// untuk menampilkan cetakan PDF
+import ModalViewPdf from '@/components/ModalViewPdf'
+
 // the default cd header
 import defaultCd from './defaultCd.json'
 
@@ -345,7 +332,8 @@ export default {
         // CardViewDetailCd
         ViewCdDetails,
         ModalViewPerhitungan,
-        SelectKurs
+        SelectKurs,
+        ModalViewPdf
     },
     data() {
         return {
