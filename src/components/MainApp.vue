@@ -38,8 +38,8 @@
                             <template v-slot:button-content>
                                 <span><font-awesome-icon icon="user-circle"></font-awesome-icon> {{ userInfo.name }} @ {{ lokasi }}</span>
                             </template>
-                            <b-dropdown-item to="/profile"><font-awesome-icon icon="user"></font-awesome-icon> Profile</b-dropdown-item>
-                            <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item>
+                            <b-dropdown-item :href="profileUrl" target="blank"><font-awesome-icon icon="user"></font-awesome-icon> Profile</b-dropdown-item>
+                            <!-- <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item> -->
                             <b-dropdown-item @click="logout"><font-awesome-icon icon="power-off"></font-awesome-icon> Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
@@ -67,6 +67,11 @@
 const axios = require('axios').default
 
 export default {
+    data () {
+        return {
+            profileUrl : 'http://apps.sh1.tech/'
+        }
+    },
     methods: {
         // to logout of sso session
         logout () {
