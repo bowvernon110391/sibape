@@ -137,7 +137,7 @@ const router = new Router({
       }
    ],
 
-   mode: 'history'
+  //  mode: 'history'
 })
 
 // set navigation guards here
