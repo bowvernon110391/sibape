@@ -8,7 +8,7 @@
             class="shadow">
             <template v-slot:header>
                 <h2>
-                    <img src="../assets/logo.png" width="64px" class="mr-2">Login SiBAPE
+                    <img src="../assets/logo.png" width="64px" class="mr-2">Login PATOPS
                 </h2>
             </template>
             <template v-slot:footer>

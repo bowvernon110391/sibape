@@ -135,7 +135,9 @@ const router = new Router({
          name: 'PageNotFound',
          component: PageNotFound
       }
-   ]
+   ],
+
+   mode: 'history'
 })
 
 // set navigation guards here
