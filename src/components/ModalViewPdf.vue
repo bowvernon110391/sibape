@@ -10,23 +10,20 @@
         :title="title"
         @change="e => $emit('input', e)">
 
-        <!-- embed pdf -->
-        <object
-            type="application/pdf"
-            width="100%"
-            height="500px"
-            :data="url">
-            <embed
-                type="application/pdf"
-                :src="url">
-        </object>
+        <pdf-embed :url="url" :alt-filename="altFilename"></pdf-embed>
 
     </b-modal>
 </template>
 
 <script>
+import PdfEmbed from '@/components/PdfEmbed'
+
 export default {
     inheritAttrs: false,
+
+    components: {
+        PdfEmbed
+    },
 
     props: {
         url: {
@@ -37,6 +34,10 @@ export default {
         title: {
             type: String,
             default: "PDF Viewer"
+        },
+
+        altFilename: {
+            type: String
         },
 
         value: {

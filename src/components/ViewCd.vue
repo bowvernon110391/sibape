@@ -287,6 +287,7 @@
         <modal-view-pdf
             v-model="viewPrintDialog"
             :url="pdfUrl"
+            :alt-filename="altFilename"
             ></modal-view-pdf>
         
     </div>
@@ -362,7 +363,8 @@ export default {
 
             // print data
             viewPrintDialog: false,
-            pdfUrl: null
+            pdfUrl: null,
+            altFilename: 'SSPCP'
         }
     },
     computed: {
@@ -561,6 +563,7 @@ export default {
             // let's set data
             this.pdfUrl = this.api.generatePdfUrl(printData.doctype, printData.id)
             this.viewPrintDialog = true
+            this.altFilename = printData.doctype + '-' + printData.id
         },
 
         // print bpj
