@@ -20,18 +20,18 @@
 
         <h5>Attachments</h5>
         
-        <b-row>
-            <b-col md="3" v-for="a in attachments" :key="a">
-                <div class="rounded shadow">
-                    <div class="bg-dark text-light rounded-top p-2">
-                        {{ a.filename }}
-                    </div>
-                    <div class="bg-light rounded-bottom p-2">
-                        Uploading...
-                    </div>
-                </div>
-            </b-col>
-        </b-row>
+        <div class="mt-3">
+            <template v-for="(a) in attachments">
+
+                <attachment-handler 
+                    :key="a.filename"
+                    :upload-data="a"
+                    doc-type="cd"
+                    doc-id="2">
+                </attachment-handler>
+
+            </template>
+        </div>
   </div>
         
         
@@ -74,13 +74,13 @@
                 Loading PDF...
             </template>
         </p> -->
-    </div>
 </template>
 
 <script>
 import SelectBpj from '@/components/SelectBpj'
 import ViewCd from '@/components/ViewCd'
 import FileReader from '@/components/FileReader'
+import AttachmentHandler from '@/components/AttachmentHandler'
 
 import { mapGetters } from 'vuex'
 
@@ -88,7 +88,8 @@ export default {
     components: {
         SelectBpj,
         ViewCd,
-        FileReader
+        FileReader,
+        AttachmentHandler
     },
 
     computed: {
@@ -103,12 +104,6 @@ export default {
             result: null,
 
             attachments: [
-                {
-                    filename: 'Some type of doc.pdf'
-                },
-                {
-                    filename: 'Some type of doc.pdf'
-                }
             ]
         }
     },

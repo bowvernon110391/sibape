@@ -269,6 +269,23 @@ class ApiSibape {
 
         return url
     }
+
+    // this one attach resource to a specific endpoints
+    attachFile (doctype, id, data, progressFn) {
+        var url = `/${doctype}/${id}/lampiran`
+
+        return this.instance.post(url, data.blob, {
+            onUploadProgress: progressFn,
+            headers: {
+                ...this.instance.defaults.headers,
+
+                'Content-Type'      : data.type,
+                // 'Content-Length'    : data.blobsize,
+                'X-Content-Filesize': data.filesize,
+                'X-Content-Filename': data.filename
+            }
+        })
+    }
 }
 
 export {
