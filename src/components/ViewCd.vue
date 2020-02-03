@@ -226,7 +226,9 @@
                     <b-form-select v-model="dataCd.pph_tarif" :disabled="disableInput" size="sm">
                         <option value="2.5">2.5</option>
                         <option value="7.5">7.5</option>
+                        <option value="10">10</option>
                         <option value="15">15</option>
+                        <option value="20">20</option>
                         <option value="22.5">22.5</option>
                     </b-form-select>
                 </b-form-group>
