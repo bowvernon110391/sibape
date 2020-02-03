@@ -3,6 +3,12 @@
         <p>
             Sistem Aplikasi Barang Penumpang. v[BETA]
         </p>
+
+        <view-cd 
+            :id="31"
+            hide-banner
+            hide-controls>
+        </view-cd>
         <!-- <select-bpj 
             v-model="bpjId"
             :search-on-empty="!bpjId"></select-bpj>
@@ -29,11 +35,14 @@
 
 <script>
 import SelectBpj from '@/components/SelectBpj'
+import ViewCd from '@/components/ViewCd'
+
 import { mapGetters } from 'vuex'
 
 export default {
     components: {
-        SelectBpj
+        SelectBpj,
+        ViewCd
     },
 
     computed: {
