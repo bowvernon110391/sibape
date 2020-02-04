@@ -21,13 +21,15 @@
         <h5>Attachments</h5>
         
         <div class="mt-3">
-            <template v-for="(a) in attachments">
+            <template v-for="(a, id) in attachments">
 
                 <attachment-handler 
                     :key="a.filename"
                     :upload-data="a"
                     doc-type="cd"
-                    doc-id="2">
+                    doc-id="2"
+                    @error="removeAttachment(id, $event)"
+                    >
                 </attachment-handler>
 
             </template>
@@ -84,7 +86,12 @@ import AttachmentHandler from '@/components/AttachmentHandler'
 
 import { mapGetters } from 'vuex'
 
+import axiosErrorHandler from '../mixins/axiosErrorHandler'
+
 export default {
+    mixins: [
+        axiosErrorHandler
+    ],
     components: {
         SelectBpj,
         ViewCd,
@@ -117,6 +124,21 @@ export default {
 
         onError(e) {
             alert(e.message)
+        },
+
+        removeAttachment(id, e) {
+            // find the id, and remove it
+            if (id > -1 && id < this.attachments.length) {
+                var removed = this.attachments.splice(id, 1)
+            }
+            // alert(`to remove: ${id}`)
+            console.log('post removal:')
+            console.log(this.attachments)
+
+            console.log(e)
+
+            this.handleError(e)
+            
         }
     },
 

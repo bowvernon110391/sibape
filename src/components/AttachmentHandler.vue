@@ -13,7 +13,7 @@
                 </div>
             </template>
             <template v-else-if="internalData">
-                <a :href="internalData.url">{{ internalData.filename }}</a>
+                <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
             </template>
         </div>
 </template>
