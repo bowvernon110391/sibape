@@ -23,12 +23,20 @@
                 </div>
             </template>
             <template v-else>
+                <!-- Table Perhitungan -->
+                <table-perhitungan
+                    :dataPenetapan="perhitungan">
+                </table-perhitungan>
+
+                <!-- Title -->
+                <h5>Summary:</h5>
+
                 <!-- BM -->
                 <b-row>
-                    <b-col sm="4">
-                        Bea Masuk
+                    <b-col sm="6">
+                        Bea Masuk / <em>Customs Duty</em> <div v-if="!isKomersil">( {{ perhitungan.data_pembebasan.tarif_bm_universal }}% x Base Value )</div>
                     </b-col>
-                    <b-col sm="1" offset-md="2">
+                    <b-col sm="1">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -38,11 +46,11 @@
                     </b-col>
                 </b-row>
                 <!-- CUKAI -->
-                <b-row>
-                    <b-col sm="4">
+                <!-- <b-row>
+                    <b-col sm="6">
                         Cukai
                     </b-col>
-                    <b-col sm="1" offset-md="2">
+                    <b-col sm="1">
                         Rp.
                     </b-col>
                     <b-col md="4" sm="7">
@@ -50,7 +58,7 @@
                             {{ perhitungan.total_cukai | formatCurrency(2) }}
                         </div>
                     </b-col>
-                </b-row>
+                </b-row> -->
                 <!-- PPN -->
                 <b-row>
                     <b-col sm="4">
@@ -296,7 +304,11 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['api', 'lokasi'])
+        ...mapGetters(['api', 'lokasi']),
+
+        isKomersil: function() {
+            return this.perhitungan.komersil
+        }
     },
     watch: {
         value: {
