@@ -7,8 +7,8 @@
             footer-text-variant="light"
             class="shadow">
             <template v-slot:header>
-                <h2>
-                    <img src="../assets/logo.png" width="64px" class="mr-2">Login PATOPS
+                <h2 class="text-center">
+                    <img src="../assets/logo.png" width="64px" class="mr-2">Passenger Monitoring and Payment System
                 </h2>
             </template>
             <template v-slot:footer>
