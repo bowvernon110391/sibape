@@ -34,14 +34,29 @@
                 <!-- BM -->
                 <b-row>
                     <b-col sm="6">
-                        Bea Masuk / <em>Customs Duty</em> <div v-if="!isKomersil">( {{ perhitungan.data_pembebasan.tarif_bm_universal }}% x Base Value )</div>
+                        Bea Masuk / <em>Customs Duty</em> <div v-if="!isKomersil" class="nudged">( <em>{{ perhitungan.data_pembebasan.tarif_bm_universal }}% x Base Value</em> )</div>
+                    </b-col>
+                    <b-col sm="1" offset="1">
+                        Rp.
+                    </b-col>
+                    <b-col sm="4">
+                        <div class="text-md-right">
+                            {{ perhitungan.total_bm | formatCurrency(2) }}
+                        </div>
+                    </b-col>
+                </b-row>
+
+                <!-- NILAI IMPOR (only when non komersil) -->
+                <b-row v-if="!isKomersil" class="text-danger">
+                    <b-col sm="6">
+                        Nilai Impor / <em>Import Value</em> <div v-if="!isKomersil" class="nudged">( <em>Base Value + Customs Duty</em> )</div>
                     </b-col>
                     <b-col sm="1">
                         Rp.
                     </b-col>
-                    <b-col md="4" sm="7">
+                    <b-col sm="4">
                         <div class="text-md-right">
-                            {{ perhitungan.total_bm | formatCurrency(2) }}
+                            <em>{{ nilaiImpor | formatCurrency(2) }}</em>
                         </div>
                     </b-col>
                 </b-row>
@@ -61,13 +76,13 @@
                 </b-row> -->
                 <!-- PPN -->
                 <b-row>
-                    <b-col sm="4">
-                        PPN
+                    <b-col sm="6">
+                        PPN / <em>Value Added Tax</em> <div v-if="!isKomersil" class="nudged">( <em>10% x Import Value</em> )</div>
                     </b-col>
-                    <b-col sm="1" offset-md="2">
+                    <b-col sm="1" offset="1">
                         Rp.
                     </b-col>
-                    <b-col md="4" sm="7">
+                    <b-col sm="4">
                         <div class="text-md-right">
                             {{ perhitungan.total_ppn | formatCurrency(2) }}
                         </div>
@@ -75,22 +90,22 @@
                 </b-row>
                 <!-- PPh -->
                 <b-row>
-                    <b-col sm="4">
-                        PPh
+                    <b-col sm="6">
+                        PPh / <em>Income Tax</em> <div v-if="!isKomersil" class="nudged">( <em>{{ perhitungan.pph_tarif | formatCurrency(2) }}% x Import Value</em> )</div>
                     </b-col>
-                    <b-col sm="1" offset-md="2">
+                    <b-col sm="1" offset="1">
                         Rp.
                     </b-col>
-                    <b-col md="4" sm="7">
+                    <b-col sm="4">
                         <div class="text-md-right">
                             {{ perhitungan.total_pph | formatCurrency(2) }}
                         </div>
                     </b-col>
                 </b-row>
                 <!-- PPNBM -->
-                <b-row>
+                <!-- <b-row>
                     <b-col sm="4">
-                        PPNBM
+                        PPNBM / <em>Luxury Tax</em>
                     </b-col>
                     <b-col sm="1" offset-md="2">
                         Rp.
@@ -100,17 +115,17 @@
                             {{ perhitungan.total_ppnbm | formatCurrency(2) }}
                         </div>
                     </b-col>
-                </b-row>
+                </b-row> -->
                 <!-- Total -->
                 <hr>
                 <b-row>
-                    <b-col sm="4">
+                    <b-col sm="6">
                         Total
                     </b-col>
-                    <b-col sm="1" offset-md="2">
+                    <b-col sm="1" offset="1">
                         Rp.
                     </b-col>
-                    <b-col md="4" sm="7">
+                    <b-col sm="4">
                         <div class="text-md-right">
                             <strong>{{ perhitungan.total_bm_pajak | formatCurrency(2) }}</strong>
                         </div>
@@ -133,7 +148,7 @@
                 </b-row>
 
                 <!-- metode pembayaran -->
-                <b-row v-if="true">
+                <b-row v-if="false">
                     <!-- Jenis pembayaran -->
                     <b-col md="4">
                         <b-form-group
@@ -308,6 +323,10 @@ export default {
 
         isKomersil: function() {
             return this.perhitungan.komersil
+        },
+
+        nilaiImpor: function() {
+            return this.perhitungan.data_pembebasan.nilai_dasar_perhitungan + this.perhitungan.total_bm
         }
     },
     watch: {
@@ -349,3 +368,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.nudged {
+    margin-left: 1em !important;
+}
+</style>
