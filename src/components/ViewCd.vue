@@ -88,6 +88,23 @@
                 </b-col>
             </b-row>
         </template>
+
+        <!-- Flag Deklarasi, special check utk flag KOMERSIL -->
+        <hr>
+        <b-row>
+            <b-col sm="12">
+                <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
+                    <b-form-checkbox-group
+                        :options="flagDeklarasi"
+                        stacked
+                        :disabled="disableInput"
+                        v-model="dataCd.declare_flags">
+
+                    </b-form-checkbox-group>
+                </b-form-group>
+            </b-col>
+        </b-row>
+        <hr>
         <!-- Nomor & Tgl Dokumen + Alamat -->
         <b-row>
             <!-- 1st col, nomor & tgl dokumen -->
@@ -247,18 +264,7 @@
                 </b-form-group>
             </b-col>
 
-            <!-- Flag Deklarasi, special check utk flag KOMERSIL -->
-            <b-col md="4"  sm="12">
-                <b-form-group label="Flag Deklarasi" description="Flag deklarasi sesuai form cd">
-                    <b-form-checkbox-group
-                        :options="flagDeklarasi"
-                        stacked
-                        :disabled="disableInput"
-                        v-model="dataCd.declare_flags">
-
-                    </b-form-checkbox-group>
-                </b-form-group>
-            </b-col>
+            
         </b-row>
         <b-row class="mt-2">
             <b-col>
