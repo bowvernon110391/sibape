@@ -152,7 +152,9 @@
                             <b-input-group>
                                 <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
                                 <template v-slot:append>
-                                    <b-form-select style="min-width: 250px" class="d-none d-sm-block"></b-form-select>
+                                    <!-- <b-form-select style="min-width: 250px" class="d-none d-sm-block"></b-form-select> -->
+                                    <select-airline tabindex="9999" style="min-width: 250px; margin: 0 2px;" :disabled="disableInput" :value="airlineCode" class="d-none d-sm-block"></select-airline>
+
                                     <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
                                 </template>
                             </b-input-group>
@@ -312,6 +314,7 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import userChecker from '../mixins/userChecker'
 // components
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
+import SelectAirline from '@/components/SelectAirline'
 import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import vSelect from 'vue-select'
@@ -341,6 +344,7 @@ export default {
         SelectPenumpang2,
         Datepicker,
         PaginatedBrowser,
+        SelectAirline,
         // vSelect,
         SelectPelabuhan,
         // CardViewDetailCd
@@ -390,7 +394,15 @@ export default {
            // and the doc is locked
            return !this.canEdit && this.dataCd.is_locked
         },
-        
+
+        // the 2 digit of airline
+        airlineCode () {
+            if (this.dataCd.no_flight && this.dataCd.no_flight.length >= 2) {
+                return this.dataCd.no_flight.substring(0, 2).toUpperCase()
+            }
+
+            return null
+        },
 
         // change npwp label depends on what data is being input
         // 15 digits: npwp

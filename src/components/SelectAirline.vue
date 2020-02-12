@@ -6,6 +6,8 @@
         :disabled="disabled || syncing"
         :filter-by="searchAirline"
         v-model="innerValue"
+        v-bind="$attrs"
+        v-on="$listeners"
         >
         <template v-slot:option="opt">
             <template v-if="opt.id">
@@ -30,6 +32,7 @@ import { mapGetters, mapActions } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 export default {
+    inheritAttrs: false,
     components: {
         vSelect
     },
