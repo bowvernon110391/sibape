@@ -25,6 +25,7 @@ export default new Vuex.Store({
             negara: [],
             satuan: [],
             jenisDetailSekunder: [],
+            airline: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -63,6 +64,9 @@ export default new Vuex.Store({
         },
         setRefDataJenisDetailSekunder(state, payload) {
             state.refData.jenisDetailSekunder = payload
+        },
+        setRefDataAirline(state, payload) {
+            state.refData.airline = payload
         }
     },
     getters: {
@@ -79,6 +83,9 @@ export default new Vuex.Store({
         },
         negara: state => {
             return state.refData.negara
+        },
+        airline: state => {
+            return state.refData.airline
         },
         negaraDirty: state => {
             return state.refData.isNegaraDirty
@@ -229,6 +236,34 @@ export default new Vuex.Store({
                 })
                 .catch(e => {})
             }
+        },
+        // get airline data,
+        fetchAirline (context) {
+            // check if the data is empty yet?
+            // return promise
+
+            return new Promise( (resolve, reject) => {
+                // first, check if we already have data
+                if (context.state.refData.airline.length < 1) {
+                    // gotta fetch and store first, then resolve
+                    const api = context.state.api
+
+                    // try to fetch airline data
+                    api.getAirline()
+                    .then(e => {
+                        var data = e.data.data
+                        // store locally
+                        context.commit('setRefDataAirline', data)
+                        // resolve using it
+                        resolve(context.state.refData.airline)
+                    })
+                    .catch(e => {
+                        reject(e)
+                    })
+                } else {
+                    resolve(context.state.refData.airline)
+                }
+            })
         }
     }
 })

@@ -152,6 +152,7 @@
                             <b-input-group>
                                 <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
                                 <template v-slot:append>
+                                    <b-form-select style="min-width: 250px" class="d-none d-sm-block"></b-form-select>
                                     <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
                                 </template>
                             </b-input-group>

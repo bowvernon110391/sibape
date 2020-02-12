@@ -72,6 +72,16 @@ class ApiSibape {
     }
 
     //===================RESOURCE : COMMON======================================================
+    // getAirline () : GET /airline
+    getAirline () {
+        return this.instance.get('/airline')
+    }
+
+    // getAirlineByKode () : GET /airline/{kode}
+    getAirlineByKode (kode) {
+        return this.instance.get('/airline/' + kode)
+    }
+
     // getNegara () : GET /negara
     getNegara () {
         return this.instance.get('/negara')

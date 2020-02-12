@@ -34,9 +34,17 @@
 
             </template>
         </div>
+
+        <h5>Select Airline</h5>
+        <div>
+            <select-airline v-model="airline"></select-airline>
+        </div>
+        <div>
+            <input v-model="airline">
+        </div>
   </div>
         
-        
+    
 
         <!-- <b-form-file
             v-model="file"
@@ -84,6 +92,8 @@ import ViewCd from '@/components/ViewCd'
 import FileReader from '@/components/FileReader'
 import AttachmentHandler from '@/components/AttachmentHandler'
 
+import SelectAirline from '@/components/SelectAirline'
+
 import { mapGetters } from 'vuex'
 
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
@@ -96,7 +106,8 @@ export default {
         SelectBpj,
         ViewCd,
         FileReader,
-        AttachmentHandler
+        AttachmentHandler,
+        SelectAirline
     },
 
     computed: {
@@ -109,6 +120,8 @@ export default {
             dataString: 'http://apishinta.test/pdf?doc=sspcp&id=2',
             file: null,
             result: null,
+
+            airline: null,
 
             attachments: [
             ]
