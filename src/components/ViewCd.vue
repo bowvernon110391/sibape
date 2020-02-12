@@ -153,7 +153,7 @@
                                 <b-form-input v-model="dataCd.no_flight" type="text" id="no_flight"  class="md-3" :disabled="disableInput"></b-form-input>
                                 <template v-slot:append>
                                     <!-- <b-form-select style="min-width: 250px" class="d-none d-sm-block"></b-form-select> -->
-                                    <select-airline tabindex="9999" style="min-width: 250px; margin: 0 2px;" :disabled="disableInput" :value="airlineCode" class="d-none d-sm-block"></select-airline>
+                                    <select-airline :tabindex="9999" style="min-width: 250px; margin: 0 2px;" :disabled="disableInput" v-model="dataCd.kd_airline" class="d-none d-sm-block"></select-airline>
 
                                     <datepicker v-model="dataCd.tgl_kedatangan" id="tgl_kedatangan" :disabled="disableInput" style="max-width: 150px"></datepicker>
                                 </template>
@@ -630,6 +630,14 @@ export default {
             if (!newVal) {
                 // alert("Closing view pungutan, reload pls")
                 this.loadCdData(this.id)
+            }
+        },
+
+        'dataCd.no_flight': {
+            immediate: true,
+            deep: true,
+            handler(newVal) {
+                this.dataCd.kd_airline = this.airlineCode
             }
         }
     }
