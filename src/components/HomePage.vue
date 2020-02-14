@@ -42,48 +42,50 @@
         <div>
             <input v-model="airline">
         </div>
-  </div>
-        
-    
 
-        <!-- <b-form-file
-            v-model="file"
-            :state="Boolean(file)"
-            placeholder="Drop or choose file here..."
-            drop-placeholder="Drop here!"
-            accept="application/pdf, image/*, application/json"
-            >
-
-        </b-form-file>
-
-        <pre>{{ JSON.stringify(result, null, 4) }}</pre> -->
-
-        <!-- <view-cd 
-            :id="31"
-            hide-banner
-            hide-controls>
-        </view-cd> -->
-        <!-- <select-bpj 
-            v-model="bpjId"
-            :search-on-empty="!bpjId"></select-bpj>
-        <input type="text" v-model="bpjId"/> -->
-        <!-- <p>
-            <template v-if="dataString">
-                <object 
-                    :data="dataString"
-                    type="application/pdf"
+        <hr>
+        <h5>Webcam Test</h5>
+        <b-row>
+            <b-col md="6">
+                <web-cam
+                    ref="webcam"
+                    :device-id="camId"
                     width="100%"
-                    height="600px">
-                    <embed
-                        type="application/pdf"
-                        :src="dataString"
-                    >
-                </object>
-            </template>
-            <template v-else>
-                Loading PDF...
-            </template>
-        </p> -->
+                    :resolution="{ width: '800', height: '600' }"
+                    
+                    @error="camError"
+                    @cameras="cameraEnum"
+                    @camera-change="cameraChange"
+                />
+            </b-col>
+
+            <b-col md="6">
+                <figure class="figure">
+                    <img :src="img" class="img-responsive" />
+                </figure>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col md="6">
+                <select v-model="camera">
+                    <option>-- Select Device --</option>
+                    <option 
+                        v-for="device in devices"
+                        :key="device.deviceId"
+                        :value="device.deviceId">
+                        {{ device.label }}
+                    </option>
+                </select>
+            </b-col>
+
+            <b-col md="12">
+                <b-button variant="primary" size="sm" @click="captureImage">SNAP!</b-button>
+                <b-button variant="danger" size="sm" @click="camStopped">Stop</b-button>
+                <b-button variant="success" size="sm" @click="camStarted">Start</b-button>
+            </b-col>
+        </b-row>
+        
+  </div>
 </template>
 
 <script>
@@ -98,6 +100,8 @@ import { mapGetters } from 'vuex'
 
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
+import { WebCam } from 'vue-web-cam'
+
 export default {
     mixins: [
         axiosErrorHandler
@@ -107,7 +111,8 @@ export default {
         ViewCd,
         FileReader,
         AttachmentHandler,
-        SelectAirline
+        SelectAirline,
+        WebCam
     },
 
     computed: {
@@ -124,11 +129,27 @@ export default {
             airline: null,
 
             attachments: [
-            ]
+            ],
+
+            camId: null,
+            camera: null,
+            devices: [],
+            img: null
         }
     },
 
     methods: {
+        makeid(length) {
+            var result           = ''
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            var charactersLength = characters.length
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength))
+            }
+            return result
+        },
+
+
         onLoad(e) {
             console.log(e)
 
@@ -152,6 +173,49 @@ export default {
 
             this.handleError(e)
             
+        },
+
+        camStarted () {
+            this.$refs.webcam.start()
+            console.log("Camera started!")
+        },
+
+        camStopped () {
+            this.$refs.webcam.stop()
+            console.log("Camera stopped!")
+        },
+
+        captureImage () {
+            this.img = this.$refs.webcam.capture()
+
+            const filename = this.makeid(16) + ".jpg"
+            // alert(filename)
+
+            // make a new object to upload 
+            var upload = {
+                blob: this.img,
+                blobsize: this.img.length,
+                filesize: this.img.length,
+                type: 'image/jpeg',
+                filename: filename
+            }
+
+            this.attachments.push(upload)
+        },
+
+        cameraEnum (cameras) {
+            this.devices = cameras
+            console.log("Enumerated cameras!", cameras)
+        },
+
+        camError (e) {
+            console.log("Camera error", e)
+        },
+
+        cameraChange (deviceId) {
+            this.camId = deviceId
+            this.camera = deviceId
+            console.log("Camera changed!", deviceId)
         }
     },
 
@@ -167,5 +231,17 @@ export default {
         }) */
     },
 
+    watch: {
+        camera: function (newVal) {
+            this.camId = newVal
+        },
+
+        devices: function(nv) {
+            const [first,...last] = this.devices
+            if (first) {
+                this.camera = first.deviceId
+            }
+        }
+    }
 }
 </script>
