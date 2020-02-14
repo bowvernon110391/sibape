@@ -61,7 +61,7 @@
 
             <b-col md="6">
                 <figure class="figure">
-                    <img :src="img" class="img-responsive" />
+                    <img :src="img" class="img-fluid"/>
                 </figure>
             </b-col>
         </b-row>
