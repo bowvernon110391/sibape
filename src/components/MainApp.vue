@@ -16,6 +16,8 @@
                             <b-dropdown-item to="/st">🛅Surat Titipan (ST)</b-dropdown-item>
                             <b-dropdown-item to="/spp">✋Surat Penundaan Pengeluaran (SPP)</b-dropdown-item>
                             <b-dropdown-item to="/bc32">💸Pembawaan Mata Uang (BC32)</b-dropdown-item>
+                            <b-dropdown-item to="/carnet">🚗CARNET</b-dropdown-item>
+                            <b-dropdown-item to="/pibk">📦PIBK - Barang Penumpang</b-dropdown-item>
                             <!-- <b-dropdown-item to="/sspcp">💸SSPCP</b-dropdown-item> -->
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
