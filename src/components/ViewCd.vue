@@ -487,8 +487,9 @@ export default {
                 console.log("Input CD Baru di sini!")
                 // 1st, init with empty data
                 this.dataCd = this.defaultData()
-                // 2nd, 
-
+                // 2nd, set default airport?
+                this.dataCd.kd_pelabuhan_tujuan = "IDCGK"
+                
                 return
             }
             // 

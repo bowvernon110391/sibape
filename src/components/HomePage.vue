@@ -4,6 +4,7 @@
             Sistem Aplikasi Barang Penumpang. v[BETA]
         </p>
 
+        <template v-if="testingMode">
         <b-row>
             <b-col md="3">
                 <b-form-group
@@ -84,6 +85,7 @@
                 <b-button variant="success" size="sm" @click="camStarted">Start</b-button>
             </b-col>
         </b-row>
+        </template>
         
   </div>
 </template>
@@ -121,6 +123,7 @@ export default {
 
     data () {
         return {
+            testingMode: false,
             bpjId: null,
             dataString: 'http://apishinta.test/pdf?doc=sspcp&id=2',
             file: null,
