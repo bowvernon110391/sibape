@@ -230,7 +230,7 @@
         <b-row>
             <!-- Jml Keluarga -->
             <b-col md="2" sm="6">
-                <b-form-group label="Jumlah Keluarga" description="Yang datang bersamaan">
+                <b-form-group label="Jml Anggota Keluarga" description="Yang datang bersamaan">
                     <b-form-input type="number" 
                         class="text-right" 
                         v-model="dataCd.jml_anggota_keluarga"
@@ -361,8 +361,8 @@ export default {
                 { text: 'Narkotika dan/atau obat-obatan', value: "NARKOTIKA"},
                 { text: 'Barang Kena Cukai', value: "BKC"},
                 { text: 'Pembawaan Mata Uang', value: "UANG"},
-                { text: 'Barang dagangan (tidak untuk dipakai)', value: "KOMERSIL"},
-                { text: 'Barang impor untuk dipakai', value: "IMPOR_UNTUK_DIPAKAI"}
+                { text: 'Barang-barang yang bukan untuk penggunaan pribadi (Non-personal use)', value: "KOMERSIL"},
+                { text: 'Barang impor untuk dipakai (personal use)', value: "IMPOR_UNTUK_DIPAKAI"}
             ],
             fieldDetails: [
                 { label: '', key: '_showDetail'},
