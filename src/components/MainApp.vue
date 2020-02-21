@@ -3,7 +3,15 @@
         <b-navbar toggleable="lg" type="dark" variant="dark" id="navbar">
             <b-container>
                 <b-navbar-brand to="/">
-                    <img style="max-height: 25px;" src="../assets/banner_icon.png"/>
+                    <img style="height: 25px;" src="../assets/banner_icon.png"/>
+                    <div class="banner-text d-inline-block">
+                        <div>
+                            <strong>PATOPS</strong>
+                        </div>
+                        <!-- <div class="smol-text d-xs-block d-sm-none">
+                            <em>Passenger Monitoring and Payment System</em>
+                        </div> -->
+                    </div>
                 </b-navbar-brand>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
@@ -135,5 +143,15 @@ background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10-
 background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 
+}
+
+.banner-text {
+    margin-left: .25em;
+}
+
+.smol-text {
+    font-size: .75em;
+    margin-bottom: 0;
+    line-height: .5em;
 }
 </style>

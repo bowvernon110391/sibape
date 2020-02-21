@@ -16,7 +16,7 @@
             <b-row class="my-2" v-if="id != 'new'">
                 <b-col>
                     <div class="text-right" ref="btnGroupPenyelesaian">
-                        <b-button-group size="sm" class="shadow">
+                        <b-button-group size="sm" class="shadow mt-2 mt-md-0">
                             <!-- apabila dijadikan impor sementara -->
                             <b-button variant="danger" :disabled="cdHasLink('bpj') || disableInput">
                                 <font-awesome-icon icon="plane-departure"></font-awesome-icon>
@@ -54,7 +54,7 @@
                                 split
                                 split-variant="dark"
                                 variant="dark"
-                                class="shadow"
+                                class="shadow mt-2 mt-md-0"
                                 @click="printSspcp"
                                 >
                                 <!-- text and icon for button -->
@@ -179,12 +179,16 @@
                     <b-col>
                         <!-- Pembebasan select. Disabled if commercial, also set to 0 if commercial -->
                         <b-form-group label="Pembebasan (USD)">
-                            <b-form-select size="sm" :disabled="disableInput || isCommercial" v-model="dataCd.pembebasan">
+                            <!-- <b-form-select size="sm" :disabled="disableInput || isCommercial" v-model="dataCd.pembebasan">
                                 <option value="0">0</option>
                                 <option value="50" :disabled="isCommercial">50</option>
                                 <option value="500" :disabled="isCommercial">500</option>
                                 <option value="1000" :disabled="isCommercial">1000</option>
-                            </b-form-select>
+                            </b-form-select> -->
+                            <b-form-input
+                                :disabled="disableInput || isCommercial"
+                                size="sm"
+                                v-model="dataCd.pembebasan"></b-form-input>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -243,14 +247,20 @@
             <!-- Tarif PPh -->
             <b-col md="2" sm="6">
                 <b-form-group label="Tarif PPh (%)">
-                    <b-form-select v-model="dataCd.pph_tarif" :disabled="disableInput" size="sm">
+                    <!-- <b-form-select v-model="dataCd.pph_tarif" :disabled="disableInput" size="sm">
                         <option value="2.5">2.5</option>
                         <option value="7.5">7.5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
                         <option value="22.5">22.5</option>
-                    </b-form-select>
+                    </b-form-select> -->
+                    <v-select
+                        v-model="dataCd.pph_tarif"
+                        taggable
+                        push-tags
+                        :options="pphOptions">
+                    </v-select>
                 </b-form-group>
             </b-col>
 
@@ -317,7 +327,7 @@ import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectAirline from '@/components/SelectAirline'
 import Datepicker from '@/components/Datepicker'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
-// import vSelect from 'vue-select'
+import vSelect from 'vue-select'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 // import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
@@ -345,7 +355,7 @@ export default {
         Datepicker,
         PaginatedBrowser,
         SelectAirline,
-        // vSelect,
+        vSelect,
         SelectPelabuhan,
         // CardViewDetailCd
         ViewCdDetails,
@@ -441,6 +451,20 @@ export default {
             }
 
             return commercial
+        },
+
+        // option of pph
+        pphOptions () {
+            var options = [
+                2.5,
+                7.5,
+                10,
+                15,
+                20,
+                ...this.dataCd.pph_tarif
+            ]
+
+            return options
         }
     },
     props: {

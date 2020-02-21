@@ -29,7 +29,8 @@
     },
     "negara_asal": {
         "data": {
-            "id": null
+            "id": null,
+            "kode": null
         }
     }
 }
