@@ -221,6 +221,52 @@ class ApiSibape {
         return this.instance.post(`/cd/${id}/penetapan`, data)
     }
 
+    //==================RESOURCE : SPP===========================================================
+    // getSpp () : GET /spp
+    getSpp (param) {
+        return this.instance.get('/spp', {
+            params: param
+        })
+    }
+
+    // getSppById (id) : GET /spp/{id}
+    getSppById (id) {
+        return this.instance.get('/spp/' + id, {
+            params: {
+                include: 'cd'
+            }
+        })
+    }
+
+    // getSppByCdId (id) : GET /spp/{id}/spp
+    getSppByCdId (id) {
+        return this.instance.get('/cd/' + id + '/spp', {
+            params: {
+                include: 'cd'
+            }
+        })
+    }
+
+    // createSpp (data) : POST /spp
+    createSpp (dataSpp) {
+        return this.instance.post('/spp', dataSpp)
+    }
+
+    /* // updateCd (dataCd) : PUT /cd/{id}
+    updateCd (id, dataCd) {
+        return this.instance.put('/cd/' + id, dataCd)
+    } */
+
+    // deleteCd (id) : DELETE /spp/{id}
+    deleteSpp (id) {
+        return this.instance.delete('/spp/' + id)
+    }
+
+    // getMockupSpp (cdId) : GET /cd/{id}/spp_mockup
+    getMockupSpp (cdId) {
+       return this.instance.get('/cd/' + cdId + '/spp_mockup') 
+    }
+
     //==================RESOURCE : BPJ===========================================================
     // getBpj () : GET /bpj
     getBpj (param) {
