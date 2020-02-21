@@ -1,3 +1,3 @@
 @echo off
-scp -P 22 -r dist/* bcsoetta@bcsoetta.org:~/www/patops
+scp -P 212 -r dist/* dukteksoetta@soetta.xyz:/html/sibape.soetta.xyz
 @echo on
