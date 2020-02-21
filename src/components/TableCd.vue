@@ -21,7 +21,7 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
-            <card-view-cd :row="row"></card-view-cd>
+            <card-view-cd :data="row.item"></card-view-cd>
         </template>
 
         <template v-slot:cell(is_locked)="data">

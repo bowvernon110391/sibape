@@ -264,7 +264,11 @@ class ApiSibape {
 
     // getMockupSpp (cdId) : GET /cd/{id}/spp_mockup
     getMockupSpp (cdId) {
-       return this.instance.get('/cd/' + cdId + '/spp_mockup') 
+       return this.instance.get('/cd/' + cdId + '/spp_mockup', {
+           params: {
+               include: 'cd'
+           }
+       }) 
     }
 
     //==================RESOURCE : BPJ===========================================================

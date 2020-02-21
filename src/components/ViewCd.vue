@@ -30,7 +30,7 @@
                             </b-button>
 
                             <!-- tunda pengeluaran -->
-                            <b-button variant="warning" :disabled="cdHasLink('spp') || disableInput">
+                            <b-button variant="warning" :disabled="cdHasLink('spp') || disableInput" @click="showPenundaan">
                                 <font-awesome-icon icon="hand-paper"></font-awesome-icon>
                                 Tunda Pengeluaran
                             </b-button>
@@ -293,12 +293,21 @@
 
             <!-- modal view utk perhitungan -->
             <template v-if="dataCd.id">
+                <!-- Tampilkan perhitungan -->
                 <modal-view-perhitungan
                     :cd-id="dataCd.id"
                     size="xl"
                     v-model="viewPungutan"
                     :simulate="!cdHasLink('sspcp')">
                 </modal-view-perhitungan>
+
+                <!-- Tampilkan SPP -->
+                <modal-view-spp
+                    :cd-id="dataCd.id"
+                    size="xl"
+                    :simulate="!cdHasLink('spp')"
+                    v-model="viewSpp">
+                </modal-view-spp>
             </template>
 
             <!-- utk nampilin respon sspcp -->
@@ -342,6 +351,9 @@ import SelectKurs from '@/components/SelectKurs'
 // untuk menampilkan cetakan PDF
 import ModalViewPdf from '@/components/ModalViewPdf'
 
+// untuk menampilkan spp
+import ModalViewSpp from '@/components/ModalViewSpp'
+
 // the default cd header
 import defaultCd from './defaultCd.json'
 
@@ -361,7 +373,8 @@ export default {
         ViewCdDetails,
         ModalViewPerhitungan,
         SelectKurs,
-        ModalViewPdf
+        ModalViewPdf,
+        ModalViewSpp
     },
     data() {
         return {
@@ -391,7 +404,10 @@ export default {
             // print data
             viewPrintDialog: false,
             pdfUrl: null,
-            altFilename: 'SSPCP'
+            altFilename: 'SSPCP',
+
+            // SPP
+            viewSpp: false
         }
     },
     computed: {
@@ -611,6 +627,11 @@ export default {
         showPungutan () {
             // tergantung status cd
             this.viewPungutan = true
+        },
+
+        // show penundaan
+        showPenundaan () {
+            this.viewSpp = true
         },
 
         // print sspcp

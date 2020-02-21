@@ -65,8 +65,8 @@
                         <option value="T2F">T2F</option>
                         <option value="T3">T3</option>
                         <option value="KANTOR">KANTOR</option>
-                        <option value="TPP">TPP</option>
-                        <option value="GUDANG">GUDANG</option>
+                        <!-- <option value="TPP">TPP</option>
+                        <option value="GUDANG">GUDANG</option> -->
                     </b-form-select>
                 </b-form-group>
                 <b-alert :show="errorMsg.length" variant="danger">{{ errorMsg }}</b-alert>
