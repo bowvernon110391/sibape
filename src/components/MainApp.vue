@@ -50,6 +50,7 @@
                             </template>
                             <b-dropdown-item :href="profileUrl" target="blank"><font-awesome-icon icon="user"></font-awesome-icon> Profile</b-dropdown-item>
                             <!-- <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item> -->
+                            <b-dropdown-item @click="viewSelectLocation = true"><font-awesome-icon icon="map-marker-alt"></font-awesome-icon> Switch Location</b-dropdown-item>
                             <b-dropdown-item @click="logout"><font-awesome-icon icon="power-off"></font-awesome-icon> Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
@@ -70,18 +71,32 @@
             <hr />
             &copy; <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
         </b-container>
+
+        <modal-select-location
+            v-model="viewSelectLocation"
+            size="sm">
+        </modal-select-location>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
+import ModalSelectLocation from '@/components/ModalSelectLocation'
+
 const axios = require('axios').default
 
 export default {
     data () {
         return {
-            profileUrl : 'http://apps.sh1.tech/'
+            profileUrl : 'http://apps.sh1.tech/',
+            viewSelectLocation: false
         }
     },
+
+    components: {
+        ModalSelectLocation
+    },
+
     methods: {
         // to logout of sso session
         logout () {
