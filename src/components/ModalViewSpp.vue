@@ -156,11 +156,15 @@
                 :disabled="!simulate || busy || !dataSpp || disabled"
                 @click="onSave"
                 >
-                <font-awesome-icon icon="hand-paper">
+                <font-awesome-icon icon="hand-paper" v-if="!disabled">
                 </font-awesome-icon>
+                <b-spinner 
+                    small
+                    v-else>
+                </b-spinner>
                 Tunda Pengeluaran
             </b-button>
-            <b-button variant="danger" @click="cancel" size="sm">
+            <b-button variant="danger" @click="cancel" size="sm" :disabled="disabled">
                 <font-awesome-icon icon="times">
                 </font-awesome-icon>
                 Tutup
