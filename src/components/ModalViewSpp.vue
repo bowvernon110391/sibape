@@ -228,6 +228,9 @@ export default {
                     `CD #${this.cdId} ditunda pengeluarannya dengan SPP #${retData.id}`,
                     'success')
 
+                // force close
+                this.$emit('input', false)
+
                 // change route
                 this.$router.replace({
                     path: retData.uri

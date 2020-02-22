@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="dataSpp.cd">
         <!-- Title at the top, showing lock status too -->
         <h4>
             <template v-if="!isNew">
@@ -44,6 +44,7 @@
             <b-col md="6">
                 <b-form-group label="Penumpang" label-for="penumpang">
                     <select-penumpang-2 
+                        v-if="dataSpp.cd"
                         v-model="dataSpp.cd.data.penumpang.data.id" 
                         id="penumpang" 
                         :disabled="disableInput" 
@@ -141,7 +142,7 @@ import userChecker from '../mixins/userChecker'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectNegara from '@/components/SelectNegara'
 import SelectAirline from '@/components/SelectAirline'
-// import Datepicker from '@/components/Datepicker'
+import Datepicker from '@/components/Datepicker'
 // import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import vSelect from 'vue-select'
 // import SelectPelabuhan from '@/components/SelectPelabuhan'
@@ -168,7 +169,8 @@ export default {
         SelectPenumpang2,
         SelectNegara,
         ViewCdDetails,
-        SelectAirline
+        SelectAirline,
+        Datepicker
     },
     data() {
         return {
