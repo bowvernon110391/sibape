@@ -19,7 +19,7 @@
             <!-- when busy, show spinner -->
             <template v-if="(busy || !dataSpp)">
                 <div class="text-md-center">
-                    Generating SPP...<b-spinner></b-spinner>
+                    {{ simulate ? 'Generating' : 'Loading' }} SPP...<b-spinner></b-spinner>
                 </div>
             </template>
 
@@ -138,7 +138,8 @@
                             label="Keterangan"
                             description="catatan tambahan untuk SPP ini">
                             <b-form-textarea
-                                v-model="keterangan">
+                                v-model="keterangan"
+                                :disabled="!simulate || disabled">
                             </b-form-textarea>
                         </b-form-group>
                     </b-col>
@@ -152,7 +153,8 @@
             <b-button 
                 variant="primary" 
                 size="sm" 
-                :disabled="!simulate || busy || !dataSpp"
+                :disabled="!simulate || busy || !dataSpp || disabled"
+                @click="onSave"
                 >
                 <font-awesome-icon icon="hand-paper">
                 </font-awesome-icon>
@@ -198,6 +200,44 @@ export default {
         }
     },
 
+    methods: {
+        onSave () {
+            if (this.disabled) {
+                return
+            }
+
+            this.disabled = true
+
+            // call teh api
+            const data = {
+                keterangan: this.keterangan,
+                lokasi: this.lokasi
+            }
+
+            this.api.createSpp(this.cdId, data)
+            .then(e => {
+                this.disabled = false
+                const retData = e.data
+
+                // make toast
+                this.showToast("Perekaman SPP", 
+                    `CD #${this.cdId} ditunda pengeluarannya dengan SPP #${retData.id}`,
+                    'success')
+
+                // change route
+                this.$router.replace({
+                    path: retData.uri
+                })
+            })
+            .catch(e => {
+                this.disabled = false
+                this.handleError(e)
+                // force close
+                this.$emit('input', false)
+            })
+        }
+    },
+
     data () {
         return {
             // busy flag
@@ -205,7 +245,9 @@ export default {
 
             dataSpp: null,
 
-            keterangan: null
+            keterangan: null,
+
+            disabled: false
         }
     },
 
@@ -229,7 +271,15 @@ export default {
                     this.busy = true
 
                     // call teh api
-                    this.api.getMockupSpp(this.cdId)
+                    var sppCallback = null
+
+                    if (this.simulate) {
+                        sppCallback = this.api.getMockupSpp(this.cdId)
+                    } else {
+                        sppCallback = this.api.getSppByCdId(this.cdId)
+                    }
+
+                    sppCallback
                     .then(e => {
                         // cancel busy state
                         this.busy = false

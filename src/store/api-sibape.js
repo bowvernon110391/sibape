@@ -248,8 +248,8 @@ class ApiSibape {
     }
 
     // createSpp (data) : POST /spp
-    createSpp (dataSpp) {
-        return this.instance.post('/spp', dataSpp)
+    createSpp (cdId, dataSpp) {
+        return this.instance.post('/cd/' + cdId + '/spp', dataSpp)
     }
 
     /* // updateCd (dataCd) : PUT /cd/{id}
