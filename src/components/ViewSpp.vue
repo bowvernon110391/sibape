@@ -13,9 +13,22 @@
         <b-row class="my-2" v-if="id != 'new'">
             <b-col>
                 <div class="text-right" ref="btnCetak">
-                    <b-button-group size="sm" class="shadow">
+                    <b-button-group size="sm" class="shadow mt-2 mt-md-0">
+                        <!-- buatkan / lihat pibk -->
+                        <b-button variant="success">
+                            <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
+                            <template v-if="sppHasLink('pibk')">
+                                Lihat PIBK
+                            </template>
+                            <template v-else>
+                                Buatkan PIBK
+                            </template>
+                        </b-button>
+                    </b-button-group>
+
+                    <b-button-group size="sm" class="shadow mt-2 mt-md-0">
                         <!-- apabila dijadikan impor sementara -->
-                        <b-button variant="dark">
+                        <b-button variant="dark" @click="printSpp">
                             <font-awesome-icon icon="print">
                             </font-awesome-icon>
                             Cetak
@@ -131,7 +144,15 @@
                 :disabled="disableInput">
             </view-cd-details>
         </template>
+
+        <!-- PRINT MODAL -->
+        <modal-view-pdf
+            v-model="viewPrintDialog"
+            :url="pdfUrl"
+            :alt-filename="altFilename"
+            ></modal-view-pdf>
     </div>
+
 </template>
 
 <script>
@@ -150,8 +171,8 @@ import Datepicker from '@/components/Datepicker'
 import { mapMutations, mapGetters } from 'vuex'
 import ViewCdDetails from '@/components/ViewCdDetails'
 
-// utk menampilkan pungutan
-// import ModalViewPerhitungan from '@/components/ModalViewPerhitungan'
+// utk menampilkan pdf
+import ModalViewPdf from '@/components/ModalViewPdf'
 
 // ndpbm (USD)
 import SelectKurs from '@/components/SelectKurs'
@@ -170,11 +191,17 @@ export default {
         SelectNegara,
         ViewCdDetails,
         SelectAirline,
-        Datepicker
+        Datepicker,
+        ModalViewPdf
     },
     data() {
         return {
-            dataSpp: this.defaultData()
+            dataSpp: this.defaultData(),
+
+            // for printing
+            viewPrintDialog: false,
+            pdfUrl: null,
+            altFilename: 'SPP'
         }
     },
     computed: {
@@ -194,7 +221,12 @@ export default {
         }
     },
     props: {
-        id: [Number,String]
+        id: [Number,String],
+
+        hideControls: {
+            type: Boolean,
+            default: false
+        }
     },
     methods: {
         ...mapMutations(['setBusyState']),
@@ -240,7 +272,40 @@ export default {
 
         // when save button clicked
         onSave () {
-        }
+        },
+
+        // when print button clicked
+        printSpp () {
+            // set data
+            this.pdfUrl = this.api.generatePdfUrl('spp', this.id)
+            this.viewPrintDialog = true
+            this.altFilename = `spp-${this.id}`
+        },
+
+        // check if cd has some related documents
+        sppHasLink: function (rel) {
+            if (this.dataSpp.links) {
+                // check by filtering it
+                return this.dataSpp.links.filter(e => e.rel == rel).length > 0
+            }
+            return false
+        },
+
+        // grab link detail
+        sppGetLinkDetails: function (rel) {
+            if (this.dataSpp.links) {
+                var filtered = this.dataSpp.links.filter(e => e.rel == rel)
+
+                if (filtered.length) {
+                    var link = filtered[0]
+                    return {
+                        doctype: link.rel,
+                        id: link.uri.match(/^\/.+\/(\d+)$/i)[1]
+                    }
+                }
+            }
+            return false
+        },
     },
     created () {
         // this.setBusyState(true)
