@@ -41,7 +41,8 @@ export default {
         getSpp (q, spinner, vm) {
             spinner(true)
             this.api.getSpp({
-                ...q
+                ...q,
+                include: 'cd.airline'
             })
             .then(e => {
                 // console.log("Got cd data:")

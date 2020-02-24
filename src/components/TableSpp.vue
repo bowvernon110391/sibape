@@ -13,16 +13,19 @@
         v-bind="$attrs"
         v-on="$listeners">
         <template v-slot:cell(showDetail)="row">
-            <b-button size="sm" variant="dark" @click="row.toggleDetails">
-                <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
-                </font-awesome-icon>
-            </b-button>
+            <div class="text-center">
+                <b-button size="sm" variant="dark" @click="row.toggleDetails">
+                    <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
+                    </font-awesome-icon>
+                </b-button>
+            </div>
         </template>
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
             <!-- <card-view-cd :row="row"></card-view-cd> -->
-            <pre>{{ JSON.stringify(row.item, null, 2) }}</pre>
+            <card-view-spp :data="row.item"/>
+            <!-- <pre>{{ JSON.stringify(row.item, null, 2) }}</pre> -->
         </template>
 
         <template v-slot:cell(is_locked)="data">
@@ -53,13 +56,15 @@
 
 <script>
 import userChecker from '../mixins/userChecker'
-import CardViewCd from '@/components/CardViewCd'
+// import CardViewCd from '@/components/CardViewCd'
+import CardViewSpp from '@/components/CardViewSpp'
 
 export default {
     inheritAttrs: false,
     mixins: [ userChecker ],
     components: {
-        CardViewCd
+        // CardViewCd
+        CardViewSpp
     },
     methods: {
         async onDelete (id, nomor) {
