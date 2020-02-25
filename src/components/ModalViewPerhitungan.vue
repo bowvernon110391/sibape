@@ -22,7 +22,7 @@
                     Calculating...<b-spinner></b-spinner>
                 </div>
             </template>
-            <template v-else>
+            <template v-else-if="perhitungan">
                 <!-- Table Perhitungan -->
                 <table-perhitungan
                     :dataPenetapan="perhitungan">
@@ -204,6 +204,10 @@
                 </b-row>
             </template>
 
+            <template v-else>
+                This thing does not compute
+            </template>
+
         </template>
 
         <!-- footer -->
@@ -326,7 +330,10 @@ export default {
         },
 
         nilaiImpor: function() {
-            return this.perhitungan.data_pembebasan.nilai_dasar_perhitungan + this.perhitungan.total_bm
+            if (this.perhitungan.data_pembebasan)
+                return this.perhitungan.data_pembebasan.nilai_dasar_perhitungan + this.perhitungan.total_bm
+            
+            return this.perhitungan.total_bm + this.perhitungan.nilai_pabean
         }
     },
     watch: {

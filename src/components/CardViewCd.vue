@@ -7,13 +7,13 @@
                 <strong>Nomor:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.no_flight }}
+                {{ data.no_flight }}
             </b-col>
             <b-col md="2">
                 <strong>Tanggal Tiba:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.tgl_kedatangan }}
+                {{ data.tgl_kedatangan }}
             </b-col>
         </b-row>
         <b-row>
@@ -21,13 +21,13 @@
                 <strong>Asal :</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.pelabuhan_asal.data.nama }} ({{ row.item.pelabuhan_asal.data.kode }})
+                {{ data.pelabuhan_asal.data.nama }} ({{ data.pelabuhan_asal.data.kode }})
             </b-col>
             <b-col md="2">
                 <strong>Tujuan :</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.pelabuhan_tujuan.data.nama }} ({{ row.item.pelabuhan_tujuan.data.kode }})
+                {{ data.pelabuhan_tujuan.data.nama }} ({{ data.pelabuhan_tujuan.data.kode }})
             </b-col>
         </b-row>
         <hr>
@@ -37,13 +37,13 @@
                 <strong>Nama:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.penumpang.data.nama }}
+                {{ data.penumpang.data.nama }}
             </b-col>
             <b-col md="2">
                 <strong>Tgl Lahir:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.penumpang.data.tgl_lahir }}
+                {{ data.penumpang.data.tgl_lahir }}
             </b-col>
         </b-row>
         <b-row>
@@ -51,7 +51,7 @@
                 <strong>Pekerjaan:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.penumpang.data.pekerjaan }}
+                {{ data.penumpang.data.pekerjaan }}
             </b-col>
         </b-row>
         <hr>
@@ -61,13 +61,13 @@
                 <strong>Jumlah Detail:</strong>
             </b-col>
             <b-col md="4">
-                {{ row.item.jumlah_detail }}
+                {{ data.jumlah_detail }}
             </b-col>
             <b-col md="2">
                 <strong>Dokumen terkait:</strong>
             </b-col>
             <b-col md="4">
-                <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in row.item.links.filter(e => e.rel == 'sspcp' || e.rel == 'bpj')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
+                <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in data.links.filter(e => e.rel == 'sspcp' || e.rel == 'bpj')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
                     {{ r.rel | docName }}
                 </b-button>
             </b-col>
@@ -79,7 +79,7 @@
             <b-col md="4" sm="12">
                 <div>
                     <!-- some pills here... -->
-                    <b-badge v-for="(flag, idx) in row.item.declare_flags" :key="idx" :variant="pillVariant[flag]">
+                    <b-badge v-for="(flag, idx) in data.declare_flags" :key="idx" :variant="pillVariant[flag]">
                         {{ flag }}
                     </b-badge>
                 </div>
@@ -88,7 +88,7 @@
                 <strong>Alamat/Domisili:</strong>
             </b-col>
             <b-col md="4" sm="12">
-                {{ row.item.alamat }}
+                {{ data.alamat }}
             </b-col>
         </b-row>
         
@@ -96,7 +96,7 @@
         <h5>Status</h5>
         <b-row>
             <b-col md="6">
-                <table-status :data="row.item.status.data">
+                <table-status :data="data.status.data">
                 </table-status>
             </b-col>
         </b-row>
@@ -111,7 +111,7 @@ export default {
         TableStatus
     },
     props: {
-        row: {
+        data: {
             type: Object
         },
         disabled: {
