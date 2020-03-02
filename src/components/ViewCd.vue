@@ -65,7 +65,7 @@
                                 </template>
                                 <!-- opsi yang selalu ada -->
                                 <b-dropdown-item @click="printSspcp">
-                                    SSPCP
+                                    Bukti Bayar
                                 </b-dropdown-item>
                                 <!-- opsi tergantung link yg ada -->
                                 <!-- Impor Sementara -->
