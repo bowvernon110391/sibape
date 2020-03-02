@@ -304,7 +304,7 @@ export default {
                 vm.$emit('input', false)
 
                 // show toast
-                vm.showToast("Penetapan CD", `CD #${vm.cdId} berhasil ditetapkan dengan SSPCP #${e.data.id}`, 'success')
+                vm.showToast("Penetapan CD", `CD #${vm.cdId} berhasil ditetapkan. Bukti bayar terbit dengan BPPM #${e.data.id}`, 'success')
 
                 /* // re route
                 vm.$router.replace({
