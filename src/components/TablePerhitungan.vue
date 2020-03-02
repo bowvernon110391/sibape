@@ -42,7 +42,7 @@
                 <div class="newline text-right">{{ row.value }}</div>
             </template>
 
-            <template v-slot:custom-foot="{columns, fields, items}">
+            <template v-slot:custom-foot="{columns, fields, items}" v-if="!isKomersil">
                 <b-tr>
                     <b-td colspan="3" class="text-center" variant="dark">
                         Total CIF of {{ items.length }} items
