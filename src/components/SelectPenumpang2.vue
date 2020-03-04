@@ -29,7 +29,10 @@
                             <strong class="d-md-inline d-block">{{ option.nama }}</strong>
                         </b-col>
                         <b-col md="12">
-                            <em class="d-md-inline d-block">({{ option.pekerjaan }})</em>
+                            <em class="d-md-inline d-block">📧 {{ option.email }}</em>
+                        </b-col>
+                        <b-col md="12">
+                            <em class="d-md-inline d-block">📞 {{ option.phone }}</em>
                         </b-col>
                         <b-col md="6">
                             <b-row>
@@ -108,11 +111,28 @@
                         <select-negara id="kebangsaan" v-model="detail.kebangsaan" :disabled="saving || disabled"></select-negara>
                     </b-form-group>
                 </b-col>
-                <b-col sm="12">
+                <!-- <b-col sm="12">
                     <b-form-group
                         label="Pekerjaan"
                         label-for="pekerjaan">
                         <b-form-input type="text" v-model="detail.pekerjaan" :disabled="saving || disabled"></b-form-input>
+                    </b-form-group>
+                </b-col> -->
+            </b-row>
+            <b-row>
+                <b-col md="6">
+                    <b-form-group
+                        label="E-mail"
+                        label-for="email">
+                        <b-form-input type="email" v-model="detail.email" :disabled="saving || disabled"></b-form-input>
+                    </b-form-group>
+                </b-col>
+
+                <b-col md="6">
+                    <b-form-group
+                        label="Phone Number"
+                        label-for="phone">
+                        <b-form-input type="phone" v-model="detail.phone" :disabled="saving || disabled"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -179,7 +199,9 @@ export default {
                 pekerjaan:'',
                 no_paspor:'',
                 kebangsaan:'',
-                tgl_lahir:''
+                tgl_lahir:'',
+                email:'',
+                phone:''
             }
         }
     },

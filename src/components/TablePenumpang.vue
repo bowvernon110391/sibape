@@ -46,7 +46,8 @@ export default {
                 },
                 'nama',
                 'tgl_lahir',
-                'pekerjaan',
+                'email',
+                'phone',
                 { 
                     label: 'Negara',
                     key: 'negara.data.uraian'
