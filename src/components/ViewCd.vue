@@ -234,7 +234,7 @@
         <b-row>
             <!-- Jml Keluarga -->
             <b-col md="2" sm="6">
-                <b-form-group label="Jml Anggota Keluarga" description="Yang datang bersamaan">
+                <b-form-group label="Jumlah Penumpang" description="at the time of arrival">
                     <b-form-input type="number" 
                         class="text-right" 
                         v-model="dataCd.jml_anggota_keluarga"
@@ -265,7 +265,7 @@
             </b-col>
 
             <!-- NDPBM -->
-            <b-col md="4">
+            <!-- <b-col md="4">
                 <b-form-group label="NDPBM">
                     <select-kurs
                         id="cd-ndpbm"
@@ -275,7 +275,7 @@
                         :search-on-empty="isNew">
                     </select-kurs>
                 </b-form-group>
-            </b-col>
+            </b-col> -->
 
             
         </b-row>
