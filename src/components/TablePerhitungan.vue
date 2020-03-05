@@ -44,7 +44,7 @@
 
             <template v-slot:custom-foot="{columns, fields, items}" v-if="!isKomersil">
                 <b-tr>
-                    <b-td colspan="3" class="text-center" variant="dark">
+                    <b-td :colspan="bottom_col_span" class="text-center" variant="dark">
                         Total CIF of {{ items.length }} items
                     </b-td>
                     <b-td variant="dark" class="text-right">
@@ -54,7 +54,7 @@
                 
                 <!-- Deminimis -->
                 <b-tr>
-                    <b-td colspan="3" class="text-center" variant="danger">
+                    <b-td :colspan="bottom_col_span" class="text-center" variant="danger">
                         Deminimis value ({{ dataPenetapan.data_pembebasan.nilai_pembebasan | formatCurrency }} {{ dataPenetapan.data_pembebasan.valuta }} @ {{ dataPenetapan.data_pembebasan.ndpbm | formatCurrency }})
                     </b-td>
                     <b-td variant="danger" class="text-right">
@@ -64,7 +64,7 @@
 
                 <!-- Base Value -->
                 <b-tr>
-                    <b-td colspan="3" class="text-center" variant="primary">
+                    <b-td :colspan="bottom_col_span" class="text-center" variant="primary">
                         <strong>Base Value for Tax and Duty Calculation</strong>
                     </b-td>
                     <b-td variant="primary" class="text-right">
@@ -90,6 +90,8 @@ export default {
 
     data () {
         return {
+            bottom_col_span: 4,
+
             fields: [
                 {
                     label: 'No.',
@@ -105,7 +107,7 @@ export default {
                 },
                 {
                     label: 'Quantity',
-                    key: 'jumlah_satuan'
+                    key: 'jumlah_kemasan'
                 },
                 {
                     label: 'Customs Value (CIF)',
@@ -129,6 +131,10 @@ export default {
                 {
                     label: 'HS Code and Tariffs',
                     key: 'hs_code_and_tariffs'
+                },
+                {
+                    label: 'Quantity',
+                    key: 'jumlah_kemasan'
                 },
                 {
                     label: 'Customs Value (CIF)',
@@ -159,6 +165,7 @@ export default {
             var description         = d.long_description
             var hs_code_and_tariffs = `${d.hs_code}\nBM: ${d.bm_tarif}%\nPPN: ${d.ppn_tarif}%\nPPh: ${d.pph_tarif}%`
             var jumlah_satuan       = `${d.jumlah_satuan} ${d.jenis_satuan}`
+            var jumlah_kemasan      = `${d.jumlah_kemasan} ${d.jenis_kemasan}`
             
             const nilai_cif_frm     = this.$options.filters.formatCurrency(d.cif)
             const nilai_pabean_frm  = this.$options.filters.displayRupiah(this.$options.filters.formatCurrency(d.nilai_pabean))
@@ -177,6 +184,7 @@ export default {
                 description:    description,
                 hs_code_and_tariffs: hs_code_and_tariffs,
                 jumlah_satuan: jumlah_satuan,
+                jumlah_kemasan: jumlah_kemasan,
                 nilai_cif_pabean: nilai_cif_pabean,
                 bm_pajak: bm_pajak
             }

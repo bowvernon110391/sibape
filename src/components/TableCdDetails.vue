@@ -94,6 +94,10 @@ export default {
         hideSatuan: {
             type: Boolean,
             default: false
+        },
+        hideNetto: {
+            type: Boolean,
+            default: false
         }
     },
     data () {

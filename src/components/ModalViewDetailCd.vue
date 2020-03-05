@@ -158,7 +158,7 @@
                 </b-col>
 
                 <!-- Neto -->
-                <b-col md="2">
+                <b-col md="2" v-if="!hideNetto">
                     <b-form-group
                         label="Netto (kg)">
                         <b-form-input v-model="tempData.netto" :disabled="!canEdit"></b-form-input>
@@ -248,7 +248,8 @@ export default {
         'editable', 
         'cdId', 
         'index',
-        'hideSatuan'
+        'hideSatuan',
+        'hideNetto'
         ],
     methods: {
         // when the modal is changing its visible state
