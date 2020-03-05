@@ -1,6 +1,6 @@
 <template>
     <div class="input-group date">
-        <input type="text" :disabled="disabled" :id="id" class="form-control" :class="{'is-valid': this.state===true, 'is-invalid': this.state===false}" ref="dp">
+        <input v-bind="$attrs" type="text" :disabled="disabled" :id="id" class="form-control" :class="{'is-valid': this.state===true, 'is-invalid': this.state===false}" ref="dp">
         <div class="input-group-append">
             <button type="button" class="btn btn-primary" :disabled="disabled"><font-awesome-icon icon="calendar-alt"></font-awesome-icon></button>
         </div>
@@ -10,6 +10,7 @@
 <script>
 
 export default {
+    inheritAttrs: false,
     props: ['value','state','id', 'disabled'],
     watch: {
         value: function(newVal, oldVal) {

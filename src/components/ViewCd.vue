@@ -113,7 +113,13 @@
                     <b-input-group>
                         <b-form-input class="rounded-left flex-grow-1" v-model="dataCd.nomor_lengkap" type="text" disabled></b-form-input>
                         <template v-slot:append>
-                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataCd.tgl_dok" :disabled="disableInput" style="max-width: 150px"></datepicker>
+                            <datepicker 
+                                class="rounded-right" 
+                                id="tgl_dok" 
+                                v-model="dataCd.tgl_dok" 
+                                :disabled="disableInput" 
+                                style="max-width: 150px"
+                                v-focus></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>

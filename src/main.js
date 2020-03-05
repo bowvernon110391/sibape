@@ -44,6 +44,9 @@ import './assets/style.css'
 // our custom filters
 import './filters'
 
+// our custom directives
+import './directives'
+
 // mixins?
 // import axiosErrorHandler from './mixins/axiosErrorHandler'
 
