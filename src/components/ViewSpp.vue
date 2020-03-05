@@ -141,7 +141,9 @@
             <hr>
             <view-cd-details 
                 :cd-id="dataSpp.cd.data.id"
-                :disabled="disableInput">
+                :disabled="disableInput"
+                hide-satuan
+                hide-netto>
             </view-cd-details>
         </template>
 
