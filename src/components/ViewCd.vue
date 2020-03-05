@@ -259,7 +259,8 @@
                         v-model="dataCd.pph_tarif"
                         taggable
                         push-tags
-                        :options="pphOptions">
+                        :options="pphOptions"
+                        :disabled="disableInput">
                     </v-select>
                 </b-form-group>
             </b-col>
