@@ -9,7 +9,7 @@
             type="application/pdf"
             :src="url">
 
-        Seems like your browser sucks, <a :href="urlWithFile" class="btn btn-primary">Download the pdf</a> here!
+        Browser was either not support embed viewing, or it was set not to. <a :href="urlWithFile" class="btn btn-primary">Download the pdf</a> here!
     </object>
 </template>
 
