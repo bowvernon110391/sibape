@@ -118,8 +118,7 @@
                                 id="tgl_dok" 
                                 v-model="dataCd.tgl_dok" 
                                 :disabled="disableInput" 
-                                style="max-width: 150px"
-                                v-focus></datepicker>
+                                style="max-width: 150px"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
