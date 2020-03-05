@@ -289,7 +289,7 @@
         <!-- paginated utk data detail -->
         <template v-if="!isNew">
             <hr>
-            <view-cd-details :cd-id="id" :disabled="disableInput"></view-cd-details>
+            <view-cd-details :cd-id="id" :disabled="disableInput" hide-satuan></view-cd-details>
 
             <!-- modal view utk perhitungan -->
             <template v-if="dataCd.id">

@@ -133,7 +133,8 @@
                 </b-col>
 
                 <!-- jml jenis satuan -->
-                <b-col md="4">
+                <b-col md="4" v-if="!hideSatuan">
+                    {{ hideSatuan }}
                     <b-form-group
                         label="Jumlah &amp; Jenis Satuan">
                         <div>
@@ -241,7 +242,14 @@ const cloneDeep = require('clone-deep')
 
 export default {
     inheritAttrs: false,
-    props: [ 'value', 'data', 'editable', 'cdId', 'index' ],
+    props: [ 
+        'value', 
+        'data', 
+        'editable', 
+        'cdId', 
+        'index',
+        'hideSatuan'
+        ],
     methods: {
         // when the modal is changing its visible state
         onChange (e) {

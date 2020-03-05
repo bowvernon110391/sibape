@@ -23,6 +23,7 @@
                     :items="data"
                     :pagination="pagination"
                     :disabled="disabled"
+                    :hideSatuan="hideSatuan"
                     @detailChange="detailChange"
                     @viewDetail="viewDetail"
                     @deleteDetail="deleteDetail"></table-cd-details>
@@ -40,6 +41,7 @@
             :index="index"
             :editable="!disabled"
             v-model="modalShown"
+            :hideSatuan="hideSatuan"
             @detailChange="$refs.detailBrowser.loadData()"
             @detailCreated="$refs.detailBrowser.moveToLastPage(1)">
         </modal-view-detail-cd>
@@ -70,6 +72,10 @@ export default {
             default: null
         },
         disabled: {
+            type: Boolean,
+            default: false
+        },
+        hideSatuan: {
             type: Boolean,
             default: false
         }

@@ -90,15 +90,35 @@ export default {
         disabled: {
             type: Boolean,
             default: false
+        },
+        hideSatuan: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
         return {
-            fields: [
+            /* fields: [
                 'seri',
                 'uraian',
                 'kemasan',
-                'satuan',
+                ...this.hideSatuan ? ['satuan'] : [],
+                'fob',
+                'brutto',
+                {
+                    label: '',
+                    key: 'showDetail'
+                }
+            ] */
+        }
+    },
+    computed: {
+        fields () {
+            return [
+                'seri',
+                'uraian',
+                'kemasan',
+                ...this.hideSatuan ? [] : ['satuan'],
                 'fob',
                 'brutto',
                 {
