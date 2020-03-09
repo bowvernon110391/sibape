@@ -7,12 +7,32 @@
         </div> -->
         <!-- di dalem div, ada paginated browser -->
         <paginated-browser
-            :data-callback="getSpp"
-            ref="browserSpp">
+            :data-callback="getSt"
+            ref="browserSt">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
-                <table-spp :items="data"
-                    @deleteHeader="deleteSpp"></table-spp>
+                <!-- <table-spp :items="data"
+                    @deleteHeader="deleteSpp"></table-spp> -->
+            </template>
+
+            <!-- jenis -->
+            <template #append-search-param>
+                <b-col sm="12" class="d-none d-sm-block">
+                <hr>
+                </b-col>
+                <b-col md="3" offset-md="9" class="mt-md-2">
+                    <b-form-group 
+                        label="Jenis ST"
+                        label-cols-md>
+                        <!-- <b-form-input type="text"/> -->
+                        <b-form-checkbox-group 
+                            v-model="jenis"
+                            stacked>
+                            <b-form-checkbox value="KANTOR">KANTOR</b-form-checkbox>
+                            <b-form-checkbox value="TERMINAL">TERMINAL</b-form-checkbox>
+                        </b-form-checkbox-group>
+                    </b-form-group>
+                </b-col>
             </template>
         </paginated-browser>
     </div>
@@ -38,11 +58,13 @@ export default {
         ...mapMutations(['setBusyState']),
 
         // ambil data cd
-        getSpp (q, spinner, vm) {
+        getSt (q, spinner, vm) {
+            console.log('jenis st', this.jenis)
             spinner(true)
             this.api.getSpp({
                 ...q,
-                include: 'cd.airline'
+                include: 'cd.airline',
+                jenis: this.jenis
             })
             .then(e => {
                 // console.log("Got cd data:")
@@ -58,20 +80,20 @@ export default {
         },
 
         // hapus data cd
-        deleteSpp (id) {
+        deleteSt (id) {
             // alert(`Delete Cd #${id}`)
             // loading screen
             this.setBusyState(true)
 
             // delet dis
-            this.api.deleteSpp(id)
+            this.api.deleteSt(id)
             .then(e => {
                 // stop loading
                 this.setBusyState(false)
                 // give warning
-                this.showToast(`Data deleted`, `SPP #${id} deleted successfully`, 'warning')
+                this.showToast(`Data deleted`, `ST #${id} deleted successfully`, 'warning')
                 // force reload current page?
-                this.$refs.browserSpp.stayAtCurrentPage(-1)
+                this.$refs.browserSt.stayAtCurrentPage(-1)
             })
             .catch(e => {
                 // stop loading
@@ -83,7 +105,9 @@ export default {
     },
     data () {
         return {
-            
+            jenis: [
+                'KANTOR', 'TERMINAL'
+            ]
         }
     }
 }

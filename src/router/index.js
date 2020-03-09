@@ -18,6 +18,9 @@ import ViewBpj from '@/components/ViewBpj'
 import BrowseSpp from '@/components/BrowseSpp'
 import ViewSpp from '@/components/ViewSpp'
 
+// ST
+import BrowseSt from '@/components/BrowseSt'
+
 import store from '../store'
 
 const axios = require('axios').default
@@ -151,6 +154,35 @@ const router = new Router({
                   component: BrowseSpp,
                   meta: {
                     title: 'Browse SPP'
+                  }
+                }
+              ]
+            },
+            /* st */
+            {
+              path: 'st',
+              meta: {
+                breadcrumb: '🔍Browse ST'
+              },
+              component: DummyView,
+              children: [
+                /* {
+                  path: ':id',
+                  name: 'ViewSpp',
+                  component: ViewSpp,
+                  props: true,
+                  meta: {
+                    title: 'Detail SPP',
+                    breadcrumb: '✋Lihat Detail SPP'
+                  }
+                }, */
+                // default (Browse SPP)
+                {
+                  path: '',
+                  name: 'BrowseSt',
+                  component: BrowseSt,
+                  meta: {
+                    title: 'Browse ST'
                   }
                 }
               ]

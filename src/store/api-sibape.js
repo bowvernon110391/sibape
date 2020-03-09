@@ -247,7 +247,7 @@ class ApiSibape {
         })
     }
 
-    // createSpp (data) : POST /spp
+    // createSpp (data) : POST /cd/{id}/spp
     createSpp (cdId, dataSpp) {
         return this.instance.post('/cd/' + cdId + '/spp', dataSpp)
     }
@@ -257,7 +257,7 @@ class ApiSibape {
         return this.instance.put('/cd/' + id, dataCd)
     } */
 
-    // deleteCd (id) : DELETE /spp/{id}
+    // deleteSpp (id) : DELETE /spp/{id}
     deleteSpp (id) {
         return this.instance.delete('/spp/' + id)
     }
@@ -265,6 +265,56 @@ class ApiSibape {
     // getMockupSpp (cdId) : GET /cd/{id}/spp_mockup
     getMockupSpp (cdId) {
        return this.instance.get('/cd/' + cdId + '/spp_mockup', {
+           params: {
+               include: 'cd'
+           }
+       }) 
+    }
+
+    //==================RESOURCE : ST===========================================================
+    // getSt () : GET /st
+    getSt (param) {
+        return this.instance.get('/st', {
+            params: param
+        })
+    }
+
+    // getStById (id) : GET /st/{id}
+    getStById (id) {
+        return this.instance.get('/st/' + id, {
+            params: {
+                include: 'cd'
+            }
+        })
+    }
+
+    // getStByCdId (id) : GET /st/{id}/spp
+    getStByCdId (id) {
+        return this.instance.get('/cd/' + id + '/st', {
+            params: {
+                include: 'cd'
+            }
+        })
+    }
+
+    // createSt (data) : POST /cd/{id}/st
+    createSt (cdId, dataSt) {
+        return this.instance.post('/cd/' + cdId + '/st', dataSt)
+    }
+
+    /* // updateCd (dataCd) : PUT /cd/{id}
+    updateCd (id, dataCd) {
+        return this.instance.put('/cd/' + id, dataCd)
+    } */
+
+    // deleteSt (id) : DELETE /st/{id}
+    deleteSt (id) {
+        return this.instance.delete('/st/' + id)
+    }
+
+    // getMockupSt (cdId) : GET /cd/{id}/st_mockup
+    getMockupSt (cdId) {
+       return this.instance.get('/cd/' + cdId + '/st_mockup', {
            params: {
                include: 'cd'
            }

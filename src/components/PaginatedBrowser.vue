@@ -27,6 +27,7 @@
                 <!-- search box -->
                 <!-- make it a slot too -->
                 <slot name="header-search-box">
+                    <slot name="prepend-search-param"></slot>
                     <b-col md="9" sm="12" >
                         <b-form inline class="float-md-right float-sm-none" @submit.prevent="loadData">
                             <!-- search date range -->
@@ -55,6 +56,7 @@
                             </template>
                         </b-form>
                     </b-col>
+                    <slot name="append-search-param"></slot>
                 </slot>
             </b-row>
         </slot>
