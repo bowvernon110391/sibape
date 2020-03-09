@@ -11,8 +11,8 @@
             ref="browserSt">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
-                <!-- <table-spp :items="data"
-                    @deleteHeader="deleteSpp"></table-spp> -->
+                <table-st :items="data"
+                    @deleteHeader="deleteSpp"></table-st>
             </template>
 
             <!-- jenis -->
@@ -42,13 +42,13 @@
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
-import TableSpp from '@/components/TableSpp'
+import TableSt from '@/components/TableSt'
 
 export default {
     mixins: [ axiosErrorHandler ],
     components: {
         PaginatedBrowser,
-        TableSpp
+        TableSt
     },
     computed: {
         ...mapGetters(['api']),
@@ -61,7 +61,7 @@ export default {
         getSt (q, spinner, vm) {
             console.log('jenis st', this.jenis)
             spinner(true)
-            this.api.getSpp({
+            this.api.getSt({
                 ...q,
                 include: 'cd.airline',
                 jenis: this.jenis

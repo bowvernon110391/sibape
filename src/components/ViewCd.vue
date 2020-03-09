@@ -24,7 +24,7 @@
                             </b-button>
 
                             <!-- titip (gk mampu/mau bayar) -->
-                            <b-button variant="dark" :disabled="cdHasLink('st') || disableInput">
+                            <b-button variant="dark" :disabled="cdHasLink('st') || disableInput" @click="showPenitipan">
                                 <font-awesome-icon icon="lock"></font-awesome-icon>
                                 Titipkan
                             </b-button>
@@ -318,6 +318,13 @@
                     :simulate="!cdHasLink('spp')"
                     v-model="viewSpp">
                 </modal-view-spp>
+
+                <!-- Tampilkan dialog ST -->
+                <modal-view-st
+                    :cd-id="dataCd.id"
+                    size="xl"
+                    :simulate="!cdHasLink('st')"
+                    v-model="viewSt"></modal-view-st>
             </template>
 
             <!-- utk nampilin respon sspcp -->
@@ -364,6 +371,9 @@ import ModalViewPdf from '@/components/ModalViewPdf'
 // untuk menampilkan spp
 import ModalViewSpp from '@/components/ModalViewSpp'
 
+// untuk menampilkan st
+import ModalViewSt from '@/components/ModalViewSt'
+
 // the default cd header
 import defaultCd from './defaultCd.json'
 
@@ -384,7 +394,8 @@ export default {
         ModalViewPerhitungan,
         SelectKurs,
         ModalViewPdf,
-        ModalViewSpp
+        ModalViewSpp,
+        ModalViewSt
     },
     data() {
         return {
@@ -417,7 +428,10 @@ export default {
             altFilename: 'SSPCP',
 
             // SPP
-            viewSpp: false
+            viewSpp: false,
+
+            // ST
+            viewSt: false,
         }
     },
     computed: {
@@ -642,6 +656,11 @@ export default {
         // show penundaan
         showPenundaan () {
             this.viewSpp = true
+        },
+
+        // show st
+        showPenitipan () {
+            this.viewSt = true
         },
 
         // print sspcp

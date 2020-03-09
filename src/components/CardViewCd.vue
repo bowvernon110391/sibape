@@ -37,6 +37,13 @@
                 <strong>Nama:</strong>
             </b-col>
             <b-col md="4">
+                <b-button
+                    v-b-popover.hover="popoverPenumpang"
+                    variant="success">
+                    {{ dataPenumpang.nama }}
+                </b-button>
+            </b-col>
+            <!-- <b-col md="4">
                 {{ data.penumpang.data.nama }}
             </b-col>
             <b-col md="2">
@@ -52,7 +59,7 @@
             </b-col>
             <b-col md="4">
                 {{ data.penumpang.data.pekerjaan }}
-            </b-col>
+            </b-col> -->
         </b-row>
         <hr>
         <h5>Lain-lain</h5>
@@ -106,7 +113,12 @@
 <script>
 import TableStatus from '@/components/TableStatus'
 
+import userPopup from '../mixins/userPopup'
+
 export default {
+    mixins: [
+        userPopup
+    ],
     components: {
         TableStatus
     },
@@ -120,6 +132,9 @@ export default {
         }
     },
     computed: {
+        dataPenumpang () {
+            return this.data.penumpang.data
+        },
         pillVariant () {
             const mapping = {
                 KARANTINA: 'warning',

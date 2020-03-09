@@ -79,7 +79,12 @@
 <script>
 import TableStatus from '@/components/TableStatus'
 
+import userPopup from '../mixins/userPopup'
+
 export default {
+    mixins: [
+        userPopup
+    ],
     components: {
         TableStatus
     },
@@ -91,22 +96,7 @@ export default {
     },
 
     computed: {
-        popoverPenumpang () {
-            return {
-                title: `#${this.data.cd.data.penumpang.data.id} <strong>${this.data.cd.data.penumpang.data.nama}</strong>`,
-                content: `
-                <strong>Kewarganegaraan:</strong>&nbsp;${this.data.cd.data.penumpang.data.negara.data.uraian} (${this.data.cd.data.penumpang.data.negara.data.kode})
-                <br>
-                <strong>No Paspor:</strong>&nbsp;${this.data.cd.data.penumpang.data.no_paspor}
-                <br>
-                <strong>Pekerjaan:</strong>&nbsp;${this.data.cd.data.penumpang.data.pekerjaan}
-                <br>
-                <strong>Tgl Lahir:</strong>&nbsp;${this.data.cd.data.penumpang.data.tgl_lahir}
-                `,
-                html: true,
-                variant: 'info'
-            }
-        },
+        
 
         uraianSummary () {
             var no = 1
