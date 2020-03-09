@@ -106,7 +106,7 @@
                         <template v-slot:append>
                             <select-airline 
                                 :tabindex="9999"
-                                style="min-width: 350px; margin: 0 2px;"
+                                style="margin: 0 2px; width: 100%"
                                 :disabled="disableInput"
                                 v-model="dataSpp.cd.data.kd_airline"/>
                         </template>
