@@ -20,6 +20,7 @@ import ViewSpp from '@/components/ViewSpp'
 
 // ST
 import BrowseSt from '@/components/BrowseSt'
+import ViewSt from '@/components/ViewSt'
 
 import store from '../store'
 
@@ -166,16 +167,16 @@ const router = new Router({
               },
               component: DummyView,
               children: [
-                /* {
+                {
                   path: ':id',
-                  name: 'ViewSpp',
-                  component: ViewSpp,
+                  name: 'ViewSt',
+                  component: ViewSt,
                   props: true,
                   meta: {
-                    title: 'Detail SPP',
-                    breadcrumb: '✋Lihat Detail SPP'
+                    title: 'Detail ST',
+                    breadcrumb: '🛅Lihat Detail ST'
                   }
-                }, */
+                },
                 // default (Browse SPP)
                 {
                   path: '',

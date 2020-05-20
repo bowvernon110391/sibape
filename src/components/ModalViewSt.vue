@@ -32,8 +32,8 @@
                                 Jenis ST/<em>Type of detention</em>
                             </template>
                             <b-form-radio-group v-model="dataSt.jenis">
-                                <b-form-radio value="KANTOR">Kantor/<em>Office</em></b-form-radio>
-                                <b-form-radio value="TERMINAL">Terminal</b-form-radio>
+                                <b-form-radio value="KANTOR">🏢Kantor/<em>Office</em></b-form-radio>
+                                <b-form-radio value="TERMINAL">✈️Terminal</b-form-radio>
                             </b-form-radio-group>
                         </b-form-group>
                     </b-col>
