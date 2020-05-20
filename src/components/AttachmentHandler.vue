@@ -22,6 +22,7 @@
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters } from 'vuex'
 
+const cloneDeep = require('clone-deep')
 
 export default {
     mixins: [
@@ -52,14 +53,19 @@ export default {
 
         value: {
             type: Object
+        },
+
+        initialData: {
+            type: Object,
+            default: null
         }
     },
 
     data () {
         return {
-            isUploading: false,
-            progress: 0,
-            internalData: null
+            isUploading: false,     // flag for when we're uploading
+            progress: 0,            // progress bar value
+            internalData: this.initialData ? cloneDeep(this.initialData) : null // if we were given initial data, use it
         }
     },
 
