@@ -22,6 +22,12 @@
         <h5>Attachments</h5>
         
         <div class="mt-3">
+            <attachment-handler
+                :initial-data="testData.data"
+            />
+
+            <pre>{{ testData.data }}</pre>
+
             <template v-for="(a, id) in attachments">
 
                 <attachment-handler 
@@ -123,7 +129,7 @@ export default {
 
     data () {
         return {
-            testingMode: false,
+            testingMode: true,
             bpjId: null,
             dataString: 'http://apishinta.test/pdf?doc=sspcp&id=2',
             file: null,
@@ -137,7 +143,9 @@ export default {
             camId: null,
             camera: null,
             devices: [],
-            img: null
+            img: null,
+
+            testData: {"data":{"id":5,"jenis":"GAMBAR","mime_type":"image\/jpeg","diskfilename":"5ec49a7b0aea3LorgB7TpgzMCQMyiyi0HQUuuZJSpNtSM.jpg","filename":"yi0HQUuuZJSpNtSM.jpg","filesize":"95423","url":"http:\/\/apishinta.test\/storage\/5ec49a7b0aea3LorgB7TpgzMCQMyiyi0HQUuuZJSpNtSM.jpg","owner_type":"cd","created_at":"2020-05-20 09:48:27","updated_at":"2020-05-20 09:48:27"}}
         }
     },
 
