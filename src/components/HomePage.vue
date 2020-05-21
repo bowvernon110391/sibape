@@ -22,11 +22,15 @@
         <h5>Attachments</h5>
         
         <div class="mt-3">
-            <attachment-handler
-                :initial-data="testData.data"
-            />
+            <template v-if="testData">
+                <attachment-handler
+                    v-for="(data) in testData.data"
+                    :key="data.id"
+                    :initial-data="data"
+                />
+            </template>
 
-            <pre>{{ testData.data }}</pre>
+            <pre>{{ testData }}</pre>
 
             <template v-for="(a, id) in attachments">
 
@@ -145,7 +149,7 @@ export default {
             devices: [],
             img: null,
 
-            testData: {"data":{"id":5,"jenis":"GAMBAR","mime_type":"image\/jpeg","diskfilename":"5ec49a7b0aea3LorgB7TpgzMCQMyiyi0HQUuuZJSpNtSM.jpg","filename":"yi0HQUuuZJSpNtSM.jpg","filesize":"95423","url":"http:\/\/apishinta.test\/storage\/5ec49a7b0aea3LorgB7TpgzMCQMyiyi0HQUuuZJSpNtSM.jpg","owner_type":"cd","created_at":"2020-05-20 09:48:27","updated_at":"2020-05-20 09:48:27"}}
+            testData: null
         }
     },
 
@@ -228,6 +232,19 @@ export default {
             this.camera = deviceId
             console.log("Camera changed!", deviceId)
         }
+    },
+
+    created () {
+        // grab some attachment data
+        const vm = this
+
+        this.api.getCdById(2)
+        .then(e => {
+            vm.testData = e.data.data.lampiran
+        })
+        .catch(e => {
+            vm.handleError(e)
+        })
     },
 
     mounted () {
