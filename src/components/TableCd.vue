@@ -40,7 +40,8 @@
             </b-button>
             <!-- Delete Cd -->
             <!-- show bomb button if document is locked already, no matter who we are -->
-            <b-button v-if="data.item.is_locked && canDelete(data.item.is_locked)" variant="warning" size="sm">
+            <b-button v-if="data.item.is_locked && canDelete(data.item.is_locked)" variant="warning" size="sm"
+                @click="onNuke(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="radiation"></font-awesome-icon>
             </b-button>
             <b-button v-else variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
@@ -82,6 +83,10 @@ export default {
                 // emit delete event
                 this.$emit('deleteHeader', id)
             }
+        },
+
+        onNuke (id, nomor) {
+            this.$emit('cancel', 'cd', id)
         }
     },
     data () {

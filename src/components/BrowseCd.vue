@@ -12,9 +12,16 @@
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
                 <table-cd :items="data"
-                    @deleteHeader="deleteCd"></table-cd>
+                    @deleteHeader="deleteCd"
+                    @cancel="cancelCd"></table-cd>
             </template>
         </paginated-browser>
+
+        <modal-view-pembatalan
+            doctype="cd"
+            :docid="cancelTargetId"
+            v-model="showCancelDlg">
+        </modal-view-pembatalan>
     </div>
 </template>
 
@@ -23,12 +30,14 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 import TableCd from '@/components/TableCd'
+import ModalViewPembatalan from '@/components/ModalViewPembatalan'
 
 export default {
     mixins: [ axiosErrorHandler ],
     components: {
         PaginatedBrowser,
-        TableCd
+        TableCd,
+        ModalViewPembatalan
     },
     computed: {
         ...mapGetters(['api']),
@@ -79,11 +88,19 @@ export default {
                 // handle error
                 this.handleError(e)
             })
+        },
+
+        // batalkan data cd
+        cancelCd (doctype, docid) {
+            // alert(`cancelling ${doctype} #${docid}`)
+            this.cancelTargetId = docid
+            this.showCancelDlg = true
         }
     },
     data () {
         return {
-            
+            showCancelDlg: false,
+            cancelTargetId: null
         }
     }
 }
