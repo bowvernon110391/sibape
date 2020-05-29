@@ -21,7 +21,9 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
-            <card-view-pembatalan :data="row.item"></card-view-pembatalan>
+            <card-view-pembatalan 
+                :data="row.item"
+                :disabled="row.item.is_locked"></card-view-pembatalan>
             <b-card>
                 <pre>{{ JSON.stringify(row.item, null, 4) }}</pre>
             </b-card>
@@ -36,16 +38,23 @@
         </template>
 
         <template v-slot:cell(action)="data">
-            <!-- Edit Cd -->
-            <b-button variant="primary" size="sm" @click="handleClick(data.item.id)">
+            <!-- Edit Pembatalan -->
+            <b-button variant="primary" size="sm" 
+                @click="onEdit(data.item.id)">
                 <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
-            <!-- Delete Cd -->
-            <b-button variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
+            <!-- Delete Pembatalan -->
+            <b-button variant="danger" size="sm" :disabled="data.item.is_locked"
                 @click="onDelete(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
+            </b-button>
+
+            <!-- Lock button when the document is unlocked -->
+            <b-button variant="warning" size="sm" v-if="!data.item.is_locked"
+                @click="onLock(data.item.id, data.item.nomor_lengkap)">
+                <font-awesome-icon icon="lock"></font-awesome-icon>
             </b-button>
         </template>
     </b-table>
@@ -85,8 +94,27 @@ export default {
             }
         },
 
-        handleClick (id) {
-            this.$emit('editPembatalan', id);
+        onEdit (id) {
+            this.$emit('editHeader', id)
+        },
+
+        async onLock (id, nomor) {
+            var msg = nomor ? nomor : 'Tanpa nomor'
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau mengunci data Pembatalan ini? (${msg})`, {
+                title: `Kunci Surat Pembatalan #${id}`,
+                size: 'md',
+                buttonSize: 'md',
+                okVariant: 'danger',
+                okTitle: 'YES',
+                cancelTitle: 'NO',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                centered: true
+            })
+
+            if (result) {
+                this.$emit('lockHeader', id)
+            }
         }
     },
     data () {

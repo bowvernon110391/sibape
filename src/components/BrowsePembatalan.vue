@@ -18,7 +18,8 @@
                 <table-pembatalan 
                     :items="data"
                     @deleteHeader="deletePembatalan"
-                    @editPembatalan="editPembatalan"></table-pembatalan>
+                    @editHeader="editPembatalan"
+                    @lockHeader="lockPembatalan"></table-pembatalan>
                     
             </template>
         </paginated-browser>
@@ -93,6 +94,24 @@ export default {
         // edit pembatalan
         editPembatalan (id) {
             alert(`Editing Pembatalan #${id}`)
+        },
+
+        // kunci pembatalan
+        lockPembatalan (id) {
+            // set spinner
+            this.setBusyState(true)
+            // call api
+            this.api.lockPembatalan(id)
+            .then(e => {
+                // if success, stop spinner
+                this.setBusyState(false)
+                // - also refresh
+                this.$refs.browserPembatalan.stayAtCurrentPage(-1)
+            })
+            .catch(e => {
+                // else also stop spinner
+                this.setBusyState(false)
+            })
         }
     },
     data () {

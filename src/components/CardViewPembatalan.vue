@@ -33,6 +33,15 @@
                 <template v-slot:cell(nomor)="row">
                     {{ (row.index+1) }}.
                 </template>
+
+                <!-- custom action slot -->
+                <template v-slot:cell(action)="row">
+                    <div class="text-center">
+                        <b-button size="sm" variant="danger" :disabled="disabled">
+                            <font-awesome-icon icon="trash-alt"></font-awesome-icon>
+                        </b-button>
+                    </div>
+                </template>
             </b-table>
         <hr>
         <h5>Status</h5>
@@ -55,6 +64,11 @@ export default {
         data: {
             type: Object,
             default: null
+        },
+
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -72,7 +86,8 @@ export default {
                 { label: 'Jenis Dok', key: 'cancellable_type' },
                 { label: 'Nomor Dok', key: 'detail.nomor_lengkap'},
                 { label: 'Tanggal', key: 'detail.tgl_dok'},
-                { label: 'Waktu Pembatalan', key: 'updated_at' }
+                { label: 'Waktu Pembatalan', key: 'updated_at' },
+                { label: 'Action', key: 'action'}
             ]
         }
     }
