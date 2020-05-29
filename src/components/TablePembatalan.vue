@@ -21,7 +21,7 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
-            <!-- <card-view-cd :data="row.item"></card-view-cd> -->
+            <card-view-pembatalan :data="row.item"></card-view-pembatalan>
             <b-card>
                 <pre>{{ JSON.stringify(row.item, null, 4) }}</pre>
             </b-card>
@@ -54,12 +54,14 @@
 <script>
 import userChecker from '../mixins/userChecker'
 // import CardViewCd from '@/components/CardViewCd'
+import CardViewPembatalan from '@/components/CardViewPembatalan'
 
 export default {
     inheritAttrs: false,
     mixins: [ userChecker ],
     components: {
         // CardViewCd
+        CardViewPembatalan
     },
     methods: {
         async onDelete (id, nomor) {
