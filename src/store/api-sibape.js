@@ -426,7 +426,7 @@ class ApiSibape {
 
     // deletePembatalan (id) : DELETE /pembatalan/{id}
     deletePembatalan (id) {
-        return this.instance.delete(id)
+        return this.instance.delete(`/pembatalan/${id}`)
     }
 
     // lockPembatalan (id) : PUT /pembatalan/{id}/lock

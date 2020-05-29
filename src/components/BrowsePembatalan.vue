@@ -14,7 +14,12 @@
             <template v-slot:default="{ data, pagination }">
                 <!-- <table-cd :items="data"
                     @deleteHeader="deletePembatalan"></table-cd> -->
-                <pre>{{ JSON.stringify(data, null, 4) }}</pre>
+                <!-- <pre>{{ JSON.stringify(data, null, 4) }}</pre> -->
+                <table-pembatalan 
+                    :items="data"
+                    @deleteHeader="deletePembatalan"
+                    @editPembatalan="editPembatalan"></table-pembatalan>
+                    
             </template>
         </paginated-browser>
     </div>
@@ -25,12 +30,14 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import TableCd from '@/components/TableCd'
+import TablePembatalan from '@/components/TablePembatalan'
 
 export default {
     mixins: [ axiosErrorHandler ],
     components: {
         PaginatedBrowser,
         // TableCd
+        TablePembatalan
     },
     computed: {
         ...mapGetters(['api']),
@@ -66,7 +73,7 @@ export default {
             this.setBusyState(true)
 
             // delet dis
-            this.api.deleteCd(id)
+            this.api.deletePembatalan(id)
             .then(e => {
                 // stop loading
                 this.setBusyState(false)
@@ -81,6 +88,11 @@ export default {
                 // handle error
                 this.handleError(e)
             })
+        },
+
+        // edit pembatalan
+        editPembatalan (id) {
+            alert(`Editing Pembatalan #${id}`)
         }
     },
     data () {
