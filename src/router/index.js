@@ -22,6 +22,9 @@ import ViewSpp from '@/components/ViewSpp'
 import BrowseSt from '@/components/BrowseSt'
 import ViewSt from '@/components/ViewSt'
 
+// Pembatalan
+import BrowsePembatalan from '@/components/BrowsePembatalan'
+
 import store from '../store'
 
 const axios = require('axios').default
@@ -129,6 +132,15 @@ const router = new Router({
                   }
                 }
               ]              
+            },
+            /* pembatalan */{
+              path: 'pembatalan',
+              name: 'BrowsePembatalan',
+              meta: {
+                breadcrumb: '🔍Browse Pembatalan',
+                title: 'Browse Surat Pembatalan'
+              },
+              component: BrowsePembatalan
             },
             /* spp */
             {
