@@ -37,7 +37,8 @@
                 <!-- custom action slot -->
                 <template v-slot:cell(action)="row">
                     <div class="text-center">
-                        <b-button size="sm" variant="danger" :disabled="disabled">
+                        <b-button size="sm" variant="danger" :disabled="disabled"
+                            @click="onDelete(row.item.id)">
                             <font-awesome-icon icon="trash-alt"></font-awesome-icon>
                         </b-button>
                     </div>
@@ -89,6 +90,11 @@ export default {
                 { label: 'Waktu Pembatalan', key: 'updated_at' },
                 { label: 'Action', key: 'action'}
             ]
+        }
+    },
+    methods: {
+        onDelete (id) {
+            alert(`Delete pembatalan/detail/${id}`)
         }
     }
 }
