@@ -20,7 +20,8 @@
         <modal-view-pembatalan
             doctype="cd"
             :docid="cancelTargetId"
-            v-model="showCancelDlg">
+            v-model="showCancelDlg"
+            @refresh="refreshTable">
         </modal-view-pembatalan>
     </div>
 </template>
@@ -95,6 +96,11 @@ export default {
             // alert(`cancelling ${doctype} #${docid}`)
             this.cancelTargetId = docid
             this.showCancelDlg = true
+        },
+
+        // refresh table
+        refreshTable () {
+            this.$refs.browserCd.stayAtCurrentPage(-1)
         }
     },
     data () {

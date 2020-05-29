@@ -16,7 +16,8 @@
             :reduce="e => e.id"
             :search-callback="searchPembatalan"
             :sync-callback="searchPembatalan"
-            search-on-empty>
+            search-on-empty
+            v-model="pembatalanId">
             <!-- normal options on the list -->
             <template v-slot:option="opt">
                 <div>
@@ -57,7 +58,7 @@
 <script>
 
 import ApiSelect from '@/components/ApiSelect'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 export default {
@@ -102,6 +103,8 @@ export default {
     },
 
     methods: {
+        ...mapMutations(['setBusyState']),
+
         searchPembatalan (q, spinner, vm) {
             spinner(true)
             this.api.getPembatalan({
@@ -121,9 +124,33 @@ export default {
 
         handlePembatalan () {
             // first, close it?
-            alert(`cancelling ${this.doctype} of ${this.docid}`)
-            // for now, just alert it
-            this.$emit('input', false)
+            // first, check if id is not null
+            if (!this.pembatalanId) {
+                // error, and dont close
+                this.showToast(`Error`, 'Tolong pilih surat pembatalan yang akan digunakan!', 'danger')
+            } else {
+                
+                // set busy first
+                this.setBusyState(true)
+
+                // now we call the api
+                this.api.addPembatalanDetail(this.pembatalanId, this.doctype, this.docid)
+                .then(e => {
+                    // stop loading screen
+                    this.setBusyState(false)
+                    // show message
+                    this.showToast('Dokumen berhasil dibatalkan',
+                        `${this.doctype} #${this.docid} berhasil dibatalkan dengan Pembatalan #${this.pembatalanId}`, 'success')
+                    // for now, just alert it
+                    this.$emit('input', false)
+
+                    // tell parent to refresh
+                    this.$emit('refresh')
+                })
+                .catch(e => {
+                    this.setBusyState(false)
+                })
+            }
         }
     }
 }
