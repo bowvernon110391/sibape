@@ -39,7 +39,11 @@
                 </font-awesome-icon>
             </b-button>
             <!-- Delete Cd -->
-            <b-button variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
+            <!-- show bomb button if document is locked already, no matter who we are -->
+            <b-button v-if="data.item.is_locked && canDelete(data.item.is_locked)" variant="warning" size="sm">
+                <font-awesome-icon icon="radiation"></font-awesome-icon>
+            </b-button>
+            <b-button v-else variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
                 @click="onDelete(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
