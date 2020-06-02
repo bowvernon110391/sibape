@@ -1,8 +1,11 @@
 <template>
     <b-card>
         <h5>Keterangan</h5>
+        
         <b-form-textarea 
             disabled
+            rows="3"
+            max-rows="9"
             :value="data.keterangan">
         </b-form-textarea>
 
@@ -18,6 +21,7 @@
             </b-alert>
             <!-- otherwise, show b-table -->
             <b-table
+                v-else
                 responsive="sm"
                 table-class="shadow"
                 head-variant="dark"

@@ -24,9 +24,9 @@
             <card-view-pembatalan 
                 :data="row.item"
                 :disabled="row.item.is_locked"></card-view-pembatalan>
-            <b-card>
+            <!-- <b-card>
                 <pre>{{ JSON.stringify(row.item, null, 4) }}</pre>
-            </b-card>
+            </b-card> -->
         </template>
 
         <template v-slot:cell(is_locked)="data">

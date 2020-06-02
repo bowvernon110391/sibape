@@ -2,7 +2,7 @@
     <div>
         <div class="mb-2">
             <!-- must show new pembatalan modal input here -->
-            <b-button variant="primary" class="shadow">
+            <b-button variant="primary" class="shadow" @click="createNewPembatalan">
                 <font-awesome-icon icon="plus-square"></font-awesome-icon> Input Surat Pembatalan
             </b-button>
         </div>
@@ -23,6 +23,33 @@
                     
             </template>
         </paginated-browser>
+
+        <!-- the modal view of pembatalan goes here -->
+        <b-modal
+            size="lg"
+            v-model="viewPembatalan.show">
+            <template #modal-title>
+                {{ viewPembatalan.disabled ? 'View' : 'Edit' }} Pembatalan
+            </template>
+
+            <template #modal-footer>
+                <b-button
+                    @click="handleSave"
+                    variant="primary"
+                    :disabled="viewPembatalan.disabled">
+                    <font-awesome-icon icon="save">
+                    </font-awesome-icon>
+                    Simpan
+                </b-button>
+            </template>
+
+            <view-pembatalan
+                :id="viewPembatalan.id"
+                ref="viewPembatalan"
+                @disableEdit="e => { viewPembatalan.disabled = e }"
+                @dataSave="onDataSave"
+                />
+        </b-modal>
     </div>
 </template>
 
@@ -32,13 +59,15 @@ import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import TableCd from '@/components/TableCd'
 import TablePembatalan from '@/components/TablePembatalan'
+import ViewPembatalan from '@/components/ViewPembatalan'
 
 export default {
     mixins: [ axiosErrorHandler ],
     components: {
         PaginatedBrowser,
         // TableCd
-        TablePembatalan
+        TablePembatalan,
+        ViewPembatalan
     },
     computed: {
         ...mapGetters(['api']),
@@ -46,6 +75,10 @@ export default {
     methods: {
         // grab some from store
         ...mapMutations(['setBusyState']),
+
+        debug(e) {
+            console.log(e)
+        },
 
         // ambil data cd
         getPembatalan (q, spinner, vm) {
@@ -93,7 +126,10 @@ export default {
 
         // edit pembatalan
         editPembatalan (id) {
-            alert(`Editing Pembatalan #${id}`)
+            // alert(`Editing Pembatalan #${id}`)
+
+            this.viewPembatalan.id = id
+            this.viewPembatalan.show = true
         },
 
         // kunci pembatalan
@@ -112,11 +148,47 @@ export default {
                 // else also stop spinner
                 this.setBusyState(false)
             })
+        },
+
+        // save pembatalan
+        handleSave () {
+            this.$refs.viewPembatalan.onSave()
+        },
+
+        createNewPembatalan () {
+            this.viewPembatalan.id = null
+            this.viewPembatalan.disabled = false
+            this.viewPembatalan.show = true
+        },
+
+        onDataSave(e) {
+            // close modal, and refresh
+            this.viewPembatalan.show = false
+            if (e.new) {
+                this.showToast(`Pembatalan created`, `Created Pembatalan #${e.id}`, 'success')
+            } else {
+                this.showToast(`Pembatalan saved`, `Saved Pembatalan #${e.id}`, 'success')
+            }
+
+            // reload
+            this.$refs.browserPembatalan.stayAtCurrentPage(0)
         }
     },
     data () {
         return {
-            
+            viewPembatalan: {
+                id: null,
+                show: false,
+                disabled: false
+            }
+        }
+    },
+    watch: {
+        'viewPembatalan.disabled': {
+            immediate: true,
+            handler (e) {
+                console.log('Disabled changed to ->', e)
+            }
         }
     }
 }
