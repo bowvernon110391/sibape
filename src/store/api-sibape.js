@@ -366,7 +366,7 @@ class ApiSibape {
             }
         })
     }
-
+    
     // this one generate accessible url (supposedly) to download pdf
     generatePdfUrl (doctype, id, param) {
         var url = this.instance.defaults.baseURL + 'pdf' + `?doc=${doctype}&id=${id}`
@@ -376,25 +376,72 @@ class ApiSibape {
                 url += `&${k}=${param[k]}`
             }
         }
-
+        
         return url
     }
-
+    
     // this one attach resource to a specific endpoints
     attachFile (doctype, id, data, progressFn) {
         var url = `/${doctype}/${id}/lampiran`
-
+        
         return this.instance.post(url, data.blob, {
             onUploadProgress: progressFn,
             headers: {
                 ...this.instance.defaults.headers,
-
+                
                 'Content-Type'      : data.type,
                 // 'Content-Length'    : data.blobsize,
                 'X-Content-Filesize': data.filesize,
                 'X-Content-Filename': data.filename
             }
         })
+    }
+    
+    //===================RESOURCE : PEMBATALAN======================================================
+    // getPembatalan () : GET /pembatalan
+    getPembatalan (param) {
+        return this.instance.get('/pembatalan', {
+            params: param
+        })
+    }
+
+    // getPembatalanById (id) : GET /pembatalan/{id}
+    getPembatalanById (id) {
+        return this.instance.get('/pembatalan/' + id, {
+            params: {
+                include: 'status,lampiran'
+            }
+        })
+    }
+
+    // createPembatalan (data) : POST /pembatalan
+    createPembatalan (data) {
+        return this.instance.post('/pembatalan', data)
+    }
+
+    // updatePembatalan (id, data) : PUT /pembatalan/{id}
+    updatePembatalan (id, data) {
+        return this.instance.put('/pembatalan/' + id, data)
+    }
+
+    // deletePembatalan (id) : DELETE /pembatalan/{id}
+    deletePembatalan (id) {
+        return this.instance.delete(`/pembatalan/${id}`)
+    }
+
+    // lockPembatalan (id) : PUT /pembatalan/{id}/lock
+    lockPembatalan (id, data) {
+        return this.instance.put(`/pembatalan/${id}/lock`, data)
+    }
+
+    // addPembatalanDetail (id, doctype, docid) : PUT /pembatalan/{id}/{doctype}/{docid}
+    addPembatalanDetail (id, doctype, docid, data) {
+        return this.instance.put(`/pembatalan/${id}/${doctype}/${docid}`, data)
+    }
+
+    // deletePembatalanDetail (detailId) : DELETE /pembatalan/detail/{detailId}
+    deletePembatalanDetail (detailId) {
+        return this.instance.delete(`/pembatalan/detail/${detailId}`)
     }
 }
 

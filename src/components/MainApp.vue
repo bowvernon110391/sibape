@@ -39,6 +39,13 @@
                     </b-navbar-nav>
 
                     <b-navbar-nav>
+                        <b-nav-item-dropdown text="Lain-lain">
+                            <b-dropdown-item to="/pembatalan">❌Rekam Pembatalan</b-dropdown-item>
+                            <b-dropdown-item to="/perbaikan">🚧Perbaikan Data</b-dropdown-item>
+                        </b-nav-item-dropdown>
+                    </b-navbar-nav>
+
+                    <b-navbar-nav>
                         <!-- <b-nav-item href="#">Lost & Found</b-nav-item> -->
                         <b-nav-item href="#">Laporan</b-nav-item>
                     </b-navbar-nav>

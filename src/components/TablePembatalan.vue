@@ -21,7 +21,12 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
-            <card-view-cd :data="row.item"></card-view-cd>
+            <card-view-pembatalan 
+                :data="row.item"
+                :disabled="row.item.is_locked"></card-view-pembatalan>
+            <!-- <b-card>
+                <pre>{{ JSON.stringify(row.item, null, 4) }}</pre>
+            </b-card> -->
         </template>
 
         <template v-slot:cell(is_locked)="data">
@@ -33,21 +38,23 @@
         </template>
 
         <template v-slot:cell(action)="data">
-            <!-- Edit Cd -->
-            <b-button variant="primary" size="sm" :to="`/cd/${data.item.id}`">
+            <!-- Edit Pembatalan -->
+            <b-button variant="primary" size="sm" 
+                @click="onEdit(data.item.id)">
                 <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
-            <!-- Delete Cd -->
-            <!-- show bomb button if document is locked already, no matter who we are -->
-            <b-button v-if="data.item.is_locked && canDelete(data.item.is_locked)" variant="warning" size="sm"
-                @click="onNuke(data.item.id, data.item.nomor_lengkap)">
-                <font-awesome-icon icon="radiation"></font-awesome-icon>
-            </b-button>
-            <b-button v-else variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
+            <!-- Delete Pembatalan -->
+            <b-button variant="danger" size="sm" :disabled="data.item.is_locked"
                 @click="onDelete(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
+            </b-button>
+
+            <!-- Lock button when the document is unlocked -->
+            <b-button variant="warning" size="sm" v-if="!data.item.is_locked"
+                @click="onLock(data.item.id, data.item.nomor_lengkap)">
+                <font-awesome-icon icon="lock"></font-awesome-icon>
             </b-button>
         </template>
     </b-table>
@@ -55,19 +62,21 @@
 
 <script>
 import userChecker from '../mixins/userChecker'
-import CardViewCd from '@/components/CardViewCd'
+// import CardViewCd from '@/components/CardViewCd'
+import CardViewPembatalan from '@/components/CardViewPembatalan'
 
 export default {
     inheritAttrs: false,
     mixins: [ userChecker ],
     components: {
-        CardViewCd
+        // CardViewCd
+        CardViewPembatalan
     },
     methods: {
         async onDelete (id, nomor) {
             var msg = nomor ? nomor : 'Tanpa Nomor'
-            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data CD ini? (${msg})`, {
-                title: `Menghapus CD #${id}`,
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data Pembatalan ini? (${msg})`, {
+                title: `Menghapus Pembatalan #${id}`,
                 size: 'md',
                 buttonSize: 'md',
                 okVariant: 'danger',
@@ -85,15 +94,34 @@ export default {
             }
         },
 
-        onNuke (id, nomor) {
-            this.$emit('cancel', 'cd', id)
+        onEdit (id) {
+            this.$emit('editHeader', id)
+        },
+
+        async onLock (id, nomor) {
+            var msg = nomor ? nomor : 'Tanpa nomor'
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau mengunci data Pembatalan ini? (${msg})`, {
+                title: `Kunci Surat Pembatalan #${id}`,
+                size: 'md',
+                buttonSize: 'md',
+                okVariant: 'danger',
+                okTitle: 'YES',
+                cancelTitle: 'NO',
+                footerClass: 'p-2',
+                hideHeaderClose: false,
+                centered: true
+            })
+
+            if (result) {
+                this.$emit('lockHeader', id)
+            }
         }
     },
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 'lokasi', 
-                { label: 'Penumpang', key: 'penumpang.data.nama' }, 'npwp_nib', 'no_flight',
+                { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 'nama_pejabat', 
+                'nip_pejabat',
                 { label: 'Terkunci', key: 'is_locked' },
                 'action'
             ]

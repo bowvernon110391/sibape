@@ -18,7 +18,7 @@ import {
    faSave, faSearch, faPencilAlt, faPlusSquare, faMinusSquare,
    faTrashAlt, faPlaneDeparture, faMoneyCheckAlt, faWrench, faTimes,
    faStamp, faCashRegister, faPrint, faCloudDownloadAlt, faHandPaper,
-   faMapMarkerAlt
+   faMapMarkerAlt, faRadiation, faUserSecret
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -26,7 +26,7 @@ library.add(faCalendarAlt, faLock, faLockOpen, faUserCircle,
    faUser, faUserAlt, faPowerOff, faEye, faEyeSlash, faUserPlus, faSave,
    faSearch, faPencilAlt, faPlusSquare, faMinusSquare, faTrashAlt,
    faPlaneDeparture, faMoneyCheckAlt, faWrench, faTimes, faStamp, faCashRegister,
-   faPrint, faCloudDownloadAlt, faHandPaper, faMapMarkerAlt)
+   faPrint, faCloudDownloadAlt, faHandPaper, faMapMarkerAlt, faRadiation, faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Bootstrap
