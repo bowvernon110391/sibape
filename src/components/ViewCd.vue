@@ -67,6 +67,11 @@
                                 <b-dropdown-item @click="printSspcp">
                                     Bukti Bayar
                                 </b-dropdown-item>
+
+                                <!-- lembar perhitungan -->
+                                <b-dropdown-item @click="printLembarHitungCd">
+                                    Lembar Perhitungan
+                                </b-dropdown-item>
                                 <!-- opsi tergantung link yg ada -->
                                 <!-- Impor Sementara -->
                                 <!-- <template v-if="cdHasLink('is')">
@@ -674,6 +679,14 @@ export default {
             this.pdfUrl = this.api.generatePdfUrl(printData.doctype, printData.id)
             this.viewPrintDialog = true
             this.altFilename = printData.doctype + '-' + printData.id
+        },
+
+        // print lembar perhitungan cd
+        printLembarHitungCd () {
+            // simple, just generate pdfUrl manually
+            this.pdfUrl = this.api.generatePdfUrl('lembarhitungcd', this.id)
+            this.viewPrintDialog = true
+            this.altFilename = 'lembarhitungcd-' + this.id
         },
 
         // print bpj
