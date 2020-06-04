@@ -19,6 +19,12 @@
             </b-col>
         </b-row>
 
+        <hr>
+        <attachment-bucket
+            :initial-data="testData.data"
+            disabled
+        />
+
         <h5>Attachments</h5>
         
         <div class="mt-3">
@@ -114,6 +120,8 @@ import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 import { WebCam } from 'vue-web-cam'
 
+import AttachmentBucket from '@/components/AttachmentBucket'
+
 export default {
     mixins: [
         axiosErrorHandler
@@ -124,7 +132,8 @@ export default {
         FileReader,
         AttachmentHandler,
         SelectAirline,
-        WebCam
+        WebCam,
+        AttachmentBucket
     },
 
     computed: {
