@@ -25,7 +25,7 @@
             disabled
         />
 
-        <h5>Attachments</h5>
+        <!-- <h5>Attachments</h5>
         
         <div class="mt-3">
             <template v-if="testData">
@@ -58,7 +58,7 @@
         </div>
         <div>
             <input v-model="airline">
-        </div>
+        </div> -->
 
         <hr>
         <h5>Webcam Test</h5>
