@@ -21,7 +21,7 @@
 
         <hr>
         <attachment-bucket
-            :initial-data="testData.data"
+            :endpoint="'/cd/2/lampiran'"
             disabled
         />
 

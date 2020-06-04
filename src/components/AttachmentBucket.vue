@@ -60,10 +60,14 @@
 
 <script>
 import AttachmentHandler from '@/components/AttachmentHandler'
+import { mapGetters, mapMutations } from 'vuex'
+import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
 const cloneDeep = require('clone-deep')
 
 export default {
+    mixins: [axiosErrorHandler],
+
     components: {
         AttachmentHandler
     },
@@ -74,16 +78,18 @@ export default {
             default: 'Attachments'
         },
 
-        targetUrlUpload: {
-            type: String
-        },
-
-        targetUrlDownload: {
-            type: String
+        endpoint: {
+            type: String,
+            default: null
         },
 
         initialData: {
             type: Array
+        },
+
+        show: {
+            type: Boolean,
+            default: true
         },
 
         disabled: {
@@ -95,26 +101,42 @@ export default {
     data () {
         return {
             attachments: this.initialData ? cloneDeep(this.initialData) : [], // empty initially
-            showAttachments: true,
+            showAttachments: this.show,
             busy: false
         }
     },
 
+    computed: {
+        ...mapGetters(['api'])
+    },
+
     methods: {
+        ...mapMutations(['setBusyState']),
+
         synchronize () {
             // gotta check if targetUrl is there
 
-            /* if (!this.targetUrlDownload) {
+            if (!this.endpoint) {
                 // no url supplied, so just emit sync event
                 this.$emit('synchronize')
                 return
-            } */
+            }
 
             // do the thing (call the API)
             this.setBusyState(true)
-            setTimeout(e => {
+            
+            // call api
+            this.api.getEndpoint(this.endpoint)
+            .then(e => {
+                this.attachments = e.data.data
+
                 this.setBusyState(false)
-            }, 5000)
+            })
+            .catch(e => {
+                this.handleError(e)
+
+                this.setBusyState(false)
+            })
 
         },
 
