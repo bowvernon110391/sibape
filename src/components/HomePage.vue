@@ -23,6 +23,7 @@
         <attachment-bucket
             :endpoint="'/cd/2/lampiran'"
             disabled
+            :title="'Lampiran CD #2'"
         />
 
         <!-- <h5>Attachments</h5>

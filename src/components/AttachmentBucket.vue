@@ -37,7 +37,7 @@
 
         <!-- The body just contains the attachments -->
         <transition name="fade">
-        <b-card-body v-if="showAttachments" class="position-relative">
+        <b-card-body v-if="showAttachments" class="position-relative text-center">
             <template>
                 <attachment-handler
                     v-for="(data) in attachments"
@@ -143,6 +143,18 @@ export default {
         // additional method so can be manipulated from outside
         setBusyState (flag) {
             this.busy = flag
+        }
+    },
+
+    // watchers
+    watch: {
+        endpoint: {
+            immediate: true,
+            handler: function (val) {
+                if (val) {
+                    this.synchronize()
+                }
+            }
         }
     }
 }
