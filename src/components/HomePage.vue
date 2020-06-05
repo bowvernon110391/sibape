@@ -75,7 +75,7 @@
             <input v-model="airline">
         </div> -->
 
-        <hr>
+        <!-- <hr>
         <h5>Webcam Test</h5>
         <b-row>
             <b-col md="6">
@@ -115,7 +115,7 @@
                 <b-button variant="danger" size="sm" @click="camStopped">Stop</b-button>
                 <b-button variant="success" size="sm" @click="camStarted">Start</b-button>
             </b-col>
-        </b-row>
+        </b-row> -->
         </template>
         
   </div>

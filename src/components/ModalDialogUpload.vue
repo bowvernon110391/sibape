@@ -38,7 +38,7 @@
                     label="Gunakan Webcam"
                     description="by snapping a photo using webcam">
                     <!-- webcam button -->
-                    <b-button variant="info">
+                    <b-button variant="info" @click="showWebcamDialog = true">
                         <font-awesome-icon icon="camera"/>
                         Open Webcam
                     </b-button>
@@ -65,12 +65,19 @@
             </attachment-handler>
         </div>
 
+        <!-- Webcam Dialog -->
+        <modal-dialog-webcam
+            v-model="showWebcamDialog"
+            @upload="handleWebcamUpload"
+            />
+
     </b-modal>
 </template>
 
 <script>
 import AttachmentHandler from '@/components/AttachmentHandler'
 import FileReader from '@/components/FileReader'
+import ModalDialogWebcam from '@/components/ModalDialogWebcam'
 
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
@@ -84,7 +91,8 @@ export default {
     // list of components
     components: {
         AttachmentHandler,
-        FileReader
+        FileReader,
+        ModalDialogWebcam
     },
 
     // available props
@@ -109,6 +117,7 @@ export default {
     data () {
         return {
             attachments: [],    // always start with empty list of attachments
+            showWebcamDialog: false
         }
     },
 
@@ -145,6 +154,12 @@ export default {
         cleanup() {
             while (this.attachments.length)
                 this.attachments.pop()
+        },
+
+        // handle webcam upload
+        handleWebcamUpload (data) {
+            console.log('got webcam data: ', data)
+            this.attachments.push(data)
         }
     },
 
