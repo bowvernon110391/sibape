@@ -23,7 +23,7 @@
                     <font-awesome-icon :icon="showAttachments ? 'eye-slash' : 'eye'"/>
                 </b-button>
                 <!-- open upload dialog -->
-                <b-button variant="primary" size="sm" :disabled="disabled" class="shadow-sm">
+                <b-button variant="primary" size="sm" :disabled="!canUpload" class="shadow-sm" @click="if (canUpload) showUploadDialog = true">
                     <font-awesome-icon icon="plus-square"/>
                     Upload
                 </b-button>
@@ -55,11 +55,17 @@
         </b-card-body>
         </transition>
 
+        <modal-dialog-upload 
+            :endpoint="endpoint"
+            v-model="showUploadDialog"
+            @synchronize="synchronize"
+            />
     </b-card>
 </template>
 
 <script>
 import AttachmentHandler from '@/components/AttachmentHandler'
+import ModalDialogUpload from '@/components/ModalDialogUpload'
 import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
@@ -69,7 +75,8 @@ export default {
     mixins: [axiosErrorHandler],
 
     components: {
-        AttachmentHandler
+        AttachmentHandler,
+        ModalDialogUpload
     },
 
     props: {
@@ -102,12 +109,19 @@ export default {
         return {
             attachments: this.initialData ? cloneDeep(this.initialData) : [], // empty initially
             showAttachments: this.show,
+            showUploadDialog: false,
             busy: false
         }
     },
 
     computed: {
-        ...mapGetters(['api'])
+        ...mapGetters(['api']),
+
+        canUpload () {
+            console.log('disabled ?', this.disabled)
+            console.log('endpoint = ', this.endpoint)
+            return !this.disabled && this.endpoint != null
+        }
     },
 
     methods: {

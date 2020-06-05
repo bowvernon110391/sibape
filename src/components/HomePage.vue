@@ -36,7 +36,7 @@
         <hr>
         <attachment-bucket
             :endpoint="'/cd/2/lampiran'"
-            disabled
+            
             :title="'Lampiran CD #2'"
         />
 
