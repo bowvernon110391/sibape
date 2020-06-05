@@ -65,6 +65,11 @@ export default {
         initialData: {
             type: Object,
             default: null
+        },
+
+        endpoint: {
+            type: String,
+            default: null
         }
     },
 
@@ -91,27 +96,42 @@ export default {
             this.progress = Math.round(e.loaded / e.total * 100)
         },
 
+        // process upload a file
+        // @nv : the object containing file information
         processUpload (nv) {
+            // if we're in uploading state, do nothing
             if (this.isUploading) {
                 return
             }
 
+            // if no file given, use uploadData property
             nv = nv || this.uploadData
 
             const vm = this
             // directly set mode to uploading
-            if (!this.id && nv && this.docType && this.docId) {
+            // if we have no id and we have data to upload
+            //   and we either have (doctype and docid) or (endpoint)
+            if (!this.id && nv && ( (this.docType && this.docId) || this.endpoint) ) {
                 // no id, but we have upload data and target
                 this.isUploading = true
 
                 console.log('Upload started!')
 
                 // call api, and sheit
-                this.api.attachFile(this.docType,
+                // if we're using doctype and id
+                var uploadPromise = null
+                if (this.docType && this.docId) {
+                    uploadPromise = this.api.attachFile(this.docType,
                                     this.docId,
                                     this.uploadData,
                                     this.onProgress)
-                .then(e => {
+                } else if (this.endpoint) {
+                    uploadPromise = this.api.attachFileToUri(this.endpoint,
+                                    this.uploadData,
+                                    this.onProgress)
+                }
+                
+                uploadPromise.then(e => {
                     console.log('Upload success!')
                     console.log(e.data)
                     vm.internalData = e.data.data

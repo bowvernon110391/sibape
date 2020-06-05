@@ -20,6 +20,20 @@
         </b-row>
 
         <hr>
+
+        <template v-for="(a, id) in attachments">
+
+            <attachment-handler 
+                :key="a.filename"
+                :upload-data="a"
+                endpoint="/cd/2/lampiran"
+                @error="removeAttachment(id, $event)"
+                >
+            </attachment-handler>
+
+        </template>
+
+        <hr>
         <attachment-bucket
             :endpoint="'/cd/2/lampiran'"
             disabled
