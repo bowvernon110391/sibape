@@ -306,6 +306,12 @@
                 hide-satuan
                 hide-netto></view-cd-details>
 
+            <!-- lampiran (manatau perlu) -->
+            <hr>
+            <attachment-bucket 
+                :disabled="disableInput"
+                :endpoint="endpoint"/>
+
             <!-- modal view utk perhitungan -->
             <template v-if="dataCd.id">
                 <!-- Tampilkan perhitungan -->
@@ -379,6 +385,9 @@ import ModalViewSpp from '@/components/ModalViewSpp'
 // untuk menampilkan st
 import ModalViewSt from '@/components/ModalViewSt'
 
+// untuk handle lampiran
+import AttachmentBucket from '@/components/AttachmentBucket'
+
 // the default cd header
 import defaultCd from './defaultCd.json'
 
@@ -400,7 +409,8 @@ export default {
         SelectKurs,
         ModalViewPdf,
         ModalViewSpp,
-        ModalViewSt
+        ModalViewSt,
+        AttachmentBucket
     },
     data() {
         return {
@@ -510,6 +520,11 @@ export default {
             ]
 
             return options
+        },
+
+        // endpoint utk attachment
+        endpoint () {
+            return this.dataCd.id ? `/cd/${this.dataCd.id}/lampiran` : null
         }
     },
     props: {
