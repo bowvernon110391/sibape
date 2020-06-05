@@ -13,7 +13,14 @@
                 </div>
             </template>
             <template v-else-if="internalData">
-                <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                <div>
+                    <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                </div>
+                <object :data="internalData.url" width="300" height="200" @click="handleClick">
+                    <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                </object>
+                <!-- Also try to show it here perhaps? -->
+
             </template>
         </div>
 </template>
@@ -74,6 +81,12 @@ export default {
     },
 
     methods: {
+        handleClick (e) {
+            // show alert first
+            // alert('I got clicked!')
+            this.$bvModal.show('loading-screen')
+        },
+
         onProgress (e) {
             this.progress = Math.round(e.loaded / e.total * 100)
         },
@@ -153,5 +166,9 @@ export default {
 .progress-barr {
     max-width: 400px;
     display: inline-block;
+}
+
+object:hover {
+    cursor: pointer;
 }
 </style>
