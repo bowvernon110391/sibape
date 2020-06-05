@@ -38,13 +38,16 @@
         <!-- The body just contains the attachments -->
         <transition name="fade">
         <b-card-body v-if="showAttachments" class="position-relative text-center">
-            <template>
+            <template v-if="attachments.length">
                 <attachment-handler
                     v-for="(data) in attachments"
                     :key="data.id"
                     :initial-data="data">
                 </attachment-handler>
             </template>
+            <b-alert v-else variant="warning" show class="text-left">
+                No attachments detected
+            </b-alert>
 
             <!-- blocker -->
             <transition name="fade">

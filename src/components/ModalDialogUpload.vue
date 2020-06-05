@@ -34,7 +34,15 @@
             </b-col>
 
             <b-col md="5" sm="12">
-                Gunakan webcam
+                <b-form-group
+                    label="Gunakan Webcam"
+                    description="by snapping a photo using webcam">
+                    <!-- webcam button -->
+                    <b-button variant="info">
+                        <font-awesome-icon icon="camera"/>
+                        Open Webcam
+                    </b-button>
+                </b-form-group>
             </b-col>
         </b-row>
 
