@@ -18,7 +18,7 @@
 
         <!-- Custom Footer -->
         <template #modal-footer="{ cancel, ok }">
-            <b-button @click="cancel" size="sm">Cancel</b-button>
+            <b-button @click="e => { img=null; cancel() }" size="sm">Cancel</b-button>
             <b-button @click="ok" variant="primary" size="sm" :disabled="!img">
                 <font-awesome-icon icon="upload"/>
                 Upload Picture

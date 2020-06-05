@@ -61,6 +61,7 @@
                 :upload-data="a"
                 :endpoint="endpoint"
                 @error="removeAttachment(id, $event)"
+                @synchronize="removeAttachment(id, $event)"
                 >
             </attachment-handler>
         </div>

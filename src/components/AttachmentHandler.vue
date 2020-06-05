@@ -1,5 +1,5 @@
 <template>
-        <div :class=" [isUploading ? 'd-block' : 'd-inline-block', 'text-dark', 'bg-light', 'rounded p-2', 'my-1', 'mx-1', 'shadow', 'border', 'border-dark']">
+        <div :class=" [isUploading ? 'd-block' : 'd-inline-block', 'text-dark', 'bg-light', 'rounded p-1', 'my-1', 'mx-1', 'shadow', 'border', 'border-dark']">
             <template v-if="isUploading">
                 <div>
                     <div class="progress">
@@ -13,21 +13,28 @@
                 </div>
             </template>
             <template v-else-if="internalData">
-                <div>
-                    <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
-                </div>
-                <object :data="internalData.url" width="300" height="200" @click="handleClick">
-                    <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
-                </object>
+                <div class="position-relative" @mouseover="handleHover" @mouseleave="handleHover">
+                    <div>
+                        <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                    </div>
+                    <object :data="internalData.url" width="300" height="200" @click="handleClick">
+                        <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                    </object>
                 <!-- Also try to show it here perhaps? -->
-
+                <!-- Delete button -->
+                    <div class="position-absolute" style="top: 0; right: 0;" v-show="isHovered" v-if="deletable">
+                        <b-button variant="danger" size="sm" class="shadow" @click="handleDelete">
+                            <font-awesome-icon icon="trash-alt"/>
+                        </b-button>
+                    </div>
+                </div>
             </template>
         </div>
 </template>
 
 <script>
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 const cloneDeep = require('clone-deep')
 
@@ -70,6 +77,11 @@ export default {
         endpoint: {
             type: String,
             default: null
+        },
+
+        deletable: {
+            type: Boolean,
+            default: true
         }
     },
 
@@ -77,7 +89,8 @@ export default {
         return {
             isUploading: false,     // flag for when we're uploading
             progress: 0,            // progress bar value
-            internalData: this.initialData ? cloneDeep(this.initialData) : null // if we were given initial data, use it
+            internalData: this.initialData ? cloneDeep(this.initialData) : null, // if we were given initial data, use it
+            isHovered: false
         }
     },
 
@@ -86,10 +99,57 @@ export default {
     },
 
     methods: {
+        ...mapMutations(['setBusyState']),
+
+        // hovering/leaving toggle delete button show flag
+        handleHover (e) {
+            console.log('hover over attachment : ', e)
+
+            if (e.type == 'mouseover') {
+                this.isHovered = true
+            } else {
+                this.isHovered = false
+            }
+        },
+
+        // click handler (not implemented yet)
         handleClick (e) {
             // show alert first
             // alert('I got clicked!')
             this.$bvModal.show('loading-screen')
+        },
+
+        // handle delete event
+        async handleDelete (e) {
+            var result = await this.$bvModal.msgBoxConfirm(
+                `Yakin mau menghapus lampiran #${this.internalData.id}?`, {
+                    title: `Hapus lampiran #${this.internalData.id}`,
+                    size: 'md',
+                    buttonSize: 'md',
+                    okVariant: 'danger',
+                    okTitle: 'YES',
+                    cancelTitle: 'NO',
+                    footerClass: 'p-2',
+                    hideHeaderClose: false,
+                    centered: true
+                }
+            )
+
+            if (result) {
+                this.setBusyState(true)
+                // alert('do deletion here')
+                this.api.deleteAttachment(this.internalData.id)
+                .then(e => {
+                    this.setBusyState(false)
+                    // show toast
+                    this.showToast('Lampiran deleted', 'Lampiran successfully deleted!', 'success')
+                    this.$emit('synchronize')
+                })
+                .catch(e => {
+                    this.setBusyState(false)
+                    this.handleError(e)
+                })
+            }
         },
 
         onProgress (e) {

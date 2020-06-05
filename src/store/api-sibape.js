@@ -421,6 +421,12 @@ class ApiSibape {
             }
         })
     }
+
+    // this one delete attachment by id
+    // deleteAttachment (id) : DELETE /lampiran/id
+    deleteAttachment (id) {
+        return this.instance.delete('/lampiran/' + id)
+    }
     
     //===================RESOURCE : PEMBATALAN======================================================
     // getPembatalan () : GET /pembatalan

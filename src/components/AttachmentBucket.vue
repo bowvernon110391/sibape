@@ -42,7 +42,9 @@
                 <attachment-handler
                     v-for="(data) in attachments"
                     :key="data.id"
-                    :initial-data="data">
+                    :initial-data="data"
+                    :deletable="!disabled"
+                    @synchronize="synchronize">
                 </attachment-handler>
             </template>
             <b-alert v-else variant="warning" show class="text-left">
