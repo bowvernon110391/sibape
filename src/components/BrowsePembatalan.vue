@@ -55,6 +55,7 @@
 
 <script>
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
+import userChecker from '../mixins/userChecker'
 import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import TableCd from '@/components/TableCd'
@@ -62,7 +63,7 @@ import TablePembatalan from '@/components/TablePembatalan'
 import ViewPembatalan from '@/components/ViewPembatalan'
 
 export default {
-    mixins: [ axiosErrorHandler ],
+    mixins: [ axiosErrorHandler, userChecker ],
     components: {
         PaginatedBrowser,
         // TableCd

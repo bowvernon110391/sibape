@@ -106,6 +106,14 @@ export default new Vuex.Store({
         },
         canDelete: (state, getters) => isDocLocked => {
             return getters.canEdit || !isDocLocked
+        },
+        roles: (state) => {
+            if (!state.userInfo) return false
+            if (!state.userInfo.apps_data) return false
+            if (!state.userInfo.apps_data['5']) return false
+
+            return state.userInfo.apps_data['5'].roles
+            // return state.userInfo.apps_data['5'].roles.filter(e => -1 !== roles.indexOf(e))
         }
     },
     actions: {

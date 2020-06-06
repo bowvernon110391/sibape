@@ -57,14 +57,27 @@
                 </table-status>
             </b-col>
         </b-row>
+
+        <!-- Attachment -->
+        <hr>
+        <attachment-bucket
+            v-if="data"
+            :endpoint="`/pembatalan/${data.id}/lampiran`"
+            :title="`Lampiran Pembatalan #${data.id}`"
+            :disabled="!canEdit"
+         />
     </b-card>
 </template>
 
 <script>
 
 import TableStatus from '@/components/TableStatus'
+import AttachmentBucket from '@/components/AttachmentBucket'
+
+import userChecker from '../mixins/userChecker'
 
 export default {
+    mixins: [userChecker],
     props: {
         data: {
             type: Object,
@@ -77,7 +90,8 @@ export default {
         }
     },
     components: {
-        TableStatus
+        TableStatus,
+        AttachmentBucket
     },
     computed: {
         cancellableCount () {

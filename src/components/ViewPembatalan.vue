@@ -125,7 +125,7 @@ export default {
 
 
         disabled: function() {
-            return this.dataPembatalan.is_locked? true: false
+            return this.dataPembatalan.is_locked || !this.canEdit
         }
     },
 
@@ -153,7 +153,7 @@ export default {
                     this.dataPembatalan = e.data.data
 
                     // emit disable edit
-                    this.$emit('disableEdit', this.dataPembatalan.is_locked)
+                    this.$emit('disableEdit', this.disabled)
                 })
                 .catch(e => {
                     this.setBusyState(false)

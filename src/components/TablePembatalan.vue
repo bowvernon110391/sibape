@@ -40,19 +40,21 @@
         <template v-slot:cell(action)="data">
             <!-- Edit Pembatalan -->
             <b-button variant="primary" size="sm" 
-                @click="onEdit(data.item.id)">
+                @click="onEdit(data.item.id)"
+                >
                 <font-awesome-icon icon="pencil-alt">
                 </font-awesome-icon>
             </b-button>
             <!-- Delete Pembatalan -->
-            <b-button variant="danger" size="sm" :disabled="data.item.is_locked"
-                @click="onDelete(data.item.id, data.item.nomor_lengkap)">
+            <b-button variant="danger" size="sm" :disabled="data.item.is_locked || !canEdit"
+                @click="onDelete(data.item.id, data.item.nomor_lengkap)"
+                >
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
             </b-button>
 
             <!-- Lock button when the document is unlocked -->
-            <b-button variant="warning" size="sm" v-if="!data.item.is_locked"
+            <b-button variant="warning" size="sm" v-if="!data.item.is_locked && canEdit"
                 @click="onLock(data.item.id, data.item.nomor_lengkap)">
                 <font-awesome-icon icon="lock"></font-awesome-icon>
             </b-button>
@@ -126,6 +128,9 @@ export default {
                 'action'
             ]
         }
+    },
+    computed: {
+        
     }
 }
 </script>
