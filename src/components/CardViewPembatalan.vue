@@ -64,7 +64,7 @@
             v-if="data"
             :endpoint="`/pembatalan/${data.id}/lampiran`"
             :title="`Lampiran Pembatalan #${data.id}`"
-            :disabled="!canEdit"
+            :disabled="!canEdit || disabled"
          />
     </b-card>
 </template>
