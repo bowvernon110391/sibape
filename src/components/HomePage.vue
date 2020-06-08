@@ -259,16 +259,6 @@ export default {
     },
 
     created () {
-        // grab some attachment data
-        const vm = this
-
-        this.api.getCdById(2)
-        .then(e => {
-            vm.testData = e.data.data.lampiran
-        })
-        .catch(e => {
-            vm.handleError(e)
-        })
     },
 
     mounted () {
