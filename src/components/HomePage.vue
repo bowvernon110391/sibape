@@ -5,117 +5,117 @@
         </p>
 
         <template v-if="testingMode">
-        <b-row>
-            <b-col md="3">
-                <b-form-group
-                    label="Add attachment"
-                    description="Add images or pdfs for attachments">
-                    <file-reader
-                        @load="onLoad"
-                        @error="onError">
-                    </file-reader>
-                </b-form-group>
-                
-            </b-col>
-        </b-row>
+            <b-row>
+                <b-col md="3">
+                    <b-form-group
+                        label="Add attachment"
+                        description="Add images or pdfs for attachments">
+                        <file-reader
+                            @load="onLoad"
+                            @error="onError">
+                        </file-reader>
+                    </b-form-group>
+                    
+                </b-col>
+            </b-row>
 
-        <hr>
-
-        <template v-for="(a, id) in attachments">
-
-            <attachment-handler 
-                :key="a.filename"
-                :upload-data="a"
-                endpoint="/cd/2/lampiran"
-                @error="removeAttachment(id, $event)"
-                >
-            </attachment-handler>
-
-        </template>
-
-        <hr>
-        <attachment-bucket
-            :endpoint="'/cd/2/lampiran'"
-            
-            :title="'Lampiran CD #2'"
-        />
-
-        <!-- <h5>Attachments</h5>
-        
-        <div class="mt-3">
-            <template v-if="testData">
-                <attachment-handler
-                    v-for="(data) in testData.data"
-                    :key="data.id"
-                    :initial-data="data"
-                />
-            </template>
-
-            <pre>{{ testData }}</pre>
+            <hr>
 
             <template v-for="(a, id) in attachments">
 
                 <attachment-handler 
                     :key="a.filename"
                     :upload-data="a"
-                    doc-type="cd"
-                    doc-id="2"
+                    endpoint="/cd/2/lampiran"
                     @error="removeAttachment(id, $event)"
                     >
                 </attachment-handler>
 
             </template>
-        </div>
 
-        <h5>Select Airline</h5>
-        <div>
-            <select-airline v-model="airline"></select-airline>
-        </div>
-        <div>
-            <input v-model="airline">
-        </div> -->
+            <hr>
+            <attachment-bucket
+                :endpoint="'/cd/2/lampiran'"
+                
+                :title="'Lampiran CD #2'"
+            />
 
-        <!-- <hr>
-        <h5>Webcam Test</h5>
-        <b-row>
-            <b-col md="6">
-                <web-cam
-                    ref="webcam"
-                    :device-id="camId"
-                    width="100%"
-                    :resolution="{ width: '800', height: '600' }"
-                    
-                    @error="camError"
-                    @cameras="cameraEnum"
-                    @camera-change="cameraChange"
-                />
-            </b-col>
+            <!-- <h5>Attachments</h5>
+            
+            <div class="mt-3">
+                <template v-if="testData">
+                    <attachment-handler
+                        v-for="(data) in testData.data"
+                        :key="data.id"
+                        :initial-data="data"
+                    />
+                </template>
 
-            <b-col md="6">
-                <figure class="figure">
-                    <img :src="img" class="img-fluid"/>
-                </figure>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col md="6">
-                <select v-model="camera">
-                    <option>-- Select Device --</option>
-                    <option 
-                        v-for="device in devices"
-                        :key="device.deviceId"
-                        :value="device.deviceId">
-                        {{ device.label }}
-                    </option>
-                </select>
-            </b-col>
+                <pre>{{ testData }}</pre>
 
-            <b-col md="12">
-                <b-button variant="primary" size="sm" @click="captureImage">SNAP!</b-button>
-                <b-button variant="danger" size="sm" @click="camStopped">Stop</b-button>
-                <b-button variant="success" size="sm" @click="camStarted">Start</b-button>
-            </b-col>
-        </b-row> -->
+                <template v-for="(a, id) in attachments">
+
+                    <attachment-handler 
+                        :key="a.filename"
+                        :upload-data="a"
+                        doc-type="cd"
+                        doc-id="2"
+                        @error="removeAttachment(id, $event)"
+                        >
+                    </attachment-handler>
+
+                </template>
+            </div>
+
+            <h5>Select Airline</h5>
+            <div>
+                <select-airline v-model="airline"></select-airline>
+            </div>
+            <div>
+                <input v-model="airline">
+            </div> -->
+
+            <!-- <hr>
+            <h5>Webcam Test</h5>
+            <b-row>
+                <b-col md="6">
+                    <web-cam
+                        ref="webcam"
+                        :device-id="camId"
+                        width="100%"
+                        :resolution="{ width: '800', height: '600' }"
+                        
+                        @error="camError"
+                        @cameras="cameraEnum"
+                        @camera-change="cameraChange"
+                    />
+                </b-col>
+
+                <b-col md="6">
+                    <figure class="figure">
+                        <img :src="img" class="img-fluid"/>
+                    </figure>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col md="6">
+                    <select v-model="camera">
+                        <option>-- Select Device --</option>
+                        <option 
+                            v-for="device in devices"
+                            :key="device.deviceId"
+                            :value="device.deviceId">
+                            {{ device.label }}
+                        </option>
+                    </select>
+                </b-col>
+
+                <b-col md="12">
+                    <b-button variant="primary" size="sm" @click="captureImage">SNAP!</b-button>
+                    <b-button variant="danger" size="sm" @click="camStopped">Stop</b-button>
+                    <b-button variant="success" size="sm" @click="camStarted">Start</b-button>
+                </b-col>
+            </b-row> -->
         </template>
         
   </div>
@@ -157,7 +157,7 @@ export default {
 
     data () {
         return {
-            testingMode: true,
+            testingMode: process.env.TESTING_MODE,
             bpjId: null,
             dataString: 'http://apishinta.test/pdf?doc=sspcp&id=2',
             file: null,
