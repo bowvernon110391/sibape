@@ -15,9 +15,9 @@
             <template v-else-if="internalData">
                 <div class="position-relative" @mouseover="handleHover" @mouseleave="handleHover">
                     <div>
-                        <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
+                        <a :href="internalData.url" target="__blank" ref="link">{{ internalData.filename }}</a>
                     </div>
-                    <object :data="internalData.url" width="300" height="200" @click="handleClick">
+                    <object :data="internalData.url" width="300" height="200" @click="handleClick" class="img-fluid">
                         <a :href="internalData.url" target="__blank">{{ internalData.filename }}</a>
                     </object>
                 <!-- Also try to show it here perhaps? -->
@@ -116,7 +116,8 @@ export default {
         handleClick (e) {
             // show alert first
             // alert('I got clicked!')
-            this.$bvModal.show('loading-screen')
+            // this.$bvModal.show('loading-screen')
+            this.$refs.link.click()
         },
 
         // handle delete event

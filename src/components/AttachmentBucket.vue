@@ -39,13 +39,16 @@
         <transition name="fade">
         <b-card-body v-if="showAttachments" class="position-relative text-center">
             <template v-if="attachments.length">
-                <attachment-handler
-                    v-for="(data) in attachments"
-                    :key="data.id"
-                    :initial-data="data"
-                    :deletable="!disabled"
-                    @synchronize="synchronize">
-                </attachment-handler>
+                <b-row>
+                    <b-col md="3" v-for="(data) in attachments" :key="data.id" class="align-middle">
+                        <attachment-handler
+                            :key="data.id"
+                            :initial-data="data"
+                            :deletable="!disabled"
+                            @synchronize="synchronize">
+                        </attachment-handler>
+                    </b-col>
+                </b-row>
             </template>
             <b-alert v-else variant="warning" show class="text-left">
                 No attachments detected
