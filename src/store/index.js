@@ -114,6 +114,9 @@ export default new Vuex.Store({
 
             return state.userInfo.apps_data['5'].roles
             // return state.userInfo.apps_data['5'].roles.filter(e => -1 !== roles.indexOf(e))
+        },
+        version: (state) => {
+            return process.env.APP_VERSION
         }
     },
     actions: {
