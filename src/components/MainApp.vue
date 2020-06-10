@@ -17,23 +17,23 @@
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
                         <b-nav-item-dropdown text="Dokumen">
-                            <b-dropdown-item to="/cd" v-if="hasRole([])">💰Customs Declaration (CD)</b-dropdown-item>
+                            <b-dropdown-item to="/cd" v-if="hasRole()">💰Customs Declaration (CD)</b-dropdown-item>
                             <!-- <b-dropdown-item to="/sbp">👮Bukti Penindakan (SBP)</b-dropdown-item> -->
-                            <b-dropdown-item to="/is" v-if="hasRole([])">⏲️Impor Sementara (IS)</b-dropdown-item>
-                            <b-dropdown-item to="/spmb" v-if="hasRole([])">🛫SPMB</b-dropdown-item>
-                            <b-dropdown-item to="/st" v-if="hasRole([])">🛅Surat Titipan (ST)</b-dropdown-item>
-                            <b-dropdown-item to="/spp" v-if="hasRole([])">✋Surat Penundaan Pengeluaran (SPP)</b-dropdown-item>
-                            <b-dropdown-item to="/bc32" v-if="hasRole([])">💸Pembawaan Mata Uang (BC32)</b-dropdown-item>
-                            <b-dropdown-item to="/carnet" v-if="hasRole([])">🚗CARNET</b-dropdown-item>
-                            <b-dropdown-item to="/pibk" v-if="hasRole([])">📦PIBK - Barang Penumpang</b-dropdown-item>
+                            <b-dropdown-item to="/is" v-if="hasRole()">⏲️Impor Sementara (IS)</b-dropdown-item>
+                            <b-dropdown-item to="/spmb" v-if="hasRole()">🛫SPMB</b-dropdown-item>
+                            <b-dropdown-item to="/st" v-if="hasRole()">🛅Surat Titipan (ST)</b-dropdown-item>
+                            <b-dropdown-item to="/spp" v-if="hasRole()">✋Surat Penundaan Pengeluaran (SPP)</b-dropdown-item>
+                            <b-dropdown-item to="/bc32" v-if="hasRole()">💸Pembawaan Mata Uang (BC32)</b-dropdown-item>
+                            <b-dropdown-item to="/carnet" v-if="hasRole()">🚗CARNET</b-dropdown-item>
+                            <b-dropdown-item to="/pibk" v-if="hasRole()">📦PIBK - Barang Penumpang</b-dropdown-item>
                             <!-- <b-dropdown-item to="/sspcp">💸SSPCP</b-dropdown-item> -->
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                     
                     <b-navbar-nav>                        
-                        <b-nav-item-dropdown text="Referensi">
+                        <b-nav-item-dropdown text="Referensi" v-if="hasRole()">
                             <b-dropdown-item to="/penumpang" v-if="hasRole(['PDTT','KASI','CONSOLE'])">👨Penumpang</b-dropdown-item>
-                            <b-dropdown-item to="/kurs" v-if="hasRole([])">💲Kurs</b-dropdown-item>
+                            <b-dropdown-item to="/kurs" v-if="hasRole()">💲Kurs</b-dropdown-item>
                             <b-dropdown-item to="/bpj" v-if="hasRole(['PDTT','KASI','CONSOLE'])">📝Jaminan</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>

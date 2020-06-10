@@ -15,7 +15,12 @@ export default {
         hasRole: (roles) => {
             if (!Array.isArray(roles)) {
                 console.log("Convertin roles criteria to array: ", roles)
-                roles = [roles]
+                if (typeof roles === 'undefined' || roles === null) {
+                    roles = []
+                } else {
+                    roles = [roles]
+                }
+                
             }
                 
 
