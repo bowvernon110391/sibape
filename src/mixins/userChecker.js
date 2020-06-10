@@ -13,11 +13,26 @@ export default {
         },
 
         hasRole: (roles) => {
-            if (!Array.isArray(roles))
+            if (!Array.isArray(roles)) {
+                console.log("Convertin roles criteria to array: ", roles)
                 roles = [roles]
+            }
+                
+
+            // if has no role, bail
+            if (store.getters.roles === false) 
+                return false
 
             console.log('checking roles ', store.getters.roles)
             console.log('criteria : ', roles)
+
+            // special check for empty array
+            if (roles.length < 1) {
+                if (store.getters.roles === [] || store.getters.roles.length) {
+                    console.log("Special case! passed!")
+                    return true
+                }
+            }
 
             // just simply check em
             var result = store.getters.roles.filter(e => roles.indexOf(e) !== -1)
