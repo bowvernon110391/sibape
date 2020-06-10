@@ -4,7 +4,7 @@
     "tgl_dok": null,
     "nomor_lengkap": null,
     "lokasi": null,
-    "declare_flags": [],
+    "declare_flags": [ "IMPOR_UNTUK_DIPAKAI" ],
     "npwp_nib": null,
     "no_flight": null,
     "kd_airline": null,

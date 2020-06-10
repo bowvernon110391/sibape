@@ -742,6 +742,30 @@ export default {
             handler(newVal) {
                 this.dataCd.kd_airline = this.airlineCode
             }
+        },
+
+        'dataCd.declare_flags': {
+            immediate: true,
+            deep: true,
+            handler(newVal, oldVal) {
+                if (!oldVal) {
+                    return
+                }
+                // gotta remove (switch) the flags of personal & non personal use
+                console.log('deklarasi: ', newVal)
+
+                // grab difference?
+                let intersection = newVal.filter(e => !oldVal.includes(e))
+                console.log('changed: ', intersection)
+
+                if (intersection.length) {
+                    var target = intersection[0] == "KOMERSIL" ? "IMPOR_UNTUK_DIPAKAI" : "KOMERSIL"
+                    var idx = newVal.indexOf(target)
+                    if (idx !== -1) {
+                        this.dataCd.declare_flags.splice(idx, 1)
+                    }
+                }
+            }
         }
     }
 }
