@@ -235,7 +235,7 @@ export default {
                             blobsize: this.img.length,
                             filesize: this.img.length,
                             type: 'image/jpeg',
-                            filename : this.makeid(16)
+                            filename : this.makeid(16) + '.jpg'
                         }
                         this.$emit('upload', uploadData)
                     }
