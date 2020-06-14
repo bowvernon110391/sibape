@@ -41,6 +41,7 @@ import 'vue-select/dist/vue-select.css'
 
 // our custom style.css
 import './assets/style.css'
+import './assets/menu.css'
 
 // our custom filters
 import './filters'
