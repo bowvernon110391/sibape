@@ -71,7 +71,7 @@
 #content {
   width: calc(100% - 15rem);
   position: absolute;
-  min-height: 100vh;
+  height: 100vh;
   top: 0;
   left: 15rem;
   transition: all 0.3s;
