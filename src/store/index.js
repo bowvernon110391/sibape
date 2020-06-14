@@ -30,25 +30,30 @@ export default new Vuex.Store({
             isNegaraDirty: true,
             isSatuanDirty: true,
             isKemasanDirty: true
-        }
+        },
+
+        sidebarActive: false
     },
     mutations: {
-        setUserInfo (state, payload) {
+        setSidebarActive(state, payload) {
+            state.sidebarActive = payload
+        },
+        setUserInfo(state, payload) {
             state.userInfo = payload
         },
-        setBusyState (state, payload) {
+        setBusyState(state, payload) {
             state.busy = payload
             // log it?
             console.log("BUSY? " + state.busy)
         },
-        setLokasi (state, payload) {
+        setLokasi(state, payload) {
             state.lokasi = payload
 
             // also store @ localStorage for 
             // later fetch if unavailable
             localStorage.setItem('lokasi', payload)
         },
-        setToken (state, payload) {
+        setToken(state, payload) {
             state.api.setToken(payload)
         },
         setDirtyFlagNegara(state, payload) {
@@ -70,6 +75,7 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        sidebar: (state) => (state.sidebarActive),
         lokasi: state => {
             if (!state.lokasi) {
                 // attempt to fetch from localStorage
@@ -120,7 +126,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        extractError (context, e) {
+        extractError(context, e) {
             // normal error
             if (e.response) {
                 if (e.response.data) {
@@ -134,14 +140,14 @@ export default new Vuex.Store({
                         message: e.statusText
                     }
                 }
-            } 
+            }
 
             return {
                 code: 999,
                 message: e.toString()
             }
         },
-        storeNegara (context, payload) {
+        storeNegara(context, payload) {
             const api = context.state.api
             // call POST
             return api.createNegara(payload)
@@ -152,7 +158,7 @@ export default new Vuex.Store({
                     return e
                 })
         },
-        fetchNegara (context, forceFetch) {
+        fetchNegara(context, forceFetch) {
             // just return current data if not dirty
             if (!context.getters.negaraDirty) {
                 if (STORE_DEBUG) {
@@ -208,52 +214,52 @@ export default new Vuex.Store({
 
                 // return promise from axios
                 return api.getNegara()
-                .then(e => {
-                    // data is in e.data.data
-                    var data = e.data.data
+                    .then(e => {
+                        // data is in e.data.data
+                        var data = e.data.data
 
-                    if (STORE_DEBUG) {
-                        console.log('fetched Data: ')
-                        console.log(data)
-                    }
+                        if (STORE_DEBUG) {
+                            console.log('fetched Data: ')
+                            console.log(data)
+                        }
 
-                    // store locally
-                    context.commit('setRefDataNegara', data)
-                    // store in localStorage using its JSON string
-                    localStorage.setItem('ref_negara', JSON.stringify(data))
-                    // remove dirty flag
-                    context.commit('setDirtyFlagNegara', false)
+                        // store locally
+                        context.commit('setRefDataNegara', data)
+                        // store in localStorage using its JSON string
+                        localStorage.setItem('ref_negara', JSON.stringify(data))
+                        // remove dirty flag
+                        context.commit('setDirtyFlagNegara', false)
 
-                    if (STORE_DEBUG) {
-                        console.log('-> success')
-                        console.log(context.state.refData.negara)
-                    }
-                })
+                        if (STORE_DEBUG) {
+                            console.log('-> success')
+                            console.log(context.state.refData.negara)
+                        }
+                    })
             }
         },
         // check if can delete
-        canDelete (context, isDocLocked) {
+        canDelete(context, isDocLocked) {
             return context.getters.canEdit || !isDocLocked
         },
         // get data jenis detail sekunder, 
-        fetchRefDataJenisDetailSekunder (context) {
+        fetchRefDataJenisDetailSekunder(context) {
             // check if refDataIsThere, returning it anyway
             if (!context.state.refData.jenisDetailSekunder.length) {
                 // load that shit here
                 context.getters.api.getJenisDetailSekunder()
-                .then(e => {
-                    // store the data
-                    context.commit('setRefDataJenisDetailSekunder', e.data.data)
-                })
-                .catch(e => {})
+                    .then(e => {
+                        // store the data
+                        context.commit('setRefDataJenisDetailSekunder', e.data.data)
+                    })
+                    .catch(e => { })
             }
         },
         // get airline data,
-        fetchAirline (context) {
+        fetchAirline(context) {
             // check if the data is empty yet?
             // return promise
 
-            return new Promise( (resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 // first, check if we already have data
                 if (context.state.refData.airline.length < 1) {
                     // gotta fetch and store first, then resolve
@@ -261,16 +267,16 @@ export default new Vuex.Store({
 
                     // try to fetch airline data
                     api.getAirline()
-                    .then(e => {
-                        var data = e.data.data
-                        // store locally
-                        context.commit('setRefDataAirline', data)
-                        // resolve using it
-                        resolve(context.state.refData.airline)
-                    })
-                    .catch(e => {
-                        reject(e)
-                    })
+                        .then(e => {
+                            var data = e.data.data
+                            // store locally
+                            context.commit('setRefDataAirline', data)
+                            // resolve using it
+                            resolve(context.state.refData.airline)
+                        })
+                        .catch(e => {
+                            reject(e)
+                        })
                 } else {
                     resolve(context.state.refData.airline)
                 }

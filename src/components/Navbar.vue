@@ -1,17 +1,15 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="dark" id="navbar">
-    <b-container fluid>
-      <b-navbar-brand to="/">
+  <b-navbar toggleable="lg" type="dark" variant="dark" id="navbar" class="rounded shadow">
+    <!-- <b-container fluid> -->
+      <b-button size="sm" variant="secondary" @click="toggle">Menu {{ sidebar }}</b-button>
+      <!-- <b-navbar-brand to="/">
         <img style="height: 25px;" src="../assets/banner_icon.png" />
         <div class="banner-text d-inline-block">
           <div>
             <strong>PATOPS</strong>
           </div>
-          <!-- <div class="smol-text d-xs-block d-sm-none">
-                            <em>Passenger Monitoring and Payment System</em>
-          </div>-->
         </div>
-      </b-navbar-brand>
+      </b-navbar-brand>-->
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -58,35 +56,44 @@
               </span>
             </template>
             <b-dropdown-item :href="profileUrl" target="blank">
-              <font-awesome-icon icon="user"></font-awesome-icon>
-              Profile
+              <font-awesome-icon icon="user"></font-awesome-icon>Profile
             </b-dropdown-item>
             <!-- <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item> -->
             <b-dropdown-item v-b-modal.modal-select-location>
-              <font-awesome-icon icon="map-marker-alt"></font-awesome-icon>
-              Switch Location
+              <font-awesome-icon icon="map-marker-alt"></font-awesome-icon>Switch Location
             </b-dropdown-item>
             <b-dropdown-item @click="logout">
-              <font-awesome-icon icon="power-off"></font-awesome-icon>
-              Sign Out
+              <font-awesome-icon icon="power-off"></font-awesome-icon>Sign Out
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
-    </b-container>
+    <!-- </b-container> -->
   </b-navbar>
 </template>
 
 <script>
-import appMethod from '../mixins/appMethod'
+import appMethod from "../mixins/appMethod";
+
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
-    mixins: [ appMethod ],
+  mixins: [appMethod],
 
-    methods: {
-        hasRole () {
-            return true
-        }
+  methods: {
+    ...mapMutations(["setSidebarActive"]),
+
+    hasRole() {
+      return true;
+    },
+
+    toggle () {
+        this.setSidebarActive(!this.sidebar)
     }
-}
+  },
+
+  computed: {
+    ...mapGetters(["sidebar"])
+  }
+};
 </script>
