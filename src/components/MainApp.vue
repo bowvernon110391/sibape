@@ -1,5 +1,7 @@
 <template>
+<!-- Wrapper -->
   <div class="wrapper">
+    <!-- Sidebar Navigation -->
     <side-nav :options="menuOption">
       <template #header>
         <img src="@/assets/logo.png" height="40px" />
@@ -9,19 +11,14 @@
         </h6>
       </template>
     </side-nav>
+    <!-- The content section houses page contents -->
     <div id="content" :class="[{ active: $store.getters.sidebar }, 'p-3']">
+      <!-- Navbar -->
       <navbar />
+      <!-- Real container -->
       <b-container id="contents-section" class="pt-2" fluid>
         <!-- breadcrumb -->
-        <b-breadcrumb class="border rounded bg-light shadow">
-          <b-breadcrumb-item
-            v-for="(bc, id) in this.validBreadCrumbs"
-            :key="id"
-            :to="bc.path"
-            :disabled="bc.disabled"
-            :active="bc.disabled"
-          >{{ bc.title }}</b-breadcrumb-item>
-        </b-breadcrumb>
+        <breadcrumb/>
         <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
         <hr />-->
         <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
@@ -45,6 +42,7 @@ import { mapGetters, mapMutations } from "vuex";
 import Navbar from "@/components/Navbar";
 import ModalSelectLocation from "@/components/ModalSelectLocation";
 import SideNav from "@/components/SideNav";
+import Breadcrumb from '@/components/Breadcrumb'
 
 import userChecker from "../mixins/userChecker";
 import appMethod from "../mixins/appMethod";
@@ -55,16 +53,20 @@ import menuInput from "@/assets/menu.json";
 export default {
   mixins: [userChecker, appMethod, menuGenerator],
 
-  data() {
-    return {
-      menuInput: menuInput
-    };
+  methods: {
+    checkRole (roles) {
+      var result = this.$store.getters.hasRole(roles)
+      // console.log("Checking roles: ", roles, "result: ", result)
+      // console.log("Checking against: ", this.$store.getters.roles)
+      console.log("Checking roles [ ", roles, "] <-> ", this.$store.getters.roles, ' : ', result)
+      return result
+    }
   },
 
   computed: {
     menuOption() {
       var result = [];
-      this.menuInput.forEach(e => {
+      menuInput.forEach(e => {
         this.processElement(result, e);
       });
       return result;
@@ -74,7 +76,8 @@ export default {
   components: {
     Navbar,
     ModalSelectLocation,
-    SideNav
+    SideNav,
+    Breadcrumb
   }
 };
 </script>

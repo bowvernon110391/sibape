@@ -39,9 +39,7 @@ export default {
     inheritAttrs: false,
 
     props: {
-        value: {
-            required: true
-        }
+        value : {}
     },
 
     computed: {

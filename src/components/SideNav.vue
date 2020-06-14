@@ -1,5 +1,5 @@
 <template>
-  <div id="sidebar" :class="[{ 'active' : sidebar }, 'shadow']">
+  <div id="sidebar" :class="[{ 'active' : sidebar }, 'shadow', 'bg-menu']">
     <!-- PERFECT SCROLL -->
     <vuescroll :ops="opts">
       <div id="sidebar-header" class="p-3 text-center">

@@ -123,6 +123,19 @@ export default new Vuex.Store({
         },
         version: (state) => {
             return process.env.APP_VERSION
+        },
+        hasRole : (state, getters) => (roles) => {
+            // special case
+            if (roles === '*') {
+                var arr_roles = getters.roles
+                return Array.isArray(arr_roles)
+            }
+
+            // better check, split em
+            var arr_roles = roles.split(',')
+            var intersection = arr_roles.filter(e => getters.roles.indexOf(e) !== -1)
+
+            return intersection.length > 0
         }
     },
     actions: {

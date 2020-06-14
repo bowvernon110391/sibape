@@ -1,116 +1,119 @@
 [
     {
-      "section": "Browse",
-      "role": "*"
+        "section": "Browse",
+        "role": "*"
     },
     {
-      "list": [
-        {
-          "item": "Dokumen",
-          "icon": "fa-file-alt",
-          "children": [
+        "role": "*",
+        "list": [
             {
-              "item": "Customs Declaration",
-              "icon": "fa-user-secret",
-              "to": "/cd"
-            },
-            {
-              "item": "Surat Penangguhan Pengeluaran",
-              "icon": "✋",
-              "to": "/spp",
-              "role": "PDTT"
-            },
-            {
-              "item": "Surat Titipan (ST)",
-              "icon": "🛅",
-              "to": "/st"
-            },
-            {
-              "item": "PIBK - Barang Penumpang",
-              "icon": "📦",
-              "to": "/pibk"
-            },
-            {
-              "item": "Pembawaan Mata Uang",
-              "icon": "💸",
-              "to": "/valas"
-            },
-            {
-              "item": "SPMB (BC 3.4)",
-              "icon": "🛫",
-              "to": "/spmb"
-            },
-            {
-              "item": "Impor Sementara",
-              "icon": "⏲️",
-              "to": "/is"
-            },
-            {
-              "item": "Carnet",
-              "icon": "🚗",
-              "to": "/carnet"
+                "item": "Dokumen",
+                "icon": "fa-file-alt",
+                "children": [
+                    {
+                        "item": "Customs Declaration",
+                        "icon": "🛃",
+                        "to": "/cd"
+                    },
+                    {
+                        "item": "Surat Penangguhan Pengeluaran",
+                        "icon": "✋",
+                        "to": "/spp",
+                        "role": "PDTT"
+                    },
+                    {
+                        "item": "Surat Titipan (ST)",
+                        "icon": "🛅",
+                        "to": "/st"
+                    },
+                    {
+                        "item": "PIBK - Barang Penumpang",
+                        "icon": "📦",
+                        "to": "/pibk"
+                    },
+                    {
+                        "item": "Pembawaan Mata Uang",
+                        "icon": "💸",
+                        "to": "/valas"
+                    },
+                    {
+                        "item": "SPMB (BC 3.4)",
+                        "icon": "🛫",
+                        "to": "/spmb"
+                    },
+                    {
+                        "item": "Impor Sementara",
+                        "icon": "⏲️",
+                        "to": "/is"
+                    },
+                    {
+                        "item": "Carnet",
+                        "icon": "🚗",
+                        "to": "/carnet"
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     },
     {
-      "section": "Referensi"
+        "section": "Referensi"
     },
     {
-      "list": [
-        {
-          "item": "Data Umum",
-          "icon": "🗄️",
-          "children": [
+        "list": [
             {
-              "item": "Kurs Pajak",
-              "icon": "💲",
-              "to": "/kurs"
-            },
-            {
-              "item": "Penumpang",
-              "icon": "👨",
-              "to": "/penumpang"
+                "item": "Data Umum",
+                "icon": "🗄️",
+                "children": [
+                    {
+                        "item": "Kurs Pajak",
+                        "icon": "💲",
+                        "to": "/kurs"
+                    },
+                    {
+                        "item": "Penumpang",
+                        "icon": "👨",
+                        "to": "/penumpang"
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     },
     {
-      "section": "Lain-lain"
+        "section": "Lain-lain",
+        "role": "KASI,CONSOLE"
     },
     {
-      "list": [
-        {
-          "item": "Perubahan/Pembatalan",
-          "icon": "fa-tools",
-          "children": [
+        "role":"KASI,CONSOLE",
+        "list": [
             {
-              "item": "Perekaman Pembatalan",
-              "icon": "fa-trash-alt",
-              "to": "/pembatalan"
+                "item": "Perubahan/Pembatalan",
+                "icon": "fa-tools",
+                "children": [
+                    {
+                        "item": "Perekaman Pembatalan",
+                        "icon": "fa-trash-alt",
+                        "to": "/pembatalan"
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     },
     {
-      "section": "Laporan"
+        "section": "Laporan"
     },
     {
-      "list": [
-        {
-          "item": "BPPM",
-          "icon": "💵",
-          "children": [
+        "list": [
             {
-              "item": "Belum Dibuatkan billing",
-              "icon": "✍️",
-              "to": "/pembatalan"
+                "item": "BPPM",
+                "icon": "💵",
+                "children": [
+                    {
+                        "item": "Belum Dibuatkan billing",
+                        "icon": "✍️",
+                        "to": "/pembatalan"
+                    }
+                ]
             }
-          ]
-        }
-      ]
+        ]
     }
-  ]
+]
