@@ -4,10 +4,12 @@
     <!-- Sidebar Navigation -->
     <side-nav :options="menuOption">
       <template #header>
-        <img src="@/assets/logo.png" height="40px" />
-        <h3>Is this okay?</h3>
+        <h3>
+          <img src="@/assets/banner_icon.png" height="32px" />
+          PATOPS
+        </h3>
         <h6>
-          <font-awesome-icon icon="user-secret" />nope.
+          versi {{ $store.getters.version }}
         </h6>
       </template>
     </side-nav>
@@ -16,6 +18,7 @@
       <!-- Navbar -->
       <navbar />
       <!-- Real container -->
+      <vuescroll>
       <b-container id="contents-section" class="pt-2" fluid>
         <!-- breadcrumb -->
         <breadcrumb/>
@@ -25,6 +28,7 @@
         <hr />
         <router-view></router-view>
       </b-container>
+      </vuescroll>
 
       <b-container fluid>
         <hr />&copy;
@@ -43,6 +47,8 @@ import Navbar from "@/components/Navbar";
 import ModalSelectLocation from "@/components/ModalSelectLocation";
 import SideNav from "@/components/SideNav";
 import Breadcrumb from '@/components/Breadcrumb'
+
+import vuescroll from 'vuescroll'
 
 import userChecker from "../mixins/userChecker";
 import appMethod from "../mixins/appMethod";
@@ -77,7 +83,8 @@ export default {
     Navbar,
     ModalSelectLocation,
     SideNav,
-    Breadcrumb
+    Breadcrumb,
+    vuescroll
   }
 };
 </script>
