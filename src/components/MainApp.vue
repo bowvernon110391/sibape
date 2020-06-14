@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="dark" id="navbar">
-            <b-container>
+            <b-container fluid>
                 <b-navbar-brand to="/">
                     <img style="height: 25px;" src="../assets/banner_icon.png"/>
                     <div class="banner-text d-inline-block">
@@ -57,30 +57,32 @@
                             </template>
                             <b-dropdown-item :href="profileUrl" target="blank"><font-awesome-icon icon="user"></font-awesome-icon> Profile</b-dropdown-item>
                             <!-- <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item> -->
-                            <b-dropdown-item @click="viewSelectLocation = true"><font-awesome-icon icon="map-marker-alt"></font-awesome-icon> Switch Location</b-dropdown-item>
+                            <b-dropdown-item v-b-modal.modal-select-location><font-awesome-icon icon="map-marker-alt"></font-awesome-icon> Switch Location</b-dropdown-item>
                             <b-dropdown-item @click="logout"><font-awesome-icon icon="power-off"></font-awesome-icon> Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
             </b-container>
         </b-navbar>
-        <b-container id="contents-section" class="pt-2">
+        <b-container id="contents-section" class="pt-2" fluid>
             <!-- breadcrumb -->
             <b-breadcrumb class="border rounded bg-light shadow">
                 <b-breadcrumb-item v-for="(bc, id) in this.validBreadCrumbs" :key="id" :to="bc.path" :disabled="bc.disabled" :active="bc.disabled">{{ bc.title }}</b-breadcrumb-item>
             </b-breadcrumb>
-            <span class="h4 data-title">{{ this.$route.meta.title }}</span>
-            <hr />
+            <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
+            <hr /> -->
+            <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
+            <hr>
             <router-view></router-view>
         </b-container>
             
-        <b-container>
-            <hr />
+        <b-container fluid>
+            <hr>
             &copy; <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
         </b-container>
 
         <modal-select-location
-            v-model="viewSelectLocation"
+            id="modal-select-location"
             size="sm">
         </modal-select-location>
     </div>
@@ -100,7 +102,7 @@ export default {
     data () {
         return {
             profileUrl : 'http://apps.sh1.tech/',
-            viewSelectLocation: false
+            // viewSelectLocation: false
         }
     },
 
