@@ -1,5 +1,5 @@
 <template>
-<!-- Wrapper -->
+  <!-- Wrapper -->
   <div class="wrapper">
     <!-- Sidebar Navigation -->
     <side-nav :options="menuOption">
@@ -8,9 +8,7 @@
           <img src="@/assets/banner_icon.png" height="32px" />
           PATOPS
         </h3>
-        <h6>
-          versi {{ $store.getters.version }}
-        </h6>
+        <h6>versi {{ $store.getters.version }}</h6>
       </template>
     </side-nav>
     <!-- The content section houses page contents -->
@@ -18,23 +16,22 @@
       <!-- Navbar -->
       <navbar />
       <!-- Real container -->
-      <vuescroll>
-      <b-container id="contents-section" class="pt-2" fluid>
-        <!-- breadcrumb -->
-        <breadcrumb/>
-        <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
-        <hr />-->
-        <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
-        <hr />
-        <router-view></router-view>
-      </b-container>
-      </vuescroll>
+        <b-container id="contents-section" class="pt-2" fluid>
+          <!-- breadcrumb -->
+          <breadcrumb />
+          <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
+          <hr />-->
+          <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
+          <hr />
+          <router-view></router-view>
+        </b-container>
 
       <b-container fluid>
         <hr />&copy;
         <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
       </b-container>
     </div>
+  
 
     <modal-select-location id="modal-select-location" size="sm"></modal-select-location>
   </div>
@@ -46,9 +43,7 @@ import { mapGetters, mapMutations } from "vuex";
 import Navbar from "@/components/Navbar";
 import ModalSelectLocation from "@/components/ModalSelectLocation";
 import SideNav from "@/components/SideNav";
-import Breadcrumb from '@/components/Breadcrumb'
-
-import vuescroll from 'vuescroll'
+import Breadcrumb from "@/components/Breadcrumb";
 
 import userChecker from "../mixins/userChecker";
 import appMethod from "../mixins/appMethod";
@@ -60,12 +55,19 @@ export default {
   mixins: [userChecker, appMethod, menuGenerator],
 
   methods: {
-    checkRole (roles) {
-      var result = this.$store.getters.hasRole(roles)
+    checkRole(roles) {
+      var result = this.$store.getters.hasRole(roles);
       // console.log("Checking roles: ", roles, "result: ", result)
       // console.log("Checking against: ", this.$store.getters.roles)
-      console.log("Checking roles [ ", roles, "] <-> ", this.$store.getters.roles, ' : ', result)
-      return result
+      console.log(
+        "Checking roles [ ",
+        roles,
+        "] <-> ",
+        this.$store.getters.roles,
+        " : ",
+        result
+      );
+      return result;
     }
   },
 
@@ -83,8 +85,7 @@ export default {
     Navbar,
     ModalSelectLocation,
     SideNav,
-    Breadcrumb,
-    vuescroll
+    Breadcrumb
   }
 };
 </script>
