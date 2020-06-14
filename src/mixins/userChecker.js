@@ -13,7 +13,8 @@ export default {
         },
 
         hasRole: (roles) => {
-            if (!Array.isArray(roles)) {
+            return store.getters.hasRole(roles)
+            /* if (!Array.isArray(roles)) {
                 console.log("Convertin roles criteria to array: ", roles)
                 if (typeof roles === 'undefined' || roles === null) {
                     roles = []
@@ -43,7 +44,7 @@ export default {
             var result = store.getters.roles.filter(e => roles.indexOf(e) !== -1)
             console.log('result: ', result)
 
-            return result.length > 0
+            return result.length > 0 */
         }
     }
 }
