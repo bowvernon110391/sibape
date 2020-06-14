@@ -1,5 +1,7 @@
 import store from '../store'
 
+const axios = require('axios')
+
 export default {
     data () {
         return {
