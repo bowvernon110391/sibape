@@ -150,7 +150,7 @@
                     <b-col>
                         <b-form-group
                             label="Keterangan"
-                            description="catatan tambahan untuk SPP ini">
+                            description="catatan tambahan untuk ST ini">
                             <b-form-textarea
                                 v-model="keterangan"
                                 :disabled="!simulate || disabled">
