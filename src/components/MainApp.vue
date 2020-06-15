@@ -12,15 +12,15 @@
       </template>
     </side-nav>
     <!-- The content section houses page contents -->
-    <div id="content" :class="[{ active: $store.getters.sidebar }, 'py-3']">
+    <div id="content" :class="[{ active: $store.getters.sidebar }]">
       <vuescroll :ops="{ bar: { background: '#aaa' } }">
-        <div class="px-3">
+        <div class="p-3">
         <!-- Navbar -->
         <navbar />
+        <!-- Breadcrumb -->
+        <breadcrumb class="mt-2 mb-3" />
         <!-- Real container -->
-        <b-container id="contents-section" class="pt-2">
-          <!-- breadcrumb -->
-          <breadcrumb />
+        <b-container fluid id="contents-section" class="mt-2">
           <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
           <hr />-->
           <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
@@ -30,10 +30,10 @@
           <router-view></router-view>
         </b-container>
 
-        <b-container fluid>
+        <div>
           <hr />&copy;
           <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
-        </b-container>
+        </div>
         </div>
       </vuescroll>
     </div>
