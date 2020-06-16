@@ -15,12 +15,12 @@
     <div id="content" :class="[{ active: $store.getters.sidebar }]">
       <vuescroll :ops="{ bar: { background: '#aaa' } }">
         <div class="p-3">
+        <!-- Real container -->
+        <b-container fluid id="contents-section" class="mt-2">
         <!-- Navbar -->
         <navbar />
         <!-- Breadcrumb -->
         <breadcrumb class="mt-2 mb-3" />
-        <!-- Real container -->
-        <b-container fluid id="contents-section" class="mt-2">
           <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
           <hr />-->
           <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>

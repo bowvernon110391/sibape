@@ -120,6 +120,11 @@ class ApiSibape {
         })
     }
 
+    // getHSById (id) : GET /hs/:id
+    getHSById (id) {
+        return this.instance.get('/hs/' + id)
+    }
+
     // getPelabuhan (param) : GET /pelabuhan
     getPelabuhan (param) {
         return this.instance.get('/pelabuhan', {

@@ -63,7 +63,7 @@
                     <b-form-group
                         label="Kode HS">
                         <select-hs 
-                            v-model="tempData.hscode" 
+                            v-model="tempData.hsid" 
                             :disabled="!canEdit"
                             :initial-options="tempData.refHs.data"
                             :search-on-empty="!tempData.id">

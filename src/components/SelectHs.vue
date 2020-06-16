@@ -1,11 +1,11 @@
 <template>
    <api-select
       label="uraian"
-      :reduce="e => e.kode"
+      :reduce="e => e.id"
       :selectable="e => e.usable"
       :get-option-key="e => e.id"
       :search-callback="searchHS"
-      :sync-callback="searchHS"
+      :sync-callback="syncHS"
       v-bind="$attrs"
       v-on="$listeners"
       >
@@ -65,6 +65,19 @@ export default {
                spinner(false)
                // alert("Failed to get hs!")
                this.handleError(e)
+         })
+      },
+
+      syncHS (q, spinner, vm) {
+         spinner(true)
+         this.api.getHSById(q)
+         .then(e => {
+            spinner(false)
+            vm.setOptions([e.data.data])
+         })
+         .catch(e => {
+            spinner(false)
+            this.handleError(e)
          })
       }
    }
