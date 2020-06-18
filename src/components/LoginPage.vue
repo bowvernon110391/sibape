@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 const axios = require('axios').default
 
 export default {
@@ -98,6 +100,8 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['sso']),
+
         environment: function () {
             console.log(process)
             return process.NODE_ENV
@@ -111,6 +115,10 @@ export default {
             }
         },
         loginReady () {
+            if (this.sso.attached) {
+                this.loginStatus = ''
+                // return true
+            }
             return this.loginStatus.length == 0
         }
     },
@@ -124,7 +132,7 @@ export default {
             this.errorMsg = ''
             this.loginStatus = 'Logging in... '
 
-            const fd = new FormData()
+            /* const fd = new FormData()
             fd.set('username', this.username)
             fd.set('password', this.password)
 
@@ -137,7 +145,8 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-            })
+            }) */
+            this.sso.login(this.username, this.password)
                 .then( (e) => {
                     console.log('login success')
                     console.log(e)
@@ -168,10 +177,11 @@ export default {
                 })
         },
         getUserInfo () {
-            axios({
+            /* axios({
                 method: 'get',
                 url: '/static/sso/api.php?command=getUserInfo'
-            })
+            }) */
+            this.sso.getUserInfo()
             .then((e) => {
                 this.userInfo = e
             })
@@ -183,7 +193,7 @@ export default {
     created () {
         var vm = this
 
-        // first, attaching
+        /* // first, attaching
         this.loginStatus = "Attaching Session... "
         $.ajax({
             url: '/static/sso/api.php?command=attach',
@@ -201,7 +211,7 @@ export default {
         })
         .always(function () {
             vm.loginStatus = ''
-        })
+        }) */
     }
 }
 </script>

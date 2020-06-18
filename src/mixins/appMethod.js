@@ -16,10 +16,11 @@ export default {
             store.commit('setBusyState', true)
 
             // call api
-            axios({
+            /* axios({
                 method: 'post',
                 url: '/static/sso/api.php?command=logout'
-            })
+            }) */
+            store.getters.sso.logout()
             .then(e => {
                 store.commit('setBusyState', false)
                 // clear local data

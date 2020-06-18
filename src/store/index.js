@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ApiSibape } from './api-sibape'
+import { SSO } from './sso'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         lokasi: 'KANTOR',   // data lokasi
         // backend SiBAPE
         api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
+        sso: new SSO(),
         refData: {
             kemasan: [],
             negara: [],
@@ -86,6 +88,9 @@ export default new Vuex.Store({
         },
         api: state => {
             return state.api
+        },
+        sso: state => {
+            return state.sso
         },
         negara: state => {
             return state.refData.negara

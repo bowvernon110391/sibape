@@ -27,7 +27,7 @@ import BrowsePembatalan from '@/components/BrowsePembatalan'
 
 import store from '../store'
 
-const axios = require('axios').default
+// const axios = require('axios').default
 const cookie = require('cookie')
 
 Vue.use(Router)
@@ -218,7 +218,7 @@ const router = new Router({
 })
 
 // set navigation guards here
-router.beforeEach((to, from, next) => {  
+router.beforeEach(async (to, from, next) => {  
   console.log('-->>')
   console.log(to)
 
@@ -289,6 +289,15 @@ router.beforeEach((to, from, next) => {
     var cookies = cookie.parse(document.cookie) 
     console.log(cookies)     
     var token = cookies.sso_token_5
+
+    var tries = 0
+    while (typeof token === 'undefined' || !token) {
+      console.log("No token found. Regenerating...tries: ", tries++)
+      // welp, not attached yet. force attachment
+      await store.getters.sso.attach()
+      cookies = cookie.parse(document.cookie)
+      token = cookies.sso_token_5
+    }
     
     // use token from .env if there's one
     if (process.env.VUE_APP_TOKEN) {
@@ -308,10 +317,11 @@ router.beforeEach((to, from, next) => {
     } else {
       // okay, token exists meaning it must have been attached (or not)
       // 1st, request user info from sso
-      axios({
+      /* axios({
         method: 'get',
         url: '/static/sso/api.php?command=getUserInfo'
-      })
+      }) */
+      store.getters.sso.getUserInfo()
       .then((e) => {
         store.commit('setBusyState', false)
         // we got user info! but is it empty?
