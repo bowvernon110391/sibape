@@ -72,7 +72,7 @@
 import CardViewDetailCd from '@/components/CardViewDetailCd'
 
 // default json for cdDetail
-import defaultCdDetail from './defaultCdDetail.json'
+// import defaultCdDetail from './defaultCdDetail.json'
 
 // mixin for checking user's shits
 import userChecker from '../mixins/userChecker'
@@ -172,8 +172,8 @@ export default {
         }
     },
     mounted () {
-        console.log('default cd Detail:')
-        console.log(defaultCdDetail)
+        // console.log('default cd Detail:')
+        // console.log(defaultCdDetail)
     }
 }
 </script>

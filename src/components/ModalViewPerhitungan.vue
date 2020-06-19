@@ -234,7 +234,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
-import defaultHitungCd from './defaultHitungCd.json'
+import defaultHitungCd from '@/defaults/defaultHitungCd'
 
 import Datepicker from '@/components/Datepicker'
 import SelectBpj from '@/components/SelectBpj'

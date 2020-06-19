@@ -368,7 +368,7 @@ import vSelect from 'vue-select'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 // import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
-import ViewCdDetails from '@/components/ViewCdDetails'
+import ViewCdDetails from '@/views/ViewCdDetails'
 
 // utk menampilkan pungutan
 import ModalViewPerhitungan from '@/components/ModalViewPerhitungan'
@@ -389,7 +389,7 @@ import ModalViewSt from '@/components/ModalViewSt'
 import AttachmentBucket from '@/components/AttachmentBucket'
 
 // the default cd header
-import defaultCd from './defaultCd.json'
+import defaultCd from '@/defaults/defaultCd'
 
 // for deep copy
 const cloneDeep = require('clone-deep')

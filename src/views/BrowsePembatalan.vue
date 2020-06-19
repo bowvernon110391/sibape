@@ -60,7 +60,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
 // import TableCd from '@/components/TableCd'
 import TablePembatalan from '@/components/TablePembatalan'
-import ViewPembatalan from '@/components/ViewPembatalan'
+import ViewPembatalan from '@/views/ViewPembatalan'
 
 export default {
     mixins: [ axiosErrorHandler, userChecker ],

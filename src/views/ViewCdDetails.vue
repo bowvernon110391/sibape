@@ -56,7 +56,7 @@ import PaginatedBrowser from '@/components/PaginatedBrowser'
 import TableCdDetails from '@/components/TableCdDetails'
 import ModalViewDetailCd from '@/components/ModalViewDetailCd'
 // for default data
-import defaultCdDetail from './defaultCdDetail.json'
+import defaultCdDetail from '@/defaults/defaultCdDetail'
 // clone deep shit
 const cloneDeep = require('clone-deep')
 

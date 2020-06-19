@@ -1,12 +1,12 @@
 <template>
-    <div v-if="dataSpp.cd">
+    <div v-if="dataSt.cd">
         <!-- Title at the top, showing lock status too -->
         <h4>
             <template v-if="!isNew">
-                <span :class="[ dataSpp.is_locked ? 'bg-danger' : 'bg-primary', 'text-light', 'p-2', 'shadow', 'border', 'border-dark', 'rounded']">SPP #{{ id }} <b-badge variant="light"><font-awesome-icon :icon="dataSpp.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataSpp.is_locked ? "LOCKED" : "OPEN" }}</b-badge></span>
+                <span :class="[ dataSt.is_locked ? 'bg-danger' : 'bg-primary', 'text-light', 'p-2', 'shadow', 'border', 'border-dark', 'rounded']">ST #{{ id }} <b-badge variant="light"><font-awesome-icon :icon="dataSt.is_locked ? 'lock' : 'lock-open'"></font-awesome-icon> {{ dataSt.is_locked ? "LOCKED" : "OPEN" }}</b-badge></span>
             </template>
             <template v-else>
-                Input SPP Baru
+                Input ST Baru
             </template>
         </h4>
         <!-- Tombol Penyelesaian? -->
@@ -17,7 +17,7 @@
                         <!-- buatkan / lihat pibk -->
                         <b-button variant="success">
                             <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
-                            <template v-if="sppHasLink('pibk')">
+                            <template v-if="stHasLink('pibk')">
                                 Lihat PIBK
                             </template>
                             <template v-else>
@@ -28,7 +28,7 @@
 
                     <b-button-group size="sm" class="shadow mt-2 mt-md-0">
                         <!-- apabila dijadikan impor sementara -->
-                        <b-button variant="dark" @click="printSpp">
+                        <b-button variant="dark" @click="printSt">
                             <font-awesome-icon icon="print">
                             </font-awesome-icon>
                             Cetak
@@ -39,15 +39,32 @@
             </b-col>
         </b-row>
 
+        <!-- Jenis ST -->
+        <b-row>
+            <b-col md="6">
+                <b-form-group>
+                    <template #label>
+                        Jenis ST/<em>Type of detention</em>
+                    </template>
+                    <b-form-radio-group 
+                        v-model="dataSt.jenis"
+                        :disabled="disableInput">
+                        <b-form-radio value="KANTOR">🏢Kantor/<em>Office</em></b-form-radio>
+                        <b-form-radio value="TERMINAL">✈️Terminal</b-form-radio>
+                    </b-form-radio-group>
+                </b-form-group>
+            </b-col>
+        </b-row>
+
         <!-- Nomor & Tgl Dokumen + Alamat -->
         <b-row>
             <!-- 1st col, nomor & tgl dokumen -->
             <b-col md="6">
                 <b-form-group label="Nomor &amp; Tgl SPP">
                     <b-input-group>
-                        <b-form-input class="rounded-left flex-grow-1" v-model="dataSpp.nomor_lengkap" type="text" disabled></b-form-input>
+                        <b-form-input class="rounded-left flex-grow-1" v-model="dataSt.nomor_lengkap" type="text" disabled></b-form-input>
                         <template v-slot:append>
-                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataSpp.tgl_dok" :disabled="disableInput" style="max-width: 150px"></datepicker>
+                            <datepicker class="rounded-right" id="tgl_dok" v-model="dataSt.tgl_dok" :disabled="disableInput" style="max-width: 150px"></datepicker>
                         </template>
                     </b-input-group>
                 </b-form-group>
@@ -57,11 +74,11 @@
             <b-col md="6">
                 <b-form-group label="Penumpang" label-for="penumpang">
                     <select-penumpang-2 
-                        v-if="dataSpp.cd"
-                        v-model="dataSpp.cd.data.penumpang.data.id" 
+                        v-if="dataSt.cd"
+                        v-model="dataSt.cd.data.penumpang.data.id" 
                         id="penumpang" 
                         :disabled="disableInput" 
-                        :initial-options="dataSpp.cd.data.penumpang.data" 
+                        :initial-options="dataSt.cd.data.penumpang.data" 
                         :search-on-empty="isNew"></select-penumpang-2>
                 </b-form-group>
             </b-col>
@@ -74,7 +91,7 @@
                 <b-form-group label="Alamat" label-for="alamat">
                     <b-form-textarea 
                         :disabled="disableInput"
-                        v-model="dataSpp.cd.data.alamat">
+                        v-model="dataSt.cd.data.alamat">
                     </b-form-textarea>
                 </b-form-group>
             </b-col>
@@ -82,12 +99,12 @@
             <b-col md="6">
                 <b-form-group label="Asal/Country of origin" label-for="negara-asal">
                     <!-- <b-form-input 
-                        v-model="dataSpp.negara_asal.data.kode" 
+                        v-model="dataSt.negara_asal.data.kode" 
                         type="text" 
                         id="negara-asal" 
                         :disabled="disableInput"></b-form-input> -->
                     <select-negara
-                        v-model="dataSpp.negara_asal.data.kode"
+                        v-model="dataSt.negara_asal.data.kode"
                         id="negara-asal"
                         :disabled="disableInput"></select-negara>
                 </b-form-group>
@@ -101,14 +118,14 @@
                 <b-form-group label="Flight/Voyage No.">
                     <b-input-group>
                         <b-form-input
-                            v-model="dataSpp.cd.data.no_flight"
+                            v-model="dataSt.cd.data.no_flight"
                             :disabled="disableInput"/>
                         <template v-slot:append>
                             <select-airline 
                                 :tabindex="9999"
                                 style="margin: 0 2px; width: 100%"
                                 :disabled="disableInput"
-                                v-model="dataSpp.cd.data.kd_airline"/>
+                                v-model="dataSt.cd.data.kd_airline"/>
                         </template>
                     </b-input-group>
                 </b-form-group>
@@ -120,7 +137,7 @@
                 <b-form-group label="Keterangan" label-for="keterangan">
                     <b-form-textarea
                         id="keterangan"
-                        v-model="dataSpp.keterangan"
+                        v-model="dataSt.keterangan"
                         :disabled="disableInput">
                     </b-form-textarea>
                 </b-form-group>
@@ -140,7 +157,7 @@
         <template v-if="!isNew">
             <hr>
             <view-cd-details 
-                :cd-id="dataSpp.cd.data.id"
+                :cd-id="dataSt.cd.data.id"
                 :disabled="disableInput"
                 hide-satuan
                 hide-netto>
@@ -171,7 +188,7 @@ import Datepicker from '@/components/Datepicker'
 // import SelectPelabuhan from '@/components/SelectPelabuhan'
 // import CardViewDetailCd from '@/components/CardViewDetailCd'
 import { mapMutations, mapGetters } from 'vuex'
-import ViewCdDetails from '@/components/ViewCdDetails'
+import ViewCdDetails from '@/views/ViewCdDetails'
 
 // utk menampilkan pdf
 import ModalViewPdf from '@/components/ModalViewPdf'
@@ -180,7 +197,8 @@ import ModalViewPdf from '@/components/ModalViewPdf'
 import SelectKurs from '@/components/SelectKurs'
 
 // the default cd header
-import defaultSpp from './defaultSpp.json'
+// import defaultSpp from './defaultSpp.json'
+import defaultSt from '@/defaults/defaultSt'
 
 // for deep copy
 const cloneDeep = require('clone-deep')
@@ -198,12 +216,12 @@ export default {
     },
     data() {
         return {
-            dataSpp: this.defaultData(),
+            dataSt: this.defaultData(),
 
             // for printing
             viewPrintDialog: false,
             pdfUrl: null,
-            altFilename: 'SPP'
+            altFilename: 'ST'
         }
     },
     computed: {
@@ -214,7 +232,7 @@ export default {
         disableInput () {
            // only disable input if user can't edit
            // and the doc is locked
-           return !this.canEdit && this.dataSpp.is_locked
+           return !this.canEdit && this.dataSt.is_locked
         },
 
         // check if this is a new data
@@ -234,7 +252,7 @@ export default {
         ...mapMutations(['setBusyState']),
         defaultData: function() {
             return cloneDeep({
-                ...defaultSpp,
+                ...defaultSt,
                 lokasi: this.lokasi
             })
         },
@@ -243,11 +261,11 @@ export default {
             return this.$options.filters.formatCurrency(value)
         },
 
-        loadSppData (id) {
+        loadStData (id) {
             if (id == 'new') {
                 console.log("Input SPP Baru di sini!")
                 // 1st, init with empty data
-                this.dataSpp = this.defaultData()
+                this.dataSt = this.defaultData()
                 // 2nd, 
 
                 return
@@ -256,10 +274,10 @@ export default {
             this.setBusyState(true)
             // api
             const vm = this
-            this.api.getSppById(id)
+            this.api.getStById(id)
                 .then(e => {
                     vm.setBusyState(false)
-                    vm.dataSpp = e.data.data
+                    vm.dataSt = e.data.data
                 })
                 .catch(e => {
                     vm.setBusyState(false)
@@ -267,7 +285,7 @@ export default {
 
                     // kalo gk ketemu, replace ke new
                     vm.$router.push({
-                       path: '/spp'
+                       path: '/st'
                     })
                 })
         },
@@ -277,26 +295,26 @@ export default {
         },
 
         // when print button clicked
-        printSpp () {
+        printSt () {
             // set data
-            this.pdfUrl = this.api.generatePdfUrl('spp', this.id)
+            this.pdfUrl = this.api.generatePdfUrl('st', this.id)
             this.viewPrintDialog = true
-            this.altFilename = `spp-${this.id}`
+            this.altFilename = `st-${this.id}`
         },
 
         // check if cd has some related documents
-        sppHasLink: function (rel) {
-            if (this.dataSpp.links) {
+        stHasLink: function (rel) {
+            if (this.dataSt.links) {
                 // check by filtering it
-                return this.dataSpp.links.filter(e => e.rel == rel).length > 0
+                return this.dataSt.links.filter(e => e.rel == rel).length > 0
             }
             return false
         },
 
         // grab link detail
-        sppGetLinkDetails: function (rel) {
-            if (this.dataSpp.links) {
-                var filtered = this.dataSpp.links.filter(e => e.rel == rel)
+        stGetLinkDetails: function (rel) {
+            if (this.dataSt.links) {
+                var filtered = this.dataSt.links.filter(e => e.rel == rel)
 
                 if (filtered.length) {
                     var link = filtered[0]
@@ -311,7 +329,7 @@ export default {
     },
     created () {
         // this.setBusyState(true)
-        this.loadSppData(this.id)
+        this.loadStData(this.id)
     },
     mounted () {
         // this.setBusyState(false)
@@ -324,7 +342,7 @@ export default {
         id: {
             immediate: false,
             handler (newVal) {
-                this.loadSppData(newVal)
+                this.loadStData(newVal)
             }
         }
     }

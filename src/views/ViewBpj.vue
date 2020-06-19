@@ -236,7 +236,7 @@ import { mapMutations, mapGetters } from 'vuex'
 import SelectKurs from '@/components/SelectKurs'
 
 // the default cd header
-import defaultBpj from './defaultBpj.json'
+import defaultBpj from '@/defaults/defaultBpj'
 
 // for deep copy
 const cloneDeep = require('clone-deep')

@@ -1,29 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from '@/components/HomePage'
-import MainApp from '@/components/MainApp'
-import BrowseCd from '@/components/BrowseCd'
-import ViewCd from '@/components/ViewCd'
 
-import DummyView from '@/components/DummyView'
-import LoginPage from '@/components/LoginPage'
-import PageNotFound from '@/components/PageNotFound'
-import BrowsePenumpang from '@/components/BrowsePenumpang'
-import BrowseKurs from '@/components/BrowseKurs'
+import HomePage from '@/views/HomePage'
+import MainApp from '@/views/MainApp'
+import BrowseCd from '@/views/BrowseCd'
+import ViewCd from '@/views/ViewCd'
+
+import DummyView from '@/views/DummyView'
+import LoginPage from '@/views/LoginPage'
+import PageNotFound from '@/views/PageNotFound'
+import BrowsePenumpang from '@/views/BrowsePenumpang'
+import BrowseKurs from '@/views/BrowseKurs'
 // import PrintSppbmcp from '@/components/PrintSppbmcp'
 
-import BrowseBpj from '@/components/BrowseBpj'
-import ViewBpj from '@/components/ViewBpj'
+import BrowseBpj from '@/views/BrowseBpj'
+import ViewBpj from '@/views/ViewBpj'
 
-import BrowseSpp from '@/components/BrowseSpp'
-import ViewSpp from '@/components/ViewSpp'
+import BrowseSpp from '@/views/BrowseSpp'
+import ViewSpp from '@/views/ViewSpp'
 
 // ST
-import BrowseSt from '@/components/BrowseSt'
-import ViewSt from '@/components/ViewSt'
+import BrowseSt from '@/views/BrowseSt'
+import ViewSt from '@/views/ViewSt'
 
 // Pembatalan
-import BrowsePembatalan from '@/components/BrowsePembatalan'
+import BrowsePembatalan from '@/views/BrowsePembatalan'
 
 import store from '../store'
 

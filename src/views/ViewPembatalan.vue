@@ -91,7 +91,7 @@
 import Datepicker from '@/components/Datepicker'
 
 // default data
-import defaultPembatalan from './defaultPembatalan.json'
+import defaultPembatalan from '@/defaults/defaultPembatalan'
 
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import userChecker from '../mixins/userChecker'
