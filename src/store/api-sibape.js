@@ -479,6 +479,13 @@ class ApiSibape {
     deletePembatalanDetail (detailId) {
         return this.instance.delete(`/pembatalan/detail/${detailId}`)
     }
+
+    // ===========================SSO USER QUERY===============================================
+    getPemeriksa (params) {
+        return this.instance.get('/pemeriksa', {
+            params: params
+        })
+    }
 }
 
 export {

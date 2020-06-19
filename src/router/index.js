@@ -11,6 +11,8 @@ import LoginPage from '@/views/LoginPage'
 import PageNotFound from '@/views/PageNotFound'
 import Forbidden from '@/views/Forbidden'
 
+import TestPage from '@/views/TestPage'
+
 import BrowsePenumpang from '@/views/BrowsePenumpang'
 import BrowseKurs from '@/views/BrowseKurs'
 // import PrintSppbmcp from '@/components/PrintSppbmcp'
@@ -57,6 +59,14 @@ const router = new Router({
           component: HomePage,
           meta: {
             title: 'Home Page'
+          }
+        },
+        {
+          path: 'test',
+          name: 'TestPage',
+          component: TestPage,
+          meta: {
+            title: 'Test Page'
           }
         },
         { /* /cd */
