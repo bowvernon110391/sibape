@@ -21,7 +21,7 @@ export default new Vuex.Store({
         lokasi: 'KANTOR',   // data lokasi
         // backend SiBAPE
         api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
-        sso: new SSO(),
+        sso: new SSO(process.env.NODE_ENV == 'production'),
         refData: {
             kemasan: [],
             negara: [],

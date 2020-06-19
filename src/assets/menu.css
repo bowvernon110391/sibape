@@ -126,7 +126,24 @@
   text-align: center;
 }
 
+/* first dropdown level style */
+#sidebar ul ul a:hover {
+  border-left: 0.25rem solid rgba(244,37,76,0.75);
+}
+
 #sidebar ul ul a {
+  border-left: 0.25rem solid rgba(76, 137, 216, 0.5);
+  padding-left: 20px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* second dropdown level style */
+#sidebar ul ul ul a:hover {
+  border-left: 0.25rem solid rgba(37,176,244,0.75);
+}
+
+#sidebar ul ul ul a {
+  border-left: 0.25rem solid rgba(76, 216, 137, 0.5);
   padding-left: 20px;
   background: rgba(0, 0, 0, 0.2);
 }
