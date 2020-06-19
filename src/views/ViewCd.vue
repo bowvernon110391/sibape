@@ -745,14 +745,16 @@ export default {
         },
 
         'dataCd.declare_flags': {
-            immediate: true,
+            immediate: false,
             deep: true,
             handler(newVal, oldVal) {
-                if (!oldVal) {
+                return
+                if (!newVal || !oldVal) {
                     return
                 }
                 // gotta remove (switch) the flags of personal & non personal use
-                console.log('deklarasi: ', newVal)
+                console.log('new deklarasi: ', newVal)
+                console.log('old deklarasi: ', oldVal)
 
                 // grab difference?
                 let intersection = newVal.filter(e => !oldVal.includes(e))
