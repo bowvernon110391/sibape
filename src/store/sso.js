@@ -5,16 +5,18 @@ const axios = require('axios').default
  * real file ada di /static/sso/api.php
  */
 
- class SSO {
+class SSO {
     //  constructor does nothing I guess
-    constructor() {
+    constructor(attachOnInit) {
         // init variables
         this.attached = false
 
         // maybe do some attachment when started?
         try {
             // await on ajax request (serialize it)
-            this.attach()
+            if (attachOnInit) {
+                this.attach()
+            }
 
             console.log('SSO SESSION ATTACHED!')
         } catch (e) {
@@ -23,22 +25,22 @@ const axios = require('axios').default
     }
 
     // attach, make it async
-    async attach () {
+    async attach() {
         var me = this
         var ret = await $.ajax({
             url: '/static/sso/api.php?command=attach',
             crossDomain: true,
             dataType: 'jsonp'
         })
-        .done((e) => {
-            me.attached = true
-        })
+            .done((e) => {
+                me.attached = true
+            })
 
         return ret
     }
 
     // just login
-    login (username, password) {
+    login(username, password) {
         const fd = new FormData()
 
         fd.set('username', username)
@@ -57,7 +59,7 @@ const axios = require('axios').default
     }
 
     // logout using post
-    logout () {
+    logout() {
         return axios({
             method: 'post',
             url: '/static/sso/api.php?command=logout'
@@ -65,13 +67,13 @@ const axios = require('axios').default
     }
 
     // get user info
-    getUserInfo () {
+    getUserInfo() {
         return axios({
             method: 'get',
             url: '/static/sso/api.php?command=getUserInfo'
         })
     }
- }
+}
 
 //  export list
 export {
