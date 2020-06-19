@@ -292,7 +292,7 @@ router.beforeEach(async (to, from, next) => {
 
     var tries = 0
     while (typeof token === 'undefined' || !token) {
-      console.log("No token found. Regenerating...tries: ", tries++)
+      console.log("No token found. Regenerating...tries: ", ++tries)
       // welp, not attached yet. force attachment
       await store.getters.sso.attach()
       cookies = cookie.parse(document.cookie)
