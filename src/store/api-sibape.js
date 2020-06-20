@@ -444,6 +444,18 @@ class ApiSibape {
     deleteAttachment (id) {
         return this.instance.delete('/lampiran/' + id)
     }
+
+    // this downloads uri
+    downloadUri (uri, headers, timeout) {
+        return this.instance.get(uri, {
+            responseType: 'arraybuffer',
+            headers: {
+                ...this.instance.defaults.headers,
+                ...headers
+            },
+            timeout : timeout || this.instance.timeout
+        })
+    }
     
     //===================RESOURCE : PEMBATALAN======================================================
     // getPembatalan () : GET /pembatalan

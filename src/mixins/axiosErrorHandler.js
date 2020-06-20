@@ -20,14 +20,32 @@ const axiosErrorHandler = {
             var msg = '<GENERIC ERROR TEXT>'
             // e is axios error
             if (e.response) {
-                // got response
+                // console.log("Got error response type: ", typeof e.response.data)
+                // got response, but we must convert if the response is in array buffer
+                if (e.response.data && e.response.data instanceof ArrayBuffer) {
+                    console.log('Parsing arraybuffer error object...', e.response.data)
+                    var jsonString = String.fromCharCode.apply(null, new Uint8Array(e.response.data))
+                    console.log(jsonString)
+
+                    try {
+                        var jsonObj = JSON.parse(jsonString)
+                        console.log('parsed: ', jsonObj)
+                        e.response.data = jsonObj
+                    } catch (error) {
+                        // do nothing...
+                        console.log('json parsing failed: ', error)
+                    }
+
+                }
+
+                // continue as usual
                 if (e.response.data && e.response.data.error) {
                     // stylized error
                     code = e.response.data.error.http_code
                     msg = e.response.data.error.message
                 } else {
-                    code = e.status
-                    msg = e.statusText
+                    code = e.response.status
+                    msg = e.response.statusText
                 }
             } else {
                 code = '?'

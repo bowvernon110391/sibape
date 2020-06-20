@@ -24,7 +24,11 @@
             :disabled="busy"
             @click="excelData = null"
           >Clear Data</b-button>
-          <b-button variant="warning" class="shadow" :disabled="busy" @click="redirect">Redirect</b-button>
+          <b-button variant="warning" class="shadow mr-2" :disabled="busy" @click="redirect">Redirect</b-button>
+          <b-button variant="info" class="shadow" :disabled="downloading" @click="downloadKurs">
+            Download Kurs
+            <b-spinner variant="light" small v-if="downloading"/>
+          </b-button>
         </b-col>
       </b-row>
 
@@ -74,6 +78,8 @@ import SelectPemeriksa from "@/components/SelectPemeriksa";
 import { mapGetters } from "vuex";
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 
+const fileDownload = require('js-file-download')
+
 export default {
   mixins: [axiosErrorHandler],
 
@@ -88,7 +94,8 @@ export default {
       busy: false,
       uploaded: 0,
       excelFile: null,
-      excelData: null
+      excelData: null,
+      downloading: false
     };
   },
 
@@ -144,6 +151,34 @@ export default {
       this.$router.push({
         path: `/test?q=someshit`
       });
+    },
+
+    downloadKurs() {
+      // this.busy = true
+      this.downloading = true
+
+      var vm = this
+
+      this.api.downloadUri('/excel/kurs')
+      .then(e => {
+        console.log(e)
+        var contentDisposition = e.headers['content-disposition']
+        var filename = contentDisposition.match(/filename=(.+);?$/i)[1]
+        // alert("Downloaded!! (" + filename + ")")
+        // this.busy = false
+        console.log('raw: ')
+        console.log(e.data)
+        
+        fileDownload(new Blob([e.data]), filename)
+        this.downloading = false
+      })
+      .catch(e => {
+        // alert("Error bitch")
+        console.log(e.response)
+        vm.handleError(e)
+        this.downloading = false
+        // this.busy = false
+      })
     }
   }
 };
