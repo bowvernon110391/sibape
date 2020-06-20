@@ -1,5 +1,7 @@
 <template>
   <div>
+    <pre>{{ currentRoute }}</pre>
+    <pre></pre>
     <b-form class="position-relative" @submit.prevent="onSubmit">
       <b-row>
         <b-col md="6">
@@ -16,7 +18,13 @@
       <b-row>
         <b-col md="6">
           <b-button type="submit" variant="primary" class="shadow mr-2" :disabled="busy">Parse</b-button>
-          <b-button variant="danger" class="shadow" :disabled="busy" @click="excelData = null">Clear Data</b-button>
+          <b-button
+            variant="danger"
+            class="shadow mr-2"
+            :disabled="busy"
+            @click="excelData = null"
+          >Clear Data</b-button>
+          <b-button variant="warning" class="shadow" :disabled="busy" @click="redirect">Redirect</b-button>
         </b-col>
       </b-row>
 
@@ -54,18 +62,9 @@
       </b-overlay>
     </b-form>
     <div v-if="excelData">
-        <hr>
-        <h5>Parsed Data</h5>
-        <!-- <pre>{{ excelData }}</pre> -->
-        <b-table
-            striped
-            responsive="md"
-            head-variant="dark"
-            small
-            hover
-            bordered
-            :items="excelData"
-        ></b-table>
+      <hr />
+      <h5>Parsed Data</h5>
+      <b-table responsive small hover head-variant="dark" striped :items="excelData"></b-table>
     </div>
   </div>
 </template>
@@ -94,7 +93,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["api"])
+    ...mapGetters(["api"]),
+
+    currentRoute() {
+      console.log(this.$route);
+      const m = this.$route.query;
+      return JSON.stringify(m, null, 4);
+    }
   },
 
   methods: {
@@ -114,20 +119,31 @@ export default {
       }
 
       this.processing = true;
-      this.uploaded = 0
+      this.uploaded = 0;
 
       // make a new file reader?
-      this.api.attachRawFileToUri('/excel/kurs', this.excelFile, this.onProgress)
-      .then(e => {
-          this.processing = this.busy = false
-          this.showToast('Upload successfull!', 'Excel file uploaded. Data is shown below', 'success')
-          console.log(e.data)
-          this.excelData = e.data.data
-      })
-      .catch(e => {
-          this.processing = this.busy = false
-          this.handleError(e)
-      })
+      this.api
+        .attachRawFileToUri("/excel/kurs", this.excelFile, this.onProgress)
+        .then(e => {
+          this.processing = this.busy = false;
+          this.showToast(
+            "Upload successfull!",
+            "Excel file uploaded. Data is shown below",
+            "success"
+          );
+          console.log(e.data);
+          this.excelData = e.data.data;
+        })
+        .catch(e => {
+          this.processing = this.busy = false;
+          this.handleError(e);
+        });
+    },
+
+    redirect() {
+      this.$router.push({
+        path: `/test?q=someshit`
+      });
     }
   }
 };
