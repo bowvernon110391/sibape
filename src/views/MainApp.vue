@@ -13,27 +13,27 @@
     </side-nav>
     <!-- The content section houses page contents -->
     <div id="content" :class="[{ active: $store.getters.sidebar }]">
-      <vuescroll :ops="{ bar: { background: '#aaa' } }">
+      <vuescroll :ops="scrollOptions">
         <div class="p-3">
-        <!-- Real container -->
-        <b-container fluid id="contents-section" class="mt-2">
-        <!-- Navbar -->
-        <navbar />
-        <!-- Breadcrumb -->
-        <breadcrumb class="mt-2 mb-3" />
-          <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
-          <hr />-->
-          <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
-          <hr />
+          <!-- Real container -->
+          <b-container fluid id="contents-section" class="mt-2">
+            <!-- Navbar -->
+            <navbar />
+            <!-- Breadcrumb -->
+            <breadcrumb class="mt-2 mb-3" />
+            <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
+            <hr />-->
+            <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
+            <hr />
 
-          <!-- Per route view -->
-          <router-view></router-view>
-        </b-container>
+            <!-- Per route view -->
+            <router-view></router-view>
+          </b-container>
 
-        <div>
-          <hr />&copy;
-          <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
-        </div>
+          <div>
+            <hr />&copy;
+            <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
+          </div>
         </div>
       </vuescroll>
     </div>
@@ -85,6 +85,17 @@ export default {
         this.processElement(result, e);
       });
       return result;
+    },
+
+    scrollOptions() {
+      return {
+        bar: {
+          background: "#aaa"
+        },
+        scrollPanel: {
+          scrollingX: false
+        }
+      };
     }
   },
 
