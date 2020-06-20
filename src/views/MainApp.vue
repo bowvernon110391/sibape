@@ -28,12 +28,12 @@
 
             <!-- Per route view -->
             <router-view></router-view>
+            <div>
+              <hr />&copy;
+              <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
+            </div>
           </b-container>
 
-          <div>
-            <hr />&copy;
-            <a href="mailto:duktek.soetta@customs.go.id">Duktek Soetta</a> 2019
-          </div>
         </div>
       </vuescroll>
     </div>
