@@ -14,16 +14,16 @@
     <!-- The content section houses page contents -->
     <div id="content" :class="[{ active: $store.getters.sidebar }]">
       <vuescroll :ops="scrollOptions">
-        <div class="p-3">
+        <div class="py-3">
           <!-- Real container -->
-          <b-container fluid id="contents-section" class="mt-2">
+          <b-container fluid id="contents-section">
             <!-- Navbar -->
             <navbar />
             <!-- Breadcrumb -->
-            <breadcrumb class="mt-2 mb-3" />
+            <breadcrumb class="my-2" />
             <!-- <span class="h4" v-if="$route.meta.title">{{ this.$route.meta.title }}</span>
             <hr />-->
-            <h4 v-if="$route.meta.title">{{ this.$route.meta.title }}</h4>
+            <h4 v-if="$route.meta.title" class="p-1" style="text-shadow: 1px 2px 12px rgba(125, 125, 225, 0.5); ">{{ this.$route.meta.title }}</h4>
             <hr />
 
             <!-- Per route view -->
