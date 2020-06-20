@@ -427,6 +427,18 @@ class ApiSibape {
         })
     }
 
+    // this one attach ONE raw file to a specific uri
+    attachRawFileToUri (uri, file, progressFn) {
+        var fd = new FormData();
+        fd.append('file', file)
+        return this.instance.post(uri, fd, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            onUploadProgress: progressFn
+        })
+    }
+
     // this one delete attachment by id
     // deleteAttachment (id) : DELETE /lampiran/id
     deleteAttachment (id) {
