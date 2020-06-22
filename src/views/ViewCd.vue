@@ -146,16 +146,6 @@ export default {
     data() {
         return {
             dataCd: this.defaultData(),
-            fieldDetails: [
-                { label: '', key: '_showDetail'},
-                'uraian',
-                'satuan',
-                'kemasan',
-                'hscode',
-                'fob',
-                'nilai_pabean',
-                { label: '', key: 'action' }
-            ],
             
             // pungutan data
             viewPungutan: false,
@@ -183,33 +173,9 @@ export default {
            return !this.canEdit && this.dataCd.is_locked
         },
 
-        
-
-        // change npwp label depends on what data is being input
-        // 15 digits: npwp
-        // 13 digits: nib
-        // 6/8 digits: nik
-        labelNpwp () {
-           var defaultLabel = 'NPWP/NIB/NIK'
-           if (!this.dataCd.npwp_nib) {
-              return defaultLabel
-           }
-           
-           switch (this.dataCd.npwp_nib.replace(/\.\-/i, '').length) {
-              case 6:
-              case 8:
-                 return 'NIK'
-               case 13:
-                  return 'NIB'
-               case 15:
-                  return 'NPWP'
-           }
-           return defaultLabel
-        },
-
         // check if this is a new data
         isNew () {
-            return this.id == 'new'
+            return this.id == 'new' || !this.dataCd.id
         },
 
         // endpoint utk attachment
