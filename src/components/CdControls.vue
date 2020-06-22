@@ -2,19 +2,19 @@
   <div class="text-right flex-grow-1 my-auto">
     <b-button-group size="sm" class="shadow mt-2 mt-md-0">
       <!-- apabila dijadikan impor sementara -->
-      <b-button variant="danger" :disabled="docHasLink(data,'bpj')">
+      <b-button variant="danger" :disabled="docHasLink(data,'bpj') || isDone">
         <font-awesome-icon icon="plane-departure"></font-awesome-icon>Jaminkan (Impor Sementara)
       </b-button>
 
       <!-- titip (gk mampu/mau bayar) -->
-      <b-button variant="dark" :disabled="docHasLink(data,'st')" @click="$emit('showPenitipan')">
+      <b-button variant="dark" :disabled="docHasLink(data,'st')  || isDone" @click="$emit('showPenitipan')">
         <font-awesome-icon icon="lock"></font-awesome-icon>Titipkan
       </b-button>
 
       <!-- tunda pengeluaran -->
       <b-button
         variant="warning"
-        :disabled="docHasLink(data,'spp')"
+        :disabled="docHasLink(data,'spp') || isDone"
         @click="$emit('showPenundaan')"
       >
         <font-awesome-icon icon="hand-paper"></font-awesome-icon>Tunda Pengeluaran
@@ -61,6 +61,12 @@ export default {
     mixins: [ docMethod ],
     props: {
         data: Object
+    },
+
+    computed: {
+      isDone () {
+        return this.docHasLink(this.data, 'sspcp')
+      }
     }
 }
 </script>
