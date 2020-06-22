@@ -37,7 +37,7 @@
       <!-- FOOTER (only if needed) -->
       <b-card-footer v-if="tabId == 0">
         <div>
-          <b-button variant="primary" :disabled="disableInput">
+          <b-button variant="primary" :disabled="disableInput" @click="onSave">
             <font-awesome-icon icon="save" /> Simpan
           </b-button>
         </div>
