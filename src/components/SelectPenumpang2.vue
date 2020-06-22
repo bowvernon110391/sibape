@@ -132,7 +132,7 @@
                     <b-form-group
                         label="Phone Number"
                         label-for="phone">
-                        <b-form-input type="phone" v-model="detail.phone" :disabled="saving || disabled"></b-form-input>
+                        <b-form-input type="text" v-model="detail.phone" :disabled="saving || disabled"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
