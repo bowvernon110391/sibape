@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button size="sm" variant="success" v-bind="$attrs" v-on="$listeners" v-b-modal="'modalIp'">
+    <b-button class="shadow" size="sm" variant="success" v-bind="$attrs" v-on="$listeners" v-b-modal="'modalIp'">
       <font-awesome-icon icon="search" />&nbsp;
       Terbitkan IP
     </b-button>
