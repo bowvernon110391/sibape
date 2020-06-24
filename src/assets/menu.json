@@ -56,6 +56,20 @@
         ]
     },
     {
+        "role": "*",
+        "section": "Pemeriksa Fisik"
+    },
+    {
+        "role": "*",
+        "list":[
+            {
+                "item": "Rekam LHP",
+                "icon": "<strong>LHP</strong>",
+                "to": "/ip"
+            }
+        ]
+    },
+    {
         "section": "Referensi"
     },
     {

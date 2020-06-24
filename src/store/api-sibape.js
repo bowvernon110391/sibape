@@ -515,6 +515,12 @@ class ApiSibape {
     putIp (uri, data) {
         return this.instance.put(uri, data)
     }
+
+    getIp (params) {
+        return this.instance.get('/ip', {
+            params: params
+        })
+    }
 }
 
 export {

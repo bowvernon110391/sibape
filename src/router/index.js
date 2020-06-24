@@ -30,6 +30,8 @@ import ViewSt from '@/views/ViewSt'
 // Pembatalan
 import BrowsePembatalan from '@/views/BrowsePembatalan'
 
+import BrowseIp from '@/views/BrowseIp'
+
 import store from '../store'
 
 // const axios = require('axios').default
@@ -212,6 +214,15 @@ const router = new Router({
               }
             }
           ]
+        },
+        // Instruksi Pemeriksaan
+        {
+          path: 'ip',
+          meta: {
+            breadcrumb: '🔍Browse Instruksi Pemeriksaan',
+            title: 'Browse Instruksi Pemeriksaan'
+          },
+          component: BrowseIp
         }
       ]
     },
