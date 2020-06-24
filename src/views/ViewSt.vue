@@ -10,7 +10,15 @@
           <!-- CONTROLS -->
           <template v-if="!hideControls && !isNew">
             <!-- ST CONTROLS HERE -->
-            <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" />
+            <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
+              <!-- IP Controls -->
+              <ip-controls
+                :disabled="docHasLink(dataSt, 'pibk')"
+                :uri="`/st/${dataSt.id}/ip`"
+                :data="dataSt.instruksi_pemeriksaan ? dataSt.instruksi_pemeriksaan.data : null"
+                @submit="loadStData(dataSt.id)"
+              />
+            </st-controls>
           </template>
         </div>
       </b-card-header>
@@ -30,6 +38,15 @@
             hide-satuan
             hide-netto
           ></view-cd-details>
+        </b-tab>
+
+        <!-- Instruksi Pemeriksaan (KLO ADA) -->
+        <b-tab v-if="dataSt.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+          <b-row>
+            <b-col md="6">
+              <ip-contents :value="dataSt.instruksi_pemeriksaan.data" disabled />
+            </b-col>
+          </b-row>
         </b-tab>
       </b-tabs>
 
@@ -52,6 +69,8 @@
 // mixins
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 import userChecker from "../mixins/userChecker";
+import docMethod from '../mixins/docMethod';
+
 import { mapMutations, mapGetters } from "vuex";
 import ViewCdDetails from "@/views/ViewCdDetails";
 
@@ -59,6 +78,10 @@ import DocBanner from "@/components/DocBanner";
 
 import StControls from "@/components/StControls";
 import StContents from "@/components/StContents";
+
+// Ip related
+import IpControls from "@/components/IpControls";
+import IpContents from "@/components/IpContents";
 
 // utk menampilkan pdf
 import ModalViewPdf from "@/components/ModalViewPdf";
@@ -71,13 +94,15 @@ import defaultSt from "@/defaults/defaultSt";
 const cloneDeep = require("clone-deep");
 
 export default {
-  mixins: [axiosErrorHandler, userChecker],
+  mixins: [axiosErrorHandler, userChecker, docMethod],
   components: {
     ViewCdDetails,
     ModalViewPdf,
     DocBanner,
     StControls,
-    StContents
+    StContents,
+    IpControls,
+    IpContents
   },
   data() {
     return {

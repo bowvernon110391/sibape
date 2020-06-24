@@ -9,6 +9,12 @@
       </b-button>
     </b-button-group>
 
+    <!-- slot -->
+    <div class="mt-2 d-inline-block">
+    <slot>
+    </slot>
+    </div>
+
     <b-button-group size="sm" class="shadow mt-2 mt-md-0">
       <!-- apabila dijadikan impor sementara -->
       <b-button variant="dark" @click="$emit('printSt')">

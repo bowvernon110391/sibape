@@ -16,7 +16,15 @@
               @showPungutan="showPungutan"
               @printSspcp="printSspcp"
               @printLembarHitungCd="printLembarHitungCd"
-            />
+            >
+              <!-- IP Controls -->
+              <ip-controls
+                :disabled="disableInput"
+                :uri="`/cd/${dataCd.id}/ip`"
+                :data="dataCd.instruksi_pemeriksaan ? dataCd.instruksi_pemeriksaan.data : null"
+                @submit="loadCdData(dataCd.id)"
+              />
+            </cd-controls>
           </template>
         </div>
       </b-card-header>
@@ -38,6 +46,15 @@
           <b-tab title="Lampiran">
             <attachment-bucket show :disabled="disableInput" :endpoint="endpoint" />
           </b-tab>
+
+          <!-- Instruksi Pemeriksaan (KLO ADA) -->
+          <b-tab v-if="dataCd.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+            <b-row>
+              <b-col md="6">
+                <ip-contents :value="dataCd.instruksi_pemeriksaan.data" disabled />
+              </b-col>
+            </b-row>
+          </b-tab>
         </template>
       </b-tabs>
 
@@ -45,7 +62,7 @@
       <b-card-footer footer-bg-variant="light" v-if="tabId == 0">
         <div>
           <b-button @click="onSave" class="shadow" variant="primary" :disabled="disableInput">
-            <font-awesome-icon icon="save"></font-awesome-icon> Simpan
+            <font-awesome-icon icon="save"></font-awesome-icon>Simpan
           </b-button>
         </div>
       </b-card-footer>
@@ -102,6 +119,9 @@ import DocBanner from "@/components/DocBanner";
 import CdControls from "@/components/CdControls";
 import CdContents from "@/components/CdContents";
 
+import IpControls from "@/components/IpControls";
+import IpContents from "@/components/IpContents";
+
 // utk menampilkan pungutan
 import ModalViewPerhitungan from "@/components/ModalViewPerhitungan";
 
@@ -138,7 +158,9 @@ export default {
     AttachmentBucket,
     DocBanner,
     CdControls,
-    CdContents
+    CdContents,
+    IpControls,
+    IpContents
   },
   data() {
     return {

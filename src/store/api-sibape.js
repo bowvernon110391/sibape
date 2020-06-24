@@ -510,6 +510,11 @@ class ApiSibape {
             params: params
         })
     }
+
+    // ===========================INSTRUKSI PEMERIKSAAN===============================================
+    putIp (uri, data) {
+        return this.instance.put(uri, data)
+    }
 }
 
 export {

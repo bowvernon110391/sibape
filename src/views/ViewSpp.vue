@@ -10,11 +10,18 @@
           <!-- show controls if it's not a new one -->
           <template v-if="!hideControls && !isNew">
             <!-- tombol controls -->
-            <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp" />
+            <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
+              <!-- IP Controls -->
+              <ip-controls
+                :disabled="docHasLink(dataSpp, 'pibk')"
+                :uri="`/spp/${dataSpp.id}/ip`"
+                :data="dataSpp.instruksi_pemeriksaan ? dataSpp.instruksi_pemeriksaan.data : null"
+                @submit="loadSppData(dataSpp.id)"
+              />
+            </spp-controls>
           </template>
         </div>
       </b-card-header>
-
 
       <!-- Tabs -->
       <b-tabs card lazy v-model="tabId">
@@ -32,13 +39,22 @@
             hide-netto
           ></view-cd-details>
         </b-tab>
+
+        <!-- Instruksi Pemeriksaan (KLO ADA) -->
+        <b-tab v-if="dataSpp.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+          <b-row>
+            <b-col md="6">
+              <ip-contents :value="dataSpp.instruksi_pemeriksaan.data" disabled />
+            </b-col>
+          </b-row>
+        </b-tab>
       </b-tabs>
 
       <!-- FOOTER (only if needed) -->
       <b-card-footer v-if="tabId == 0">
         <div>
           <b-button variant="primary" :disabled="disableInput" @click="onSave">
-            <font-awesome-icon icon="save" /> Simpan
+            <font-awesome-icon icon="save" />Simpan
           </b-button>
         </div>
       </b-card-footer>
@@ -53,6 +69,7 @@
 // mixins
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 import userChecker from "../mixins/userChecker";
+import docMethod from '../mixins/docMethod';
 
 // components
 import { mapMutations, mapGetters } from "vuex";
@@ -70,6 +87,10 @@ import SppControls from "@/components/SppControls";
 // contents
 import SppContents from "@/components/SppContents";
 
+// Ip related
+import IpControls from "@/components/IpControls";
+import IpContents from "@/components/IpContents";
+
 // the default cd header
 import defaultSpp from "@/defaults/defaultSpp";
 
@@ -77,13 +98,15 @@ import defaultSpp from "@/defaults/defaultSpp";
 const cloneDeep = require("clone-deep");
 
 export default {
-  mixins: [axiosErrorHandler, userChecker],
+  mixins: [axiosErrorHandler, userChecker, docMethod],
   components: {
     ViewCdDetails,
     ModalViewPdf,
     DocBanner,
     SppControls,
-    SppContents
+    SppContents,
+    IpControls,
+    IpContents
   },
   data() {
     return {
@@ -95,7 +118,7 @@ export default {
       altFilename: "SPP",
 
       // tab id
-      tabId : 0
+      tabId: 0
     };
   },
   computed: {

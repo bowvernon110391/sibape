@@ -1,5 +1,7 @@
 <template>
   <div class="text-right flex-grow-1 my-auto">
+    <slot name="append"></slot>
+
     <b-button-group size="sm" class="shadow mt-2 mt-md-0">
       <!-- apabila dijadikan impor sementara -->
       <b-button variant="danger" :disabled="docHasLink(data,'bpj') || isDone">
@@ -28,6 +30,12 @@
       </b-button>
     </b-button-group>
 
+    <!-- slot -->
+    <div class="mt-2 d-inline-block">
+    <slot>
+    </slot>
+    </div>
+
     <!-- tombol cetak -->
     <template v-if="docHasLink(data,'sspcp')">
       <b-dropdown
@@ -51,6 +59,10 @@
         <!-- opsi tergantung link yg ada -->
       </b-dropdown>
     </template>
+
+    <!-- slot append -->
+    <slot name="append">
+    </slot>
   </div>
 </template>
 
