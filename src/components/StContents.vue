@@ -23,7 +23,7 @@
     <b-row>
       <!-- 1st col, nomor & tgl dokumen -->
       <b-col md="6">
-        <b-form-group label="Nomor &amp; Tgl SPP">
+        <b-form-group label="Nomor &amp; Tgl ST">
           <b-input-group>
             <b-form-input
               class="rounded-left flex-grow-1"
