@@ -1,24 +1,23 @@
 <template>
-    <b-modal
-        v-bind="$attrs"
-        v-on="$listeners"
-        :visible="value"
-        @change="e => $emit('input', e)"
-        header-bg-variant="light"
-        centered>
+  <b-modal
+    v-bind="$attrs"
+    v-on="$listeners"
+    :visible="value"
+    @change="e => $emit('input', e)"
+    header-bg-variant="light"
+    centered
+  >
+    <!-- Head -->
+    <template #modal-header>
+      <h4>Select Location</h4>
+    </template>
 
-        <!-- Head -->
-        <template #modal-header>
-            <h4>Select Location</h4>
-        </template>
-
-        <!-- Body -->
-        <template>
-            <!-- <p>Gotta put something in here</p> -->
-            <b-form-group
-                label="Pilih lokasi"
-                description="Hanya berdampak pada saat input data">
-                <b-form-select
+    <!-- Body -->
+    <template>
+      <!-- <p>Gotta put something in here</p> -->
+      <b-form-group label="Pilih lokasi" description="Hanya berdampak pada saat input data">
+        <select-lokasi :value="lokasi" @input="setLokasi" />
+        <!-- <b-form-select
                     :value="lokasi"
                     @input="setLokasi">
 
@@ -26,28 +25,35 @@
                     <option value="T3">T3</option>
                     <option value="KANTOR">KANTOR</option>
 
-                </b-form-select>
-            </b-form-group>
-        </template>
-    </b-modal>
+        </b-form-select>-->
+      </b-form-group>
+    </template>
+  </b-modal>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from "vuex";
+
+// SelectLokasi
+import SelectLokasi from "@/components/SelectLokasi";
 
 export default {
-    inheritAttrs: false,
+  inheritAttrs: false,
 
-    props: {
-        value : {}
-    },
+  components: {
+    SelectLokasi
+  },
 
-    computed: {
-        ...mapGetters(['lokasi'])
-    },
+  props: {
+    value: {}
+  },
 
-    methods: {
-        ...mapMutations(['setLokasi'])
-    }
-}
+  computed: {
+    ...mapGetters(["lokasi"])
+  },
+
+  methods: {
+    ...mapMutations(["setLokasi"])
+  }
+};
 </script>
