@@ -30,7 +30,11 @@ import ViewSt from '@/views/ViewSt'
 // Pembatalan
 import BrowsePembatalan from '@/views/BrowsePembatalan'
 
+// IP
 import BrowseIp from '@/views/BrowseIp'
+
+// LHP
+import ViewLhp from '@/views/ViewLhp'
 
 import store from '../store'
 
@@ -223,6 +227,16 @@ const router = new Router({
             title: 'Browse Instruksi Pemeriksaan'
           },
           component: BrowseIp
+        },
+        // Laporan Hasil Pemeriksaan
+        {
+          path: 'lhp/:id',
+          component: ViewLhp,
+          meta: {
+            breadcrumb: 'Rekam LHP',
+            title: 'Rekam Laporan Hasil Pemeriksaan'
+          },
+          props: true
         }
       ]
     },
@@ -261,7 +275,8 @@ router.beforeEach(async (to, from, next) => {
 
     var mockRoles = {
       token_pdtt: ['PDTT'],
-      token_admin: ['CONSOLE', 'KASI']
+      token_admin: ['CONSOLE', 'KASI'],
+      token_pemeriksa: ['PEMERIKSA']
     }
 
     var lokasiDemo = process.env.MOCK_LOKASI || "KANTOR"

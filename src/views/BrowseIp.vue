@@ -36,7 +36,8 @@ export default {
         getIp (q, spinner, vm) {
             spinner(true)
             this.api.getIp({
-                ...q
+                ...q,
+                self: true // limit ip to only that belongs to us
             })
             .then(e => {
                 spinner(false)

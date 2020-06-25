@@ -30,6 +30,20 @@
     <b-form-group label="Pemeriksa" description="Tunjuk pemeriksa fisik" :disabled="disabled">
       <select-pemeriksa :disabled="disabled" v-model="value.pemeriksa_id"/>
     </b-form-group>
+
+    <!-- Nip dan Nama Pejabat -->
+    <b-row v-if="showIssuer">
+      <b-col md="6">
+        <b-form-group label="Pejabat Penerbit IP" disabled>
+          <b-form-input type="text" size="sm" :value="value.nama_issuer"/> 
+        </b-form-group>
+      </b-col>
+      <b-col md="6">
+        <b-form-group label="NIP" disabled>
+          <b-form-input type="text" size="sm" :value="value.nip_issuer"/> 
+        </b-form-group>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -45,6 +59,10 @@ export default {
     value: {
       type: Object,
       default: null
+    },
+    showIssuer: {
+      type: Boolean,
+      default: false
     }
   },
 

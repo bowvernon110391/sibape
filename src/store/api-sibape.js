@@ -521,6 +521,19 @@ class ApiSibape {
             params: params
         })
     }
+
+    // ===========================LHP=====================================================================
+    putLhp (uri, data, params) {
+        return this.instance.put(uri, data, {
+            params: params
+        })
+    }
+
+    getLhpById (id, params) {
+        return this.instance.get(`/lhp/${id}`, {
+            params: params
+        })
+    }
 }
 
 export {

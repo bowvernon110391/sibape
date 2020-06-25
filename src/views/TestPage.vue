@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ip-controls size="sm" uri="/cd/23/ip" />
+    <lhp-contents v-model="lhpData" disabled />
   </div>
 </template>
 
@@ -9,7 +9,9 @@ import SelectPemeriksa from "@/components/SelectPemeriksa";
 import { mapGetters } from "vuex";
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 
-import IpControls from '@/components/IpControls'
+import IpControls from "@/components/IpControls";
+
+import LhpContents from "@/components/LhpContents";
 
 const fileDownload = require("js-file-download");
 
@@ -18,7 +20,8 @@ export default {
 
   components: {
     SelectPemeriksa,
-    IpControls
+    IpControls,
+    LhpContents
   },
 
   data() {
@@ -30,6 +33,54 @@ export default {
       excelFile: null,
       excelData: null,
       downloading: false,
+
+      lhpData: {
+        id: 5,
+        no_dok: 7,
+        tgl_dok: "2020-06-25",
+        nomor_lengkap: "LHP-000007/SH/2020",
+        isi: "asdasdasdasa adasdasdasdas",
+        pemeriksa_id: 612,
+        pemeriksa: {
+          nama: "Tri Mulyadi Wibowo",
+          nip: "199103112012101001"
+        },
+        lokasi: "T2F",
+        instructable_uri: "/cd/25",
+        last_status: {
+          status: "CLOSED",
+          created_at: "2020-06-25 14:46:14"
+        },
+        is_locked: true,
+        created_at: "2020-06-25 14:24:00",
+        updated_at: "2020-06-25 14:45:28",
+        lampiran: {
+          data: []
+        },
+        status: {
+          data: [
+            {
+              id: 68,
+              status: "CLOSED",
+              created_at: "2020-06-25 14:46:14"
+            },
+            {
+              id: 66,
+              status: "CREATED",
+              created_at: "2020-06-25 14:24:00",
+              detail: {
+                data: {
+                  id: 20,
+                  keterangan: "mulai diperiksa oleh tri.mulyadi",
+                  other_data: null,
+                  created_at: "2020-06-25 14:24:00",
+                  updated_at: "2020-06-25 14:24:00"
+                }
+              }
+            }
+          ]
+        }
+      }
     };
   },
 

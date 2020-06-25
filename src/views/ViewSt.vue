@@ -119,13 +119,13 @@ export default {
   },
   computed: {
     // pick api and lokasi from our store
-    ...mapGetters(["api", "lokasi"]),
+    ...mapGetters(["api", "lokasi", 'safeMode']),
 
     // when to disable input?
     disableInput() {
       // only disable input if user can't edit
       // and the doc is locked
-      return !this.canEdit && this.dataSt.is_locked;
+      return (!this.canEdit && this.dataSt.is_locked);
     },
 
     // check if this is a new data

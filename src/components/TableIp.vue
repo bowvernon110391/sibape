@@ -1,51 +1,107 @@
 <template>
-    <b-table
-        responsive="sm"
-        table-class="shadow"
-        head-variant="dark"
-        bordered
-        outlined
-        striped
-        small
-        hover
-        primary-key="id"
-        :fields="fields"
-        v-bind="$attrs"
-        v-on="$listeners"
+  <b-table
+    responsive="sm"
+    table-class="shadow"
+    head-variant="dark"
+    bordered
+    outlined
+    striped
+    small
+    hover
+    primary-key="id"
+    :fields="fields"
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
+    <!-- custom cell for action -->
+    <template #cell(action)="row">
+      <div class="text-center">
+        <!-- Ambil/Periksa button -->
+        <b-button
+          size="sm"
+          variant="primary"
+          :disabled="!canEdit(row.item)"
+          class="shadow"
+          @click="spawnLhp(row.item.instructable_uri)"
+          v-if="canEdit(row.item)"
         >
-        <!-- custom cell for action -->
-        <template #cell(action)="row">
-            <div class="text-center">
-            <!-- Ambil/Periksa button -->
-            <b-button size="sm" variant="info" :disabled="row.item.lhp ? row.item.lhp.is_locked : false" class="shadow">
-                <font-awesome-icon icon="pencil-alt" />&nbsp;
-                Ambil/Periksa
-            </b-button>
-            </div>
-        </template>
-    </b-table>
+          <font-awesome-icon icon="pencil-alt" />&nbsp;
+          Ambil/Periksa
+        </b-button>
+        <!-- Lihat LHP -->
+        <b-button v-else size="sm" variant="danger" class="shadow" @click="redirectToLhp(row.item.lhp.data.id)">
+          <font-awesome-icon icon="eye" />&nbsp;
+          Lihat LHP
+        </b-button>
+      </div>
+    </template>
+  </b-table>
 </template>
 
 <script>
-export default {
-    inheritAttrs: false,
+import { mapGetters, mapMutations } from "vuex";
+import axiosErrorHandler from "../mixins/axiosErrorHandler";
 
-    data () {
-        return {
-            fields: [
-                'nomor_lengkap',
-                'tgl_dok',
-                {
-                    label: 'Nama Pejabat',
-                    key: 'nama_issuer'
-                },
-                {
-                    label: 'NIP Pejabat',
-                    key: 'nip_issuer'
-                },
-                'action'
-            ]
-        }
+export default {
+  inheritAttrs: false,
+
+  mixins: [axiosErrorHandler],
+
+  data() {
+    return {
+      fields: [
+        "nomor_lengkap",
+        "tgl_dok",
+        {
+          label: "Nama Pejabat",
+          key: "nama_issuer"
+        },
+        {
+          label: "NIP Pejabat",
+          key: "nip_issuer"
+        },
+        "action"
+      ]
+    };
+  },
+
+  methods: {
+    ...mapMutations(["setBusyState"]),
+
+    redirectToLhp(id) {
+      this.$router.push({
+        path: `/lhp/${id}`
+      });
+    },
+
+    spawnLhp(uri) {
+      this.setBusyState(true);
+
+      this.api
+        .putLhp(`${uri}/lhp`, null, null)
+        .then(e => {
+          this.setBusyState(false);
+
+          const uri = e.data.uri;
+
+          // redirect to it
+          this.$router.push({
+            path: uri
+          });
+        })
+        .catch(e => {
+          this.setBusyState(false);
+          this.handleError(e);
+        });
+    },
+
+    canEdit(ip) {
+      return ip.lhp ? !ip.lhp.data.is_locked : true;
     }
-}
+  },
+
+  computed: {
+    ...mapGetters(["api"])
+  }
+};
 </script>

@@ -1,10 +1,10 @@
 [
     {
         "section": "Browse",
-        "role": "*"
+        "role": "PDTT,KASI,CONSOLE"
     },
     {
-        "role": "*",
+        "role": "PDTT,KASI,CONSOLE",
         "list": [
             {
                 "item": "Dokumen",
@@ -56,11 +56,11 @@
         ]
     },
     {
-        "role": "*",
+        "role": "PEMERIKSA,CONSOLE",
         "section": "Pemeriksa Fisik"
     },
     {
-        "role": "*",
+        "role": "PEMERIKSA,CONSOLE",
         "list":[
             {
                 "item": "Rekam LHP",
@@ -70,9 +70,11 @@
         ]
     },
     {
-        "section": "Referensi"
+        "section": "Referensi",
+        "role": "PDTT,KASI,CONSOLE"
     },
     {
+        "role": "PDTT,KASI,CONSOLE",
         "list": [
             {
                 "item": "Data Umum",
@@ -113,9 +115,11 @@
         ]
     },
     {
-        "section": "Laporan"
+        "section": "Laporan",
+        "role": "PDTT,KASI,CONSOLE"
     },
     {
+        "role": "PDTT,KASI,CONSOLE",
         "list": [
             {
                 "item": "BPPM",

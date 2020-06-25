@@ -141,6 +141,11 @@ export default new Vuex.Store({
             var intersection = arr_roles.filter(e => getters.roles.indexOf(e) !== -1)
 
             return intersection.length > 0
+        },
+
+        // activate safe mode for pemeriksa
+        safeMode: (state, getters) => {
+            return getters.hasRole('PEMERIKSA')
         }
     },
     actions: {
