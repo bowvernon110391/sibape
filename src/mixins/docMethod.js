@@ -42,6 +42,15 @@ export default {
                 return lhp.is_locked
             }
             return false
+        },
+
+        // lhp attachment?
+        lhpAttachmentEndpoint: function (doc) {
+            const lhp = this.getLhp(doc, false)
+            if (lhp) {
+                return `/lhp/${lhp.id}/lampiran`
+            }
+            return false
         }
     }
 }
