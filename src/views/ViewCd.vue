@@ -6,7 +6,7 @@
         <div class="d-sm-block d-md-flex my-2">
           <!-- Title at the top, showing lock status too -->
           <doc-banner doctype="CD" :data="dataCd" :is-new="isNew" v-if="!hideBanner" />
-          <template v-if="!hideControls && !isNew">
+          <template v-if="!hideControls && !isNew && !readOnly">
             <!-- Tombol Penyelesaian? -->
             <cd-controls
               :data="dataCd"
@@ -48,7 +48,7 @@
           </b-tab>
 
           <!-- Instruksi Pemeriksaan (KLO ADA) -->
-          <b-tab v-if="dataCd.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+          <b-tab v-if="dataCd.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
             <b-row>
               <b-col md="6">
                 <ip-contents :value="dataCd.instruksi_pemeriksaan.data" disabled />
@@ -192,7 +192,7 @@ export default {
     disableInput() {
       // only disable input if user can't edit
       // and the doc is locked
-      return !this.canEdit && this.dataCd.is_locked;
+      return (!this.canEdit && this.dataCd.is_locked) || this.readOnly;
     },
 
     // check if this is a new data
@@ -214,6 +214,16 @@ export default {
     },
 
     hideControls: {
+      type: Boolean,
+      default: false
+    },
+
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
+
+    hideIp: {
       type: Boolean,
       default: false
     }

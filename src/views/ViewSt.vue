@@ -8,7 +8,7 @@
           <doc-banner doctype="ST" :data="dataSt" :is-new="isNew" />
 
           <!-- CONTROLS -->
-          <template v-if="!hideControls && !isNew">
+          <template v-if="!hideControls && !isNew && !readOnly">
             <!-- ST CONTROLS HERE -->
             <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
               <!-- IP Controls -->
@@ -41,7 +41,7 @@
         </b-tab>
 
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
-        <b-tab v-if="dataSt.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+        <b-tab v-if="dataSt.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
           <b-row>
             <b-col md="6">
               <ip-contents :value="dataSt.instruksi_pemeriksaan.data" disabled />
@@ -125,7 +125,7 @@ export default {
     disableInput() {
       // only disable input if user can't edit
       // and the doc is locked
-      return (!this.canEdit && this.dataSt.is_locked);
+      return (!this.canEdit && this.dataSt.is_locked) || this.readOnly;
     },
 
     // check if this is a new data
@@ -137,6 +137,16 @@ export default {
     id: [Number, String],
 
     hideControls: {
+      type: Boolean,
+      default: false
+    },
+
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
+
+    hideIp: {
       type: Boolean,
       default: false
     }

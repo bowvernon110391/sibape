@@ -8,7 +8,7 @@
           <doc-banner doctype="SPP" :data="dataSpp" :is-new="isNew" />
 
           <!-- show controls if it's not a new one -->
-          <template v-if="!hideControls && !isNew">
+          <template v-if="!hideControls && !isNew && !readOnly">
             <!-- tombol controls -->
             <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
               <!-- IP Controls -->
@@ -41,7 +41,7 @@
         </b-tab>
 
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
-        <b-tab v-if="dataSpp.instruksi_pemeriksaan" title="Instruksi Pemeriksaan">
+        <b-tab v-if="dataSpp.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
           <b-row>
             <b-col md="6">
               <ip-contents :value="dataSpp.instruksi_pemeriksaan.data" disabled />
@@ -129,7 +129,7 @@ export default {
     disableInput() {
       // only disable input if user can't edit
       // and the doc is locked
-      return !this.canEdit && this.dataSpp.is_locked;
+      return (!this.canEdit && this.dataSpp.is_locked) || this.readOnly;
     },
 
     // check if this is a new data
@@ -141,6 +141,16 @@ export default {
     id: [Number, String],
 
     hideControls: {
+      type: Boolean,
+      default: false
+    },
+
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
+
+    hideIp: {
       type: Boolean,
       default: false
     }
