@@ -7,16 +7,32 @@
         variant="warning"
         class="shadow"
         size="sm"
-        @click="handleClick"
+        
+        v-b-modal.source-doc
         >
           <font-awesome-icon icon="eye" />&nbsp;Lihat Dokumen Sumber
         </b-button>
       </template>
       <!-- additional button in slot -->
       <slot></slot>
-      {{ routerObject }}
+      <!-- {{ routerObject }} -->
       <!-- <pre>{{ JSON.stringify(routerObject, null, 2) }}</pre> -->
     </div>
+
+    <!-- View in Modal? -->
+    <b-modal size="xl" id="source-doc" title="Dokumen Sumber" header-bg-variant="light" footer-bg-variant="light">
+      <component :is="sourceObject" v-bind="sourceObjectParams">
+      </component>
+
+      <template #modal-footer="{ hide }">
+        <div>
+          <b-button variant="danger" size="sm" @click="hide">
+            <font-awesome-icon icon="times"/>
+              Tutup
+          </b-button>
+        </div>
+      </template>
+    </b-modal>
   </div>
 </template>
 
@@ -38,10 +54,25 @@ export default {
 
   computed: {
     routerObject() {
-      const r = this.$router.resolve(this.data.instructable_uri)
-
-      console.log('resolved router object: ', r.resolved)
+      console.log('Source Component: ', this.sourceObject)
+      console.log('Source Params: ', this.sourceObjectParams)
       return "RESOLVED"
+    },
+
+    sourceObject() {
+      const comps = this.$router.getMatchedComponents(this.data.instructable_uri)
+      const lastComp = comps[comps.length-1]
+
+      return lastComp
+    },
+
+    sourceObjectParams() {
+      const r = this.$router.resolve(this.data.instructable_uri)
+      return {
+        ...r.resolved.params,
+        readOnly: true,
+        hideIp: true
+      }
     }
   }
 };
