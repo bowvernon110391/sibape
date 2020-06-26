@@ -13,7 +13,7 @@
             <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
               <!-- IP Controls -->
               <ip-controls
-                :disabled="docHasLink(dataSt, 'pibk')"
+                :disabled="docHasLink(dataSt, 'pibk') || lhpIsLocked(dataSt)"
                 :uri="`/st/${dataSt.id}/ip`"
                 :data="dataSt.instruksi_pemeriksaan ? dataSt.instruksi_pemeriksaan.data : null"
                 @submit="loadStData(dataSt.id)"

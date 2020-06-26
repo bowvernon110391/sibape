@@ -19,7 +19,7 @@
             >
               <!-- IP Controls -->
               <ip-controls
-                :disabled="disableInput"
+                :disabled="disableInput || lhpIsLocked(dataCd)"
                 :uri="`/cd/${dataCd.id}/ip`"
                 :data="dataCd.instruksi_pemeriksaan ? dataCd.instruksi_pemeriksaan.data : null"
                 @submit="loadCdData(dataCd.id)"

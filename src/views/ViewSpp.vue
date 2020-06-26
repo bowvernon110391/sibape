@@ -13,7 +13,7 @@
             <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
               <!-- IP Controls -->
               <ip-controls
-                :disabled="docHasLink(dataSpp, 'pibk')"
+                :disabled="docHasLink(dataSpp, 'pibk') || lhpIsLocked(dataSpp)"
                 :uri="`/spp/${dataSpp.id}/ip`"
                 :data="dataSpp.instruksi_pemeriksaan ? dataSpp.instruksi_pemeriksaan.data : null"
                 @submit="loadSppData(dataSpp.id)"

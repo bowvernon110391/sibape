@@ -23,5 +23,25 @@ export default {
             }
             return false
         },
+
+        // check if doc has lhp (that is ready)
+        getLhp: function (doc, lockedOnly) {
+            if (doc.instruksi_pemeriksaan && doc.instruksi_pemeriksaan && doc.instruksi_pemeriksaan.data.lhp) {
+                if (lockedOnly) {
+                    return doc.instruksi_pemeriksaan.data.lhp.data.is_locked ? doc.instruksi_pemeriksaan.data.lhp.data : null
+                }
+                return doc.instruksi_pemeriksaan.data.lhp.data
+            }
+            return null
+        },
+
+        // check if lhp is locked
+        lhpIsLocked: function (doc) {
+            const lhp = this.getLhp(doc, false)
+            if (lhp) {
+                return lhp.is_locked
+            }
+            return false
+        }
     }
 }
