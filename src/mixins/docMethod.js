@@ -1,4 +1,28 @@
 export default {
+    props: {
+        id: [Number, String],
+
+        hideBanner: {
+            type: Boolean,
+            default: false
+        },
+
+        hideControls: {
+            type: Boolean,
+            default: false
+        },
+
+        readOnly: {
+            type: Boolean,
+            default: false
+        },
+
+        hideIp: {
+            type: Boolean,
+            default: false
+        }
+    },
+
     methods: {
         docHasLink(doc, rel) {
             if (doc.links) {
@@ -51,6 +75,15 @@ export default {
                 return `/lhp/${lhp.id}/lampiran`
             }
             return false
+        },
+
+        // lhp id
+        lhpId: function (doc, lockedOnly) {
+            const lhp = this.getLhp(doc, lockedOnly)
+            if (lhp) {
+                return lhp.id
+            }
+            return null
         }
     }
 }

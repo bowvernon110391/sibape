@@ -48,6 +48,13 @@
             </b-col>
           </b-row>
         </b-tab>
+
+        <!-- LHP (KLO DH SIAP) -->
+        <b-tab v-if="getLhp(dataSpp, true)" title="LHP">
+          <lhp-contents :value="getLhp(dataSpp, true)" disabled />
+          <hr />
+          <attachment-bucket show disabled :endpoint="lhpAttachmentEndpoint(dataSpp)" />
+        </b-tab>
       </b-tabs>
 
       <!-- FOOTER (only if needed) -->
@@ -91,8 +98,12 @@ import SppContents from "@/components/SppContents";
 import IpControls from "@/components/IpControls";
 import IpContents from "@/components/IpContents";
 
+import AttachmentBucket from '@/components/AttachmentBucket'
+import LhpContents from "@/components/LhpContents";
+
 // the default cd header
 import defaultSpp from "@/defaults/defaultSpp";
+
 
 // for deep copy
 const cloneDeep = require("clone-deep");
@@ -106,7 +117,9 @@ export default {
     SppControls,
     SppContents,
     IpControls,
-    IpContents
+    IpContents,
+    AttachmentBucket,
+    LhpContents
   },
   data() {
     return {
@@ -137,24 +150,7 @@ export default {
       return this.id == "new";
     }
   },
-  props: {
-    id: [Number, String],
-
-    hideControls: {
-      type: Boolean,
-      default: false
-    },
-
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-
-    hideIp: {
-      type: Boolean,
-      default: false
-    }
-  },
+  
   methods: {
     ...mapMutations(["setBusyState"]),
     defaultData: function() {

@@ -8,7 +8,7 @@
           <doc-banner doctype="LHP" :data="dataLhp" :is-new="false" />
 
           <!-- CONTROLS -->
-          <lhp-controls :data="dataLhp" />
+          <lhp-controls :data="dataLhp" v-if="!hideControls"/>
         </div>
       </b-card-header>
 
@@ -26,7 +26,7 @@
         </b-tab>
 
         <!-- IP, klo valid -->
-        <b-tab title="Instruksi Pemeriksaan" v-if="getValidIp">
+        <b-tab title="Instruksi Pemeriksaan" v-if="getValidIp && !hideIp">
           <b-row>
             <b-col md="6">
               <ip-contents show-issuer disabled :value="getValidIp" />
@@ -50,6 +50,7 @@
 <script>
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 import userChecker from "../mixins/userChecker";
+import docMethod from '../mixins/docMethod'
 
 import { mapGetters, mapMutations } from "vuex";
 
@@ -66,17 +67,13 @@ import defaultLhp from "@/defaults/defaultLhp";
 const cloneDeep = require("clone-deep");
 
 export default {
-  mixins: [axiosErrorHandler, userChecker],
+  mixins: [axiosErrorHandler, userChecker, docMethod],
   components: {
     LhpControls,
     LhpContents,
     IpContents,
     DocBanner,
     AttachmentBucket
-  },
-
-  props: {
-    id: [Number, String]
   },
 
   // internal data
@@ -91,7 +88,7 @@ export default {
     ...mapGetters(["api", "lokasi"]),
 
     disableInput() {
-      return this.dataLhp.is_locked;
+      return (this.dataLhp.is_locked) || this.readOnly;
     },
 
     endpoint() {

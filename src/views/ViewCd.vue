@@ -56,6 +56,13 @@
             </b-row>
           </b-tab>
         </template>
+
+        <!-- LHP (KLO DH SIAP) -->
+        <b-tab v-if="getLhp(dataCd, true)" title="LHP">
+          <lhp-contents :value="getLhp(dataCd, true)" disabled />
+          <hr />
+          <attachment-bucket show disabled :endpoint="lhpAttachmentEndpoint(dataCd)" />
+        </b-tab>
       </b-tabs>
 
       <!-- CARD'S FOOTER -->
@@ -143,6 +150,10 @@ import AttachmentBucket from "@/components/AttachmentBucket";
 // the default cd header
 import defaultCd from "@/defaults/defaultCd";
 
+// import LHPView
+// import ViewLhp from '@/views/ViewLhp'
+import LhpContents from "@/components/LhpContents";
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -160,7 +171,9 @@ export default {
     CdControls,
     CdContents,
     IpControls,
-    IpContents
+    IpContents,
+    // ViewLhp
+    LhpContents
   },
   data() {
     return {
@@ -205,29 +218,7 @@ export default {
       return this.dataCd.id ? `/cd/${this.dataCd.id}/lampiran` : null;
     }
   },
-  props: {
-    id: [Number, String],
 
-    hideBanner: {
-      type: Boolean,
-      default: false
-    },
-
-    hideControls: {
-      type: Boolean,
-      default: false
-    },
-
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-
-    hideIp: {
-      type: Boolean,
-      default: false
-    }
-  },
   methods: {
     ...mapMutations(["setBusyState"]),
     loadCdDetails(q, spinner, vm) {
