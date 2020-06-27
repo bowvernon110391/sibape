@@ -42,6 +42,12 @@
             <view-cd-details :cd-id="id" :disabled="disableInput" hide-satuan hide-netto></view-cd-details>
           </b-tab>
 
+          <!-- Dokkap -->
+          <b-tab title="Dokkap">
+            <table-dokkap v-model="dataCd.dokkap.data" :disabled="disableInput"/>
+            <!-- <pre>{{ JSON.stringify(dataCd.dokkap.data, null, 2) }}</pre> -->
+          </b-tab>
+
           <!-- Lampiran -->
           <b-tab title="Lampiran">
             <attachment-bucket show :disabled="disableInput" :endpoint="endpoint" />
@@ -66,7 +72,7 @@
       </b-tabs>
 
       <!-- CARD'S FOOTER -->
-      <b-card-footer footer-bg-variant="light" v-if="tabId == 0">
+      <b-card-footer footer-bg-variant="light" v-if="tabId == 0 || tabId == 2">
         <div>
           <b-button @click="onSave" class="shadow" variant="primary" :disabled="disableInput">
             <font-awesome-icon icon="save"></font-awesome-icon>Simpan
@@ -154,6 +160,8 @@ import defaultCd from "@/defaults/defaultCd";
 // import ViewLhp from '@/views/ViewLhp'
 import LhpContents from "@/components/LhpContents";
 
+import TableDokkap from '@/components/TableDokkap';
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -173,7 +181,8 @@ export default {
     IpControls,
     IpContents,
     // ViewLhp
-    LhpContents
+    LhpContents,
+    TableDokkap
   },
   data() {
     return {

@@ -50,6 +50,10 @@ li.vs__dropdown-option {
     /* IE6-9 */
 }
 
+.datepicker-width {
+    width: 10rem !important;
+}
+
 /* 
 body {
     transition: background-color 1s ease;
