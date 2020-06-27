@@ -28,6 +28,7 @@ export default new Vuex.Store({
             satuan: [],
             jenisDetailSekunder: [],
             airline: [],
+            jenisDokkap: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -74,6 +75,9 @@ export default new Vuex.Store({
         },
         setRefDataAirline(state, payload) {
             state.refData.airline = payload
+        },
+        setRefDataJenisDokkap(state, payload) {
+            state.refData.jenisDokkap = payload
         }
     },
     getters: {
@@ -103,6 +107,9 @@ export default new Vuex.Store({
         },
         jenisDetailSekunder: state => {
             return state.refData.jenisDetailSekunder
+        },
+        jenisDokkap: state => {
+            return state.refData.jenisDokkap
         },
         canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'
@@ -275,6 +282,20 @@ export default new Vuex.Store({
                         context.commit('setRefDataJenisDetailSekunder', e.data.data)
                     })
                     .catch(e => { })
+            }
+        },
+        // fetch jenis dokkap
+        fetchRefDataJenisDokkap(context) {
+            if (!context.state.refData.jenisDokkap.length) {
+                // load it then
+                const api = context.getters.api
+
+                api.getJenisDokkap()
+                .then(e => {
+                    // store it
+                    context.commit('setRefDataJenisDokkap', e.data.data)
+                })
+                .catch(e => {})
             }
         },
         // get airline data,

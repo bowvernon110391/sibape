@@ -1,6 +1,10 @@
 <template>
   <div>
-    <lhp-contents v-model="lhpData" disabled />
+    <!-- <lhp-contents v-model="lhpData" disabled /> -->
+    <select-jenis-dokkap v-model="jenis_dokkap"/>
+    <p>
+      jenis dokkap = {{ jenis_dokkap }}
+    </p>
   </div>
 </template>
 
@@ -13,12 +17,15 @@ import IpControls from "@/components/IpControls";
 
 import LhpContents from "@/components/LhpContents";
 
+import SelectJenisDokkap from '@/components/SelectJenisDokkap'
+
 const fileDownload = require("js-file-download");
 
 export default {
   mixins: [axiosErrorHandler],
 
   components: {
+    SelectJenisDokkap,
     SelectPemeriksa,
     IpControls,
     LhpContents
@@ -33,6 +40,8 @@ export default {
       excelFile: null,
       excelData: null,
       downloading: false,
+
+      jenis_dokkap: null,
 
       lhpData: {
         id: 5,

@@ -166,6 +166,11 @@ class ApiSibape {
         return this.instance.get('/jenis-detail-sekunder')
     }
 
+    // getJenisDokkap () : GET /dokkap
+    getJenisDokkap () {
+        return this.instance.get('/dokkap')
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {
