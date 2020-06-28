@@ -15,7 +15,7 @@
     "jml_bagasi_dibawa": 0,
     "jml_bagasi_tdk_dibawa": 0,
     "jml_anggota_keluarga": 0,
-    "pembebasan": 0,
+    "pembebasan": 500,
     "pph_tarif": 7.5,
     "last_status": null,
     "is_locked": false,
