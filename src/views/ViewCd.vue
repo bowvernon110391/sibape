@@ -39,7 +39,8 @@
         <template v-if="!isNew">
           <!-- Detail Barang -->
           <b-tab title="Barang">
-            <view-cd-details :cd-id="id" :disabled="disableInput" hide-satuan hide-netto></view-cd-details>
+            <!-- <view-cd-details :cd-id="id" :disabled="disableInput" hide-satuan hide-netto></view-cd-details> -->
+            <view-detail-barang :uri="`/cd/${id}/details`" :disabled="disableInput" />
           </b-tab>
 
           <!-- Dokkap -->
@@ -126,7 +127,8 @@ import docMethod from "../mixins/docMethod";
 import { mapMutations, mapGetters } from "vuex";
 
 import PaginatedBrowser from "@/components/PaginatedBrowser";
-import ViewCdDetails from "@/views/ViewCdDetails";
+// import ViewCdDetails from "@/views/ViewCdDetails";
+import ViewDetailBarang from '@/views/ViewDetailBarang';
 
 import DocBanner from "@/components/DocBanner";
 import CdControls from "@/components/CdControls";
@@ -169,7 +171,8 @@ export default {
   mixins: [axiosErrorHandler, userChecker, docMethod],
   components: {
     PaginatedBrowser,
-    ViewCdDetails,
+    // ViewCdDetails,
+    ViewDetailBarang,
     ModalViewPerhitungan,
     ModalViewPdf,
     ModalViewSpp,

@@ -1,0 +1,31 @@
+{
+    "id": null,
+    "uraian": null,
+    "jumlah_kemasan": null,
+    "jenis_kemasan": null,
+    "jumlah_satuan": null,
+    "jenis_satuan": null,
+    "fob": null,
+    "insurance": null,
+    "freight": null,
+    "brutto": null,
+    "netto": null,
+    "kategori_tags": [],
+    "is_penetapan": false,
+    "kurs": {
+        "data": {
+            "id": null
+        }
+    },
+    "hs": {
+        "data": {
+            "id": null
+        }
+    },
+    "detailSekunder": {
+        "data": []
+    },
+    "tarif": {
+        "data": []
+    }
+}
