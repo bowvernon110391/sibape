@@ -5,7 +5,7 @@
             <!-- Uraian -->
             <b-col md="6">
                 <b-form-group label="Urian Barang">
-                    <b-form-textarea :disabled="disabled" v-model="value.uraian"/>
+                    <b-form-textarea :disabled="disabled" v-model="value.uraian" />
                 </b-form-group>
             </b-col>
             <!-- Select HS -->
@@ -26,17 +26,17 @@
             <!-- CIF -->
             <b-col md="2">
                 <b-form-group label="FOB">
-                    <b-form-input :disabled="disabled" v-model="value.fob"/>
+                    <b-form-input :disabled="disabled" v-model="value.fob" size="sm"/>
                 </b-form-group>
             </b-col>
             <b-col md="2">
                 <b-form-group label="Insurance">
-                    <b-form-input :disabled="disabled" v-model="value.insurance"/>
+                    <b-form-input :disabled="disabled" v-model="value.insurance" size="sm"/>
                 </b-form-group>
             </b-col>
             <b-col md="2">
                 <b-form-group label="Freight">
-                    <b-form-input :disabled="disabled" v-model="value.freight"/>
+                    <b-form-input :disabled="disabled" v-model="value.freight" size="sm"/>
                 </b-form-group>
             </b-col>
 
@@ -82,7 +82,7 @@
             <!-- Jumlah Jenis Kemasan -->
             <b-col md="1">
                 <b-form-group label="Jumlah">
-                    <b-form-input :disabled="disabled" v-model="value.jumlah_kemasan"/>
+                    <b-form-input :disabled="disabled" v-model="value.jumlah_kemasan" size="sm"/>
                 </b-form-group>
             </b-col>
 
@@ -100,7 +100,7 @@
             <template v-if="!hideSatuan">
             <b-col md="2">
                 <b-form-group label="Jumlah Satuan">
-                    <b-form-input :disabled="disabled" v-model="value.jumlah_satuan"/>
+                    <b-form-input :disabled="disabled" v-model="value.jumlah_satuan" size="sm"/>
                 </b-form-group>
             </b-col>
 

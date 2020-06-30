@@ -1,4 +1,5 @@
 <template>
+<div>
     <b-table
         responsive="sm"
         table-class="shadow"
@@ -55,10 +56,35 @@
         <template v-slot:row-details="row">
             <!-- <pre>{{ JSON.stringify(row, null, 2) }}</pre> -->
             <b-card>
-                <detail-barang-contents v-model="row.item"/>
+                <detail-barang-contents disabled v-model="row.item"/>
             </b-card>
         </template>
+
+        <!-- Action -->
+        <template #cell(action)="row">
+            <div class="text-center">
+                <!-- EDID DIS -->
+                <b-button size="sm" variant="primary" class="shadow" @click="editItem(row.item)">
+                    <font-awesome-icon icon="pencil-alt"/>
+                </b-button>
+                <!-- DELET DIS -->
+                <b-button size="sm" variant="danger" class="shadow">
+                    <font-awesome-icon icon="trash-alt"/>
+                </b-button>
+            </div>
+        </template>
     </b-table>
+
+    <b-modal 
+    id="viewDetailBarang"
+    header-bg-variant="light"
+    footer-bg-variant="light"
+    title="Edit Detail Barang"
+    v-model="showModal"
+    size="xl">
+        <detail-barang-contents :disabled="disabled" v-model="selectedItem" v-if="selectedItem"/>
+    </b-modal>
+</div>
 </template>
 
 <script>
@@ -88,20 +114,58 @@ export default {
         }
     },
 
+    data: () => ({
+        selectedItem: null,
+        showModal: false,
+        dirty: false,
+        initialItemSerialized: ''
+    }),
+
     computed: {
         fields () {
             return [
-                {
-                    label: '',
-                    key: '_detail'
-                },
                 'seri',
                 'uraian',
                 'kemasan',
                 ...this.hideSatuan ? [] : ['satuan'],
                 'fob',
-                'brutto'
+                'brutto',
+                {
+                    label: 'action',
+                    key: 'action'
+                }
             ]
+        }
+    },
+
+    methods: {
+        editItem(item) {
+            this.selectedItem = item
+            this.showModal = true
+
+            // store initial shit
+            this.initialItemSerialized = JSON.stringify(item)
+        }
+    },
+
+    watch: {
+        showModal: {
+            handler(nv) {
+                if (!nv) {
+                    // time to reload?
+                    // 1st, compute serialized item
+                    const serialized = JSON.stringify(this.selectedItem)
+                    const changed = this.initialItemSerialized != serialized
+
+                    console.log('old', this.initialItemSerialized)
+                    console.log('new', serialized)
+                    console.log('changing? ', changed)
+
+                    if (changed && this.selectedItem.id) {
+                        this.$emit('refresh')
+                    }
+                }
+            }
         }
     }
 }

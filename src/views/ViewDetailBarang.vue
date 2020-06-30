@@ -18,7 +18,7 @@
             ref="detailBrowser">
             <template #default="{ data, pagination }">
                 <!-- <pre>{{ JSON.stringify(data, null, 2) }}</pre> -->
-                <table-detail-barang :items="data" :pagination="pagination" :disabled="disabled"/>
+                <table-detail-barang :items="data" :pagination="pagination" :disabled="disabled" @refresh="handleRefresh"/>
             </template>
         </paginated-browser>
     </div>
@@ -62,6 +62,10 @@ export default {
     },
 
     methods: {
+        handleRefresh() {
+            this.$refs.detailBrowser.stayAtCurrentPage(0)
+        },
+
         loadDetailBarang(q, spinner, vm) {
             spinner(true)
 
