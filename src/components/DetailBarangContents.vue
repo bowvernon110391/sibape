@@ -13,7 +13,7 @@
                 <b-form-group label="HS Code">
                     <select-hs 
                     :disabled="disabled" 
-                    v-model="value.hs.data.id"
+                    v-model="value.hs_id"
                     :initial-options="initialHs"
                     
                     />
@@ -45,7 +45,7 @@
                 <b-form-group label="Kurs">
                     <select-kurs 
                     :disabled="disabled" 
-                    v-model="value.kurs.data.id" 
+                    v-model="value.kurs_id" 
                     :id="value.id" 
                     ref="kurs"
                     :initial-options="initialKurs"
@@ -176,19 +176,19 @@ export default {
         },
 
         initialHs() {
-            return this.value.hs.data.id ? this.value.hs.data : null
+            return this.value.hs ? this.value.hs.data : null
         },
 
         initialKemasan() {
-            return this.value.kemasan.data.id ? this.value.kemasan.data : null
+            return this.value.kemasan ? this.value.kemasan.data : null
         },
 
         initialSatuan() {
-            return this.value.satuan ? this.value.satuan : null
+            return this.value.satuan ? this.value.satuan.data : null
         },
 
         initialKurs() {
-            return this.value.kurs.data.id ? this.value.kurs.data : null
+            return this.value.kurs ? this.value.kurs.data : null
         },
     },
 }
