@@ -222,6 +222,13 @@
           ></v-select>
         </b-form-group>
       </b-col>
+
+      <!-- KOLI -->
+      <b-col md="2" sm="6">
+        <b-form-group label="Koli">
+          <b-form-input :disabled="disabled" size="sm" v-model="data.koli"/>
+        </b-form-group>
+      </b-col>
     </b-row>
   </div>
 </template>
