@@ -40,7 +40,7 @@
           <!-- Detail Barang -->
           <b-tab title="Barang">
             <!-- <view-cd-details :cd-id="id" :disabled="disableInput" hide-satuan hide-netto></view-cd-details> -->
-            <view-detail-barang :uri="`/cd/${id}/details`" :disabled="disableInput" />
+            <view-detail-barang :uri="`/cd/${id}/details`" :store-uri="`/cd/${id}/penetapan`" :disabled="disableInput" />
           </b-tab>
 
           <!-- Dokkap -->

@@ -98,13 +98,13 @@
 
             <!-- Jumlah Jenis Satuan -->
             <template v-if="!hideSatuan">
-            <b-col md="2">
+            <b-col md="1">
                 <b-form-group label="Jumlah Satuan">
                     <b-form-input :disabled="disabled" v-model="value.jumlah_satuan" size="sm"/>
                 </b-form-group>
             </b-col>
 
-            <b-col md="2">
+            <b-col md="3">
                 <b-form-group label="Jenis Satuan">
                     <select-kemasan 
                     :disabled="disabled" 
@@ -114,14 +114,33 @@
                 </b-form-group>
             </b-col>
             </template>
+
+            <!-- Brutto -->
+            <b-col md="2">
+                <b-form-group label="Bruto (Kg)">
+                    <b-form-input :disabled="disabled" v-model="value.brutto" size="sm" />
+                </b-form-group>
+            </b-col>
+            <!-- Netto -->
+            <b-col md="2" v-if="!hideNetto">
+                <b-form-group label="Netto (Kg)">
+                    <b-form-input :disabled="disabled" v-model="value.netto" size="sm" />
+                </b-form-group>
+            </b-col>
         </b-form-row>
 
         <hr>
         <!-- 5th row -->
         <b-form-row>
-            <b-col md="8" class="border-right">
+            <b-col md="8" >
                 <h5>Detail Tambahan</h5>
+                <div class="text-right my-2">
+                    <b-button size="sm" class="shadow" variant="primary" :disabled="disabled" @click="addNewDetailSekunder">
+                        <font-awesome-icon icon="plus-square"/>&nbsp;Tambah
+                    </b-button>
+                </div>
                 <table-cd-detail-sekunder 
+                class="shadow"
                 :disabled="disabled" 
                 v-model="value.detailSekunder.data"
                 />
@@ -137,6 +156,10 @@ import SelectSatuan from '@/components/SelectSatuan'
 import SelectKurs from '@/components/SelectKurs'
 import SelectKategori from '@/components/SelectKategori'
 import TableCdDetailSekunder from '@/components/TableCdDetailSekunder'
+
+import defaultDetailSekunder from '../defaults/defaultDetailSekunder'
+
+const cloneDeep = require('clone-deep')
 
 export default {
     components: {
@@ -154,6 +177,11 @@ export default {
             default: true
         },
 
+        hideNetto: {
+            type: Boolean,
+            default: true
+        },
+
         disabled: {
             type: Boolean,
             default: false
@@ -167,6 +195,14 @@ export default {
 
     data() {
         return {
+        }
+    },
+
+    methods: {
+        addNewDetailSekunder() {
+            this.value.detailSekunder.data.push(
+                cloneDeep(defaultDetailSekunder)
+            )
         }
     },
 

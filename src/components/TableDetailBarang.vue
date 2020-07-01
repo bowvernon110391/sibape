@@ -46,48 +46,27 @@
             </p>
         </template>
 
-        <!-- Detail -->
-        <template v-slot:cell(_detail)="row">
-            <b-button variant="dark">
-                <font-awesome-icon :icon="row.item._showDetails? 'minus-square' : 'plus-square'" @click="row.toggleDetails"/>
-            </b-button>
-        </template>
-
-        <template v-slot:row-details="row">
-            <!-- <pre>{{ JSON.stringify(row, null, 2) }}</pre> -->
-            <b-card>
-                <detail-barang-contents disabled v-model="row.item"/>
-            </b-card>
-        </template>
-
         <!-- Action -->
         <template #cell(action)="row">
             <div class="text-center">
                 <!-- EDID DIS -->
-                <b-button size="sm" variant="primary" class="shadow" @click="editItem(row.item)">
+                <b-button :disabled="disabled" size="sm" variant="primary" class="shadow" @click="disabled ? viewItem(row.item) : editItem(row.item)">
                     <font-awesome-icon icon="pencil-alt"/>
                 </b-button>
                 <!-- DELET DIS -->
-                <b-button size="sm" variant="danger" class="shadow">
+                <b-button :disabled="disabled" size="sm" variant="danger" class="shadow" @click="deleteItem(row.item)">
                     <font-awesome-icon icon="trash-alt"/>
                 </b-button>
             </div>
         </template>
     </b-table>
-
-    <b-modal 
-    id="viewDetailBarang"
-    header-bg-variant="light"
-    footer-bg-variant="light"
-    title="Edit Detail Barang"
-    v-model="showModal"
-    size="xl">
-        <detail-barang-contents :disabled="disabled" v-model="selectedItem" v-if="selectedItem"/>
-    </b-modal>
 </div>
 </template>
 
 <script>
+/**
+ * This component just let us view contents of detail barang and pass events
+ */
 
 import DetailBarangContents from '@/components/DetailBarangContents'
 
@@ -115,10 +94,6 @@ export default {
     },
 
     data: () => ({
-        selectedItem: null,
-        showModal: false,
-        dirty: false,
-        initialItemSerialized: ''
     }),
 
     computed: {
@@ -140,32 +115,15 @@ export default {
 
     methods: {
         editItem(item) {
-            this.selectedItem = item
-            this.showModal = true
+            this.$emit('edit', item)
+        },
 
-            // store initial shit
-            this.initialItemSerialized = JSON.stringify(item)
-        }
-    },
+        viewItem(item) {
+            this.$emit('view', item)
+        },
 
-    watch: {
-        showModal: {
-            handler(nv) {
-                if (!nv) {
-                    // time to reload?
-                    // 1st, compute serialized item
-                    const serialized = JSON.stringify(this.selectedItem)
-                    const changed = this.initialItemSerialized != serialized
-
-                    console.log('old', this.initialItemSerialized)
-                    console.log('new', serialized)
-                    console.log('changing? ', changed)
-
-                    if (changed && this.selectedItem.id) {
-                        this.$emit('refresh')
-                    }
-                }
-            }
+        deleteItem(item) {
+            this.$emit('delete', item)
         }
     }
 }

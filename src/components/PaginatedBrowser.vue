@@ -207,17 +207,19 @@ export default {
         moveToLastPage (offset) {
             // set page to last
             var lastPage = this.calcLastPage(offset)
+            // this.totalRows += offset
 
-            console.log("moving to last page")
-            console.log(lastPage)
+            console.log("moving to last page: ", lastPage, " from: ", this.internalPage)
+            // console.log(lastPage)
 
             // if we're already at last
             // reload
             if (this.internalPage == lastPage) { 
                 this.loadData()
-            } else {
-                this.internalPage = lastPage
-            }
+            } 
+
+            this.internalPage = lastPage
+            
         },
         // this will stay but will shrink if num page is not enough
         stayAtCurrentPage (offset) {
@@ -251,7 +253,8 @@ export default {
         internalLength: function() {
             this.loadData()
         },
-        internalPage: function() {
+        internalPage: function(nv, ov) {
+            console.log('internal page changed from ', ov, ' to ', nv)
             this.loadData()
         }
     },

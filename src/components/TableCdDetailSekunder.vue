@@ -73,7 +73,7 @@ export default {
             fields: [
                 '#', 'jenis', 'data', { label: '', key: 'action' }
             ],
-            internalValue: this.value.length ? cloneDeep(this.value) : []
+            internalValue: this.value.length ? this.value : []
         }
     },
     watch: {
@@ -99,7 +99,7 @@ export default {
         async deleteDetail (id) {
             // alert("Deleting " + id)
             // console.log(`deleting sekunder ${id}`)
-            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data ini? (${this.internalValue[id].jenis})`, {
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data ini? (${this.value[id].jenis})`, {
                 title: `Deleting data tambahan`,
                 size: 'md',
                 buttonSize: 'md',
@@ -112,7 +112,7 @@ export default {
             })
 
             if (result) {
-                this.internalValue.splice(id, 1)
+                this.value.splice(id, 1)
             }
         }
     }

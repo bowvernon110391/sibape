@@ -8,22 +8,26 @@
     "fob": null,
     "insurance": null,
     "freight": null,
+    "hs_id": null,
+    "kurs_id": null,
     "brutto": null,
     "netto": null,
     "kategori_tags": [],
     "is_penetapan": false,
     "kurs": {
-        "data": {
-            "id": null
-        }
+        "data":null
     },
     "hs": {
-        "data": {
-            "id": null
-        }
+        "data": null
     },
     "detailSekunder": {
         "data": []
+    },
+    "kemasan": {
+        "data": null
+    },
+    "satuan": {
+        "data": null
     },
     "tarif": {
         "data": []

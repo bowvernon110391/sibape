@@ -539,6 +539,19 @@ class ApiSibape {
             params: params
         })
     }
+
+    // ===========================DETAIL BARANG=====================================================================
+    updatePenetapanBarang(id, data) {
+        return this.instance.put(`/penetapan/${id}`, data)
+    }
+
+    storePenetapanBarang(uri, data) {
+        return this.instance.post(uri, data)
+    }
+
+    deletePenetapanBarang(id) {
+        return this.instance.delete(`/penetapan/${id}`)
+    }
 }
 
 export {
