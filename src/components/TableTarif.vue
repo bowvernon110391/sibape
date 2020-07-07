@@ -52,7 +52,7 @@
 
             <!-- Detail tarif (dibayar, bla bla) -->
             <template #cell(tarif_detail)="row">
-                <b-form-group label="Dibayar">
+                <b-form-group label="Dibayar" label-cols="3" label-align="right">
                     <b-input-group size="sm">
                         <b-form-input v-model="row.item.bayar" :disabled="disabled"/>
                         <b-input-group-append>
@@ -60,7 +60,7 @@
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group label="Dibebaskan">
+                <b-form-group label="Dibebaskan" label-cols="3" label-align="right">
                     <b-input-group size="sm">
                         <b-form-input v-model="row.item.bebas" :disabled="disabled"/>
                         <b-input-group-append>
@@ -68,7 +68,7 @@
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group label="Ditunda">
+                <b-form-group label="Ditunda" label-cols="3" label-align="right">
                     <b-input-group size="sm">
                         <b-form-input v-model="row.item.tunda" :disabled="disabled"/>
                         <b-input-group-append>
@@ -76,7 +76,7 @@
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
-                <b-form-group label="Ditanggung Pemerintah">
+                <b-form-group label="Ditanggung Pemerintah" label-cols="3" label-align="right">
                     <b-input-group size="sm">
                         <b-form-input v-model="row.item.tanggung_pemerintah" :disabled="disabled"/>
                         <b-input-group-append>
@@ -89,7 +89,7 @@
             <!-- act -->
             <template #cell(act)="row">
                 <div class="text-center">
-                    <b-button size="sm" variant="danger" @click="$emit('delete', row.item)">
+                    <b-button size="sm" variant="danger" @click="$emit('delete', row.item)" :disabled="disabled">
                         <font-awesome-icon icon="trash-alt"/>
                     </b-button>
                 </div>

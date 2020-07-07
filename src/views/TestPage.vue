@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- <lhp-contents v-model="lhpData" disabled /> -->
-    <select-jenis-pungutan v-model="jenis_dokkap"/>
-    <p>
-      jenis dokkap = {{ jenis_dokkap }}
-    </p>
+    <page-perhitungan-cd :data="data_perhitungan" />
   </div>
 </template>
 
@@ -17,9 +13,11 @@ import IpControls from "@/components/IpControls";
 
 import LhpContents from "@/components/LhpContents";
 
-import SelectJenisDokkap from '@/components/SelectJenisDokkap'
+import SelectJenisDokkap from "@/components/SelectJenisDokkap";
 
-import SelectJenisPungutan from '@/components/SelectJenisPungutan'
+import SelectJenisPungutan from "@/components/SelectJenisPungutan";
+
+import PagePerhitunganCd from "@/components/PagePerhitunganCd";
 
 const fileDownload = require("js-file-download");
 
@@ -31,67 +29,57 @@ export default {
     SelectPemeriksa,
     IpControls,
     LhpContents,
-    SelectJenisPungutan
+    SelectJenisPungutan,
+    PagePerhitunganCd
   },
 
   data() {
     return {
-      pemeriksa_id: 296,
-      processing: false,
-      busy: false,
-      uploaded: 0,
-      excelFile: null,
-      excelData: null,
-      downloading: false,
-
-      jenis_dokkap: null,
-
-      lhpData: {
-        id: 5,
-        no_dok: 7,
-        tgl_dok: "2020-06-25",
-        nomor_lengkap: "LHP-000007/SH/2020",
-        isi: "asdasdasdasa adasdasdasdas",
-        pemeriksa_id: 612,
-        pemeriksa: {
-          nama: "Tri Mulyadi Wibowo",
-          nip: "199103112012101001"
+      data_perhitungan: {
+        pembebasan: 500,
+        ndpbm: 14253,
+        nilai_pembebasan_idr: 7126500,
+        nilai_dasar_idr: 1738879.3583549988,
+        nilai_impor: 1912879.3583549988,
+        tarif_bm: 10,
+        tarif_pph: 7.5,
+        pungutan: {
+          bm: 174000,
+          ppn: 192000,
+          pph: 144000
         },
-        lokasi: "T2F",
-        instructable_uri: "/cd/25",
-        last_status: {
-          status: "CLOSED",
-          created_at: "2020-06-25 14:46:14"
-        },
-        is_locked: true,
-        created_at: "2020-06-25 14:24:00",
-        updated_at: "2020-06-25 14:45:28",
-        lampiran: {
-          data: []
-        },
-        status: {
-          data: [
-            {
-              id: 68,
-              status: "CLOSED",
-              created_at: "2020-06-25 14:46:14"
-            },
-            {
-              id: 66,
-              status: "CREATED",
-              created_at: "2020-06-25 14:24:00",
-              detail: {
-                data: {
-                  id: 20,
-                  keterangan: "mulai diperiksa oleh tri.mulyadi",
-                  other_data: null,
-                  created_at: "2020-06-25 14:24:00",
-                  updated_at: "2020-06-25 14:24:00"
-                }
-              }
-            }
-          ]
-        }
+        total: 510000,
+        barang: [
+          {
+            uraian:
+              "In veniam non omnis ut.\n20.20 KG\n------------------\nMAC ADDRESS : Blanditiis dignissimos numquam cumque dolor.\n",
+            jumlah_jenis_kemasan: "14.00 PK",
+            jumlah_jenis_satuan: " ",
+            hs_code: "72202010",
+            hs_raw_code: "7220.20.10",
+            fob: 552.2087,
+            insurance: 56.1025,
+            freight: 24.8249,
+            cif: 633.1360999999999,
+            nilai_pabean: 6480496.208354999,
+            valuta: "SGD",
+            ndpbm: 10235.55
+          },
+          {
+            uraian: "Snake Venom\n5.00 KG",
+            jumlah_jenis_kemasan: "2.00 BX",
+            jumlah_jenis_satuan: " ",
+            hs_code: "02109990",
+            hs_raw_code: "0210.99.90",
+            fob: 233,
+            insurance: 0,
+            freight: 0,
+            cif: 233,
+            nilai_pabean: 2384883.15,
+            valuta: "SGD",
+            ndpbm: 10235.55
+          }
+        ]
       }
     };
   },

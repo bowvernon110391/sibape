@@ -60,7 +60,7 @@
             <b-col md="4">
                 <b-form-group label="Nilai Pabean">
                     <b-alert variant="info" show class="p-1">
-                        {{ 1234.5678 | formatCurrency | displayRupiah }}
+                        {{ value.nilai_pabean| formatCurrency | displayRupiah }}
                     </b-alert>
                 </b-form-group>
             </b-col>
@@ -134,7 +134,7 @@
                 label="Override tarif"
                 description="untuk penetapan tarif manual">
                     <b-button variant="warning" class="shadow" size="sm" v-b-toggle.collapse-table-tarif>
-                        <font-awesome-icon icon="pencil-alt"/>
+                        <font-awesome-icon :icon="disabled ? 'eye' : 'pencil-alt'"/>
                         Override <b-badge>{{ value.tarif.data.length }} tariffs</b-badge>
                     </b-button>
                 </b-form-group>
