@@ -87,10 +87,10 @@
       <template v-if="!isNew">
         <!-- Tampilkan perhitungan -->
         <modal-view-perhitungan
-          :cd-id="dataCd.id"
+          :uri="`/cd/${dataCd.id}/simulasi`"
           size="xl"
           v-model="viewPungutan"
-          :simulate="!docHasLink(dataCd, 'sspcp')"
+          :simulate="!dataCd.is_locked"
         ></modal-view-perhitungan>
 
         <!-- Tampilkan SPP -->

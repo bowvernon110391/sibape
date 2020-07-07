@@ -26,7 +26,7 @@
       <b-button variant="success" :disabled="false" @click="$emit('showPungutan')">
         <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
         <template v-if="docHasLink(data,'sspcp')">Lihat Pungutan</template>
-        <template v-else>Bayar</template>
+        <template v-else>Tetapkan</template>
       </b-button>
     </b-button-group>
 
