@@ -50,7 +50,7 @@
         <template #cell(action)="row">
             <div class="text-center">
                 <!-- EDID DIS -->
-                <b-button :disabled="disabled" size="sm" variant="primary" class="shadow" @click="disabled ? viewItem(row.item) : editItem(row.item)">
+                <b-button size="sm" variant="primary" class="shadow" @click="disabled ? viewItem(row.item) : editItem(row.item)">
                     <font-awesome-icon icon="pencil-alt"/>
                 </b-button>
                 <!-- DELET DIS -->

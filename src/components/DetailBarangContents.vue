@@ -127,6 +127,21 @@
                     <b-form-input :disabled="disabled" v-model="value.netto" size="sm" />
                 </b-form-group>
             </b-col>
+
+            <b-col md="6">
+                <b-form-group 
+                label="Override tarif"
+                description="untuk penetapan tarif manual">
+                    <b-button variant="warning" class="shadow" size="sm" v-b-toggle.collapse-table-tarif>
+                        <font-awesome-icon icon="pencil-alt"/>
+                        Override <b-badge>{{ value.tarif.data.length }} tariffs</b-badge>
+                    </b-button>
+                </b-form-group>
+
+                <b-collapse id="collapse-table-tarif">
+                    Show some shit right here!
+                </b-collapse>
+            </b-col>
         </b-form-row>
 
         <hr>
