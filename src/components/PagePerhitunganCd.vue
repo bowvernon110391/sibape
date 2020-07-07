@@ -85,7 +85,7 @@
     class="shadow"
     >
         <template #header>
-            <h5 class="my-0"><font-awesome-icon icon="money-check-alt"/> Tax and Duty</h5>
+            <h5 class="my-0"><font-awesome-icon icon="money-check-alt"/> Duty and Tax</h5>
         </template>
 
         <b-row>
