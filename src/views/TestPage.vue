@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <lhp-contents v-model="lhpData" disabled /> -->
-    <select-jenis-dokkap v-model="jenis_dokkap"/>
+    <select-jenis-pungutan v-model="jenis_dokkap"/>
     <p>
       jenis dokkap = {{ jenis_dokkap }}
     </p>
@@ -19,6 +19,8 @@ import LhpContents from "@/components/LhpContents";
 
 import SelectJenisDokkap from '@/components/SelectJenisDokkap'
 
+import SelectJenisPungutan from '@/components/SelectJenisPungutan'
+
 const fileDownload = require("js-file-download");
 
 export default {
@@ -28,7 +30,8 @@ export default {
     SelectJenisDokkap,
     SelectPemeriksa,
     IpControls,
-    LhpContents
+    LhpContents,
+    SelectJenisPungutan
   },
 
   data() {

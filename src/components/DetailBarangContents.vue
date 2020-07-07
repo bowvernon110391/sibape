@@ -128,7 +128,8 @@
                 </b-form-group>
             </b-col>
 
-            <b-col md="6">
+            <!-- Override Tariff -->
+            <b-col md="12">
                 <b-form-group 
                 label="Override tarif"
                 description="untuk penetapan tarif manual">
@@ -139,7 +140,14 @@
                 </b-form-group>
 
                 <b-collapse id="collapse-table-tarif">
-                    Show some shit right here!
+                    <b-card>
+                        <table-tarif 
+                            v-model="value.tarif.data" 
+                            :disabled="disabled" 
+                            @create="addNewTarif"
+                            @delete="deleteTarif"
+                            />
+                    </b-card>
                 </b-collapse>
             </b-col>
         </b-form-row>
@@ -171,8 +179,11 @@ import SelectSatuan from '@/components/SelectSatuan'
 import SelectKurs from '@/components/SelectKurs'
 import SelectKategori from '@/components/SelectKategori'
 import TableCdDetailSekunder from '@/components/TableCdDetailSekunder'
+import TableTarif from '@/components/TableTarif'
 
 import defaultDetailSekunder from '../defaults/defaultDetailSekunder'
+
+import defaultTarif from '../defaults/defaultTarif'
 
 const cloneDeep = require('clone-deep')
 
@@ -183,7 +194,8 @@ export default {
         SelectSatuan,
         SelectKurs,
         SelectKategori,
-        TableCdDetailSekunder
+        TableCdDetailSekunder,
+        TableTarif
     },
 
     props: {
@@ -218,6 +230,21 @@ export default {
             this.value.detailSekunder.data.push(
                 cloneDeep(defaultDetailSekunder)
             )
+        },
+
+        addNewTarif() {
+            this.value.tarif.data.push(
+                cloneDeep(defaultTarif)
+            )
+        },
+
+        deleteTarif(data) {
+            // find index
+            var id = this.value.tarif.data.findIndex(e => e === data)
+
+            if (id >= 0) {
+                this.value.tarif.data.splice(id, 1)
+            }
         }
     },
 

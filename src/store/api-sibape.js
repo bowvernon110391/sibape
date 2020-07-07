@@ -171,6 +171,11 @@ class ApiSibape {
         return this.instance.get('/dokkap')
     }
 
+    // getJenisPungutan () : GET /jenis-pungutan
+    getJenisPungutan () {
+        return this.instance.get('/jenis-pungutan')
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {

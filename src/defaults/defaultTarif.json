@@ -1,0 +1,12 @@
+{
+    "id": null,
+    "jenis_pungutan_id": null,
+    "kd_jenis_pungutan": null,
+    "jenis": null,
+    "tarif": null,
+    "bayar": 100,
+    "bebas": 0,
+    "tunda": 0,
+    "tanggung_pemerintah": 0,
+    "overridable": true
+}
