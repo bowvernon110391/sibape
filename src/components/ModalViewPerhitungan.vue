@@ -28,6 +28,14 @@
                     :is="pageComponent"
                     :data="data_perhitungan.pungutan"
                 />
+
+                <!-- Keterangan penetapan -->
+                <div v-if="!hideKeterangan">
+                    <hr>
+                    <b-form-group label="Keterangan" description="catatan dari pejabat penetapan">
+                        <b-form-textarea size="sm" :disabled="!simulate" v-model="keterangan" />
+                    </b-form-group>
+                </div>
             </template>
 
             <template v-else>
@@ -42,6 +50,7 @@
                 variant="primary" 
                 size="sm" 
                 :disabled="!simulate"
+                @click="createPenetapan"
                 >
                 <font-awesome-icon icon="stamp">
                 </font-awesome-icon>
@@ -82,6 +91,10 @@ export default {
         },
         value: {
             required: true
+        },
+        hideKeterangan: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -89,11 +102,31 @@ export default {
             // busy flag
             busy: false,
 
-            data_perhitungan: null
+            data_perhitungan: null,
+
+            keterangan: null
         }
     },
     methods: {
         ...mapMutations(['setBusyState']),
+
+        createPenetapan () {
+            this.setBusyState(true)
+            // call the backend with the only data = keterangan
+            this.api.putEndpoint(this.uri+'/penetapan', {
+                keterangan: this.keterangan
+            })
+            .then(e => {
+                this.setBusyState(false)
+                this.showToast('Penetapan CD', 'CD Berhasil ditetapkan', 'success')
+                this.$emit('input', false) // close ourself
+            })
+            .catch(e => {
+                this.setBusyState(false)
+                this.handleError(e)
+                this.$emit('input', false) // close ourself
+            })
+        }
     },
     computed: {
         ...mapGetters(['api']),
@@ -113,11 +146,12 @@ export default {
                 if (val) {
                     this.busy = true
                     // we're being shown, let's fetch
-                    this.api.getEndpoint(this.uri)
+                    this.api.getEndpoint(this.uri+'/simulasi')
                     .then(e => {
                         this.busy = false
                         // let's 
                         this.data_perhitungan = e.data
+                        this.keterangan = e.data.keterangan ? e.data.keterangan.keterangan : null
                     })
                     .catch(e => {
                         this.busy = false

@@ -14,7 +14,7 @@
               @showPenitipan="showPenitipan"
               @showPenundaan="showPenundaan"
               @showPungutan="showPungutan"
-              @printSspcp="printSspcp"
+              @printBppm="printBppm"
               @printLembarHitungCd="printLembarHitungCd"
             >
               <!-- IP Controls -->
@@ -87,7 +87,7 @@
       <template v-if="!isNew">
         <!-- Tampilkan perhitungan -->
         <modal-view-perhitungan
-          :uri="`/cd/${dataCd.id}/simulasi`"
+          :uri="`/cd/${dataCd.id}`"
           size="xl"
           v-model="viewPungutan"
           :simulate="!dataCd.is_locked"
@@ -361,7 +361,7 @@ export default {
     },
 
     // print sspcp
-    printSspcp() {
+    printBppm() {
       // alert("Printing SSPCP...")
       var printData = this.docGetLinkDetails(this.dataCd, "sspcp");
 

@@ -31,6 +31,16 @@ class ApiSibape {
         return this.instance.get(endpoint)
     }
 
+    // call post on /endpoint
+    postEndpoint (endpoint, data) {
+        return this.instance.post(endpoint, data)
+    }
+
+    // call PUT on /endpoint
+    putEndpoint (endpoint, data) {
+        return this.instance.put(endpoint, data)
+    }
+
     //==================RESOURCE : KURS========================================
     // getKurs (param) : GET /kurs. param = data, e.g. { q:'CNY', tanggal:'2019-01-01' }
     getKurs (param) {
@@ -244,7 +254,7 @@ class ApiSibape {
 
     // createPenetapanCd (id) : POST /cd/:id/penetapan
     createPenetapanCd (id, data) {
-        return this.instance.post(`/cd/${id}/penetapan`, data)
+        return this.instance.put(`/cd/${id}/penetapan`, data)
     }
 
     //==================RESOURCE : SPP===========================================================

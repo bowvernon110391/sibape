@@ -8,7 +8,9 @@
         centered
         hide-footer
         :title="title"
-        @change="e => $emit('input', e)">
+        @change="e => $emit('input', e)"
+        class="fullscreen"
+        >
 
         <pdf-embed :url="url" :alt-filename="altFilename"></pdf-embed>
 

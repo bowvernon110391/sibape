@@ -4,19 +4,19 @@
 
     <b-button-group size="sm" class="shadow mt-2 mt-md-0">
       <!-- apabila dijadikan impor sementara -->
-      <b-button variant="danger" :disabled="docHasLink(data,'bpj') || isDone">
+      <b-button variant="danger" :disabled="isLocked">
         <font-awesome-icon icon="plane-departure"></font-awesome-icon>Jaminkan (Impor Sementara)
       </b-button>
 
       <!-- titip (gk mampu/mau bayar) -->
-      <b-button variant="dark" :disabled="docHasLink(data,'st')  || isDone" @click="$emit('showPenitipan')">
+      <b-button variant="dark" :disabled="isLocked" @click="$emit('showPenitipan')">
         <font-awesome-icon icon="lock"></font-awesome-icon>Titipkan
       </b-button>
 
       <!-- tunda pengeluaran -->
       <b-button
         variant="warning"
-        :disabled="docHasLink(data,'spp') || isDone"
+        :disabled="isLocked"
         @click="$emit('showPenundaan')"
       >
         <font-awesome-icon icon="hand-paper"></font-awesome-icon>Tunda Pengeluaran
@@ -25,7 +25,7 @@
       <!-- apabila dibayar (Terbit SPPBMCP) -->
       <b-button variant="success" :disabled="false" @click="$emit('showPungutan')">
         <font-awesome-icon icon="money-check-alt"></font-awesome-icon>
-        <template v-if="docHasLink(data,'sspcp')">Lihat Pungutan</template>
+        <template v-if="isLocked">Lihat Pungutan</template>
         <template v-else>Tetapkan</template>
       </b-button>
     </b-button-group>
@@ -37,22 +37,22 @@
     </div>
 
     <!-- tombol cetak -->
-    <template v-if="docHasLink(data,'sspcp')">
+    <template v-if="isLocked">
       <b-dropdown
         right
         size="sm"
         split
         split-variant="dark"
         variant="dark"
-        class="shadow mt-2 mt-md-0"
-        @click="$emit('printSspcp')"
+        class="shadow"
       >
         <!-- text and icon for button -->
         <template v-slot:button-content>
-          <font-awesome-icon icon="print"></font-awesome-icon>Cetak
+          <font-awesome-icon icon="print"/>
+          Cetak
         </template>
         <!-- opsi yang selalu ada -->
-        <b-dropdown-item @click="$emit('printSspcp')">Bukti Bayar</b-dropdown-item>
+        <b-dropdown-item @click="$emit('printBppm')" v-if="data.bppm">Bukti Bayar (BPPM)</b-dropdown-item>
 
         <!-- lembar perhitungan -->
         <b-dropdown-item @click="$emit('printLembarHitungCd')">Lembar Perhitungan</b-dropdown-item>
@@ -78,6 +78,10 @@ export default {
     computed: {
       isDone () {
         return this.docHasLink(this.data, 'sspcp')
+      },
+
+      isLocked () {
+        return this.data.is_locked
       }
     }
 }
