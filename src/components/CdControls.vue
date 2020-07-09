@@ -47,7 +47,7 @@
         <b-dropdown-item @click="$emit('printBppm')" v-if="data.bppm">Bukti Bayar (BPPM)</b-dropdown-item>
 
         <!-- lembar perhitungan -->
-        <b-dropdown-item @click="$emit('printLembarHitungCd')">Lembar Perhitungan</b-dropdown-item>
+        <b-dropdown-item @click="$emit('printLembarHitungCd')">Lembar Penetapan</b-dropdown-item>
         <!-- opsi tergantung link yg ada -->
       </b-dropdown>
     </template>

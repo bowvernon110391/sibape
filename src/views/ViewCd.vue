@@ -86,7 +86,8 @@
       <b-card-footer footer-bg-variant="light" v-if="tabId == 0 || tabId == 2">
         <div>
           <b-button @click="onSave" class="shadow" variant="primary" :disabled="disableInput">
-            <font-awesome-icon icon="save"></font-awesome-icon>Simpan
+            <font-awesome-icon icon="save"></font-awesome-icon>
+            Simpan
           </b-button>
         </div>
       </b-card-footer>
