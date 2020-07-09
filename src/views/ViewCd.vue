@@ -16,16 +16,26 @@
               @showPungutan="showPungutan"
               @printBppm="printBppm"
               @printLembarHitungCd="printLembarHitungCd"
-            >
-              <!-- IP Controls -->
-              <ip-controls
-                :disabled="disableInput || lhpIsLocked(dataCd)"
-                :uri="`/cd/${dataCd.id}/ip`"
-                :data="dataCd.instruksi_pemeriksaan ? dataCd.instruksi_pemeriksaan.data : null"
-                @submit="loadCdData(dataCd.id)"
-              />
-            </cd-controls>
+            />
           </template>
+        </div>
+
+        <!-- IP Controls -->
+        <div class="mt-n2 text-right">
+          <ip-controls
+            :disabled="disableInput || lhpIsLocked(dataCd)"
+            :uri="`/cd/${dataCd.id}/ip`"
+            :data="dataCd.instruksi_pemeriksaan ? dataCd.instruksi_pemeriksaan.data : null"
+            @submit="loadCdData(dataCd.id)"
+            class="d-inline-block"
+          />
+
+          <!-- Payment controls (only if penetapan is done)-->
+          <payment-controls v-if="dataCd.is_locked"
+            :disabled="dataCd.sspcp || dataCd.billing"
+            :uri="`/cd/${dataCd.uri}`"
+            class="d-inline-block"
+          />
         </div>
       </b-card-header>
 
@@ -137,6 +147,8 @@ import CdContents from "@/components/CdContents";
 import IpControls from "@/components/IpControls";
 import IpContents from "@/components/IpContents";
 
+import PaymentControls from '@/components/PaymentControls'
+
 // utk menampilkan pungutan
 import ModalViewPerhitungan from "@/components/ModalViewPerhitungan";
 
@@ -185,7 +197,8 @@ export default {
     IpContents,
     // ViewLhp
     LhpContents,
-    TableDokkap
+    TableDokkap,
+    PaymentControls
   },
   data() {
     return {

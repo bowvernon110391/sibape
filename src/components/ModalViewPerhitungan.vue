@@ -19,7 +19,7 @@
             <!-- Bea Masuk, Cukai, PPN, PPh, PPNBM, TOTAL -->
             <template v-if="busy">
                 <div class="text-md-center">
-                    Calculating...<b-spinner></b-spinner>
+                    Please Wait...<b-spinner></b-spinner>
                 </div>
             </template>
             <template v-else-if="data_perhitungan">

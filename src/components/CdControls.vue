@@ -30,21 +30,13 @@
       </b-button>
     </b-button-group>
 
-    <!-- slot -->
-    <div class="mt-2 d-inline-block">
-    <slot>
-    </slot>
-    </div>
-
     <!-- tombol cetak -->
     <template v-if="isLocked">
       <b-dropdown
         right
         size="sm"
-        split
-        split-variant="dark"
         variant="dark"
-        class="shadow"
+        class="shadow my-2"
       >
         <!-- text and icon for button -->
         <template v-slot:button-content>
