@@ -95,7 +95,7 @@ export default {
                 'nomor_lengkap', 
                 'tgl_dok', 
                 'lokasi', 
-                'pemilik_barang',
+                { label:'pemilik_barang', key: 'cd.data.penumpang.data.nama' },
                 { label: 'Terkunci', key: 'is_locked' },
                 'action'
             ]

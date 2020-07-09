@@ -42,7 +42,7 @@ export default {
             spinner(true)
             this.api.getSpp({
                 ...q,
-                include: 'cd.airline'
+                include: 'cd.airline,cd.details'
             })
             .then(e => {
                 // console.log("Got cd data:")
