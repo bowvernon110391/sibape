@@ -11,6 +11,7 @@
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- ST CONTROLS HERE -->
             <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
+              <div class="d-inline-block">
               <!-- IP Controls -->
               <ip-controls
                 :disabled="docHasLink(dataSt, 'pibk') || lhpIsLocked(dataSt)"
@@ -18,8 +19,12 @@
                 :data="dataSt.instruksi_pemeriksaan ? dataSt.instruksi_pemeriksaan.data : null"
                 @submit="loadStData(dataSt.id)"
               />
+              </div>
             </st-controls>
           </template>
+        </div>
+        <div class="text-right mt-md-n2 mt-xs-auto">
+          
         </div>
       </b-card-header>
 
@@ -32,12 +37,11 @@
 
         <!-- Barang dari cd -->
         <b-tab title="Barang" v-if="!isNew">
-          <view-cd-details
-            :cd-id="dataSt.cd.data.id"
-            :disabled="disableInput"
-            hide-satuan
-            hide-netto
-          ></view-cd-details>
+          <view-detail-barang 
+            :uri="`/cd/${dataSt.cd.data.id}/details`" 
+            :store-uri="`/cd/${dataSt.cd.data.id}/penetapan`" 
+            disabled
+            />
         </b-tab>
 
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
@@ -80,6 +84,7 @@ import docMethod from '../mixins/docMethod';
 
 import { mapMutations, mapGetters } from "vuex";
 import ViewCdDetails from "@/views/ViewCdDetails";
+import ViewDetailBarang from '@/views/ViewDetailBarang';
 
 import DocBanner from "@/components/DocBanner";
 
@@ -115,7 +120,8 @@ export default {
     IpControls,
     IpContents,
     LhpContents,
-    AttachmentBucket
+    AttachmentBucket,
+    ViewDetailBarang
   },
   data() {
     return {

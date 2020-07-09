@@ -135,9 +135,9 @@
                                 Uraian Barang/<em>Description</em>
                             </template>
                             <b-form-input
-                                v-for="(uraian, id) in dataSt.uraian_summary"
-                                :key="uraian"
-                                :value="(id+1) + '. ' + uraian"
+                                v-for="(barang, id) in dataSt.cd.data.details.data"
+                                :key="id"
+                                :value="(id+1) + '. ' + barang.uraian"
                                 disabled
                                 class="mb-2"/>
                         </b-form-group>
@@ -281,7 +281,10 @@ export default {
                 return null
             }
 
-            return this.dataSt.package_summary_string + " / " + this.$options.filters.formatCurrency(this.dataSt.total_brutto, 2) + " kg"
+            var total_brutto = this.dataSt.cd.data.details.data.reduce((acc, e) => (acc + e.brutto), 0)
+
+            return this.dataSt.cd.data.koli + " Koli / " 
+            + this.$options.filters.formatCurrency(total_brutto, 2) + " kg"
         }
     },
 

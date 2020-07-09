@@ -11,6 +11,7 @@
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- tombol controls -->
             <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
+              <div class="d-inline-block">
               <!-- IP Controls -->
               <ip-controls
                 :disabled="docHasLink(dataSpp, 'pibk') || lhpIsLocked(dataSpp)"
@@ -18,6 +19,7 @@
                 :data="dataSpp.instruksi_pemeriksaan ? dataSpp.instruksi_pemeriksaan.data : null"
                 @submit="loadSppData(dataSpp.id)"
               />
+              </div>
             </spp-controls>
           </template>
         </div>
@@ -32,12 +34,11 @@
 
         <!-- Barang baca dari cd -->
         <b-tab title="Barang" v-if="!isNew">
-          <view-cd-details
-            :cd-id="dataSpp.cd.data.id"
-            :disabled="disableInput"
-            hide-satuan
-            hide-netto
-          ></view-cd-details>
+          <view-detail-barang 
+            :uri="`/cd/${dataSpp.cd.data.id}/details`" 
+            :store-uri="`/cd/${dataSpp.cd.data.id}/penetapan`" 
+            disabled
+            />
         </b-tab>
 
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
@@ -81,6 +82,7 @@ import docMethod from '../mixins/docMethod';
 // components
 import { mapMutations, mapGetters } from "vuex";
 import ViewCdDetails from "@/views/ViewCdDetails";
+import ViewDetailBarang from "@/views/ViewDetailBarang";
 
 // utk menampilkan pdf
 import ModalViewPdf from "@/components/ModalViewPdf";
@@ -119,7 +121,8 @@ export default {
     IpControls,
     IpContents,
     AttachmentBucket,
-    LhpContents
+    LhpContents,
+    ViewDetailBarang
   },
   data() {
     return {
