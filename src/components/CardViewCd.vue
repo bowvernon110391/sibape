@@ -68,15 +68,7 @@
                 <strong>Jumlah Detail:</strong>
             </b-col>
             <b-col md="4">
-                {{ data.jumlah_detail }}
-            </b-col>
-            <b-col md="2">
-                <strong>Dokumen terkait:</strong>
-            </b-col>
-            <b-col md="4">
-                <b-button size="sm" :variant="pillVariantDokumen[r.rel]" v-for="r in data.links.filter(e => e.rel == 'sspcp' || e.rel == 'bpj')" :key="r.uri" :to="r.uri" class="mr-2 mb-2">
-                    {{ r.rel | docName }}
-                </b-button>
+                {{ data.jumlah_detail_penetapan }}
             </b-col>
         </b-row>
         <b-row>
