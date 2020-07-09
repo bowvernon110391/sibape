@@ -10,7 +10,7 @@
                 <b-button
                     v-b-popover.hover="popoverPenumpang"
                     variant="success">
-                    {{ data.pemilik_barang }}
+                    {{ data.cd.data.penumpang.data.nama }}
                 </b-button>
             </b-col>
         </b-row>
@@ -24,7 +24,7 @@
                 Jumlah:
             </b-col>
             <b-col md="4">
-                <strong>{{ data.package_summary_string }} / {{ data.total_brutto | formatCurrency }} Kg</strong>
+                <strong>{{ data.cd.data.koli }} Koli / {{ totalBrutto | formatCurrency }} Kg</strong>
             </b-col>
 
             <b-col md="2">
@@ -99,13 +99,25 @@ export default {
         
 
         uraianSummary () {
+            if (typeof this.data.cd.data.details == 'undefined') {
+                return null
+            }
+
             var no = 1
-            return this.data.uraian_summary.map(e => {
+            return this.data.cd.data.details.data.map(e => {
                 return {
                     no: `${no ++}.`,
-                    uraian_summary: e
+                    uraian_summary: e.uraian
                 }
             })
+        },
+
+        totalBrutto () {
+            if (typeof this.data.cd.data.details == 'undefined') {
+                return null
+            }
+
+            return this.data.cd.data.details.data.reduce((acc,e) => (acc + e.brutto), 0)
         }
     }
 }

@@ -63,7 +63,7 @@ export default {
             spinner(true)
             this.api.getSt({
                 ...q,
-                include: 'cd.airline',
+                include: 'cd.airline,cd.details',
                 jenis: this.jenis
             })
             .then(e => {
