@@ -16,6 +16,7 @@
               @showPungutan="showPungutan"
               @printBppm="printBppm"
               @printLembarHitungCd="printLembarHitungCd"
+              @printSppb="printSppb"
             />
           </template>
         </div>
@@ -419,6 +420,13 @@ export default {
       this.pdfUrl = this.api.generatePdfUrl("lembarhitungcd", this.id);
       this.viewPrintDialog = true;
       this.altFilename = "lembarhitungcd-" + this.id;
+    },
+
+    // print sppb
+    printSppb() {
+      this.pdfUrl = this.api.generatePdfUrl("sppb", this.dataCd.sppb.data.id)
+      this.viewPrintDialog = true
+      this.altFilename = "sppb-" + this.dataCd.sppb.data.id
     },
 
     // create BPPM
