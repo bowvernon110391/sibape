@@ -49,6 +49,7 @@
         <!-- lembar perhitungan -->
         <b-dropdown-item @click="$emit('printLembarHitungCd')">Lembar Penetapan</b-dropdown-item>
         <!-- opsi tergantung link yg ada -->
+        <b-dropdown-item @click="$emit('printSppb')" v-if="data.sppb">SPPB</b-dropdown-item>
       </b-dropdown>
     </template>
 

@@ -32,12 +32,24 @@
 
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
-            :disabled="Boolean(dataCd.bppm) || Boolean(dataCd.billing[0])"
+            :disabled="isPaid"
             :uri="`/cd/${dataCd.uri}`"
             class="d-inline-block"
 
             @createBppm="createBppm"
           />
+
+          <!-- terbitkan SPPB -->
+          <b-button 
+            size="sm"
+            class="shadow"
+            variant="primary"
+            v-if="isPaid"
+            :disabled="Boolean(dataCd.sppb)"
+            >
+            <font-awesome-icon icon="check-circle"/>
+            Terbitkan SPPB
+          </b-button>
         </div>
       </b-card-header>
 
@@ -239,6 +251,12 @@ export default {
     // check if this is a new data
     isNew() {
       return this.id == "new" || !this.dataCd.id;
+    },
+
+    // check if this has either bppm or billing
+    isPaid() {
+      return typeof this.dataCd.bppm != 'undefined'
+            || Boolean(this.dataCd.billing.data[0]);
     },
 
     // endpoint utk attachment

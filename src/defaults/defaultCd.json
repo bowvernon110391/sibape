@@ -36,5 +36,8 @@
     },
     "dokkap" : {
         "data" : []
+    },
+    "billing" : {
+        "data" : []
     }
 }

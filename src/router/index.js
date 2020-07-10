@@ -319,7 +319,7 @@ router.beforeEach(async (to, from, next) => {
 
     // store default data
     store.commit('setUserInfo', userDemo)
-    store.commit('setLokasi', lokasiDemo)
+    // store.commit('setLokasi', lokasiDemo)
     store.commit('setToken', tokenDemo)
     // bypass auth
     authRequired = false
