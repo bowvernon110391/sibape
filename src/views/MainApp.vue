@@ -38,7 +38,7 @@
       </vuescroll>
     </div>
 
-    <modal-select-location id="modal-select-location" size="sm"></modal-select-location>
+    <modal-select-location id="modal-select-location" size="md"></modal-select-location>
   </div>
 </template>
 

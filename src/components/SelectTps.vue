@@ -1,9 +1,10 @@
 <template>
   <v-select
-    :options="lokasiRef"
+    :options="tps"
     label="kode"
     v-on="$listeners"
     v-bind="$attrs"
+    :filter-by="filterTps"
   >
     <template #option="opt">
       <strong>{{ opt.kode }}</strong> - {{ opt.nama }}
@@ -32,19 +33,24 @@ export default {
     },
 
     methods: {
-      ...mapMutations(['setRefDataLokasi'])
+      ...mapMutations(['setRefDataTps']),
+
+      filterTps(option, label, search) {
+        return option.kode.toLowerCase().indexOf(search.toLowerCase()) > -1
+            || option.nama.toLowerCase().indexOf(search.toLowerCase()) > -1
+      }
     },
 
     computed: {
-      ...mapGetters(['api', 'lokasiRef']),
+      ...mapGetters(['api', 'tps']),
     },
 
     created: function () {
-      if (!this.lokasiRef.length) {
+      if (!this.tps.length) {
         // fetch for first time
-        this.api.getLokasi()
+        this.api.getTps()
         .then(e => {
-          this.setRefDataLokasi(e.data.data)
+          this.setRefDataTps(e.data.data)
         })
         .catch(e => {
           this.handleError(e)

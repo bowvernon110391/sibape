@@ -46,6 +46,7 @@
             variant="primary"
             v-if="isPaid"
             :disabled="Boolean(dataCd.sppb)"
+            v-b-modal.modal-select-lokasi-timbun
             >
             <font-awesome-icon icon="check-circle"/>
             Terbitkan SPPB
@@ -139,6 +140,13 @@
 
     <!-- PRINT MODAL -->
     <modal-view-pdf v-model="viewPrintDialog" :url="pdfUrl" :alt-filename="altFilename"></modal-view-pdf>
+
+    <!-- MODAL SELECT LOKASI (UTK SPPB) -->
+    <modal-select-lokasi-timbun
+      id="modal-select-lokasi-timbun"
+      centered
+      @select="createSppb"
+    />
   </div>
 </template>
 
@@ -191,6 +199,8 @@ import LhpContents from "@/components/LhpContents";
 
 import TableDokkap from '@/components/TableDokkap';
 
+import ModalSelectLokasiTimbun from '@/components/ModalSelectLokasiTimbun'
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -213,7 +223,8 @@ export default {
     // ViewLhp
     LhpContents,
     TableDokkap,
-    PaymentControls
+    PaymentControls,
+    ModalSelectLokasiTimbun
   },
   data() {
     return {
@@ -420,6 +431,25 @@ export default {
         this.setBusyState(false)
         // show toast, and reload data
         this.showToast('BPPM berhasil diterbitkan', `BPPM terbit dengan id #${e.data.id}`, 'success')
+        this.$nextTick(() => {
+          this.loadCdData(this.dataCd.id)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
+    },
+
+    // create SPPB
+    createSppb(lokasi) {
+      this.setBusyState(true)
+
+      // call api
+      this.api.putEndpoint(`/cd/${this.dataCd.id}/sppb`, lokasi)
+      .then(e => {
+        this.setBusyState(false)
+        this.showToast('SPPB', 'SPPB berhasil diterbitkan', 'success')
         this.$nextTick(() => {
           this.loadCdData(this.dataCd.id)
         })

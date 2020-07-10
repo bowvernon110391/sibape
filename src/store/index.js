@@ -18,7 +18,7 @@ export default new Vuex.Store({
     state: {
         userInfo: null, // user info dari sso
         busy: false,    // status layar (busy) bakal mnculin modal
-        lokasi: 'KANTOR',   // data lokasi
+        lokasi: 'BCSH',   // data lokasi
         // backend SiBAPE
         api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
         sso: new SSO(process.env.NODE_ENV == 'production'),
@@ -30,6 +30,8 @@ export default new Vuex.Store({
             airline: [],
             jenisDokkap: [],
             jenisPungutan: [],
+            lokasi: [],
+            tps: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -82,6 +84,12 @@ export default new Vuex.Store({
         },
         setRefDataJenisPungutan(state, payload) {
             state.refData.jenisPungutan = payload
+        },
+        setRefDataLokasi(state, payload) {
+            state.refData.lokasi = payload
+        },
+        setRefDataTps(state, payload) {
+            state.refData.tps = payload
         }
     },
     getters: {
@@ -117,6 +125,12 @@ export default new Vuex.Store({
         },
         jenisPungutan: state => {
             return state.refData.jenisPungutan
+        },
+        lokasiRef: state => {
+            return state.refData.lokasi
+        },
+        tps: state => {
+            return state.refData.tps
         },
         canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'

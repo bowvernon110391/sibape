@@ -186,6 +186,16 @@ class ApiSibape {
         return this.instance.get('/jenis-pungutan')
     }
 
+    // getLokasi () : GET /lokasi
+    getLokasi () {
+        return this.instance.get('/lokasi')
+    }
+
+    // getTps () : GET /tps
+    getTps () {
+        return this.instance.get('/tps')
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {
