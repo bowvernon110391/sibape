@@ -32,7 +32,7 @@
 
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
-            :disabled="Boolean(dataCd.bppm)"
+            :disabled="Boolean(dataCd.bppm) || Boolean(dataCd.billing[0])"
             :uri="`/cd/${dataCd.uri}`"
             class="d-inline-block"
 
