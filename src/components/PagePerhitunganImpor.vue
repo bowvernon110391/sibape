@@ -35,7 +35,7 @@
                 -
                 <template v-if="kode.indexOf('BM') == 0">
                     <!-- for BM Tarif -->
-                    <strong>{{ kode }}</strong>: {{ tarif.tarif }} % ({{ tarif.jenis }})
+                    <strong>{{ kode }}</strong>: {{ tarif.tarif | formatCurrency }} <span v-if="tarif.jenis=='ADVALORUM'">%</span> ({{ tarif.jenis }})
                 </template>
                 <!-- other kind -->
                 <template v-else>
