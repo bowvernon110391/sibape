@@ -32,9 +32,11 @@
 
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
-            :disabled="dataCd.sspcp || dataCd.billing"
+            :disabled="Boolean(dataCd.bppm)"
             :uri="`/cd/${dataCd.uri}`"
             class="d-inline-block"
+
+            @createBppm="createBppm"
           />
         </div>
       </b-card-header>
@@ -376,15 +378,10 @@ export default {
 
     // print sspcp
     printBppm() {
-      // alert("Printing SSPCP...")
-      var printData = this.docGetLinkDetails(this.dataCd, "sspcp");
-
-      console.log("SSPCP PDF GENERATION DATA:");
-      console.log(this.docGetLinkDetails(this.dataCd, "sspcp"));
       // let's set data
-      this.pdfUrl = this.api.generatePdfUrl(printData.doctype, printData.id);
+      this.pdfUrl = this.api.generatePdfUrl('bppm', this.dataCd.bppm.data.id);
       this.viewPrintDialog = true;
-      this.altFilename = printData.doctype + "-" + printData.id;
+      this.altFilename = "bppm-" + this.dataCd.bppm.data.id;
     },
 
     // print lembar perhitungan cd
@@ -395,9 +392,24 @@ export default {
       this.altFilename = "lembarhitungcd-" + this.id;
     },
 
-    // print bpj
-    printBpj() {
-      alert("Printing BPJ...");
+    // create BPPM
+    createBppm() {
+      this.setBusyState(true)
+      this.api.putEndpoint(`/cd/${this.dataCd.id}/bppm`, {
+        lokasi: this.lokasi
+      })
+      .then(e => {
+        this.setBusyState(false)
+        // show toast, and reload data
+        this.showToast('BPPM berhasil diterbitkan', `BPPM terbit dengan id #${e.data.id}`, 'success')
+        this.$nextTick(() => {
+          this.loadCdData(this.dataCd.id)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
     }
   },
   created() {

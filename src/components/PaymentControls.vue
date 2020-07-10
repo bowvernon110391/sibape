@@ -1,14 +1,14 @@
 <template>
-    <b-dropdown size="sm" variant="info" class="shadow" right>
+    <b-dropdown size="sm" variant="info" class="shadow" right :disabled="disabled">
         <template #button-content>
             💲 Bayar
         </template>
 
         <!-- Option -->
-        <b-dropdown-item>
+        <b-dropdown-item @click="$emit('createBppm')" :disabled="disabled">
             Manual (BPPM)
         </b-dropdown-item>
-        <b-dropdown-item>
+        <b-dropdown-item @click="$emit('createBilling')" :disabled="disabled">
             Dengan Billing (input manual)
         </b-dropdown-item>
     </b-dropdown>
@@ -22,11 +22,6 @@ export default {
     inheritAttrs: false,
 
     props: {
-        uri: {
-            type: String,
-            required: true
-        },
-
         disabled: {
             type: Boolean,
             default: false
