@@ -229,6 +229,18 @@
           <b-form-input :disabled="disabled" size="sm" v-model="data.koli"/>
         </b-form-group>
       </b-col>
+
+      <!-- Lokasi -->
+      <b-col md="6">
+        <b-form-group label="Lokasi">
+          <select-lokasi
+            size="sm"
+            :disabled="disabled"
+            :reduce="e => e.kode"
+            v-model="data.lokasi"
+          />
+        </b-form-group>
+      </b-col>
     </b-row>
   </div>
 </template>
@@ -239,6 +251,7 @@ import Datepicker from '@/components/Datepicker'
 import SelectPenumpang2 from '@/components/SelectPenumpang2'
 import SelectAirline from '@/components/SelectAirline'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
+import SelectLokasi from '@/components/SelectLokasi'
 
 export default {
     // COMPONENTS USED
@@ -247,7 +260,8 @@ export default {
         Datepicker,
         SelectPenumpang2,
         SelectAirline,
-        SelectPelabuhan
+        SelectPelabuhan,
+        SelectLokasi
     },
 
     // PROPERTIES
