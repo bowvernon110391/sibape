@@ -22,9 +22,30 @@
         </b-form-group>
 
         <b-form-group label="Tanggal Billing">
-            <!-- <b-form-input :v-model="tanggal" :disabled="disabled" size="sm"/> -->
             <datepicker 
                 v-model="tanggal"
+                :disabled="disabled"
+                size="sm"
+                style="max-width: 128px"
+            />
+        </b-form-group>
+        
+        <b-form-group label="NTB" description="Nomor Transaksi Bank">
+            <b-form-input 
+                v-model="ntb" 
+                :disabled="disabled" 
+                size="sm"/>
+        </b-form-group>
+        <b-form-group label="NTPN" description="Nomor Transaksi Penerimaan Negara">
+            <b-form-input 
+                v-model="ntpn" 
+                :disabled="disabled" 
+                size="sm"/>
+        </b-form-group>
+
+        <b-form-group label="Tanggal NTPN">
+            <datepicker 
+                v-model="tgl_ntpn"
                 :disabled="disabled"
                 size="sm"
                 style="max-width: 128px"
@@ -65,7 +86,10 @@ export default {
     data () {
         return {
             nomor: '',
-            tanggal: ''
+            tanggal: '',
+            ntb: null,
+            ntpn: null,
+            tgl_ntpn: null
         }
     },
 
@@ -74,7 +98,10 @@ export default {
             this.$refs['modal'].hide()
             this.$emit('select', {
                 nomor: this.nomor,
-                tanggal: this.tanggal
+                tanggal: this.tanggal,
+                ntb: this.ntb,
+                ntpn: this.ntpn,
+                tgl_ntpn: this.tgl_ntpn
             })
         }
     }
