@@ -38,6 +38,7 @@
             class="d-inline-block"
 
             @createBppm="createBppm"
+            @createBilling="viewBilling = true"
           />
 
           <!-- terbitkan SPPB -->
@@ -148,6 +149,15 @@
       centered
       @select="createSppb"
     />
+
+    <!-- Modal DIalog Billing -->
+    <modal-dialog-billing
+      id="modal-dialog-billing"
+      centered
+      @select="createBilling"
+      v-model="viewBilling"
+      size="sm"
+    />
   </div>
 </template>
 
@@ -202,6 +212,8 @@ import TableDokkap from '@/components/TableDokkap';
 
 import ModalSelectLokasiTimbun from '@/components/ModalSelectLokasiTimbun'
 
+import ModalDialogBilling from '@/components/ModalDialogBilling'
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -225,7 +237,8 @@ export default {
     LhpContents,
     TableDokkap,
     PaymentControls,
-    ModalSelectLokasiTimbun
+    ModalSelectLokasiTimbun,
+    ModalDialogBilling
   },
   data() {
     return {
@@ -246,7 +259,9 @@ export default {
       viewSt: false,
 
       // Tab Id
-      tabId: 0
+      tabId: 0,
+
+      viewBilling: false
     };
   },
   computed: {
@@ -466,7 +481,26 @@ export default {
         this.setBusyState(false)
         this.handleError(e)
       })
-    }
+    },
+
+    // input data billing
+    createBilling(data) {
+      console.log('billing data: ', data)
+      this.setBusyState(true)
+      // call api
+      this.api.postEndpoint(`/cd/${this.dataCd.id}/billing`, data)
+      .then(e => {
+        this.setBusyState(false)
+        this.showToast('Billing tersimpan', `Data Billing untuk CD #${this.dataCd.id} tersimpan`, 'success')
+        this.$nextTick(() => {
+          this.loadCdData(this.dataCd.id)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
+    },
   },
   created() {
     // this.setBusyState(true)
