@@ -119,7 +119,7 @@
         "role": "PDTT,KASI,CONSOLE"
     },
     {
-        "role": "PDTT,KASI,CONSOLE",
+        "role": "PDTT,PERBENDAHARAAN,CONSOLE",
         "list": [
             {
                 "item": "BPPM",
@@ -128,7 +128,7 @@
                     {
                         "item": "Belum Dibuatkan billing",
                         "icon": "✍️",
-                        "to": "/pembatalan"
+                        "to": "/bppm-not-billed"
                     }
                 ]
             }
