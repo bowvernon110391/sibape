@@ -15,6 +15,7 @@
       :items="value"
       :fields="fields"
       show-empty
+      responsive="sm"
     >
       <!-- EMPTY SLOT -->
       <template #empty>
