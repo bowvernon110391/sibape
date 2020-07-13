@@ -48,7 +48,7 @@
             variant="primary"
             v-if="isPaid"
             :disabled="Boolean(dataCd.sppb)"
-            v-b-modal.modal-select-lokasi-timbun
+            @click="createSppb"
             >
             <font-awesome-icon icon="check-circle"/>
             Terbitkan SPPB
@@ -144,11 +144,11 @@
     <modal-view-pdf v-model="viewPrintDialog" :url="pdfUrl" :alt-filename="altFilename"></modal-view-pdf>
 
     <!-- MODAL SELECT LOKASI (UTK SPPB) -->
-    <modal-select-lokasi-timbun
+    <!-- <modal-select-lokasi-timbun
       id="modal-select-lokasi-timbun"
       centered
       @select="createSppb"
-    />
+    /> -->
 
     <!-- Modal DIalog Billing -->
     <modal-dialog-billing
@@ -210,7 +210,7 @@ import LhpContents from "@/components/LhpContents";
 
 import TableDokkap from '@/components/TableDokkap';
 
-import ModalSelectLokasiTimbun from '@/components/ModalSelectLokasiTimbun'
+// import ModalSelectLokasiTimbun from '@/components/ModalSelectLokasiTimbun'
 
 import ModalDialogBilling from '@/components/ModalDialogBilling'
 
@@ -237,7 +237,7 @@ export default {
     LhpContents,
     TableDokkap,
     PaymentControls,
-    ModalSelectLokasiTimbun,
+    // ModalSelectLokasiTimbun,
     ModalDialogBilling
   },
   data() {
@@ -465,11 +465,11 @@ export default {
     },
 
     // create SPPB
-    createSppb(lokasi) {
+    createSppb() {
       this.setBusyState(true)
 
       // call api
-      this.api.putEndpoint(`/cd/${this.dataCd.id}/sppb`, lokasi)
+      this.api.putEndpoint(`/cd/${this.dataCd.id}/sppb`)
       .then(e => {
         this.setBusyState(false)
         this.showToast('SPPB', 'SPPB berhasil diterbitkan', 'success')
