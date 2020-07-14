@@ -201,6 +201,11 @@ class ApiSibape {
         return this.instance.get('/pjt')
     }
 
+    // createPjt () : POST /pjt
+    createPjt (data) {
+        return this.instance.post('/pjt', data)
+    }
+
     // getGudang () : GET /gudang?include=tps
     getGudang () {
         return this.instance.get('/gudang', {

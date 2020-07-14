@@ -1,28 +1,30 @@
 <template>
-  <div>
-    <b-button v-b-modal.modal-select-lt>
-      Select Lokasi Timbun
-    </b-button>
-    <modal-select-lokasi-timbun 
-      id="modal-select-lt" 
-      @select="e => tps = e"
-      />
-    <pre>{{ tps }}</pre>
-    <pre>{{ $store.getters.lokasi }}</pre>
-  </div>
+  <b-row>
+    <b-col md="6">
+      <b-form-group label="PJT" description="Perusahaan Jasa Titipan">
+        <select-pjt 
+          v-model="pjt_id"
+        />
+      </b-form-group>
+      <pre>{{ pjt_id }}</pre>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import ModalSelectLokasiTimbun from '@/components/ModalSelectLokasiTimbun'
+import SelectPjt from '@/components/SelectPjt'
 
 export default {
   components: {
-    ModalSelectLokasiTimbun
+    ModalSelectLokasiTimbun,
+    SelectPjt
   },
 
   data() {
     return {
-      tps: null
+      tps: null,
+      pjt_id: 4
     };
   }
 };

@@ -32,6 +32,7 @@ export default new Vuex.Store({
             jenisPungutan: [],
             lokasi: [],
             tps: [],
+            pjt: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -90,6 +91,9 @@ export default new Vuex.Store({
         },
         setRefDataTps(state, payload) {
             state.refData.tps = payload
+        },
+        setRefDataPjt(state, payload) {
+            state.refData.pjt = payload
         }
     },
     getters: {
@@ -131,6 +135,9 @@ export default new Vuex.Store({
         },
         tps: state => {
             return state.refData.tps
+        },
+        pjt: state => {
+            return state.refData.pjt
         },
         canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'
@@ -329,6 +336,20 @@ export default new Vuex.Store({
                 .then(e => {
                     // store
                     context.commit('setRefDataJenisPungutan', e.data.data)
+                })
+                .catch(e => {})
+            }
+        },
+        // fetch pjt
+        fetchRefDataPjt(context) {
+            if (!context.state.refData.pjt.length) {
+                // load it
+                const api = context.getters.api
+
+                return api.getPjt()
+                .then(e => {
+                    // store
+                    context.commit('setRefDataPjt', e.data.data)
                 })
                 .catch(e => {})
             }
