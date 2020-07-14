@@ -30,7 +30,7 @@
         </div>
 
         <!-- IP Controls -->
-        <div class="mt-md-n3 text-right">
+        <div class="mt-n2 mt-md-n3 text-right">
           <ip-controls
             :disabled="disableInput || lhpIsLocked(dataCd)"
             :uri="`/cd/${dataCd.id}/ip`"

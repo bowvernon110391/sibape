@@ -2,7 +2,7 @@
   <div class="text-right flex-grow-1 my-auto">
     <slot name="append"></slot>
 
-    <b-button-group size="sm" class="shadow mt-2 mt-md-0 d-block d-md-inline-block" :vertical="vertical">
+    <b-button-group size="sm" :class="['shadow', 'mt-2', 'mt-md-0', { 'd-block' : vertical }]" :vertical="vertical">
       <!-- apabila dijadikan impor sementara -->
       <b-button variant="danger" :disabled="isLocked">
         <font-awesome-icon icon="plane-departure"></font-awesome-icon>Jaminkan (Impor Sementara)
