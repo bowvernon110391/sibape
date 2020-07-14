@@ -7,6 +7,13 @@
           <!-- Title at the top, showing lock status too -->
           <doc-banner doctype="CD" :data="dataCd" :is-new="isNew" v-if="!hideBanner" />
           <template v-if="!hideControls && !isNew && !readOnly">
+            <div
+              class="d-inline-block d-md-none"
+              style="height:1px"
+              v-b-visible="breakpointChange"
+            >
+            </div>
+            <!-- <pre>{{ isXs }}</pre> -->
             <!-- Tombol Penyelesaian? -->
             <cd-controls
               :data="dataCd"
@@ -17,25 +24,26 @@
               @printBppm="printBppm"
               @printLembarHitungCd="printLembarHitungCd"
               @printSppb="printSppb"
+              :vertical="isXs"
             />
           </template>
         </div>
 
         <!-- IP Controls -->
-        <div class="mt-n2 text-right">
+        <div class="mt-md-n3 text-right">
           <ip-controls
             :disabled="disableInput || lhpIsLocked(dataCd)"
             :uri="`/cd/${dataCd.id}/ip`"
             :data="dataCd.instruksi_pemeriksaan ? dataCd.instruksi_pemeriksaan.data : null"
             @submit="loadCdData(dataCd.id)"
-            class="d-inline-block"
+            class="d-inline-block my-2"
           />
 
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
             :disabled="isPaid"
             :uri="`/cd/${dataCd.uri}`"
-            class="d-inline-block"
+            class="d-inline-block my-2"
 
             @createBppm="createBppm"
             @createBilling="viewBilling = true"
@@ -44,7 +52,7 @@
           <!-- terbitkan SPPB -->
           <b-button 
             size="sm"
-            class="shadow"
+            class="shadow my-2"
             variant="primary"
             v-if="isPaid"
             :disabled="Boolean(dataCd.sppb)"
@@ -261,7 +269,9 @@ export default {
       // Tab Id
       tabId: 0,
 
-      viewBilling: false
+      viewBilling: false,
+
+      isXs: false
     };
   },
   computed: {
@@ -501,6 +511,11 @@ export default {
         this.handleError(e)
       })
     },
+
+    // change breakpoint
+    breakpointChange(v) {
+      this.isXs = v
+    }
   },
   created() {
     // this.setBusyState(true)

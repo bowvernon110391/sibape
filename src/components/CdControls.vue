@@ -2,7 +2,7 @@
   <div class="text-right flex-grow-1 my-auto">
     <slot name="append"></slot>
 
-    <b-button-group size="sm" class="shadow mt-2 mt-md-0">
+    <b-button-group size="sm" class="shadow mt-2 mt-md-0 d-block d-md-inline-block" :vertical="vertical">
       <!-- apabila dijadikan impor sementara -->
       <b-button variant="danger" :disabled="isLocked">
         <font-awesome-icon icon="plane-departure"></font-awesome-icon>Jaminkan (Impor Sementara)
@@ -65,7 +65,11 @@ import docMethod from '../mixins/docMethod'
 export default {
     mixins: [ docMethod ],
     props: {
-        data: Object
+        data: Object,
+        vertical: {
+          type: Boolean,
+          default: false
+        }
     },
 
     computed: {
