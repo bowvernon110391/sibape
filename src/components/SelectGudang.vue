@@ -1,32 +1,31 @@
 <template>
     <b-input-group class="d-flex">
         <v-select
-            label="nama"
+            label="kode"
             v-bind="$attrs"
             v-on="$listeners"
 
-            :options="pjt"
-            :reduce="e => e.id"
+            :options="gudang"
 
             class="flex-grow-1 no-flex-selected"
             :disabled="disabled"
         >
             <!-- custom rendering -->
             <template #option="opt">
-                <div>
-                    <h5>{{ opt.nama }}</h5>
-                    <strong>NPWP ({{ opt.npwp }})</strong>
-                </div>
+                <h5>{{ opt.kode }}</h5>
+                <template v-if="opt.tps">
+                    <div>
+                        <strong>🏤 ({{ opt.tps.data.nama }})</strong>
+                    </div>
+                    <div>
+                        <small>{{ opt.tps.data.alamat }}</small>
+                    </div>
+                </template>
             </template>
 
             <!-- selected -->
             <template #selected-option="opt">
-                <div>
-                    <strong>{{ opt.nama }}</strong>
-                </div>
-                <div>
-                    NPWP ({{opt.npwp}})
-                </div>
+                <strong>{{ opt.kode }}</strong>
             </template>
         </v-select>
 
@@ -36,17 +35,17 @@
             variant="primary"
             size="sm"
             :disabled="disabled"
-            v-b-modal.modal-add-pjt
+            v-b-modal.modal-add-gudang
             >
                 <font-awesome-icon icon="user-plus"/>
             </b-button>
         </b-input-group-append>
         <!-- put some modal here -->
         <b-modal
-            id="modal-add-pjt"
+            id="modal-add-gudang"
             header-bg-variant="light"
             footer-bg-variant="light"
-            title="Rekam PJT Baru"
+            title="Rekam Gudang Baru"
             ref="modal"
         >
             <!-- custom footer -->
@@ -54,7 +53,7 @@
                 <b-button
                     size="sm"
                     variant="primary"
-                    @click="storePjt"
+                    @click="storeGudang"
                 >
                     <font-awesome-icon icon="save"/>
                     Simpan
@@ -62,14 +61,17 @@
             </template>
 
             <!-- custom contents -->
-            <b-form-group label="Nama PJT" description="Nama min 6 karakter">
-                <b-form-input size="sm" v-model="newPjt.nama" />
+            <b-form-group label="Kode TPS">
+                <select-tps
+                    :reduce="e => e.id"
+                    v-model="newGudang.tps_id"
+                />
             </b-form-group>
-            <b-form-group label="NPWP" description="Npwp harus 15 digit (minus tanda baca)">
-                <b-form-input size="sm" v-model="newPjt.npwp" />
-            </b-form-group>
-            <b-form-group label="Alamat" description="Opsional, bisa dikosongin">
-                <b-form-textarea size="sm" v-model="newPjt.alamat" />
+            <b-form-group label="Kode Gudang">
+                <b-form-input
+                    size="sm"
+                    v-model="newGudang.kode"
+                />
             </b-form-group>
         </b-modal>
     </b-input-group>
@@ -80,6 +82,8 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import vSelect from 'vue-select'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 
+import SelectTps from '@/components/SelectTps'
+
 export default {
     inheritAttrs: false,
 
@@ -88,7 +92,8 @@ export default {
     ],
 
     components: {
-        vSelect
+        vSelect,
+        SelectTps
     },
 
     props: [ 'disabled' ],
@@ -96,35 +101,34 @@ export default {
     data () {
         return {
             // new pjt to be stored
-            newPjt: {
-                npwp: null,
-                nama: null,
-                alamat: null
+            newGudang: {
+                tps_id: null,
+                kode: null
             }
         }
     },
 
     methods: {
-        ...mapActions(['fetchRefDataPjt']),
-        ...mapMutations(['setRefDataPjt', 'setBusyState']),
+        ...mapActions(['fetchRefDataGudang']),
+        ...mapMutations(['setRefDataGudang', 'setBusyState']),
 
-        storePjt() {
+        storeGudang() {
             var id = null // the newly created pjt
 
             this.setBusyState(true)
             // 1st, POST /pjt : { nama, npwp }
-            this.api.createPjt(this.newPjt)
+            this.api.createGudang(this.newGudang.tps_id, this.newGudang.kode)
             // 2nd, then -> refetch (clear and fetch again)
             .then(e => {
                 // store id
                 id = e.data.id
                 // clear it
-                this.setRefDataPjt([])
+                this.setRefDataGudang([])
                 // fetch again
-                this.fetchRefDataPjt()
+                this.fetchRefDataGudang()
                 .then(e => {
                     // done fetching, let's emit toast
-                    this.showToast('PJT Tersimpan', `PJT tersimpan dengan id #${id}`, 'success')
+                    this.showToast('Kode Gudang Tersimpan', `Kode Gudang tersimpan dengan id #${id}`, 'success')
                     // 3rd,   then -> emit input -> hide
                     this.$emit('input', id)
                     this.$nextTick(() => {
@@ -132,9 +136,8 @@ export default {
                         this.$refs.modal.hide()
 
                         // clear data
-                        this.newPjt.nama = null
-                        this.newPjt.npwp = null
-                        this.newPjt.alamat = null
+                        this.newGudang.kode = null
+                        this.newGudang.tps_id = null
                     })
                 })
             })
@@ -147,12 +150,12 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['pjt', 'api'])
+        ...mapGetters(['gudang', 'api'])
     },
 
     created: function () {
-        if (!this.pjt.length) {
-            this.fetchRefDataPjt()
+        if (!this.gudang.length) {
+            this.fetchRefDataGudang()
         }
     }
 }

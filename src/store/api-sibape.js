@@ -215,6 +215,13 @@ class ApiSibape {
         })
     }
 
+    // createGudang () : POST /tps/{id}/gudang
+    createGudang (tps_id, kode) {
+        return this.instance.post(`/tps/${tps_id}/gudang`, {
+            kode: kode
+        })
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {

@@ -33,6 +33,7 @@ export default new Vuex.Store({
             lokasi: [],
             tps: [],
             pjt: [],
+            gudang: [],
             // dirty flags
             isNegaraDirty: true,
             isSatuanDirty: true,
@@ -94,6 +95,9 @@ export default new Vuex.Store({
         },
         setRefDataPjt(state, payload) {
             state.refData.pjt = payload
+        },
+        setRefDataGudang(state, payload) {
+            state.refData.gudang = payload
         }
     },
     getters: {
@@ -138,6 +142,9 @@ export default new Vuex.Store({
         },
         pjt: state => {
             return state.refData.pjt
+        },
+        gudang: state => {
+            return state.refData.gudang
         },
         canEdit: state => {
             // check if user role is one of 'KASI' or 'CONSOLE'
@@ -351,7 +358,19 @@ export default new Vuex.Store({
                     // store
                     context.commit('setRefDataPjt', e.data.data)
                 })
-                .catch(e => {})
+            }
+        },
+        // fetch gudang
+        fetchRefDataGudang(context) {
+            if (!context.state.refData.gudang.length) {
+                // load it
+                const api = context.getters.api
+
+                return api.getGudang()
+                .then(e => {
+                    // store
+                    context.commit('setRefDataGudang', e.data.data)
+                })
             }
         },
         // get airline data,
