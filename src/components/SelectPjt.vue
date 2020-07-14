@@ -8,7 +8,7 @@
             :options="pjt"
             :reduce="e => e.id"
 
-            class="flex-grow-1"
+            class="flex-grow-1 no-flex-selected"
             :disabled="disabled"
         >
             <!-- custom rendering -->
@@ -21,7 +21,12 @@
 
             <!-- selected -->
             <template #selected-option="opt">
-                {{ opt.nama }}&nbsp;<strong>({{opt.npwp}})</strong>
+                <div>
+                    <strong>{{ opt.nama }}</strong>
+                </div>
+                <div>
+                    NPWP ({{opt.npwp}})
+                </div>
             </template>
         </v-select>
 
@@ -152,3 +157,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.no-flex-selected .vs__selected {
+    display: block;
+}
+</style>
