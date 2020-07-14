@@ -196,6 +196,20 @@ class ApiSibape {
         return this.instance.get('/tps')
     }
 
+    // getPjt () : GET /pjt
+    getPjt () {
+        return this.instance.get('/pjt')
+    }
+
+    // getGudang () : GET /gudang?include=tps
+    getGudang () {
+        return this.instance.get('/gudang', {
+            params: {
+                include: 'tps'
+            }
+        })
+    }
+
     //==================RESOURCE : CD===========================================================
     // getCd () : GET /cd
     getCd (param) {
