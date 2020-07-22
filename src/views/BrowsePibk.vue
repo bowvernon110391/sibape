@@ -11,7 +11,9 @@
             ref="browser">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
-                <table-pibk :items="data"/>
+                <table-pibk :items="data"
+                
+                />
             </template>
         </paginated-browser>
 

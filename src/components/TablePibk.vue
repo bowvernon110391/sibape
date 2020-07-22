@@ -20,6 +20,11 @@
             </div>
         </template>
 
+        <!-- no_flight -->
+        <template #cell(no_flight)="{ value }">
+            <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
+        </template>
+
         <template v-slot:cell(showDetail)="row">
             <b-button size="sm" variant="dark" @click="row.toggleDetails">
                 <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
@@ -89,7 +94,7 @@ export default {
             if (result) {
                 // alert("Hapuuus")
                 // emit delete event
-                this.$emit('deleteHeader', id)
+                this.$emit('delete', id)
             }
         },
 
@@ -102,8 +107,9 @@ export default {
             fields: [
                 { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 
                 { key: 'lokasi', class: 'text-center' }, 
-                { label: 'Importir', key: 'importir.data.nama' }, { label: 'Pemberitahu', key: 'pemberitahu' }, 'no_flight',
-                { label: 'Terkunci', key: 'is_locked' },
+                { label: 'Importir', key: 'importir.data.nama' }, { label: 'Pemberitahu', key: 'pemberitahu' }, 
+                { key: 'no_flight', class: 'text-center'},
+                { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
                 'action'
             ]
         }

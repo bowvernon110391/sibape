@@ -96,7 +96,7 @@ export default {
             if (result) {
                 // alert("Hapuuus")
                 // emit delete event
-                this.$emit('deleteHeader', id)
+                this.$emit('delete', id)
             }
         },
 

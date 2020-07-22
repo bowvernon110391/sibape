@@ -13,11 +13,11 @@
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
                 <!-- <table-cd :items="data"
-                    @deleteHeader="deletePembatalan"></table-cd> -->
+                    @delete="deletePembatalan"></table-cd> -->
                 <!-- <pre>{{ JSON.stringify(data, null, 4) }}</pre> -->
                 <table-pembatalan 
                     :items="data"
-                    @deleteHeader="deletePembatalan"
+                    @delete="deletePembatalan"
                     @editHeader="editPembatalan"
                     @lockHeader="lockPembatalan"></table-pembatalan>
                     

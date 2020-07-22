@@ -12,7 +12,7 @@
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
                 <table-st :items="data"
-                    @deleteHeader="deleteSt"></table-st>
+                    @delete="deleteSt"></table-st>
             </template>
 
             <!-- jenis -->
