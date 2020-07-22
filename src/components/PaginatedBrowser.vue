@@ -65,7 +65,7 @@
         <!-- 2nd row, content -->
         <b-row class="my-2 position-relative">
             <b-col>
-                <slot :data="internalData" :pagination="paginationData" v-if="dataLength">
+                <slot :data="internalData" :pagination="paginationData" :viewData="viewData" v-if="dataLength">
                     There's {{ dataLength }} data here. But no render components provided. SHieet
                 </slot>
                 <slot name="no-data" v-if="!dataLength">
@@ -120,8 +120,7 @@ export default {
             default: 10
         },
         dataCallback: {
-            type: Function,
-            required: true
+            type: Function
         },
         dateRange: {
             type: Boolean,
@@ -138,6 +137,10 @@ export default {
         searchBox: {
             type: Boolean,
             default: true
+        },
+        manual: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -185,12 +188,28 @@ export default {
                 page: this.internalPage,
                 total: this.totalRows
             }
+        },
+        viewData () {
+            return this.internalData.filter((e, index) => {
+                console.log('filtering: ', e, ' idx:', index, ` range: ${this.start} .. ${this.end}`)
+                return (index+1) >= this.start && (index+1) <= this.end
+            })
         }
     },
     methods: {
         ...mapMutations(['setBusyState']),
         // call it whenever data needs to be reloaded
         loadData () {
+            // if we're manual mode, just emit event and bail
+            if (this.manual) {
+                this.$emit('data-request', {
+                    q: this.browseData,
+                    spinner: this.setBusyState,
+                    vm: this
+                })
+                return
+            }
+
             console.log("Calling loadData...")
             if (this.dataCallback) {
                 console.log("Refreshing paginated-browser...")
@@ -254,6 +273,10 @@ export default {
             this.loadData()
         },
         internalPage: function(nv, ov) {
+            if (nv < 1) {
+                this.internalPage = 1
+                return
+            }
             console.log('internal page changed from ', ov, ' to ', nv)
             this.loadData()
         }
