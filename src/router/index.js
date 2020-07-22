@@ -36,6 +36,9 @@ import BrowseIp from '@/views/BrowseIp'
 // LHP
 import ViewLhp from '@/views/ViewLhp'
 
+// PIBK
+import BrowsePibk from '@/views/BrowsePibk'
+
 import store from '../store'
 
 // const axios = require('axios').default
@@ -99,6 +102,33 @@ const router = new Router({
                 title: 'Browse Customs Declaration'
               },
               component: BrowseCd
+            }
+          ]
+        },
+        { /* /pibk */
+          path: 'pibk',
+          component: DummyView,
+          meta: {
+            breadcrumb: '🔍Browse PIBK'
+          },
+          children: [
+            // { // /cd/{id}
+            //   path: ':id',
+            //   name: 'ViewCd',
+            //   component: ViewCd,
+            //   props: true,
+            //   meta: {
+            //     title: 'Detail CD',
+            //     breadcrumb: '💰Lihat Detail CD'
+            //   }
+            // },
+            { //
+              path: '',
+              name: 'BrowsePibk',
+              meta: {
+                title: 'Browse Pemberitahuan Impor Barang Khusus'
+              },
+              component: BrowsePibk
             }
           ]
         },

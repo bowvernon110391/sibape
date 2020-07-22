@@ -603,6 +603,35 @@ class ApiSibape {
     deletePenetapanBarang(id) {
         return this.instance.delete(`/penetapan/${id}`)
     }
+
+    // ===========================PIBK=====================================================================
+    getPibk (params) {
+        return this.instance.get('/pibk', {
+            params: params
+        })
+    }
+
+    getPibkById (id, params) {
+        return this.instance.get(`/pibk/${id}`, {
+            params: params
+        })
+    }
+
+    storePibk (data, params) {
+        return this.instance.post('/pibk', data, {
+            params: params
+        })
+    }
+
+    updatePibk (id, data, params) {
+        return this.instance.put(`/pibk/${id}`, data, {
+            params: params
+        })
+    }
+
+    deletePibk (id) {
+        return this.instance.delete(`/pibk/${id}`)
+    }
 }
 
 export {
