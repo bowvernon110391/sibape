@@ -115,13 +115,32 @@ export default {
             }
         },
         loginReady () {
-            if (this.sso.attached) {
-                this.loginStatus = ''
-                // return true
-            }
             return this.loginStatus.length == 0
         }
     },
+    
+    watch: {
+        'sso.attached': {
+            immediate: true,
+            handler(nv) {
+                if (nv) {
+                    this.loginStatus = ''
+                } else {
+                    this.loginStatus = 'ATTACHING...'
+
+                    var timer = setInterval(() => {
+                        if (this.sso.attached) {
+                            clearInterval(timer)
+                            return
+                        }
+                        console.log('Attempt to attach...')
+                        this.sso.attach()
+                    }, 4000)
+                }
+            }
+        }
+    },
+
     methods: {
         processLogin () {
             if (!this.loginReady) {
@@ -162,7 +181,7 @@ export default {
                     // redirect to home?
                     this.$router.push({
                         path: '/'
-                    })
+                    }, () => {})
                 })
                 .catch( (e) => {
                     console.log('login error')
@@ -189,29 +208,6 @@ export default {
                 alert(e.data)
             })
         }
-    },
-    created () {
-        var vm = this
-
-        /* // first, attaching
-        this.loginStatus = "Attaching Session... "
-        $.ajax({
-            url: '/static/sso/api.php?command=attach',
-            crossDomain: true,
-            dataType: 'jsonp'
-        })
-        .done(function(data) {
-            console.log('success')
-            console.log(data)
-            vm.attached = true
-        })
-        .fail(function(jqxhr) {
-            console.log('error')
-            console.log(jqxhr)
-        })
-        .always(function () {
-            vm.loginStatus = ''
-        }) */
     }
 }
 </script>
