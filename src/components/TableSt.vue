@@ -98,12 +98,12 @@ export default {
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 
+                { label: '', key: 'showDetail' },  
                 'nomor_lengkap', 
-                'tgl_dok', 
-                { label: 'Jenis ST', key:'jenis' }, 
-                { label: 'pemilik_barang', key:'cd.data.penumpang.data.nama' },
-                { label: 'Terkunci', key: 'is_locked' },
+                { key: 'tgl_dok', class: 'text-center' },
+                { label: 'Jenis ST', key:'jenis', class: 'text-center' }, 
+                { label: 'Pemilik Barang', key:'cd.data.penumpang.data.nama' },
+                { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
                 'action'
             ]
         }

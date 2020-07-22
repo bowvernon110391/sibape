@@ -12,17 +12,11 @@
         :fields="fields"
         v-bind="$attrs"
         v-on="$listeners">
+
         <!-- lokasi -->
         <template #cell(lokasi)="{ value }">
             <div v-if="value">
-                <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
-            </div>
-        </template>
-
-        <!-- no flight -->
-        <template #cell(no_flight)="{ value }">
-            <div v-if="value">
-                <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
+                <b-badge :variant="badgeVariant(value.data.kode)">{{ value.data.kode }}</b-badge>
             </div>
         </template>
 
@@ -35,7 +29,8 @@
 
         <!-- Detail Row -->
         <template v-slot:row-details="row">
-            <card-view-cd :data="row.item"></card-view-cd>
+            <!-- <card-view-cd :data="row.item"></card-view-cd> -->
+            <pre>{{ row.item }}</pre>
         </template>
 
         <template v-slot:cell(is_locked)="data">
@@ -48,20 +43,18 @@
 
         <template v-slot:cell(action)="data">
             <!-- Edit Cd -->
-            <b-button variant="primary" size="sm" :to="`/cd/${data.item.id}`">
-                <font-awesome-icon icon="pencil-alt">
-                </font-awesome-icon>
+            <b-button variant="primary" size="sm" :to="`/pibk/${data.item.id}`">
+                <font-awesome-icon icon="pencil-alt"/>
             </b-button>
             <!-- Delete Cd -->
             <!-- show bomb button if document is locked already, no matter who we are -->
             <b-button v-if="data.item.is_locked && canDelete(data.item.is_locked)" variant="warning" size="sm"
                 @click="onNuke(data.item.id, data.item.nomor_lengkap)">
-                <font-awesome-icon icon="radiation"></font-awesome-icon>
+                <font-awesome-icon icon="radiation"/>
             </b-button>
             <b-button v-else variant="danger" size="sm" :disabled="!canDelete(data.item.is_locked)"
                 @click="onDelete(data.item.id, data.item.nomor_lengkap)">
-                <font-awesome-icon icon="trash-alt">
-                </font-awesome-icon>
+                <font-awesome-icon icon="trash-alt"/>
             </b-button>
         </template>
     </b-table>
@@ -81,8 +74,8 @@ export default {
     methods: {
         async onDelete (id, nomor) {
             var msg = nomor ? nomor : 'Tanpa Nomor'
-            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data CD ini? (${msg})`, {
-                title: `Menghapus CD #${id}`,
+            var result = await this.$bvModal.msgBoxConfirm(`Yakin mau menghapus data PIBK ini? (${msg})`, {
+                title: `Menghapus PIBK #${id}`,
                 size: 'md',
                 buttonSize: 'md',
                 okVariant: 'danger',
@@ -101,18 +94,16 @@ export default {
         },
 
         onNuke (id, nomor) {
-            this.$emit('cancel', 'cd', id)
+            this.$emit('cancel', 'pibk', id)
         }
     },
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 'nomor_lengkap', 
-                { key: 'tgl_dok', class: 'text-center' }, 
+                { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 
                 { key: 'lokasi', class: 'text-center' }, 
-                { label: 'Penumpang', key: 'penumpang.data.nama' }, 'npwp_nib', 
-                { key: 'no_flight', class: 'text-center' },
-                { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
+                { label: 'Importir', key: 'importir.data.nama' }, { label: 'Pemberitahu', key: 'pemberitahu' }, 'no_flight',
+                { label: 'Terkunci', key: 'is_locked' },
                 'action'
             ]
         }

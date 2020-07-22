@@ -11,7 +11,7 @@
             ref="browser">
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
-                
+                <table-pibk :items="data"/>
             </template>
         </paginated-browser>
 
@@ -28,14 +28,14 @@
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import { mapGetters, mapMutations } from 'vuex'
 import PaginatedBrowser from '@/components/PaginatedBrowser'
-// import TableCd from '@/components/TableCd'
+import TablePibk from '@/components/TablePibk'
 import ModalViewPembatalan from '@/components/ModalViewPembatalan'
 
 export default {
     mixins: [ axiosErrorHandler ],
     components: {
         PaginatedBrowser,
-        // TableCd,
+        TablePibk,
         ModalViewPembatalan
     },
     computed: {
