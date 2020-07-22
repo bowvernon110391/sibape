@@ -11,7 +11,7 @@
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- ST CONTROLS HERE -->
             <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
-              <div class="d-inline-block">
+              <div class="d-inline-block my-2">
               <!-- IP Controls -->
               <ip-controls
                 :disabled="docHasLink(dataSt, 'pibk') || lhpIsLocked(dataSt)"

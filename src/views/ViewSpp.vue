@@ -11,7 +11,7 @@
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- tombol controls -->
             <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
-              <div class="d-inline-block">
+              <div class="d-inline-block my-2">
               <!-- IP Controls -->
               <ip-controls
                 :disabled="docHasLink(dataSpp, 'pibk') || lhpIsLocked(dataSpp)"
@@ -62,7 +62,8 @@
       <b-card-footer v-if="tabId == 0">
         <div>
           <b-button variant="primary" :disabled="disableInput" @click="onSave">
-            <font-awesome-icon icon="save" />Simpan
+            <font-awesome-icon icon="save"/>
+            Simpan
           </b-button>
         </div>
       </b-card-footer>

@@ -5,12 +5,12 @@
     <b-button-group size="sm" :class="['shadow', 'mt-2', 'mt-md-0', { 'd-block' : vertical }]" :vertical="vertical">
       <!-- apabila dijadikan impor sementara -->
       <b-button variant="danger" :disabled="isLocked">
-        <font-awesome-icon icon="plane-departure"></font-awesome-icon>Jaminkan (Impor Sementara)
+        <font-awesome-icon icon="plane-departure"/>Jaminkan (Impor Sementara)
       </b-button>
 
       <!-- titip (gk mampu/mau bayar) -->
       <b-button variant="dark" :disabled="isLocked" @click="$emit('showPenitipan')">
-        <font-awesome-icon icon="lock"></font-awesome-icon>Titipkan
+        <font-awesome-icon icon="lock"/>Titipkan
       </b-button>
 
       <!-- tunda pengeluaran -->
@@ -19,7 +19,7 @@
         :disabled="isLocked"
         @click="$emit('showPenundaan')"
       >
-        <font-awesome-icon icon="hand-paper"></font-awesome-icon>Tunda Pengeluaran
+        <font-awesome-icon icon="hand-paper"/>Tunda Pengeluaran
       </b-button>
 
       <!-- apabila dibayar (Terbit SPPBMCP) -->
