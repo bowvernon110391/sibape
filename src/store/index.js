@@ -21,7 +21,7 @@ export default new Vuex.Store({
         lokasi: 'BCSH',   // data lokasi
         // backend SiBAPE
         api: new ApiSibape(process.env.API_URL, process.env.API_TIMEOUT),
-        sso: new SSO(process.env.NODE_ENV == 'production'),
+        sso: new SSO(/* process.env.NODE_ENV == 'production' */false),
         refData: {
             kemasan: [],
             negara: [],
