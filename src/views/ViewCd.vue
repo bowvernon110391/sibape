@@ -10,7 +10,7 @@
             <div
               class="d-inline-block d-md-none"
               style="height:1px"
-              v-b-visible="breakpointChange"
+              v-b-visible.once="breakpointChange"
             >
             </div>
             <!-- <pre>{{ isXs }}</pre> -->
