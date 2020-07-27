@@ -15,6 +15,7 @@
         <select-gudang
           v-model="gudang_id"
           :reduce="e => e.id"
+          disabled
         />
       </b-form-group>
       <pre>{{ gudang_id }}</pre>

@@ -99,7 +99,7 @@
             <!-- Jumlah Jenis Satuan -->
             <template v-if="!hideSatuan">
             <b-col md="1">
-                <b-form-group label="Jumlah Satuan">
+                <b-form-group label="Jumlah">
                     <b-form-input :disabled="disabled" v-model="value.jumlah_satuan" size="sm"/>
                 </b-form-group>
             </b-col>

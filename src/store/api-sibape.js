@@ -613,7 +613,10 @@ class ApiSibape {
 
     getPibkById (id, params) {
         return this.instance.get(`/pibk/${id}`, {
-            params: params
+            params: {
+                ...params,
+                include: 'lampiran,instruksi_pemeriksaan,dokkap,details'
+            }
         })
     }
 

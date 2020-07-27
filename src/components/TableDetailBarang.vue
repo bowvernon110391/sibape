@@ -28,7 +28,7 @@
         <!-- satuan -->
         <template #cell(satuan)="row" v-if="!hideSatuan">
             <p class="text-center">
-                {{ row.item.jumlah_kemasan }} <strong>{{ row.item.jenis_kemasan }}</strong>
+                {{ row.item.jumlah_satuan }} <strong>{{ row.item.jenis_satuan }}</strong>
             </p>
         </template>
 
@@ -43,6 +43,13 @@
         <template v-slot:cell(brutto)="row">
             <p class="text-right">
                 {{ row.item.brutto | formatCurrency }} KG
+            </p>
+        </template>
+
+        <!-- Netto -->
+        <template #cell(netto)="row">
+            <p class="text-right">
+                {{ row.item.netto | formatCurrency }} KG
             </p>
         </template>
 
@@ -105,6 +112,7 @@ export default {
                 ...this.hideSatuan ? [] : ['satuan'],
                 'fob',
                 'brutto',
+                ...this.hideSatuan ? [] : ['netto'],
                 {
                     label: 'action',
                     key: 'action'

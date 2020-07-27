@@ -1,0 +1,59 @@
+{
+    "id": null,
+    "no_dok": null,
+    "tgl_dok": null,
+    "nomor_lengkap": null,
+    "koli": null,
+    "importir_type": null,
+    "importir_id": null,
+    "source_type": null,
+    "source_id": null,
+    "lokasi_type": null,
+    "lokasi_id": null,
+    "no_bc11": null,
+    "tgl_bc11": null,
+    "pos_bc11": null,
+    "subpos_bc11": null,
+    "subsubpos_bc11": null,
+    "pph_tarif": 7.5,
+    "kd_pelabuhan_asal": null,
+    "kd_pelabuhan_tujuan": null,
+    "kd_airline": null,
+    "no_flight": null,
+    "alamat": null,
+    "npwp": null,
+    "is_locked": false,
+    "importir": {
+        "data": null
+    },
+    "airline": {
+        "data": null
+    },
+    "pelabuhan_asal": {
+        "data": null
+    },
+    "pelabuhan_tujuan": {
+        "data": null
+    },
+    "lokasi": {
+        "data": null
+    },
+    "ndpbm": {
+        "data": null
+    },
+    "status": {
+        "data": []
+    },
+    "billing": {
+        "data": []
+    },
+    "lampiran": {
+        "data": []
+    },
+    "dokkap": {
+        "data": []
+    },
+    "details": {
+        "data": []
+    }
+}

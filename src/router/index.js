@@ -38,6 +38,7 @@ import ViewLhp from '@/views/ViewLhp'
 
 // PIBK
 import BrowsePibk from '@/views/BrowsePibk'
+import ViewPibk from '@/views/ViewPibk'
 
 import store from '../store'
 
@@ -112,16 +113,16 @@ const router = new Router({
             breadcrumb: '🔍Browse PIBK'
           },
           children: [
-            // { // /cd/{id}
-            //   path: ':id',
-            //   name: 'ViewCd',
-            //   component: ViewCd,
-            //   props: true,
-            //   meta: {
-            //     title: 'Detail CD',
-            //     breadcrumb: '💰Lihat Detail CD'
-            //   }
-            // },
+            { // /pibk/{id}
+              path: ':id',
+              name: 'ViewPibk',
+              component: ViewPibk,
+              props: true,
+              meta: {
+                title: 'Detail PIBK',
+                breadcrumb: '💰Lihat Detail PIBK'
+              }
+            },
             { //
               path: '',
               name: 'BrowsePibk',

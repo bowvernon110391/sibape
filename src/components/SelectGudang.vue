@@ -1,5 +1,5 @@
 <template>
-    <b-input-group class="d-flex">
+    <b-input-group>
         <v-select
             label="kode"
             v-bind="$attrs"
@@ -25,7 +25,7 @@
 
             <!-- selected -->
             <template #selected-option="opt">
-                <strong>{{ opt.kode }}</strong>
+                <strong>{{ opt.kode }}</strong><span v-if="opt.tps">&nbsp;({{ opt.tps.data.nama }})</span>
             </template>
         </v-select>
 

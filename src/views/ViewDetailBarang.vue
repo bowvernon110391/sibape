@@ -25,6 +25,7 @@
                 @delete="deleteBarang" 
                 @view="viewBarang"
                 @edit="editBarang"
+                :hide-satuan="!detailedView"
                 />
             </template>
         </paginated-browser>
@@ -38,7 +39,7 @@
         v-model="showModal"
         size="xl"
         >
-            <detail-barang-contents :disabled="!editMode || modalBusy" v-model="currentItem"/>
+            <detail-barang-contents :disabled="!editMode || modalBusy" v-model="currentItem" :hide-satuan="!detailedView" :hide-netto="!detailedView"/>
 
             <!-- Footer -->
             <template #modal-footer="{ cancel }">
@@ -86,6 +87,11 @@ export default {
         },
 
         disabled: {
+            type: Boolean,
+            default: false
+        },
+
+        detailedView: {
             type: Boolean,
             default: false
         }
