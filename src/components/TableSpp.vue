@@ -19,6 +19,14 @@
             </div>
         </template>
 
+        <!-- status terakhir -->
+        <template #cell(last_status)="{ value }">
+            <!-- <pre>{{ value }}</pre> -->
+            <div v-if="value">
+                <b-badge :variant="badgeVariant(value.status)">{{ value.status }}</b-badge>
+            </div>
+        </template>
+
         <template v-slot:cell(showDetail)="row">
             <div class="text-center">
                 <b-button size="sm" variant="dark" @click="row.toggleDetails">
@@ -104,6 +112,7 @@ export default {
                 { key: 'lokasi', class: 'text-center' }, 
                 { label:'Pemilik Barang', key: 'cd.data.penumpang.data.nama' },
                 { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
+                { label: 'Status Terakhir', key: 'last_status', class: 'text-center' },
                 'action'
             ]
         }
