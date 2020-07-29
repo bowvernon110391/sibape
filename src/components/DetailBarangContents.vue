@@ -106,7 +106,7 @@
 
             <b-col md="3">
                 <b-form-group label="Jenis Satuan">
-                    <select-kemasan 
+                    <select-satuan 
                     :disabled="disabled" 
                     v-model="value.jenis_satuan"
                     :initial-options="initialSatuan"

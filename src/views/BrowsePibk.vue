@@ -12,7 +12,7 @@
             <!-- di tengahnya, ada tabel -->
             <template v-slot:default="{ data, pagination }">
                 <table-pibk :items="data"
-                
+                @delete="deletePibk"
                 />
             </template>
         </paginated-browser>
@@ -81,7 +81,7 @@ export default {
                 // give warning
                 this.showToast(`Data deleted`, `PIBK #${id} deleted successfully`, 'warning')
                 // force reload current page?
-                this.$refs.browserCd.stayAtCurrentPage(-1)
+                this.$refs.browser.stayAtCurrentPage(-1)
             })
             .catch(e => {
                 // stop loading

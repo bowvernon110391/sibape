@@ -20,9 +20,28 @@
             </div>
         </template>
 
+        <!-- Pemberitahu -->
+        <template #cell(pemberitahu)="{ value }">
+            <div v-if="value">
+                <div>
+                    <b-badge 
+                    :variant="badgeVariant(value.data.nama)"
+                    >{{ value.data.nama }}</b-badge>
+                </div>
+            </div>
+        </template>
+
         <!-- no_flight -->
         <template #cell(no_flight)="{ value }">
             <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
+        </template>
+
+        <!-- status terakhir -->
+        <template #cell(last_status)="{ value }">
+            <!-- <pre>{{ value }}</pre> -->
+            <div v-if="value">
+                <b-badge :variant="badgeVariant(value.status)">{{ value.status }}</b-badge>
+            </div>
         </template>
 
         <template v-slot:cell(showDetail)="row">
@@ -107,9 +126,11 @@ export default {
             fields: [
                 { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 
                 { key: 'lokasi', class: 'text-center' }, 
-                { label: 'Importir', key: 'importir.data.nama' }, { label: 'Pemberitahu', key: 'pemberitahu' }, 
+                { label: 'Importir', key: 'importir.data.nama' }, 
+                { label: 'Pemberitahu', key: 'pemberitahu', class: 'text-center' }, 
                 { key: 'no_flight', class: 'text-center'},
                 { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
+                { label: 'Status Terakhir', key: 'last_status', class: 'text-center' },
                 'action'
             ]
         }

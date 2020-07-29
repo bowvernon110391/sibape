@@ -62,7 +62,7 @@
             <!-- FOOTER -->
             <b-card-footer footer-bg-variant="light" v-if="tabId == 0 || tabId == 2">
                 <div>
-                    <b-button class="shadow" variant="primary" :disabled="disableInput">
+                    <b-button class="shadow" variant="primary" :disabled="disableInput" @click="onSave">
                         <font-awesome-icon icon="save"/>
                         Simpan
                     </b-button>
@@ -131,10 +131,12 @@ export default {
     methods: {
         ...mapMutations(['setBusyState']),
 
+        // returns default pibk data
         defaultData () {
             return cloneDeep(defaultPibk)
         },
 
+        // load pibk data based on id
         loadPibkData(id) {
             if (id == 'new') {
                 // init with default data
@@ -162,6 +164,55 @@ export default {
                     path: "/pibk/new"
                 })
             })
+        },
+
+        // when save button clicked
+        onSave() {
+            console.log('data: ', this.dataPibk)
+
+            // do it
+            this.setBusyState(true)
+            if (!this.dataPibk.id) {
+                // id null, means create new
+                this.api.storePibk(this.dataPibk)
+                .then(e => {
+                    this.setBusyState(false)
+                    // what to do next? reload
+                    this.showToast(
+                        "Data PIBK tersimpan!",
+                        `Data PIBK tersimpan dengan id #${e.data.id}`,
+                        'success'
+                    )
+                    // re route
+                    this.$router.replace({
+                        name: "ViewPibk",
+                        params: {
+                            id: e.data.id
+                        }
+                    })
+                })
+                .catch(e => {
+                    this.setBusyState(false)
+                    this.handleError(e)
+                })
+            } else {
+                // id is set, means save it
+                this.api.updatePibk(this.id, this.dataPibk)
+                .then(e => {
+                    this.setBusyState(false)
+                    this.showToast(
+                        "Data PIBK terupdate!",
+                        `Berhasil mengupdate data PIBK #${this.id}`,
+                        'success'
+                    )
+                    // reload
+                    this.loadPibkData(this.id)
+                })
+                .catch(e => {
+                    this.setBusyState(false)
+                    this.handleError(e)
+                })
+            }
         }
     },
 

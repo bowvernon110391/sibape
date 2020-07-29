@@ -17,7 +17,7 @@
 
             <!-- NPWP -->
             <b-col md="6">
-                <b-form-group label="NPWP" description="kosongkan kalau tidak ada">
+                <b-form-group label="NPWP Importir" description="kosongkan kalau tidak ada">
                     <b-form-input v-model="data.npwp" :disabled="disabled"/>
                 </b-form-group>
             </b-col>
@@ -26,7 +26,7 @@
 
         <!-- 2nd row -->
         <b-row>
-            <!-- Importir -->
+            <!-- Importir + PEMBERITAHU (PJT)-->
             <b-col md="6">
                 <b-form-group label="Importir" description="jenis importir dan idnya">
                     <!-- {{ data.importir_type }} -->
@@ -48,12 +48,20 @@
                         <small>Pilih Jenis Importir (saat ini cuma support penumpang)</small>
                     </template>
                 </b-form-group>
+
+                <!-- PJT -->
+                <b-form-group label="Pemberitahu (PJT)" description="kosongkan kalau tidak ada (misal barang penumpang)">
+                    <select-pjt
+                    v-model="data.pemberitahu_id"
+                    :disabled="disabled"
+                    />
+                </b-form-group>
             </b-col>
 
             <!-- Alamat -->
             <b-col md="6">
                 <b-form-group label="Alamat">
-                    <b-form-textarea v-model="data.alamat" :disabled="disabled"/>
+                    <b-form-textarea v-model="data.alamat" :disabled="disabled" rows="6"/>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -98,7 +106,7 @@
                 <!-- Data BC11 -->
                 <b-row>
                     <b-col>
-                        <b-form-group label="Nomor &amp; Tgl BC11">
+                        <b-form-group label="Nomor &amp; Tgl BC11 (opsional)" description="kosongkan data BC11 kalau tidak ada (misal: barang penumpang)">
                             <div>
                                 <b-input-group>
                                     <b-form-input 
@@ -204,9 +212,9 @@
                 <!-- Lokasi Penimbunan Barang -->
                 <b-row>
                     <b-col>
-                        <b-form-group label="Lokasi Penimbunan Barang" description="bisa di lokasi kerja atau gudang tertentu">
+                        <b-form-group label="Lokasi Barang" description="bisa di lokasi kerja atau gudang tertentu">
                             <!-- Radio selector -->
-                            <b-form-radio-group v-model="data.lokasi_type" :disabled="disabled" class="mb-1">
+                            <b-form-radio-group v-model="data.lokasi_type" :disabled="disabled" class="mb-1" @change="data.lokasi_id = 0">
                                 <b-form-radio value="App\Lokasi">Lokasi Kerja</b-form-radio>
                                 <b-form-radio value="App\Gudang">Gudang</b-form-radio>
                             </b-form-radio-group>
@@ -246,6 +254,7 @@ import SelectAirline from '@/components/SelectAirline'
 import SelectPelabuhan from '@/components/SelectPelabuhan'
 import SelectGudang from '@/components/SelectGudang'
 import SelectLokasi from '@/components/SelectLokasi'
+import SelectPjt from '@/components/SelectPjt'
 
 export default {
     
@@ -256,7 +265,8 @@ export default {
         SelectAirline,
         SelectPelabuhan,
         SelectGudang,
-        SelectLokasi
+        SelectLokasi,
+        SelectPjt
     },
     // PROPERTIES
     props: {
