@@ -26,6 +26,14 @@
             </div>
         </template>
 
+        <!-- status terakhir -->
+        <template #cell(last_status)="{ value }">
+            <!-- <pre>{{ value }}</pre> -->
+            <div v-if="value">
+                <b-badge :variant="badgeVariant(value.status)">{{ value.status }}</b-badge>
+            </div>
+        </template>
+
         <template v-slot:cell(showDetail)="row">
             <b-button size="sm" variant="dark" @click="row.toggleDetails">
                 <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
@@ -113,6 +121,7 @@ export default {
                 { label: 'Penumpang', key: 'penumpang.data.nama' }, 'npwp_nib', 
                 { key: 'no_flight', class: 'text-center' },
                 { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
+                { label: 'Status Terakhir', key: 'last_status', class: 'text-center' },
                 'action'
             ]
         }
