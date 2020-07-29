@@ -17,13 +17,10 @@
 
             <!-- jenis -->
             <template #append-search-param>
-                <b-col sm="12" class="d-none d-sm-block">
-                <hr>
-                </b-col>
-                <b-col md="3" offset-md="9" class="mt-md-2">
+                <b-col md="12" class="mt-md-2">
                     <b-form-group 
                         label="Jenis ST"
-                        label-cols-md>
+                        label-cols-md="1">
                         <!-- <b-form-input type="text"/> -->
                         <b-form-checkbox-group 
                             v-model="jenis"

@@ -12,6 +12,20 @@
         :fields="fields"
         v-bind="$attrs"
         v-on="$listeners">
+        <!-- lokasi -->
+        <template #cell(lokasi)="{ value }">
+            <div v-if="value">
+                <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
+            </div>
+        </template>
+        <!-- status terakhir -->
+        <template #cell(last_status)="{ value }">
+            <!-- <pre>{{ value }}</pre> -->
+            <div v-if="value">
+                <b-badge :variant="badgeVariant(value.status)">{{ value.status }}</b-badge>
+            </div>
+        </template>
+
         <template v-slot:cell(showDetail)="row">
             <div class="text-center">
                 <b-button size="sm" variant="dark" @click="row.toggleDetails">
@@ -63,12 +77,13 @@
 
 <script>
 import userChecker from '../mixins/userChecker'
+import niceties from '../mixins/niceties'
 // import CardViewCd from '@/components/CardViewCd'
 import CardViewSpp from '@/components/CardViewSpp'
 
 export default {
     inheritAttrs: false,
-    mixins: [ userChecker ],
+    mixins: [ userChecker, niceties ],
     components: {
         // CardViewCd
         CardViewSpp
@@ -101,9 +116,11 @@ export default {
                 { label: '', key: 'showDetail' },  
                 'nomor_lengkap', 
                 { key: 'tgl_dok', class: 'text-center' },
+                { key: 'lokasi', class: 'text-center' }, 
                 { label: 'Jenis ST', key:'jenis', class: 'text-center' }, 
                 { label: 'Pemilik Barang', key:'cd.data.penumpang.data.nama' },
                 { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
+                { label: 'Status Terakhir', key: 'last_status', class: 'text-center' },
                 'action'
             ]
         }
