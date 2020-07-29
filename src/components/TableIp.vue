@@ -78,7 +78,9 @@ export default {
       this.setBusyState(true);
 
       this.api
-        .putLhp(`${uri}/lhp`, null, null)
+        .putLhp(`${uri}/lhp`, {
+          lokasi: this.lokasi
+        }, null)
         .then(e => {
           this.setBusyState(false);
 
@@ -101,7 +103,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["api"])
+    ...mapGetters(["api", "lokasi"])
   }
 };
 </script>

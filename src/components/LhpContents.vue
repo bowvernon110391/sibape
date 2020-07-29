@@ -2,9 +2,9 @@
   <div v-if="value">
     <b-row>
       <!-- Lokasi Pemeriksaan -->
-      <b-col md="2">
-        <b-form-group label="Lokasi Pemeriksaan" :disabled="disabled">
-          <select-lokasi size="sm" v-model="value.lokasi" />
+      <b-col md="6">
+        <b-form-group label="Lokasi Pemeriksaan">
+          <select-lokasi size="sm" v-model="value.lokasi" :reduce="e => e.kode" :disabled="disabled"/>
         </b-form-group>
       </b-col>
       <!-- Waktu Mulai Periksa dan Selesai -->
