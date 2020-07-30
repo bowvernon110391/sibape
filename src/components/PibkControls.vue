@@ -22,7 +22,7 @@
                 right
                 size="sm"
                 variant="dark"
-                class="shadow my-2"
+                class="shadow mt-2 mt-md-0"
             >
                 <!-- text and icon for button -->
                 <template #button-content>

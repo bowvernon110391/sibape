@@ -81,6 +81,11 @@
             <attachment-bucket show :disabled="disableInput" :endpoint="`/pibk/${id}/lampiran`" />
           </b-tab>
 
+          <!-- status -->
+          <b-tab title="Status">
+            <status-timeline :data="dataPibk.status.data"/>
+          </b-tab>
+
           <!-- Instruksi Pemeriksaan (KLO ADA) -->
           <b-tab v-if="dataPibk.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
             <b-row>
@@ -160,6 +165,8 @@ import ModalDialogBilling from '@/components/ModalDialogBilling'
 // PRINT MODAL
 import ModalViewPdf from '@/components/ModalViewPdf'
 
+import StatusTimeline from '@/components/StatusTimeline'
+
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 import docMethod from "../mixins/docMethod";
 import userChecker from '../mixins/userChecker'
@@ -186,7 +193,8 @@ export default {
     IpControls,
     ModalViewPdf,
     PaymentControls,
-    ModalDialogBilling
+    ModalDialogBilling,
+    StatusTimeline
   },
 
   data() {
