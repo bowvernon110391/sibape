@@ -3,19 +3,24 @@
     <b-row>
       <b-col md="6" offset-md="3">
         <ul class="timeline">
-          <li v-for="(s, id) in status" :key="id" class="rounded shadow mx-2 mb-4 p-3">
-            <b-badge :variant="badgeVariant(s.title)" style="font-size:1.2rem" class="shadow">{{ s.title }}</b-badge>
-            <span class="float-right text-secondary">{{ s.date }}</span>
-            <div>
+          <li v-for="(s) in data" :key="s.id" class="rounded shadow mx-2 mb-4 p-3">
+            <!-- title -->
+            <b-badge :variant="badgeVariant(s.status)" style="font-size:1.2rem" class="shadow">{{ s.status }}</b-badge>
+            <!-- time -->
+            <small class="float-right text-dark bg-light px-1 rounded">{{ s.created_at }}</small>
+            <!-- user data -->
+            <div v-if="s.user">
+              <small class="username">
               <font-awesome-icon icon="user-alt"/>
-              <small>Anonymouse</small>
+              {{ s.user.data.name }} (<em>{{ s.user.data.nip }}</em>)
+              </small>
             </div>
-            <p>{{ s.desc }}</p>
-            <div v-if="id == 2">
-              <b-button size="sm" :variant="badgeVariant('btn'+s.title)" class="shadow">
-                View Detail...
-              </b-button>
-            </div>
+            <!-- desc -->
+            <template v-if="s.detail">
+              <p>{{ s.detail.data.keterangan }}</p>
+              <!-- detail button (if exists) -->
+            
+            </template>
           </li>
         </ul>
       </b-col>
@@ -31,32 +36,12 @@ export default {
     niceties
   ],
 
-  data () {
-    return {
-      status: [
-        {
-          title: 'The Martyrs',
-          date: '1998-03-13 10:23:04',
-          desc: "Several college students were shot in this damned day. That's what you get when you have a CIA backed puppet president"
-        },
-        {
-          title: "Lil bro's burial",
-          date: '1991-03-20 18:10:31',
-          desc: "He was buried somewhere near the public (now private) football field. Lil grave in there along with some famous locals"
-        },
-        {
-          title: 'Brother Died',
-          date: '1991-03-18 03:03:11',
-          desc: 'My younger twin brother died. Better dead than live a crippled existence though'
-        },
-        {
-          title: 'Born',
-          date: '1991-03-11 20:03:34',
-          desc: 'I was born triplet. Two boys, one girl. Sadly only two of us survived into adulthood. Well maybe I should have cheered for him instead'
-        },
-      ]
+  props: {
+    data: {
+      type: Array,
+      required: true
     }
-  }
+  },
 }
 </script>
 
@@ -78,12 +63,12 @@ ul.timeline:before {
 }
 
 ul.timeline > li {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#eeeeee+0,eeeeee+100;Grey+Flat */
-background: rgb(238,238,238); /* Old browsers */
-background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(238,238,238,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(238,238,238,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f2eef6+0,eae1f4+100 */
+background: rgb(242,238,246); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(242,238,246,1) 0%, rgba(234,225,244,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(242,238,246,1) 0%,rgba(234,225,244,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(242,238,246,1) 0%,rgba(234,225,244,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2eef6', endColorstr='#eae1f4',GradientType=0 ); /* IE6-9 */
 
 }
 
@@ -98,5 +83,9 @@ ul.timeline > li:before {
   width: 20px;
   height: 20px;
   z-index: 400;
+}
+
+.username {
+  font-weight: 650;
 }
 </style>

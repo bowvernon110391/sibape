@@ -88,6 +88,11 @@
             <attachment-bucket show :disabled="disableInput" :endpoint="endpoint" />
           </b-tab>
 
+          <!-- Status -->
+          <b-tab title="Status">
+            <status-timeline :data="dataCd.status.data"/>
+          </b-tab>
+
           <!-- Instruksi Pemeriksaan (KLO ADA) -->
           <b-tab v-if="dataCd.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
             <b-row>
@@ -221,6 +226,8 @@ import TableDokkap from '@/components/TableDokkap';
 
 import ModalDialogBilling from '@/components/ModalDialogBilling'
 
+import StatusTimeline from '@/components/StatusTimeline'
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -245,7 +252,8 @@ export default {
     TableDokkap,
     PaymentControls,
     // ModalSelectLokasiTimbun,
-    ModalDialogBilling
+    ModalDialogBilling,
+    StatusTimeline
   },
   data() {
     return {
