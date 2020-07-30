@@ -41,6 +41,11 @@
             />
         </b-tab>
 
+        <!-- status -->
+        <b-tab title="Status">
+          <status-timeline :data="dataSpp.status.data"/>
+        </b-tab>
+
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
         <b-tab v-if="dataSpp.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
           <b-row>
@@ -84,6 +89,7 @@ import docMethod from '../mixins/docMethod';
 import { mapMutations, mapGetters } from "vuex";
 import ViewCdDetails from "@/views/ViewCdDetails";
 import ViewDetailBarang from "@/views/ViewDetailBarang";
+import StatusTimeline from '@/components/StatusTimeline'
 
 // utk menampilkan pdf
 import ModalViewPdf from "@/components/ModalViewPdf";
@@ -123,7 +129,8 @@ export default {
     IpContents,
     AttachmentBucket,
     LhpContents,
-    ViewDetailBarang
+    ViewDetailBarang,
+    StatusTimeline
   },
   data() {
     return {

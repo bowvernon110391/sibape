@@ -7,7 +7,11 @@
             <!-- title -->
             <b-badge :variant="badgeVariant(s.status)" style="font-size:1.2rem" class="shadow">{{ s.status }}</b-badge>
             <!-- time -->
-            <small class="float-right text-dark bg-light px-1 rounded">{{ s.created_at }}</small>
+            <small 
+            class="float-right text-dark bg-light px-1 rounded"
+            v-b-tooltip.hover
+            :title="new Date(s.created_at).toDateString()"
+            >{{ s.created_at }}</small>
             <!-- user data -->
             <div v-if="s.user">
               <small class="username">
