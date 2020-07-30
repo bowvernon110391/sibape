@@ -7,6 +7,13 @@
                     <!-- Banner at the top -->
                     <doc-banner doctype="PIBK" :data="dataPibk" :is-new="isNew" />
                     <!-- document controls -->
+                    <template v-if="!hideControls && !isNew && !readOnly">
+                        <pibk-controls
+                            :data="dataPibk"
+                            ref="tombolPenyelesaian"
+                            
+                        />
+                    </template>
                 </div>
 
                 <!-- IP Controls -->
@@ -75,6 +82,7 @@
 <script>
 import DocBanner from '@/components/DocBanner'
 import PibkContents from '@/components/PibkContents'
+import PibkControls from '@/components/PibkControls'
 import TableDokkap from '@/components/TableDokkap'
 import AttachmentBucket from '@/components/AttachmentBucket'
 import IpContents from '@/components/IpContents'
@@ -103,7 +111,8 @@ export default {
         TableDokkap,
         AttachmentBucket,
         IpContents,
-        LhpContents
+        LhpContents,
+        PibkControls
     },
 
     data () {
