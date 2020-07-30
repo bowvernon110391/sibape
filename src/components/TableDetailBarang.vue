@@ -48,7 +48,7 @@
 
         <!-- Netto -->
         <template #cell(netto)="row">
-            <p class="text-right">
+            <p class="text-right" v-if="row.item.netto">
                 {{ row.item.netto | formatCurrency }} KG
             </p>
         </template>
