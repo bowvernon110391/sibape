@@ -44,6 +44,11 @@
             />
         </b-tab>
 
+        <!-- status -->
+        <b-tab title="Status">
+          <status-timeline :data="dataSt.status.data"/>
+        </b-tab>
+
         <!-- Instruksi Pemeriksaan (KLO ADA) -->
         <b-tab v-if="dataSt.instruksi_pemeriksaan && !hideIp" title="Instruksi Pemeriksaan">
           <b-row>
@@ -106,6 +111,8 @@ import defaultSt from "@/defaults/defaultSt";
 
 import LhpContents from "@/components/LhpContents";
 
+import StatusTimeline from '@/components/StatusTimeline'
+
 // for deep copy
 const cloneDeep = require("clone-deep");
 
@@ -121,7 +128,8 @@ export default {
     IpContents,
     LhpContents,
     AttachmentBucket,
-    ViewDetailBarang
+    ViewDetailBarang,
+    StatusTimeline
   },
   data() {
     return {
