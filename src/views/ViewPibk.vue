@@ -8,12 +8,19 @@
           <doc-banner doctype="PIBK" :data="dataPibk" :is-new="isNew" />
           <!-- document controls -->
           <template v-if="!hideControls && !isNew && !readOnly">
-            <pibk-controls :data="dataPibk" ref="tombolPenyelesaian" @showPungutan="showPungutan" />
+            <pibk-controls 
+                :data="dataPibk" 
+                ref="tombolPenyelesaian" 
+                @showPungutan="showPungutan" 
+
+                @printBppm="printBppm"
+                @printSppb="printSppb"
+            />
           </template>
         </div>
 
         <!-- IP Controls -->
-        <div class="mt-n2 mt-md-n3 text-right" v-if="!readOnly">
+        <div class="mt-n2 mt-md-n3 text-right" v-if="!readOnly && !isNew">
           <ip-controls
             :disabled="disableInput || lhpIsLocked(dataPibk)"
             :uri="`/pibk/${dataPibk.id}/ip`"
@@ -30,6 +37,19 @@
             @createBppm="createBppm"
             @createBilling="viewBilling = true"
           />
+
+          <!-- terbitkan SPPB -->
+          <b-button 
+            size="sm"
+            class="shadow my-2"
+            variant="primary"
+            v-if="isPaid(dataPibk)"
+            :disabled="Boolean(dataPibk.sppb)"
+            @click="createSppb"
+            >
+            <font-awesome-icon icon="check-circle"/>
+            Terbitkan SPPB
+          </b-button>
         </div>
       </b-card-header>
 
@@ -99,6 +119,22 @@
         :simulate="!dataPibk.is_locked"
       />
     </template>
+
+    <!-- PRINT MODAL -->
+    <modal-view-pdf
+        v-model="viewPrintDialog"
+        :url="pdfUrl"
+        :alt-filename="altFilename"
+    />
+
+    <!-- Modal DIalog Billing -->
+    <modal-dialog-billing
+      id="modal-dialog-billing"
+      centered
+      @select="createBilling"
+      v-model="viewBilling"
+      size="sm"
+    />
   </div>
 </template>
 
@@ -113,11 +149,20 @@ import IpContents from "@/components/IpContents";
 import LhpContents from "@/components/LhpContents";
 import ViewDetailBarang from "@/views/ViewDetailBarang";
 
+import PaymentControls from '@/components/PaymentControls'
+
 // utk menampilkan pungutan
 import ModalViewPerhitungan from "@/components/ModalViewPerhitungan";
 
+// blling input
+import ModalDialogBilling from '@/components/ModalDialogBilling'
+
+// PRINT MODAL
+import ModalViewPdf from '@/components/ModalViewPdf'
+
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
 import docMethod from "../mixins/docMethod";
+import userChecker from '../mixins/userChecker'
 
 import { mapGetters, mapMutations } from "vuex";
 
@@ -126,7 +171,7 @@ import defaultPibk from "../defaults/defaultPibk";
 const cloneDeep = require("clone-deep");
 
 export default {
-  mixins: [axiosErrorHandler, docMethod],
+  mixins: [axiosErrorHandler, docMethod, userChecker],
 
   components: {
     DocBanner,
@@ -139,6 +184,9 @@ export default {
     PibkControls,
     ModalViewPerhitungan,
     IpControls,
+    ModalViewPdf,
+    PaymentControls,
+    ModalDialogBilling
   },
 
   data() {
@@ -147,6 +195,12 @@ export default {
       tabId: null,
 
       viewPungutan: false,
+
+      viewPrintDialog: false,
+      pdfUrl: null,
+      altFilename: null,
+
+      viewBilling: false
     };
   },
 
@@ -156,7 +210,7 @@ export default {
 
     // when to disable?
     disableInput() {
-      return this.dataPibk.is_locked;
+      return (!this.canEdit && this.dataPibk.is_locked) || this.readOnly;
     },
 
     // is new?
@@ -260,6 +314,21 @@ export default {
       this.viewPungutan = true;
     },
 
+    // print sspcp
+    printBppm() {
+      // let's set data
+      this.pdfUrl = this.api.generatePdfUrl('bppm', this.dataPibk.bppm.data.id);
+      this.viewPrintDialog = true;
+      this.altFilename = "bppm-" + this.dataPibk.bppm.data.id;
+    },
+
+    // print sppb
+    printSppb() {
+      this.pdfUrl = this.api.generatePdfUrl("sppb", this.dataPibk.sppb.data.id)
+      this.viewPrintDialog = true
+      this.altFilename = "sppb-" + this.dataPibk.sppb.data.id
+    },
+
     // create BPPM
     createBppm() {
       this.setBusyState(true);
@@ -284,6 +353,44 @@ export default {
           this.handleError(e);
         });
     },
+
+    // input data billing
+    createBilling(data) {
+      console.log('billing data: ', data)
+      this.setBusyState(true)
+      // call api
+      this.api.postEndpoint(`/pibk/${this.dataPibk.id}/billing`, data)
+      .then(e => {
+        this.setBusyState(false)
+        this.showToast('Billing tersimpan', `Data Billing untuk PIBK #${this.dataPibk.id} tersimpan`, 'success')
+        this.$nextTick(() => {
+          this.loadPibkData(this.dataPibk.id)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
+    },
+
+    // create SPPB
+    createSppb() {
+      this.setBusyState(true)
+
+      // call api
+      this.api.putEndpoint(`/pibk/${this.dataPibk.id}/sppb`)
+      .then(e => {
+        this.setBusyState(false)
+        this.showToast('SPPB', 'SPPB berhasil diterbitkan', 'success')
+        this.$nextTick(() => {
+          this.loadPibkData(this.dataPibk.id)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
+    },
   },
 
   watch: {
@@ -293,6 +400,13 @@ export default {
         this.loadPibkData(newVal);
       },
     },
-  },
+
+    viewPungutan(newVal, oldVal) {
+      if (!newVal) {
+        // alert("Closing view pungutan, reload pls")
+        this.loadPibkData(this.id);
+      }
+    }
+  }
 };
 </script>

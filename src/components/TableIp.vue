@@ -13,6 +13,10 @@
     v-bind="$attrs"
     v-on="$listeners"
   >
+    <!-- jenis dok -->
+    <template #cell(instructable_type)="{ value }">
+      <b-badge :variant="badgeVariant(value)">{{ value }}</b-badge>
+    </template>
     <!-- custom cell for action -->
     <template #cell(action)="row">
       <div class="text-center">
@@ -41,17 +45,19 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
+import niceties from '../mixins/niceties'
 
 export default {
   inheritAttrs: false,
 
-  mixins: [axiosErrorHandler],
+  mixins: [axiosErrorHandler, niceties],
 
   data() {
     return {
       fields: [
         "nomor_lengkap",
         "tgl_dok",
+        { label: "Jenis Dok", key: 'instructable_type', class: 'text-center' },
         {
           label: "Nama Pejabat",
           key: "nama_issuer"

@@ -42,7 +42,6 @@
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
             :disabled="isPaid(dataCd)"
-            :uri="`/cd/${dataCd.uri}`"
             class="d-inline-block my-2"
 
             @createBppm="createBppm"
@@ -54,7 +53,7 @@
             size="sm"
             class="shadow my-2"
             variant="primary"
-            v-if="isPaid"
+            v-if="isPaid(dataCd)"
             :disabled="Boolean(dataCd.sppb)"
             @click="createSppb"
             >

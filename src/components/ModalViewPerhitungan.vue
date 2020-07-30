@@ -118,7 +118,7 @@ export default {
             })
             .then(e => {
                 this.setBusyState(false)
-                this.showToast('Penetapan CD', 'CD Berhasil ditetapkan', 'success')
+                this.showToast('Penetapan Dokumen', 'Dokumen Berhasil ditetapkan', 'success')
                 this.$emit('input', false) // close ourself
             })
             .catch(e => {
