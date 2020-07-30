@@ -84,6 +84,12 @@ export default {
                 return lhp.id
             }
             return null
+        },
+
+        // check if this has either bppm or billing
+        isPaid: function (doc) {
+            return typeof doc.bppm != 'undefined'
+                || Boolean(doc.billing.data[0]);
         }
     }
 }

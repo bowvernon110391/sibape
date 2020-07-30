@@ -41,7 +41,7 @@
 
           <!-- Payment controls (only if penetapan is done)-->
           <payment-controls v-if="dataCd.is_locked"
-            :disabled="isPaid"
+            :disabled="isPaid(dataCd)"
             :uri="`/cd/${dataCd.uri}`"
             class="d-inline-block my-2"
 
@@ -288,12 +288,6 @@ export default {
     // check if this is a new data
     isNew() {
       return this.id == "new" || !this.dataCd.id;
-    },
-
-    // check if this has either bppm or billing
-    isPaid() {
-      return typeof this.dataCd.bppm != 'undefined'
-            || Boolean(this.dataCd.billing.data[0]);
     },
 
     // endpoint utk attachment
