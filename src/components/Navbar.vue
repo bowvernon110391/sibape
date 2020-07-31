@@ -60,6 +60,10 @@
               <font-awesome-icon icon="user"></font-awesome-icon>
               Profile
             </b-dropdown-item>
+            <b-dropdown-item to="/akses-intranet">
+              <font-awesome-icon icon="wrench"/>
+              Akses via Intranet
+            </b-dropdown-item>
             <!-- <b-dropdown-item to="/resetpassword"><font-awesome-icon icon="lock"></font-awesome-icon> Reset Password</b-dropdown-item> -->
             <b-dropdown-item v-b-modal.modal-select-location>
               <font-awesome-icon icon="map-marker-alt"></font-awesome-icon>

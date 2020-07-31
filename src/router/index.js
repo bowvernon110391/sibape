@@ -13,6 +13,8 @@ import Forbidden from '@/views/Forbidden'
 
 import TestPage from '@/views/TestPage'
 
+import AksesIntranetPage from '@/views/AksesIntranetPage'
+
 import BrowsePenumpang from '@/views/BrowsePenumpang'
 import BrowseKurs from '@/views/BrowseKurs'
 // import PrintSppbmcp from '@/components/PrintSppbmcp'
@@ -77,6 +79,14 @@ const router = new Router({
           component: TestPage,
           meta: {
             title: 'Test Page'
+          }
+        },
+        {
+          path: 'akses-intranet',
+          name: 'AksesIntranetPage',
+          component: AksesIntranetPage,
+          meta: {
+            title: 'Panduan setting akses intranet'
           }
         },
         { /* /cd */
