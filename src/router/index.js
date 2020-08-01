@@ -42,6 +42,9 @@ import ViewLhp from '@/views/ViewLhp'
 import BrowsePibk from '@/views/BrowsePibk'
 import ViewPibk from '@/views/ViewPibk'
 
+// BPPM
+import BrowseBppm from '@/views/BrowseBppm'
+
 import store from '../store'
 
 // const axios = require('axios').default
@@ -87,6 +90,15 @@ const router = new Router({
           component: AksesIntranetPage,
           meta: {
             title: 'Panduan setting akses intranet'
+          }
+        },
+        {
+          // BPPM
+          path: 'bppm',
+          component: BrowseBppm,
+          meta: {
+            title: 'Browse Bukti Penerimaan Pembayaran Manual',
+            breadcrumb: '🔍Browse BPPM'
           }
         },
         { /* /cd */

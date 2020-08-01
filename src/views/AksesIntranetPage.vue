@@ -2,7 +2,7 @@
     <div>
         <h3>AKSES PATOPS VIA <b-badge variant="success">INTRANET</b-badge></h3>
         <small class="text-muted">opsional, kalau mau kecepatan akses rasa lokal</small>
-        <p class="lead">
+        <p>
             By default jalur akses aplikasi adalah melalui internet. 
             Dikarenakan kondisi internet di terminal bandara soekarno hatta (terutama T3) yang kurang optimal,
             maka server aplikasi ini disetel sedemikian rupa sehingga bisa diakses via dua jalur, 

@@ -635,6 +635,13 @@ class ApiSibape {
     deletePibk (id) {
         return this.instance.delete(`/pibk/${id}`)
     }
+
+    //==================RESOURCE : BPPM===========================================================
+    getBppm (params) {
+        return this.instance.get('/bppm', {
+            params: params
+        })
+    }
 }
 
 export {
