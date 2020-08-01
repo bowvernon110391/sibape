@@ -316,7 +316,7 @@ router.beforeEach(async (to, from, next) => {
 
     var mockRoles = {
       token_pdtt: ['PDTT'],
-      token_admin: ['CONSOLE', 'KASI'],
+      token_admin: ['CONSOLE', 'KASI', 'PERBENDAHARAAN'],
       token_pemeriksa: ['PEMERIKSA']
     }
 

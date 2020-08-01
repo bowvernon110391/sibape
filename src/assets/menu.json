@@ -115,20 +115,20 @@
         ]
     },
     {
-        "section": "Laporan",
-        "role": "PDTT,KASI,CONSOLE"
+        "section": "Perbendaharaan",
+        "role": "PERBENDAHARAAN"
     },
     {
-        "role": "PDTT,PERBENDAHARAAN,CONSOLE",
+        "role": "PERBENDAHARAAN",
         "list": [
             {
                 "item": "BPPM",
                 "icon": "💵",
                 "children": [
                     {
-                        "item": "Belum Dibuatkan billing",
+                        "item": "Browse BPPM",
                         "icon": "✍️",
-                        "to": "/bppm-not-billed"
+                        "to": "/bppm"
                     }
                 ]
             }

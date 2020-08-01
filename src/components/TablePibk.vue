@@ -44,17 +44,30 @@
             </div>
         </template>
 
-        <template v-slot:cell(showDetail)="row">
+        <!-- <template v-slot:cell(showDetail)="row">
             <b-button size="sm" variant="dark" @click="row.toggleDetails">
                 <font-awesome-icon :icon="row.detailsShowing ? 'minus-square' : 'plus-square'">
                 </font-awesome-icon>
             </b-button>
-        </template>
+        </template> -->
 
         <!-- Detail Row -->
-        <template v-slot:row-details="row">
-            <!-- <card-view-cd :data="row.item"></card-view-cd> -->
+        <!-- <template v-slot:row-details="row">
             <pre>{{ row.item }}</pre>
+        </template> -->
+
+        <!-- dok sumber -->
+        <template #cell(source_type)="{ item }">
+            <b-button
+                v-if="item.source_type"
+                size="sm"
+                :variant="badgeVariant('src'+item.source_type)"
+                class="shadow"
+                :to="item.source_uri"
+            >
+                <font-awesome-icon icon="eye"/>
+                {{ item.source_type }}
+            </b-button>
         </template>
 
         <template v-slot:cell(is_locked)="data">
@@ -124,7 +137,10 @@ export default {
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 'nomor_lengkap', 'tgl_dok', 
+                // { label: '', key: 'showDetail' }, 
+                { label: 'Dok Sumber', key: 'source_type', class: 'text-center' },
+                { key: 'nomor_lengkap', class: 'text-center' }, 
+                'tgl_dok', 
                 { key: 'lokasi', class: 'text-center' }, 
                 { label: 'Importir', key: 'importir.data.nama' }, 
                 { label: 'Pemberitahu', key: 'pemberitahu', class: 'text-center' }, 
