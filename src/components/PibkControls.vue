@@ -3,7 +3,7 @@
         <!-- button group -->
         <b-button-group size="sm" class="shadow mt-2 mt-md-0">
             <!-- view source? -->
-            <b-button variant="warning" :disabled="!hasSource" @click="$emit('viewSource', sourceUri)">
+            <b-button variant="warning" :disabled="!hasSource" @click="$emit('view-source')">
                 <font-awesome-icon icon="eye"/>
                 Lihat Dok Sumber
             </b-button>
@@ -61,18 +61,6 @@ export default {
 
         hasSource () {
             return typeof this.data.source !== 'undefined'
-        },
-
-        sourceUri () {
-            // generate a valid uri based on the source
-            switch (this.data.source_type) {
-                case "App\\ST":
-                    return `/st/${this.data.source_id}`
-                case "App\\SPP":
-                    return `/spp/${this.data.source_id}`
-            }
-            // maybe it's none of the above?
-            return null
         }
     }
 }

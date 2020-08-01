@@ -10,7 +10,13 @@
           <!-- show controls if it's not a new one -->
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- tombol controls -->
-            <spp-controls :data="dataSpp" ref="tombolPenyelesaian" @printSpp="printSpp">
+            <spp-controls 
+              :data="dataSpp" 
+              ref="tombolPenyelesaian" 
+              @printSpp="printSpp" 
+              @view-pibk="$router.push(`/pibk/${dataSpp.pibk.data.id}`)"
+              @create-pibk="viewCreatePibkDialog = true"
+            >
               <div class="d-inline-block my-2">
               <!-- IP Controls -->
               <ip-controls
@@ -76,6 +82,14 @@
 
     <!-- PRINT MODAL -->
     <modal-view-pdf v-model="viewPrintDialog" :url="pdfUrl" :alt-filename="altFilename"></modal-view-pdf>
+
+    <!-- CREATE PIBK DIALOG -->
+    <modal-dialog-create-pibk
+      size="xl"
+      centered
+      v-model="viewCreatePibkDialog"
+      @submit="onCreatePibk"
+    />
   </div>
 </template>
 
@@ -93,6 +107,9 @@ import StatusTimeline from '@/components/StatusTimeline'
 
 // utk menampilkan pdf
 import ModalViewPdf from "@/components/ModalViewPdf";
+
+// utk nerbitin PIBK
+import ModalDialogCreatePibk from '@/components/ModalDialogCreatePibk'
 
 // banner
 import DocBanner from "@/components/DocBanner";
@@ -130,7 +147,8 @@ export default {
     AttachmentBucket,
     LhpContents,
     ViewDetailBarang,
-    StatusTimeline
+    StatusTimeline,
+    ModalDialogCreatePibk
   },
   data() {
     return {
@@ -142,7 +160,9 @@ export default {
       altFilename: "SPP",
 
       // tab id
-      tabId: 0
+      tabId: 0,
+
+      viewCreatePibkDialog: false
     };
   },
   computed: {
@@ -214,6 +234,31 @@ export default {
       this.pdfUrl = this.api.generatePdfUrl("spp", this.id);
       this.viewPrintDialog = true;
       this.altFilename = `spp-${this.id}`;
+    },
+
+    // when creating pibk
+    onCreatePibk(data) {
+      console.log('data-create-pibk: ', data)
+
+      this.setBusyState(true)
+      // call it
+      this.api.putEndpoint(`/spp/${this.dataSpp.id}/pibk`, data)
+      .then(e => {
+        this.setBusyState(false)
+        // redirect to page and say something nice?
+        this.showToast(
+          'PIBK created',
+          `Berhasil menerbitkan PIBK #${e.data.id} dari SPP #${this.dataSpp.id}`,
+          'success'
+        )
+        this.$nextTick(() => {
+          this.$router.push(e.data.uri)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
     }
   },
   created() {

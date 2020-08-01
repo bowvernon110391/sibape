@@ -10,7 +10,13 @@
           <!-- CONTROLS -->
           <template v-if="!hideControls && !isNew && !readOnly">
             <!-- ST CONTROLS HERE -->
-            <st-controls :data="dataSt" ref="tombolPenyelesaian" @printSt="printSt" >
+            <st-controls 
+              :data="dataSt" 
+              ref="tombolPenyelesaian" 
+              @printSt="printSt"
+              @view-pibk="$router.push(`/pibk/${dataSt.pibk.data.id}`)"
+              @create-pibk="viewCreatePibkDialog = true"
+            >
               <div class="d-inline-block my-2">
               <!-- IP Controls -->
               <ip-controls
@@ -78,6 +84,14 @@
 
     <!-- PRINT MODAL -->
     <modal-view-pdf v-model="viewPrintDialog" :url="pdfUrl" :alt-filename="altFilename"></modal-view-pdf>
+
+    <!-- CREATE PIBK DIALOG -->
+    <modal-dialog-create-pibk
+      size="xl"
+      centered
+      v-model="viewCreatePibkDialog"
+      @submit="onCreatePibk"
+    />
   </div>
 </template>
 
@@ -102,6 +116,9 @@ import IpContents from "@/components/IpContents";
 
 // utk menampilkan pdf
 import ModalViewPdf from "@/components/ModalViewPdf";
+
+// utk nerbitin PIBK
+import ModalDialogCreatePibk from '@/components/ModalDialogCreatePibk'
 
 import AttachmentBucket from '@/components/AttachmentBucket'
 
@@ -129,7 +146,8 @@ export default {
     LhpContents,
     AttachmentBucket,
     ViewDetailBarang,
-    StatusTimeline
+    StatusTimeline,
+    ModalDialogCreatePibk
   },
   data() {
     return {
@@ -141,7 +159,9 @@ export default {
       altFilename: "ST",
 
       // tabId
-      tabId: 0
+      tabId: 0,
+
+      viewCreatePibkDialog: false
     };
   },
   computed: {
@@ -238,6 +258,31 @@ export default {
         }
       }
       return false;
+    },
+
+    // when creating pibk
+    onCreatePibk(data) {
+      console.log('data-create-pibk: ', data)
+
+      this.setBusyState(true)
+      // call it
+      this.api.putEndpoint(`/st/${this.dataSt.id}/pibk`, data)
+      .then(e => {
+        this.setBusyState(false)
+        // redirect to page and say something nice?
+        this.showToast(
+          'PIBK created',
+          `Berhasil menerbitkan PIBK #${e.data.id} dari ST #${this.dataSt.id}`,
+          'success'
+        )
+        this.$nextTick(() => {
+          this.$router.push(e.data.uri)
+        })
+      })
+      .catch(e => {
+        this.setBusyState(false)
+        this.handleError(e)
+      })
     }
   },
   created() {

@@ -15,6 +15,8 @@
 
                 @printBppm="printBppm"
                 @printSppb="printSppb"
+
+                @view-source="$router.push(`${dataPibk.source_uri}`)"
             />
           </template>
         </div>

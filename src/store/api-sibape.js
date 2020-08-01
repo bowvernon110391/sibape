@@ -305,7 +305,7 @@ class ApiSibape {
     getSppById (id) {
         return this.instance.get('/spp/' + id, {
             params: {
-                include: 'cd'
+                include: 'cd,pibk'
             }
         })
     }
@@ -355,7 +355,7 @@ class ApiSibape {
     getStById (id) {
         return this.instance.get('/st/' + id, {
             params: {
-                include: 'cd'
+                include: 'cd,pibk'
             }
         })
     }
@@ -615,7 +615,7 @@ class ApiSibape {
         return this.instance.get(`/pibk/${id}`, {
             params: {
                 ...params,
-                include: 'lampiran,instruksi_pemeriksaan,dokkap,details'
+                include: 'lampiran,instruksi_pemeriksaan,dokkap,details,source'
             }
         })
     }
