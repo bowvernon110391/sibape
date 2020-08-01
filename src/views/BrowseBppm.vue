@@ -1,10 +1,24 @@
 <template>
     <div>
         <div class="mb-2 text-right">
+            <!-- Upload billing -->
+            <b-button
+                variant="danger"
+                class="shadow"
+                v-b-tooltip.hover
+                title="Upload data billing untuk menutup BPPM"
+            >
+                <font-awesome-icon icon="cloud-upload-alt"/>
+                Upload Data Billing
+            </b-button>
+            <!-- Download excel -->
             <b-button 
                 variant="success"
                 class="shadow"
                 :disabled="!can_download"
+                v-b-tooltip.hover
+                title="Download data BPPM dalam bentuk excel (hint: bisa jadi bahan upload data billing)"
+                @click="downloadExcel"
                 >
                 <font-awesome-icon icon="file-excel"/>
                 Download Excel
@@ -190,6 +204,8 @@ import { mapGetters, mapMutations } from 'vuex'
 import axiosErrorHandler from '../mixins/axiosErrorHandler'
 import niceties from '../mixins/niceties'
 
+const fileDownload = require('js-file-download')
+
 export default {
     mixins: [
         axiosErrorHandler,
@@ -246,6 +262,34 @@ export default {
             })
             .catch(e => {
                 spinner(false)
+                this.handleError(e)
+            })
+        },
+
+        // download excel
+        downloadExcel() {
+            // grab all parameter then
+            
+
+            var queryData = {
+                ...this.$refs.browser.browseData,
+                deep: this.deep_query,
+                'billing-status': this.billing_status
+            }
+
+            console.log('query data: ', queryData)
+
+            // call api using this endpoint?
+            this.setBusyState(true)
+
+            this.api.downloadUri('/excel/bppm', {}, 35000, queryData)
+            .then(e => {
+                this.setBusyState(false)
+                // save the file though
+                fileDownload(e.data, 'BPPM.xlsx')
+            })
+            .catch(e => {
+                this.setBusyState(false)
                 this.handleError(e)
             })
         }

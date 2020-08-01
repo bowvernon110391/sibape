@@ -502,14 +502,15 @@ class ApiSibape {
     }
 
     // this downloads uri
-    downloadUri (uri, headers, timeout) {
+    downloadUri (uri, headers, timeout, params) {
         return this.instance.get(uri, {
             responseType: 'arraybuffer',
             headers: {
                 ...this.instance.defaults.headers,
                 ...headers
             },
-            timeout : timeout || this.instance.timeout
+            timeout : timeout || this.instance.timeout,
+            params: params
         })
     }
     
