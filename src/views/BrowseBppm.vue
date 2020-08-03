@@ -7,6 +7,7 @@
                 class="shadow"
                 v-b-tooltip.hover
                 title="Upload data billing untuk menutup BPPM"
+                v-b-modal.modalImport
             >
                 <font-awesome-icon icon="cloud-upload-alt"/>
                 Upload Data Billing
@@ -194,6 +195,46 @@
                 </b-table>
             </template>
         </paginated-browser>
+
+        <!-- modal utk upload -->
+        <b-modal
+        id="modalImport"
+        ref="modalImport"
+        footer-bg-variant="light"
+        header-bg-variant="light"
+        title="Import Data Billing"
+        centered
+        :no-close-on-backdrop="uploading"
+        :no-close-on-esc="uploading"
+        >
+            <!-- custom footer -->
+            <template #modal-footer>
+                <b-button size="sm" variant="primary" @click="uploadDataBilling" :disabled="uploading">
+                    <template v-if="!uploading">
+                        <font-awesome-icon icon="cloud-upload-alt"/>
+                        Upload
+                    </template>
+                    <template v-else>
+                        <b-spinner small/>
+                        Uploading...
+                    </template>
+                </b-button>
+            </template>
+
+            <!-- only contain file -->
+            <b-form-group>
+                <template #label>
+                    Browse File Excel (<a href="/static/contoh-input-data-billing.xlsx">Contoh File</a>)
+                </template>
+
+                <b-file
+                    required
+                    v-model="file_input"
+                    accept=".xls, .xlsx"
+                    :disabled="uploading"
+                />
+            </b-form-group>
+        </b-modal>
     </div>
 </template>
 
@@ -222,7 +263,10 @@ export default {
             deep_query: false,  // do not use deep query
             billing_status: null, // do not care about billing status
 
-            can_download: false
+            can_download: false,
+
+            file_input: null,
+            uploading: false
         }
     },
 
@@ -263,6 +307,33 @@ export default {
             .catch(e => {
                 spinner(false)
                 this.handleError(e)
+            })
+        },
+
+        // upload data billing
+        uploadDataBilling () {
+            this.uploading = true
+            this.api.attachRawFileToUri('/excel/billing', this.file_input)
+            .then(e => {
+                // gotta say something about that?
+                this.uploading = false
+                this.file_input = null
+                
+                this.showToast(
+                    `Import Berhasil`,
+                    `Total : ${e.data.total} billing, \nInserted : ${e.data.inserted} billing, \nOmitted : ${e.data.omitted} billing`,
+                    'success'
+                )
+
+                // now we hide modal and reload
+                this.$nextTick(() => {
+                    this.$refs.modalImport.hide()
+                    this.$refs.browser.loadData()
+                })
+            })
+            .catch(e => {
+                this.handleError(e)
+                this.uploading = false
             })
         },
 
