@@ -81,7 +81,7 @@
             <h5 class="my-0"><font-awesome-icon icon="money-check-alt"/> Duty and Tax Summary</h5>
         </template>
 
-        <b-row v-for="(pungutan, kode) in data.pungutan.bayar" :key="kode">
+        <b-row v-for="(pungutan, kode) in dataPungutanBayar" :key="kode">
             <b-col md="8">
                 <strong>{{ dict[kode][0] }} (<em>{{ dict[kode][1] }}</em>)</strong>
             </b-col>
@@ -127,6 +127,18 @@ export default {
             }
 
             return total
+        },
+
+        dataPungutanBayar() {
+            // produce sorted key first
+            var keys = Object.keys(this.data.pungutan.bayar).sort((a,b)=> (a > b))
+
+            // return copy of object
+            var o = {};
+            for (var i=0; i<keys.length; i++) {
+                o[keys[i]] = this.data.pungutan.bayar[keys[i]]
+            }
+            return o
         }
     },
 
@@ -163,6 +175,14 @@ export default {
                 'BM': [
                     'Bea Masuk',
                     'Import Duty'
+                ],
+                'BMI': [
+                    'Bea Masuk Imbalan',
+                    'Reciprocal Duty'
+                ],
+                'BMAD': [
+                    'Bea Masuk Anti Dumping',
+                    'Duty for Anti Dumping'
                 ],
                 'BMTP': [
                     'Bea Masuk Tindak Pengamaman',
