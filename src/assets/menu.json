@@ -18,8 +18,7 @@
                     {
                         "item": "Surat Penangguhan Pengeluaran",
                         "icon": "✋",
-                        "to": "/spp",
-                        "role": "PDTT"
+                        "to": "/spp"
                     },
                     {
                         "item": "Surat Titipan (ST)",
