@@ -22,7 +22,7 @@
         </template>
 
         <!-- DESCRIPTION -->
-        <template #cell(uraian)="row">
+        <template #cell(uraian_print)="row">
             <div class="newline">{{ row.value }}</div>
         </template>
 
@@ -151,7 +151,7 @@ export default {
                 },
                 {
                     label: 'Description',
-                    key: 'uraian'
+                    key: 'uraian_print'
                 },
                 {
                     label: 'HS Code and Tariffs',

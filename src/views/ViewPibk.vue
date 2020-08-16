@@ -15,6 +15,7 @@
 
                 @printBppm="printBppm"
                 @printSppb="printSppb"
+                @printLembarHitungPibk="printLembarHitungPibk"
 
                 @view-source="$router.push(`${dataPibk.source_uri}`)"
             />
@@ -330,6 +331,14 @@ export default {
       this.pdfUrl = this.api.generatePdfUrl('bppm', this.dataPibk.bppm.data.id);
       this.viewPrintDialog = true;
       this.altFilename = "bppm-" + this.dataPibk.bppm.data.id;
+    },
+
+    // print lembar perhitungan PIBK
+    printLembarHitungPibk() {
+      // just generate url
+      this.pdfUrl = this.api.generatePdfUrl("lembarhitungpibk",this.id)
+      this.viewPrintDialog = true
+      this.altFilename = "lembarhitungpibk-" + this.id;
     },
 
     // print sppb
