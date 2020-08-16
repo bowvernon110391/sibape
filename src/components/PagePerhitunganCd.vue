@@ -28,9 +28,20 @@
 
         <!-- hs_raw_code -->
         <template #cell(hs_raw_code)="row">
-            <p class="text-center">
-                {{ row.value }}
-            </p>
+            <div class="text-center">
+                <u>{{ row.value }}</u>
+            </div>
+            <div v-for="(tarif, kode) in row.item.tarif" :key="kode">
+                -
+                <template v-if="kode.indexOf('BM') == 0">
+                    <!-- for BM Tarif -->
+                    <strong>{{ kode }}</strong>: {{ tarif.tarif | formatCurrency }} <span v-if="tarif.jenis=='ADVALORUM'">%</span> ({{ tarif.jenis }})
+                </template>
+                <!-- other kind -->
+                <template v-else>
+                    <strong>{{ kode }}</strong>: {{ tarif.tarif }} %
+                </template>
+            </div>
         </template>
 
         <!-- quantity -->
@@ -49,8 +60,23 @@
             </div>
         </template>
 
+        <!-- pembebasan -->
+        <template #cell(pembebasan)="{ item }">
+            <div class="text-right">
+                <strong>USD</strong> {{ item.pembebasan | formatCurrency }}<br>
+                = <strong>IDR</strong> {{ item.pembebasan_idr | formatCurrency }}
+            </div>
+        </template>
+
+        <!-- tax and duty -->
+        <template #cell(tax_and_duty)="row">
+            <div v-for="(pungutan, id) in row.item.pungutan" :key="id+'pungutan'+pungutan.jenis_pungutan_id">
+                <strong>{{ pungutan.jenis_pungutan.kode }}</strong>: {{ pungutan.bayar | formatCurrency |displayRupiah }}
+            </div>
+        </template>
+
         <!-- custom footer -->
-        <template #custom-foot>
+        <!-- <template #custom-foot>
             <b-tr>
                 <b-td colspan="4" variant="dark" class="text-center">
                     Total Customs Value
@@ -75,11 +101,42 @@
                     <strong><u>{{ data.nilai_dasar_idr | formatCurrency | displayRupiah }}</u></strong>
                 </b-td>
             </b-tr>
-        </template>
+        </template> -->
     </b-table>
 
-    <!-- now we just list the steps of calculation -->
+    <!-- display summary -->
     <b-card
+    header-bg-variant="light"
+    footer-bg-variant="light"
+    class="shadow"
+    >
+        <template #header>
+            <h5 class="my-0"><font-awesome-icon icon="money-check-alt"/> Duty and Tax Summary</h5>
+        </template>
+
+        <b-row v-for="(pungutan, kode) in dataPungutanBayar" :key="kode">
+            <b-col md="8">
+                <strong>{{ dict[kode][0] }} (<em>{{ dict[kode][1] }}</em>)</strong>
+            </b-col>
+            <b-col md="4" class="text-right">
+                {{ pungutan | formatCurrency | displayRupiah }}
+            </b-col>
+        </b-row>
+        
+        <template #footer>
+        <b-row>
+            <b-col md="8" class="text-center">
+                <strong>Total Bea Masuk dan Pajak (<em>Total Duty and Tax</em>)</strong>
+            </b-col>
+            <b-col md="4" class="text-right">
+                <u><strong>{{ totalDutyAndTax | formatCurrency | displayRupiah }}</strong></u>
+            </b-col>
+        </b-row>
+        </template>
+    </b-card>
+
+    <!-- now we just list the steps of calculation -->
+    <!-- <b-card
     header-bg-variant="light"
     footer-bg-variant="light"
     class="shadow"
@@ -131,7 +188,7 @@
             </b-col>
         </b-row>
         </template>
-    </b-card>
+    </b-card> -->
 </div>
 </template>
 
@@ -149,6 +206,27 @@ export default {
     computed: {
         totalNilaiPabean() {
             return this.data.barang.reduce((prev, curr) => (prev + curr.nilai_pabean), 0.0)
+        },
+
+        totalDutyAndTax() {
+            var total = 0
+            for (let kode in this.data.pungutan.bayar) {
+                total += this.data.pungutan.bayar[kode]
+            }
+
+            return total
+        },
+
+        dataPungutanBayar() {
+            // produce sorted key first
+            var keys = Object.keys(this.data.pungutan.bayar).sort((a,b)=> (a > b))
+
+            // return copy of object
+            var o = {};
+            for (var i=0; i<keys.length; i++) {
+                o[keys[i]] = this.data.pungutan.bayar[keys[i]]
+            }
+            return o
         }
     },
 
@@ -174,8 +252,47 @@ export default {
                 {
                     label: 'Customs Value (CIF)',
                     key: 'nilai_pabean'
+                },
+                {
+                    label: 'Pembebasan (Deminimis)',
+                    key: 'pembebasan'
+                },
+                {
+                    label: 'Duty and Tax',
+                    key: 'tax_and_duty'
                 }
-            ]
+            ],
+
+            dict: {
+                'BM': [
+                    'Bea Masuk',
+                    'Import Duty'
+                ],
+                'BMI': [
+                    'Bea Masuk Imbalan',
+                    'Reciprocal Duty'
+                ],
+                'BMAD': [
+                    'Bea Masuk Anti Dumping',
+                    'Duty for Anti Dumping'
+                ],
+                'BMTP': [
+                    'Bea Masuk Tindak Pengamaman',
+                    'Duty for Protection'
+                ],
+                'PPN': [
+                    'PPN Impor',
+                    'Value Added Tax'
+                ],
+                'PPh': [
+                    'PPh Impor',
+                    'Income Tax'
+                ],
+                'PPnBM': [
+                    'PPnBM Impor',
+                    'Luxury Goods Tax'
+                ],
+            }
         }
     }
 }
