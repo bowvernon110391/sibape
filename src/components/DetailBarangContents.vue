@@ -52,6 +52,13 @@
                     />
                 </b-form-group>
             </b-col>
+
+            <!-- PEMBEBASAN -->
+            <b-col md="2">
+                <b-form-group label="Pembebasan (USD)">
+                    <b-form-input disabled v-model="value.pembebasan" size="sm" />
+                </b-form-group>
+            </b-col>
         </b-form-row>
 
         <!-- 3rd ROW -->

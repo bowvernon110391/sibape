@@ -26,6 +26,7 @@
                 @view="viewBarang"
                 @edit="editBarang"
                 :hide-satuan="!detailedView"
+                :show-pembebasan="showPembebasan"
                 />
             </template>
         </paginated-browser>
@@ -38,6 +39,7 @@
         :title="modalTitle"
         v-model="showModal"
         size="xl"
+        no-close-on-esc
         >
             <detail-barang-contents :disabled="!editMode || modalBusy" v-model="currentItem" :hide-satuan="!detailedView" :hide-netto="!detailedView"/>
 
@@ -92,6 +94,11 @@ export default {
         },
 
         detailedView: {
+            type: Boolean,
+            default: false
+        },
+
+        showPembebasan: {
             type: Boolean,
             default: false
         }

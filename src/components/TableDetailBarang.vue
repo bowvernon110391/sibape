@@ -34,21 +34,22 @@
 
         <!-- FOB -->
         <template v-slot:cell(fob)="row">
-            <p class="text-right">
-                <strong>{{ row.item.kurs.data.kode_valas }}</strong> {{ row.item.fob | formatCurrency(4) }}
-            </p>
+            <strong>{{ row.item.kurs.data.kode_valas }}</strong> {{ row.item.fob | formatCurrency(4) }}
+        </template>
+
+        <!-- PEMBEBASAN -->
+        <template #cell(pembebasan)="{ value }">
+            <strong>USD</strong> {{ value | formatCurrency(4) }}
         </template>
 
         <!-- Bruto -->
         <template v-slot:cell(brutto)="row">
-            <p class="text-right">
-                {{ row.item.brutto | formatCurrency }} KG
-            </p>
+            {{ row.item.brutto | formatCurrency }} KG
         </template>
 
         <!-- Netto -->
         <template #cell(netto)="row">
-            <p class="text-right" v-if="row.item.netto">
+            <p class="text-center" v-if="row.item.netto">
                 {{ row.item.netto | formatCurrency }} KG
             </p>
         </template>
@@ -90,6 +91,11 @@ export default {
             default: true
         },
 
+        showPembebasan: {
+            type: Boolean,
+            default: false
+        },
+
         pagination: {
             type: Object
         },
@@ -107,11 +113,15 @@ export default {
         fields () {
             return [
                 'seri',
-                'uraian',
+                { key: 'uraian', class:'text-center' },
                 'kemasan',
                 ...this.hideSatuan ? [] : ['satuan'],
-                'fob',
-                'brutto',
+                { key: 'fob', class: 'text-center' },
+                ...!this.showPembebasan ? [] : [{
+                    key: 'pembebasan',
+                    class: 'text-center'
+                }],
+                { key: 'brutto', class: 'text-center' },
                 ...this.hideSatuan ? [] : ['netto'],
                 {
                     label: 'action',
