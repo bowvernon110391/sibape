@@ -254,6 +254,11 @@ class ApiSibape {
         return this.instance.delete('/cd/' + id)
     }
 
+    // unlockCd (id) : DELETE /cd/{id}/lock
+    unlockCd (id) {
+        return this.instance.delete(`/cd/${id}/lock`)
+    }
+
     // getCdDetails (id, param) : GET /cd/:id/details?param
     getCdDetails (id, param) {
         return this.instance.get(`/cd/${id}/details`, {

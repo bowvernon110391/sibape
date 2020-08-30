@@ -16,6 +16,7 @@
               @printSpp="printSpp" 
               @view-pibk="$router.push(`/pibk/${dataSpp.pibk.data.id}`)"
               @create-pibk="viewCreatePibkDialog = true"
+              @restore-cd="onRestoreCd"
             >
               <div class="d-inline-block my-2">
               <!-- IP Controls -->
@@ -223,6 +224,51 @@ export default {
             path: "/spp"
           });
         });
+    },
+
+    // when restore cd clicked
+    async onRestoreCd() {
+      var result = await this.$bvModal.msgBoxConfirm(
+          `Selesaikan dengan Customs Declaration?`, {
+              title: `Restore data Customs Declaration`,
+              size: 'md',
+              buttonSize: 'md',
+              okVariant: 'danger',
+              okTitle: 'YES',
+              cancelTitle: 'NO',
+              footerClass: 'p-2',
+              hideHeaderClose: false,
+              centered: true
+          }
+      )
+
+      if (result) {
+        // alert("Delete SPP + Redirect to CD");
+        // spinner
+        this.setBusyState(true)
+        
+        // delete spp then redirect to CD
+        this.api.deleteSpp(this.dataSpp.id)
+        .then(e => {
+          // unlock cd first
+          this.api.unlockCd(this.dataSpp.cd.data.id)
+          .then(e => {
+            this.setBusyState(false)
+            // redirect @next tick
+            this.$nextTick(() => {
+              this.$router.replace(`/cd/${this.dataSpp.cd.data.id}`)
+            })
+          })
+          .catch(e => {
+            this.setBusyState(false)
+            this.handleError(e)
+          })
+        })
+        .catch(e => {
+          this.setBusyState(false)
+          this.handleError(e)
+        })
+      }
     },
 
     // when save button clicked

@@ -105,6 +105,15 @@
                 </b-col>
                 <b-col sm="12" md="6">
                     <b-form-group
+                        label="Nomor KTP"
+                        label-for="no-ktp"
+                        description="opsional, hanya untuk WNI"
+                        >
+                        <b-form-input type="text" v-model="detail.nik" :disabled="saving || disabled"></b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="12" md="6">
+                    <b-form-group
                         label="Kebangsaan"
                         label-for="kebangsaan">
                         <!-- <b-form-input type="text" v-model="detail.kebangsaan" :disabled="saving"></b-form-input> -->
@@ -175,7 +184,8 @@ export default {
                 pekerjaan:'',
                 no_paspor:'',
                 kebangsaan:'',
-                tgl_lahir:''
+                tgl_lahir:'',
+                nik:null
             }
         },
         modalTitle () {
@@ -201,7 +211,8 @@ export default {
                 kebangsaan:'',
                 tgl_lahir:'',
                 email:'',
-                phone:''
+                phone:'',
+                nik:null
             }
         }
     },
