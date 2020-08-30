@@ -29,26 +29,6 @@
                         "item": "PIBK - Barang Penumpang",
                         "icon": "📦",
                         "to": "/pibk"
-                    },
-                    {
-                        "item": "Pembawaan Mata Uang",
-                        "icon": "💸",
-                        "to": "/valas"
-                    },
-                    {
-                        "item": "SPMB (BC 3.4)",
-                        "icon": "🛫",
-                        "to": "/spmb"
-                    },
-                    {
-                        "item": "Impor Sementara",
-                        "icon": "⏲️",
-                        "to": "/is"
-                    },
-                    {
-                        "item": "Carnet",
-                        "icon": "🚗",
-                        "to": "/carnet"
                     }
                 ]
             }
