@@ -26,11 +26,25 @@
                         "to": "/st"
                     },
                     {
-                        "item": "PIBK - Barang Penumpang",
+                        "item": "PIBK",
                         "icon": "📦",
                         "to": "/pibk"
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "role": "PELAKSANA_ADMINISTRASI",
+        "section": "Staf PDTT"
+    },
+    {
+        "role": "PELAKSANA_ADMINISTRASI",
+        "list":[
+            {
+                "item": "PIBK",
+                "icon": "📦",
+                "to": "/pibk"
             }
         ]
     },

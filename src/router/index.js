@@ -329,7 +329,8 @@ router.beforeEach(async (to, from, next) => {
     var mockRoles = {
       token_pdtt: ['PDTT'],
       token_admin: ['CONSOLE', 'KASI', 'PERBENDAHARAAN'],
-      token_pemeriksa: ['PEMERIKSA']
+      token_pemeriksa: ['PEMERIKSA'],
+      token_pelaksana_administrasi: ['PELAKSANA_ADMINISTRASI']
     }
 
     var lokasiDemo = process.env.MOCK_LOKASI || "KANTOR"
