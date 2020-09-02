@@ -250,19 +250,13 @@ export default {
         // delete spp then redirect to CD
         this.api.deleteSpp(this.dataSpp.id)
         .then(e => {
-          // unlock cd first
-          this.api.unlockCd(this.dataSpp.cd.data.id)
-          .then(e => {
-            this.setBusyState(false)
-            // redirect @next tick
-            this.$nextTick(() => {
-              this.$router.replace(`/cd/${this.dataSpp.cd.data.id}`)
-            })
+          
+          this.setBusyState(false)
+          // redirect @next tick
+          this.$nextTick(() => {
+            this.$router.replace(`/cd/${this.dataSpp.cd.data.id}`)
           })
-          .catch(e => {
-            this.setBusyState(false)
-            this.handleError(e)
-          })
+          
         })
         .catch(e => {
           this.setBusyState(false)
