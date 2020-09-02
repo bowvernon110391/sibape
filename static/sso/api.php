@@ -4,7 +4,7 @@ require_once __DIR__ . '/src/Exception.php';
 require_once __DIR__ . '/src/NotAttachedException.php';
 require_once __DIR__ . '/src/Broker.php';
 
-$broker = new Jasny\SSO\Broker('https://ssoserv.bcsoetta.org/', '5', '5h1n74aPPs');
+$broker = new Jasny\SSO\Broker('https://ssoserv.bcsoetta.org/', '5', '5h1n74aPPs', 36000);
 
 if (empty($_REQUEST['command']) || !method_exists($broker, $_REQUEST['command'])) {
     header("Content-Type: application/json");
