@@ -89,7 +89,7 @@ export default {
         // check if this has either bppm or billing
         isPaid: function (doc) {
             return typeof doc.bppm != 'undefined'
-                || Boolean(doc.billing.data[0]);
+                || Boolean(doc.billing.data[0]) || (doc.is_locked && doc.total_bayar == 0);
         }
     }
 }
