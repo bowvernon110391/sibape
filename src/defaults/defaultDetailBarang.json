@@ -31,5 +31,8 @@
     },
     "tarif": {
         "data": []
+    },
+    "fasilitas": {
+        "data": []
     }
 }

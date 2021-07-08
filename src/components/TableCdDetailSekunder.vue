@@ -34,7 +34,7 @@
 
         <!-- delete -->
         <template v-slot:cell(action)="row">
-            <b-button size="sm" variant="danger" class="shadow" 
+            <b-button size="sm" variant="danger" class="shadow"
                 :disabled="disabled" @click="deleteDetail(row.index)">
                 <font-awesome-icon icon="trash-alt">
                 </font-awesome-icon>
@@ -71,7 +71,7 @@ export default {
     data () {
         return {
             fields: [
-                '#', 'jenis', 'data', { label: '', key: 'action' }
+                '#', 'jenis', 'data', { label: '', key: 'action', class: 'text-center' }
             ],
             internalValue: this.value.length ? this.value : []
         }

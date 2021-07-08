@@ -9,7 +9,7 @@
       </b-button>
 
       <!-- titip (gk mampu/mau bayar) -->
-      <b-button variant="dark" :disabled="isLocked" @click="$emit('showPenitipan')">
+      <b-button variant="dark" :disabled="isLocked" @click="$emit('showPenitipan')" v-if="false">
         <font-awesome-icon icon="lock"/>Titipkan
       </b-button>
 

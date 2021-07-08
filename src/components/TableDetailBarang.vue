@@ -18,6 +18,27 @@
             {{ pagination.start + row.index }}.
         </template>
 
+        <!-- uraian (utk nambah data teks?) -->
+        <template #cell(uraian)="{ item }">
+          <div>
+            <p class="text-center">
+              {{ item.uraian }}
+            </p>
+            <hr v-if="item.fasilitas.data.length">
+            <p class="text-left" v-if="item.fasilitas.data.length">
+              <em>*) Fasilitas</em><br/>
+              <!-- better show all of them as badge? -->
+              <template v-for="(f, idx) in item.fasilitas.data">
+                <span :key="f.id" :class="{ 'ml-1' : idx }">
+                  <b-badge :variant="variantForFasilitas(f.jenis)">
+                    {{ f.deskripsi }}
+                  </b-badge>
+                </span>
+              </template>
+            </p>
+          </div>
+        </template>
+
         <!-- kemasan -->
         <template #cell(kemasan)="row">
             <p class="text-center">
@@ -142,6 +163,11 @@ export default {
 
         deleteItem(item) {
             this.$emit('delete', item)
+        },
+
+        variantForFasilitas(text) {
+          return text == 'PEMBEBASAN' ? 'success' :
+              text == 'TIDAK_DIPUNGUT' ? 'warning' : 'danger'
         }
     }
 }
