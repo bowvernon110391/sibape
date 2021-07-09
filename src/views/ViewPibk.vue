@@ -8,10 +8,10 @@
           <doc-banner doctype="PIBK" :data="dataPibk" :is-new="isNew" />
           <!-- document controls -->
           <template v-if="!hideControls && !isNew && !readOnly">
-            <pibk-controls 
-                :data="dataPibk" 
-                ref="tombolPenyelesaian" 
-                @showPungutan="showPungutan" 
+            <pibk-controls
+                :data="dataPibk"
+                ref="tombolPenyelesaian"
+                @showPungutan="showPungutan"
 
                 @printBppm="printBppm"
                 @printSppb="printSppb"
@@ -42,7 +42,7 @@
           />
 
           <!-- terbitkan SPPB -->
-          <b-button 
+          <b-button
             size="sm"
             class="shadow my-2"
             variant="primary"
@@ -71,6 +71,7 @@
               :store-uri="`/pibk/${id}/penetapan`"
               :disabled="disableInput"
               detailed-view
+              showFasilitas
             />
           </b-tab>
 

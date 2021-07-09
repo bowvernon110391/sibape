@@ -18,11 +18,11 @@
             ref="detailBrowser">
             <template #default="{ data, pagination }">
                 <!-- <pre>{{ JSON.stringify(data, null, 2) }}</pre> -->
-                <table-detail-barang 
-                :items="data" 
-                :pagination="pagination" 
+                <table-detail-barang
+                :items="data"
+                :pagination="pagination"
                 :disabled="disabled"
-                @delete="deleteBarang" 
+                @delete="deleteBarang"
                 @view="viewBarang"
                 @edit="editBarang"
                 :hide-satuan="!detailedView"
@@ -32,7 +32,7 @@
         </paginated-browser>
 
         <!-- MODAL -->
-        <b-modal 
+        <b-modal
         id="modalDetailBarang"
         header-bg-variant="light"
         footer-bg-variant="light"
@@ -41,7 +41,7 @@
         size="xl"
         no-close-on-esc
         >
-            <detail-barang-contents :disabled="!editMode || modalBusy" v-model="currentItem" :hide-satuan="!detailedView" :hide-netto="!detailedView"/>
+            <detail-barang-contents :disabled="!editMode || modalBusy" v-model="currentItem" :hide-satuan="!detailedView" :hide-netto="!detailedView" :showFasilitas="showFasilitas"/>
 
             <!-- Footer -->
             <template #modal-footer="{ cancel }">
@@ -101,6 +101,11 @@ export default {
         showPembebasan: {
             type: Boolean,
             default: false
+        },
+
+        showFasilitas: {
+          type: Boolean,
+          default: false
         }
     },
 

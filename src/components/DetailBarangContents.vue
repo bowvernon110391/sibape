@@ -176,20 +176,21 @@
                 />
             </b-col>
         </b-form-row>
-
-        <hr>
-        <!-- 6th row -->
-        <b-form-row>
-            <b-col md="12">
-                <h5>Fasilitas</h5>
-                <table-fasilitas
-                  v-model="value.fasilitas.data"
-                  :disabled="disabled"
-                  @create="addNewFasilitas"
-                  @delete="deleteFasilitas"
-                  />
-            </b-col>
-        </b-form-row>
+        <div v-if="showFasilitas">
+          <hr>
+          <!-- 6th row -->
+          <b-form-row>
+              <b-col md="12">
+                  <h5>Fasilitas</h5>
+                  <table-fasilitas
+                    v-model="value.fasilitas.data"
+                    :disabled="disabled"
+                    @create="addNewFasilitas"
+                    @delete="deleteFasilitas"
+                    />
+              </b-col>
+          </b-form-row>
+        </div>
     </div>
 </template>
 
