@@ -31,6 +31,17 @@
                         "to": "/pibk"
                     }
                 ]
+            },
+            {
+              "item": "Aplikasi Tambahan",
+              "icon": "fa-plus-square",
+              "children":[
+                {
+                  "item": "SPMB,Valas,ECD",
+                  "icon": "ECD",
+                  "to": "https://ecdpatops-dev.bcsoetta.org"
+                }
+              ]
             }
         ]
     },

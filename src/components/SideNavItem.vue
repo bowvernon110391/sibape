@@ -1,11 +1,15 @@
 <template>
   <li>
-    <router-link v-if="to" :to="to" tag="a" active-class="active-route">
+    <router-link v-if="to && !hasUrl" :to="to" tag="a" active-class="active-route" @click.native="handleRouteClick">
       <!-- <span v-if="icon" v-html="icon"></span> -->
       <c-icon :icon="icon" v-if="icon"/>
       {{ text }}
       <!-- spawn dynamic components here -->
     </router-link>
+    <a v-else-if="hasUrl" :href="to" target="_blank" rel="noreferrer" @click="handleRouteClick">
+        <c-icon :icon="icon" v-if="icon"/>
+        {{ text }}
+    </a>
     <a v-else :class="{ 'dropdown-toggle': children }" @click="handleClick">
       <!-- <span v-if="icon" v-html="icon"></span> -->
       <c-icon :icon="icon" v-if="icon"/>
@@ -21,7 +25,7 @@
 
 <script>
 import SideNavItemList from "@/components/SideNavItemList"
-import CIcon from '@/components/CIcon'
+import CIcon from './CIcon.vue';
 
 export default {
   name: 'SideNavItem',
@@ -55,10 +59,24 @@ export default {
     };
   },
 
+  computed: {
+      hasUrl() {
+          return this.to && (this.to.match(/(^https?)\:([^\s]+)/i) != null)
+      }
+  },
+
   methods: {
     handleClick() {
       this.showChildren = !this.showChildren;
     //   alert("CLIIICK" + String(this.show));
+    },
+
+    handleRouteClick() {
+        if (this.$store.getters.mobileScreen) {
+            // hide on mobile
+            console.log('nav item route clicked. hide sidebar...')
+            this.$store.commit('setSidebarActive', false)
+        }
     }
   },
 
