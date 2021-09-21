@@ -1,7 +1,7 @@
 [
     {
         "section": "Browse",
-        "role": "PDTT,KASI,CONSOLE"
+        "role": "PDTT,KASI,CONSOLE,PEMERIKSA"
     },
     {
         "role": "PDTT,KASI,CONSOLE",
@@ -31,20 +31,25 @@
                         "to": "/pibk"
                     }
                 ]
-            },
-            {
-              "item": "Aplikasi Tambahan",
-              "icon": "fa-plus-square",
-              "children":[
-                {
-                  "item": "SPMB,Valas,ECD",
-                  "icon": "ECD",
-                  "to": "https://ecdpatops-dev.bcsoetta.org"
-                }
-              ]
             }
         ]
     },
+	{
+		"role": "PDTT,KASI,CONSOLE,PEMERIKSA",
+		"list": [
+			{
+				"item": "Aplikasi Tambahan",
+				"icon": "fa-plus-square",
+				"children":[
+					{
+						"item": "SPMB,Valas,ECD",
+						"icon": "ECD",
+						"to": "https://ecdpatops-dev.bcsoetta.org"
+					}
+				]
+			}
+		]
+	},
     {
         "role": "PELAKSANA_ADMINISTRASI",
         "section": "Staf PDTT"
