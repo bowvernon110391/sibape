@@ -35,7 +35,7 @@
         ]
     },
 	{
-		"role": "PDTT,KASI,CONSOLE,PEMERIKSA",
+		"role": "PDTT,KASI,CONSOLE,PEMERIKSA,TESTER",
 		"list": [
 			{
 				"item": "Aplikasi Tambahan",
@@ -43,6 +43,12 @@
 				"children":[
 					{
 						"item": "SPMB,Valas,ECD",
+						"icon": "ECD",
+						"to": "https://ecdpatops.bcsoetta.org"
+					},
+					{
+						"role": "CONSOLE,TESTER",
+						"item": "SPMB,Valas,ECD (DEVELOPMENT)",
 						"icon": "ECD",
 						"to": "https://ecdpatops-dev.bcsoetta.org"
 					}
