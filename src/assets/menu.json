@@ -42,9 +42,44 @@
 				"icon": "fa-plus-square",
 				"children":[
 					{
-						"item": "SPMB,Valas,ECD",
-						"icon": "ECD",
-						"to": "https://ecdpatops.bcsoetta.org"
+						"item": "SPMB",
+						"icon": ">",
+						"to": "https://ecdpatops.bcsoetta.org/spmb"
+					},
+					{
+						"item": "VALAS - kedatangan",
+						"icon": ">",
+						"to": "https://ecdpatops.bcsoetta.org/valas"
+					},
+					{
+						"item": "VALAS - keberangkatan",
+						"icon": ">",
+						"to": "https://ecdpatops.bcsoetta.org/valas-departure"
+					},
+					{
+						"item": "Impor Sementara",
+						"icon": ">",
+						"to": "https://ecdpatops.bcsoetta.org/import"
+					},
+					{
+						"item": "ECD",
+						"children": [
+							{
+								"item": "Admin",
+								"icon": ">",
+								"to": "https://ecdpatops.bcsoetta.org/ecd"
+							},
+							{
+								"item": "Referensi",
+								"icon": ">",
+								"to": "https://ecdpatops.bcsoetta.org/reference"
+							},
+							{
+								"item": "RAO",
+								"icon": ">",
+								"to": "https://ecdpatops.bcsoetta.org/rao"
+							}
+						]
 					},
 					{
 						"role": "CONSOLE,TESTER",
