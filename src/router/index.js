@@ -45,6 +45,9 @@ import ViewPibk from '@/views/ViewPibk'
 // BPPM
 import BrowseBppm from '@/views/BrowseBppm'
 
+// Penetapan
+import BrowsePenetapan from '@/views/BrowsePenetapan'
+
 import store from '../store'
 
 // const axios = require('axios').default
@@ -154,6 +157,16 @@ const router = new Router({
               component: BrowsePibk
             }
           ]
+        },
+        // Penetapan
+        {
+          path: 'penetapan',
+          name: 'BrowsePenetapan',
+          meta: {
+            breadcrumb: '🔍Browse Penetapan',
+            title: 'Browse History Penetapan'
+          },
+          component: BrowsePenetapan
         },
         /* penumpang */
         {

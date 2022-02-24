@@ -15,7 +15,7 @@ class ApiSibape {
     }
 
     //===================GENERIC SECTION========================================
-    // setToken (token) : ngeset semua access token tiap request    
+    // setToken (token) : ngeset semua access token tiap request
     setToken (token) {
         this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
     }
@@ -345,7 +345,7 @@ class ApiSibape {
            params: {
                include: 'cd.details'
            }
-       }) 
+       })
     }
 
     //==================RESOURCE : ST===========================================================
@@ -395,7 +395,7 @@ class ApiSibape {
            params: {
                include: 'cd.details'
            }
-       }) 
+       })
     }
 
     //==================RESOURCE : BPJ===========================================================
@@ -443,7 +443,7 @@ class ApiSibape {
             }
         })
     }
-    
+
     // this one generate accessible url (supposedly) to download pdf
     generatePdfUrl (doctype, id, param) {
         var url = this.instance.defaults.baseURL + 'pdf' + `?doc=${doctype}&id=${id}`
@@ -453,19 +453,19 @@ class ApiSibape {
                 url += `&${k}=${param[k]}`
             }
         }
-        
+
         return url
     }
-    
+
     // this one attach resource to a specific endpoints
     attachFile (doctype, id, data, progressFn) {
         var url = `/${doctype}/${id}/lampiran`
-        
+
         return this.instance.post(url, data.blob, {
             onUploadProgress: progressFn,
             headers: {
                 ...this.instance.defaults.headers,
-                
+
                 'Content-Type'      : data.type,
                 // 'Content-Length'    : data.blobsize,
                 'X-Content-Filesize': data.filesize,
@@ -518,7 +518,7 @@ class ApiSibape {
             params: params
         })
     }
-    
+
     //===================RESOURCE : PEMBATALAN======================================================
     // getPembatalan () : GET /pembatalan
     getPembatalan (param) {
@@ -598,6 +598,12 @@ class ApiSibape {
     }
 
     // ===========================DETAIL BARANG=====================================================================
+    getPenetapanBarang(params) {
+        return this.instance.get(`/penetapan`, {
+            params: params
+        })
+    }
+
     updatePenetapanBarang(id, data) {
         return this.instance.put(`/penetapan/${id}`, data)
     }

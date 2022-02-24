@@ -1,187 +1,202 @@
 [
-    {
-        "section": "Browse",
-        "role": "PDTT,KASI,CONSOLE,PEMERIKSA"
-    },
-    {
-        "role": "PDTT,KASI,CONSOLE",
-        "list": [
-            {
-                "item": "Dokumen",
-                "icon": "fa-file-alt",
-                "children": [
-                    {
-                        "item": "Customs Declaration",
-                        "icon": "🛃",
-                        "to": "/cd"
-                    },
-                    {
-                        "item": "Surat Penangguhan Pengeluaran",
-                        "icon": "✋",
-                        "to": "/spp"
-                    },
-                    {
-                        "item": "Surat Titipan (ST)",
-                        "icon": "🛅",
-                        "to": "/st"
-                    },
-                    {
-                        "item": "PIBK",
-                        "icon": "📦",
-                        "to": "/pibk"
-                    }
-                ]
-            }
+  {
+    "section": "Browse",
+    "role": "PDTT,KASI,CONSOLE,PEMERIKSA"
+  },
+  {
+    "role": "PDTT,KASI,CONSOLE",
+    "list": [
+      {
+        "item": "Dokumen",
+        "icon": "fa-file-alt",
+        "children": [
+          {
+            "item": "Customs Declaration",
+            "icon": "🛃",
+            "to": "/cd"
+          },
+          {
+            "item": "Surat Penangguhan Pengeluaran",
+            "icon": "✋",
+            "to": "/spp"
+          },
+          {
+            "item": "Surat Titipan (ST)",
+            "icon": "🛅",
+            "to": "/st"
+          },
+          {
+            "item": "PIBK",
+            "icon": "📦",
+            "to": "/pibk"
+          }
         ]
-    },
-	{
-		"role": "PDTT,KASI,CONSOLE,PEMERIKSA,TESTER",
-		"list": [
-			{
-				"item": "Aplikasi Tambahan",
-				"icon": "fa-plus-square",
-				"children":[
-					{
-						"item": "SPMB",
-						"icon": ">",
-						"to": "https://ecdpatops.bcsoetta.org/spmb"
-					},
-					{
-						"item": "VALAS - kedatangan",
-						"icon": ">",
-						"to": "https://ecdpatops.bcsoetta.org/valas"
-					},
-					{
-						"item": "VALAS - keberangkatan",
-						"icon": ">",
-						"to": "https://ecdpatops.bcsoetta.org/valas-departure"
-					},
-					{
-						"item": "Impor Sementara",
-						"icon": ">",
-						"to": "https://ecdpatops.bcsoetta.org/import"
-					},
-					{
-						"item": "ECD",
-						"children": [
-							{
-								"item": "Admin",
-								"icon": ">",
-								"to": "https://ecdpatops.bcsoetta.org/ecd"
-							},
-							{
-								"item": "Referensi",
-								"icon": ">",
-								"to": "https://ecdpatops.bcsoetta.org/reference"
-							},
-							{
-								"item": "RAO",
-								"icon": ">",
-								"to": "https://ecdpatops.bcsoetta.org/rao"
-							}
-						]
-					},
-					{
-						"role": "CONSOLE,TESTER",
-						"item": "SPMB,Valas,ECD (DEVELOPMENT)",
-						"icon": "ECD",
-						"to": "https://ecdpatops-dev.bcsoetta.org"
-					}
-				]
-			}
-		]
-	},
-    {
-        "role": "PELAKSANA_ADMINISTRASI",
-        "section": "Staf PDTT"
-    },
-    {
-        "role": "PELAKSANA_ADMINISTRASI",
-        "list":[
-            {
-                "item": "PIBK",
-                "icon": "📦",
-                "to": "/pibk"
-            }
+      },
+      {
+        "item": "History",
+        "icon": "🗄️",
+        "children": [
+          {
+            "item": "Penetapan",
+            "icon": "💲",
+            "to": "/penetapan"
+          }
         ]
-    },
-    {
-        "role": "PEMERIKSA,CONSOLE",
-        "section": "Pemeriksa Fisik"
-    },
-    {
-        "role": "PEMERIKSA,CONSOLE",
-        "list":[
-            {
-                "item": "Rekam LHP",
-                "icon": "<strong>LHP</strong>",
-                "to": "/ip"
-            }
+      }
+    ]
+  },
+  {
+    "section": "Eksternal",
+    "role": "PDTT,KASI,CONSOLE,PEMERIKSA,TESTER"
+  },
+  {
+    "role": "PDTT,KASI,CONSOLE,PEMERIKSA,TESTER",
+    "list": [
+      {
+        "item": "Aplikasi Tambahan",
+        "icon": "fa-plus-square",
+        "children": [
+          {
+            "item": "SPMB",
+            "icon": ">",
+            "to": "https://ecdpatops.bcsoetta.org/spmb"
+          },
+          {
+            "item": "VALAS - kedatangan",
+            "icon": ">",
+            "to": "https://ecdpatops.bcsoetta.org/valas"
+          },
+          {
+            "item": "VALAS - keberangkatan",
+            "icon": ">",
+            "to": "https://ecdpatops.bcsoetta.org/valas-departure"
+          },
+          {
+            "item": "Impor Sementara",
+            "icon": ">",
+            "to": "https://ecdpatops.bcsoetta.org/import"
+          },
+          {
+            "item": "ECD",
+            "children": [
+              {
+                "item": "Admin",
+                "icon": ">",
+                "to": "https://ecdpatops.bcsoetta.org/ecd"
+              },
+              {
+                "item": "Referensi",
+                "icon": ">",
+                "to": "https://ecdpatops.bcsoetta.org/reference"
+              },
+              {
+                "item": "RAO",
+                "icon": ">",
+                "to": "https://ecdpatops.bcsoetta.org/rao"
+              }
+            ]
+          },
+          {
+            "role": "CONSOLE,TESTER",
+            "item": "SPMB,Valas,ECD (DEVELOPMENT)",
+            "icon": "ECD",
+            "to": "https://ecdpatops-dev.bcsoetta.org"
+          }
         ]
-    },
-    {
-        "section": "Referensi",
-        "role": "PDTT,KASI,CONSOLE"
-    },
-    {
-        "role": "PDTT,KASI,CONSOLE",
-        "list": [
-            {
-                "item": "Data Umum",
-                "icon": "🗄️",
-                "children": [
-                    {
-                        "item": "Kurs Pajak",
-                        "icon": "💲",
-                        "to": "/kurs"
-                    },
-                    {
-                        "item": "Penumpang",
-                        "icon": "👨",
-                        "to": "/penumpang"
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "role": "PELAKSANA_ADMINISTRASI",
+    "section": "Staf PDTT"
+  },
+  {
+    "role": "PELAKSANA_ADMINISTRASI",
+    "list": [
+      {
+        "item": "PIBK",
+        "icon": "📦",
+        "to": "/pibk"
+      }
+    ]
+  },
+  {
+    "role": "PEMERIKSA,CONSOLE",
+    "section": "Pemeriksa Fisik"
+  },
+  {
+    "role": "PEMERIKSA,CONSOLE",
+    "list": [
+      {
+        "item": "Rekam LHP",
+        "icon": "<strong>LHP</strong>",
+        "to": "/ip"
+      }
+    ]
+  },
+  {
+    "section": "Referensi",
+    "role": "PDTT,KASI,CONSOLE"
+  },
+  {
+    "role": "PDTT,KASI,CONSOLE",
+    "list": [
+      {
+        "item": "Data Umum",
+        "icon": "🗄️",
+        "children": [
+          {
+            "item": "Kurs Pajak",
+            "icon": "💲",
+            "to": "/kurs"
+          },
+          {
+            "item": "Penumpang",
+            "icon": "👨",
+            "to": "/penumpang"
+          }
         ]
-    },
-    {
-        "section": "Lain-lain",
-        "role": "KASI,CONSOLE"
-    },
-    {
-        "role":"KASI,CONSOLE",
-        "list": [
-            {
-                "item": "Perubahan/Pembatalan",
-                "icon": "fa-tools",
-                "children": [
-                    {
-                        "item": "Perekaman Pembatalan",
-                        "icon": "fa-trash-alt",
-                        "to": "/pembatalan"
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "section": "Lain-lain",
+    "role": "KASI,CONSOLE"
+  },
+  {
+    "role": "KASI,CONSOLE",
+    "list": [
+      {
+        "item": "Perubahan/Pembatalan",
+        "icon": "fa-tools",
+        "children": [
+          {
+            "item": "Perekaman Pembatalan",
+            "icon": "fa-trash-alt",
+            "to": "/pembatalan"
+          }
         ]
-    },
-    {
-        "section": "Perbendaharaan",
-        "role": "PERBENDAHARAAN"
-    },
-    {
-        "role": "PERBENDAHARAAN",
-        "list": [
-            {
-                "item": "BPPM",
-                "icon": "💵",
-                "children": [
-                    {
-                        "item": "Browse BPPM",
-                        "icon": "✍️",
-                        "to": "/bppm"
-                    }
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "section": "Perbendaharaan",
+    "role": "PERBENDAHARAAN"
+  },
+  {
+    "role": "PERBENDAHARAAN",
+    "list": [
+      {
+        "item": "BPPM",
+        "icon": "💵",
+        "children": [
+          {
+            "item": "Browse BPPM",
+            "icon": "✍️",
+            "to": "/bppm"
+          }
         ]
-    }
+      }
+    ]
+  }
 ]
