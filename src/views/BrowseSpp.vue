@@ -10,7 +10,7 @@
             :data-callback="getSpp"
             ref="browserSpp">
             <!-- di tengahnya, ada tabel -->
-            <template v-slot:default="{ data, pagination }">
+            <template v-slot:default="{ data }">
                 <table-spp :items="data"
                     @delete="deleteSpp"></table-spp>
             </template>
@@ -42,7 +42,7 @@ export default {
             spinner(true)
             this.api.getSpp({
                 ...q,
-                include: 'cd.airline,cd.details'
+                include: 'source.airline,source.details'
             })
             .then(e => {
                 // console.log("Got cd data:")
@@ -83,7 +83,7 @@ export default {
     },
     data () {
         return {
-            
+
         }
     }
 }

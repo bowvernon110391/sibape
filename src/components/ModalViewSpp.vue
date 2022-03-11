@@ -33,7 +33,7 @@
                             </template>
                             <b-form-input
                                 type="text"
-                                :value="dataSpp.cd.data.penumpang.data.nama"
+                                :value="dataPenumpang.data.nama"
                                 disabled/>
                         </b-form-group>
                     </b-col>
@@ -44,7 +44,7 @@
                                 Alamat/<em>Address</em>
                             </template>
                             <b-form-textarea
-                                :value="dataSpp.cd.data.alamat"
+                                :value="dataSpp.source.data.alamat"
                                 disabled>
                             </b-form-textarea>
                         </b-form-group>
@@ -58,7 +58,7 @@
                                 Pasport/<em>Passport No.</em>
                             </template>
                             <b-form-input
-                                :value="dataSpp.cd.data.penumpang.data.no_paspor"
+                                :value="dataPenumpang.data.no_paspor"
                                 disabled></b-form-input>
                         </b-form-group>
                     </b-col>
@@ -68,7 +68,7 @@
                                 Kebangsaan/<em>Nationality</em>
                             </template>
                             <b-form-input
-                                :value="dataSpp.cd.data.penumpang.data.negara.data.uraian"
+                                :value="dataPenumpang.data.negara.data.uraian"
                                 disabled></b-form-input>
                         </b-form-group>
                     </b-col>
@@ -81,7 +81,7 @@
                                 <em>Flight / Voyage No.</em>
                             </template>
                             <b-form-input
-                                :value="dataSpp.cd.data.no_flight"
+                                :value="dataSpp.source.data.no_flight"
                                 disabled></b-form-input>
                         </b-form-group>
                     </b-col>
@@ -106,7 +106,7 @@
                             <template #label>
                                 Jumlah/<em>Quantity</em>
                             </template>
-                            
+
                             <b-form-input
                                 disabled
                                 :value="quantityString">
@@ -121,7 +121,7 @@
                                 Uraian Barang/<em>Description</em>
                             </template>
                             <b-form-input
-                                v-for="(barang, id) in dataSpp.cd.data.details.data"
+                                v-for="(barang, id) in dataSpp.source.data.details.data"
                                 :key="id"
                                 :value="(id+1) + '. ' + barang.uraian"
                                 disabled
@@ -149,16 +149,16 @@
         </template>
 
         <!-- footer -->
-        <template v-slot:modal-footer="{ visible, ok, cancel }">
-            <b-button 
-                variant="primary" 
-                size="sm" 
+        <template v-slot:modal-footer="{ cancel }">
+            <b-button
+                variant="primary"
+                size="sm"
                 :disabled="!simulate || busy || !dataSpp || disabled"
                 @click="onSave"
                 >
                 <font-awesome-icon icon="hand-paper" v-if="!disabled">
                 </font-awesome-icon>
-                <b-spinner 
+                <b-spinner
                     small
                     v-else>
                 </b-spinner>
@@ -189,8 +189,13 @@ export default {
     },
 
     props: {
-        cdId: {
+        sourceId: {
             type: [Number, String],
+            required: true
+        },
+
+        sourceType: {
+            type: String,
             required: true
         },
 
@@ -218,14 +223,14 @@ export default {
                 lokasi: this.lokasi
             }
 
-            this.api.createSpp(this.cdId, data)
+            this.api.createSpp(this.sourceType, this.sourceId, data)
             .then(e => {
                 this.disabled = false
                 const retData = e.data
 
                 // make toast
-                this.showToast("Perekaman SPP", 
-                    `CD #${this.cdId} ditunda pengeluarannya dengan SPP #${retData.id}`,
+                this.showToast("Perekaman SPP",
+                    `${this.sourceType} #${this.sourceId} ditunda pengeluarannya dengan SPP #${retData.id}`,
                     'success')
 
                 // force close
@@ -261,14 +266,18 @@ export default {
     computed: {
         ...mapGetters(['api', 'lokasi']),
 
+        dataPenumpang() {
+            return this.dataSpp ? this.dataSpp.source.data.penumpang ? this.dataSpp.source.data.penumpang : this.dataSpp.source.data.importir : null
+        },
+
         quantityString() {
             if (!this.dataSpp) {
                 return null
             }
 
-            var total_brutto = this.dataSpp.cd.data.details.data.reduce((acc, e) => (acc + e.brutto), 0.0)
+            var total_brutto = this.dataSpp.source.data.details.data.reduce((acc, e) => (acc + e.brutto), 0.0)
 
-            return this.dataSpp.cd.data.koli + " Koli / " + 
+            return this.dataSpp.source.data.koli + " Koli / " +
                 this.$options.filters.formatCurrency(total_brutto, 2) + " kg"
         }
     },
@@ -284,9 +293,9 @@ export default {
                     var sppCallback = null
 
                     if (this.simulate) {
-                        sppCallback = this.api.getMockupSpp(this.cdId)
+                        sppCallback = this.api.getMockupSpp(this.sourceType, this.sourceId)
                     } else {
-                        sppCallback = this.api.getSppByCdId(this.cdId)
+                        sppCallback = this.api.getSppBySourceId(this.sourceType, this.sourceId)
                     }
 
                     sppCallback

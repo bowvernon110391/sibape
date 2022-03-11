@@ -27,6 +27,11 @@
             </div>
         </template>
 
+        <!-- Pemilik Barang -->
+        <template #cell(pemilik_barang)="{ item }">
+            {{ item.source.data.penumpang ? item.source.data.penumpang.data.nama : item.source.data.importir.data.nama }}
+        </template>
+
         <template v-slot:cell(showDetail)="row">
             <div class="text-center">
                 <b-button size="sm" variant="dark" @click="row.toggleDetails">
@@ -106,11 +111,11 @@ export default {
     data () {
         return {
             fields: [
-                { label: '', key: 'showDetail' }, 
-                'nomor_lengkap', 
-                { key: 'tgl_dok', class: 'text-center' }, 
-                { key: 'lokasi', class: 'text-center' }, 
-                { label:'Pemilik Barang', key: 'cd.data.penumpang.data.nama' },
+                { label: '', key: 'showDetail' },
+                'nomor_lengkap',
+                { key: 'tgl_dok', class: 'text-center' },
+                { key: 'lokasi', class: 'text-center' },
+                { label:'Pemilik Barang', key: 'pemilik_barang' },
                 { label: 'Terkunci', key: 'is_locked', class: 'text-center' },
                 { label: 'Status Terakhir', key: 'last_status', class: 'text-center' },
                 'action'

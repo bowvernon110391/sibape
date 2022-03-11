@@ -10,7 +10,7 @@
                 <b-button
                     v-b-popover.hover="popoverPenumpang"
                     variant="success">
-                    {{ data.cd.data.penumpang.data.nama }}
+                    {{ dataPenumpang.nama }}
                 </b-button>
             </b-col>
         </b-row>
@@ -24,7 +24,7 @@
                 Jumlah:
             </b-col>
             <b-col md="4">
-                <strong>{{ data.cd.data.koli }} Koli / {{ totalBrutto | formatCurrency }} Kg</strong>
+                <strong>{{ data.source.data.koli }} Koli / {{ totalBrutto | formatCurrency }} Kg</strong>
             </b-col>
 
             <b-col md="2">
@@ -40,7 +40,7 @@
                 No. Flight
             </b-col>
             <b-col md="10">
-                <strong>{{ data.cd.data.no_flight }} ({{ data.cd.data.airline.data.uraian }})</strong>
+                <strong>{{ data.source.data.no_flight }} ({{ data.source.data.airline.data.uraian }})</strong>
             </b-col>
         </b-row>
 
@@ -96,15 +96,17 @@ export default {
     },
 
     computed: {
-        
+        dataPenumpang () {
+            return this.data.source.data.penumpang ? this.data.source.data.penumpang.data : this.data.source.data.importir.data
+        },
 
         uraianSummary () {
-            if (typeof this.data.cd.data.details == 'undefined') {
+            if (typeof this.data.source.data.details == 'undefined') {
                 return null
             }
 
             var no = 1
-            return this.data.cd.data.details.data.map(e => {
+            return this.data.source.data.details.data.map(e => {
                 return {
                     no: `${no ++}.`,
                     uraian_summary: e.uraian
@@ -113,11 +115,11 @@ export default {
         },
 
         totalBrutto () {
-            if (typeof this.data.cd.data.details == 'undefined') {
+            if (typeof this.data.source.data.details == 'undefined') {
                 return null
             }
 
-            return this.data.cd.data.details.data.reduce((acc,e) => (acc + e.brutto), 0)
+            return this.data.source.data.details.data.reduce((acc,e) => (acc + e.brutto), 0)
         }
     }
 }

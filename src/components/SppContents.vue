@@ -29,11 +29,11 @@
       <b-col md="6">
         <b-form-group label="Penumpang" label-for="penumpang">
           <select-penumpang-2
-            v-if="data.cd"
-            v-model="data.cd.data.penumpang.data.id"
+            v-if="data.source"
+            v-model="dataPenumpang.data.id"
             id="penumpang"
             :disabled="disabled"
-            :initial-options="data.cd.data.penumpang.data"
+            :initial-options="dataPenumpang.data"
             :search-on-empty="isNew"
           ></select-penumpang-2>
         </b-form-group>
@@ -45,16 +45,16 @@
       <!-- 2nd col, jenis identitas -->
       <b-col md="6">
         <b-form-group label="Alamat" label-for="alamat">
-          <b-form-textarea :disabled="disabled" v-model="data.cd.data.alamat"></b-form-textarea>
+          <b-form-textarea :disabled="disabled" v-model="data.source.data.alamat"></b-form-textarea>
         </b-form-group>
       </b-col>
 
       <b-col md="6">
         <b-form-group label="Asal/Country of origin" label-for="negara-asal">
-          <!-- <b-form-input 
-                        v-model="data.negara_asal.data.kode" 
-                        type="text" 
-                        id="negara-asal" 
+          <!-- <b-form-input
+                        v-model="data.negara_asal.data.kode"
+                        type="text"
+                        id="negara-asal"
           :disabled="disabled"></b-form-input>-->
           <select-negara
             v-model="data.negara_asal.data.kode"
@@ -71,13 +71,13 @@
       <b-col md="6">
         <b-form-group label="Flight/Voyage No.">
           <b-input-group>
-            <b-form-input v-model="data.cd.data.no_flight" :disabled="disabled" />
+            <b-form-input v-model="data.source.data.no_flight" :disabled="disabled" />
             <template v-slot:append>
               <select-airline
                 :tabindex="9999"
                 style="margin: 0 2px; width: 100%"
                 :disabled="disabled"
-                v-model="data.cd.data.kd_airline"
+                v-model="data.source.data.kd_airline"
               />
             </template>
           </b-input-group>
@@ -112,6 +112,12 @@ export default {
         SelectNegara,
         SelectAirline,
         Datepicker
+    },
+
+    computed: {
+        dataPenumpang() {
+            return this.data.source.data.penumpang ? this.data.source.data.penumpang : this.data.source.data.importir
+        }
     }
 }
 </script>

@@ -310,14 +310,14 @@ class ApiSibape {
     getSppById (id) {
         return this.instance.get('/spp/' + id, {
             params: {
-                include: 'cd,pibk'
+                include: 'source,pibk'
             }
         })
     }
 
     // getSppByCdId (id) : GET /spp/{id}/spp
-    getSppByCdId (id) {
-        return this.instance.get('/cd/' + id + '/spp', {
+    getSppBySourceId (type, id) {
+        return this.instance.get(`/${type}/` + id + '/spp', {
             params: {
                 include: 'cd'
             }
@@ -325,8 +325,8 @@ class ApiSibape {
     }
 
     // createSpp (data) : POST /cd/{id}/spp
-    createSpp (cdId, dataSpp) {
-        return this.instance.put('/cd/' + cdId + '/spp', dataSpp)
+    createSpp (type, cdId, dataSpp) {
+        return this.instance.put(`/${type}/` + cdId + '/spp', dataSpp)
     }
 
     /* // updateCd (dataCd) : PUT /cd/{id}
@@ -340,10 +340,10 @@ class ApiSibape {
     }
 
     // getMockupSpp (cdId) : GET /cd/{id}/spp_mockup
-    getMockupSpp (cdId) {
-       return this.instance.get('/cd/' + cdId + '/spp_mockup', {
+    getMockupSpp (type, id) {
+       return this.instance.get(`/${type}/` + id + '/spp_mockup', {
            params: {
-               include: 'cd.details'
+               include: 'source.details'
            }
        })
     }

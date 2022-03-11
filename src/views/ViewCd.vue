@@ -49,7 +49,7 @@
           />
 
           <!-- terbitkan SPPB -->
-          <b-button 
+          <b-button
             size="sm"
             class="shadow my-2"
             variant="primary"
@@ -135,7 +135,9 @@
 
         <!-- Tampilkan SPP -->
         <modal-view-spp
-          :cd-id="dataCd.id"
+          :source-id="dataCd.id"
+          :source-type="'cd'"
+
           size="xl"
           :simulate="!docHasLink(dataCd, 'spp')"
           v-model="viewSpp"
