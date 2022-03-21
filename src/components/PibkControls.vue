@@ -3,9 +3,18 @@
         <!-- button group -->
         <b-button-group size="sm" class="shadow mt-2 mt-md-0">
             <!-- view source? -->
-            <b-button variant="warning" :disabled="!hasSource" @click="$emit('view-source')">
+            <b-button variant="primary" :disabled="!hasSource" @click="$emit('view-source')">
                 <font-awesome-icon icon="eye"/>
                 Lihat Dok Sumber
+            </b-button>
+
+            <!-- tunda pengeluaran -->
+            <b-button
+                variant="warning"
+                :disabled="isLocked"
+                @click="$emit('showPenundaan')"
+            >
+                <font-awesome-icon icon="hand-paper"/>Tunda Pengeluaran
             </b-button>
 
             <!-- Tetapkan -->

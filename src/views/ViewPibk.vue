@@ -12,6 +12,7 @@
                 :data="dataPibk"
                 ref="tombolPenyelesaian"
                 @showPungutan="showPungutan"
+                @showPenundaan="showPenundaan"
 
                 @printBppm="printBppm"
                 @printSppb="printSppb"
@@ -120,13 +121,23 @@
 
     <!-- apa2 yg ada klo pibk bukan input baru -->
     <template v-if="!isNew">
-      <!-- modal view perhitungan -->
-      <modal-view-perhitungan
-        :uri="`/pibk/${dataPibk.id}`"
-        size="xl"
-        v-model="viewPungutan"
-        :simulate="!dataPibk.is_locked"
-      />
+        <!-- modal view perhitungan -->
+        <modal-view-perhitungan
+            :uri="`/pibk/${dataPibk.id}`"
+            size="xl"
+            v-model="viewPungutan"
+            :simulate="!dataPibk.is_locked"
+        />
+
+        <!-- Tampilkan SPP -->
+        <modal-view-spp
+            :source-id="dataPibk.id"
+            :source-type="'pibk'"
+
+            size="xl"
+            :simulate="!docHasLink(dataPibk, 'spp')"
+            v-model="viewSpp"
+        ></modal-view-spp>
     </template>
 
     <!-- PRINT MODAL -->
@@ -169,6 +180,8 @@ import ModalDialogBilling from '@/components/ModalDialogBilling'
 // PRINT MODAL
 import ModalViewPdf from '@/components/ModalViewPdf'
 
+import ModalViewSpp from '@/components/ModalViewSpp'
+
 import StatusTimeline from '@/components/StatusTimeline'
 
 import axiosErrorHandler from "../mixins/axiosErrorHandler";
@@ -198,6 +211,7 @@ export default {
     ModalViewPdf,
     PaymentControls,
     ModalDialogBilling,
+    ModalViewSpp,
     StatusTimeline
   },
 
@@ -211,6 +225,8 @@ export default {
       viewPrintDialog: false,
       pdfUrl: null,
       altFilename: null,
+
+      viewSpp: false,
 
       viewBilling: false
     };
@@ -227,7 +243,7 @@ export default {
 
     // is new?
     isNew() {
-      return this.id == "new";
+      return this.id == "new" || !this.dataPibk.id;
     },
   },
 
@@ -324,6 +340,11 @@ export default {
     // show pungutan dialog
     showPungutan() {
       this.viewPungutan = true;
+    },
+
+    // show penundaan
+    showPenundaan() {
+      this.viewSpp = true;
     },
 
     // print sspcp

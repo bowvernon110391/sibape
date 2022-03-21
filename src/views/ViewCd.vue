@@ -121,37 +121,36 @@
         </div>
       </b-card-footer>
     </b-card>
-    <!-- paginated utk data detail -->
+
+    <!-- modal view utk perhitungan -->
     <template v-if="!isNew">
-      <!-- modal view utk perhitungan -->
-      <template v-if="!isNew">
         <!-- Tampilkan perhitungan -->
         <modal-view-perhitungan
-          :uri="`/cd/${dataCd.id}`"
-          size="xl"
-          v-model="viewPungutan"
-          :simulate="!dataCd.is_locked"
+            :uri="`/cd/${dataCd.id}`"
+            size="xl"
+            v-model="viewPungutan"
+            :simulate="!dataCd.is_locked"
         ></modal-view-perhitungan>
 
         <!-- Tampilkan SPP -->
         <modal-view-spp
-          :source-id="dataCd.id"
-          :source-type="'cd'"
+            :source-id="dataCd.id"
+            :source-type="'cd'"
 
-          size="xl"
-          :simulate="!docHasLink(dataCd, 'spp')"
-          v-model="viewSpp"
+            size="xl"
+            :simulate="!docHasLink(dataCd, 'spp')"
+            v-model="viewSpp"
         ></modal-view-spp>
 
         <!-- Tampilkan dialog ST -->
         <modal-view-st
-          :cd-id="dataCd.id"
-          size="xl"
-          :simulate="!docHasLink(dataCd, 'st')"
-          v-model="viewSt"
+            :cd-id="dataCd.id"
+            size="xl"
+            :simulate="!docHasLink(dataCd, 'st')"
+            v-model="viewSt"
         ></modal-view-st>
-      </template>
     </template>
+
     <!-- <pre>{{ dataCd }}</pre> -->
 
     <!-- PRINT MODAL -->
