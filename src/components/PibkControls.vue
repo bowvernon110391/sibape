@@ -8,10 +8,10 @@
                 Lihat Dok Sumber
             </b-button>
 
-            <!-- tunda pengeluaran -->
+            <!-- tunda pengeluaran (kalau tidak punya sumber) -->
             <b-button
                 variant="warning"
-                :disabled="isLocked"
+                :disabled="isLocked || hasSource"
                 @click="$emit('showPenundaan')"
             >
                 <font-awesome-icon icon="hand-paper"/>Tunda Pengeluaran
