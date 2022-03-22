@@ -15,6 +15,36 @@
         tbody-tr-class="text-center"
         thead-tr-class="text-center">
 
+        <!-- dok asal -->
+        <template #cell(header_info)="{ value }">
+            <template v-if="value.data.valid">
+                <div>
+                    <span>
+                       {{ value.data.nomor_lengkap }}
+                    </span>
+                </div>
+                <div>
+                    <!-- <datepicker v-model="value.data.tgl_dok" disabled/> -->
+                    <font-awesome-icon icon="calendar-alt"/>
+                    {{ value.data.tgl_dok }}
+                </div>
+                <hr/>
+                <b-button variant="secondary" class="shadow"
+                    :to="value.data.header_type.split('\\')[1].toLowerCase() + '/' + value.data.header_id"
+                    target="_blank">
+                    <font-awesome-icon icon="eye"/>
+                    Lihat Dok
+                    <b-badge variant="light">{{ value.data.header_type.split('\\')[1] }}</b-badge>
+                </b-button>
+            </template>
+            <template v-else>
+                <b-button :disabled="true" variant="secondary">
+                    <font-awesome-icon icon="eye-slash"/>
+                    Dok tidak ditemukan
+                </b-button>
+            </template>
+        </template>
+
         <!-- uraian -->
         <template #cell(uraian)="{ value, item }">
           <div style="white-space: pre-line; text-align:left;">{{ uraianDanBruto(value) }}</div>
@@ -76,15 +106,23 @@
 
 <script>
 import niceties from '../mixins/niceties'
+// import Datepicker from './Datepicker.vue'
 
 export default {
     inheritAttrs: false,
+    components: {
+        // Datepicker
+    },
     mixins: [
       niceties
     ],
     data () {
         return {
             fields: [
+                {
+                    key: 'header_info',
+                    label: 'Dok Asal'
+                },
                 'uraian',
                 'jumlah',
                 'harga',
